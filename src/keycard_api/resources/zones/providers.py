@@ -1,0 +1,703 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from __future__ import annotations
+
+from typing import Optional
+from typing_extensions import Literal
+
+import httpx
+
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
+from ..._utils import maybe_transform, async_maybe_transform
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
+    to_raw_response_wrapper,
+    to_streamed_response_wrapper,
+    async_to_raw_response_wrapper,
+    async_to_streamed_response_wrapper,
+)
+from ...types.zones import provider_list_params, provider_create_params, provider_update_params
+from ..._base_client import make_request_options
+from ...types.zones.provider import Provider
+from ...types.zones.provider_list_response import ProviderListResponse
+
+__all__ = ["ProvidersResource", "AsyncProvidersResource"]
+
+
+class ProvidersResource(SyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> ProvidersResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/stainless-sdks/keycard-api-python#accessing-raw-response-data-eg-headers
+        """
+        return ProvidersResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> ProvidersResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/stainless-sdks/keycard-api-python#with_streaming_response
+        """
+        return ProvidersResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        zone_id: str,
+        *,
+        identifier: str,
+        name: str,
+        client_id: str | Omit = omit,
+        client_secret: str | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        domains: SequenceNotStr[str] | Omit = omit,
+        metadata: provider_create_params.Metadata | Omit = omit,
+        protocols: provider_create_params.Protocols | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Provider:
+        """
+        Creates a new Provider - a system that supplies access to Resources and allows
+        actors to authenticate
+
+        Args:
+          identifier: User specified identifier, unique within the zone
+
+          name: Human-readable name
+
+          client_id: OAuth 2.0 client identifier
+
+          client_secret: OAuth 2.0 client secret (will be encrypted and stored securely)
+
+          description: Human-readable description
+
+          domains: Domains for identifier-first login flow. Must be globally unique across all
+              providers.
+
+          metadata: Provider metadata
+
+          protocols: Protocol-specific configuration for provider creation
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        return self._post(
+            f"/zones/{zone_id}/providers",
+            body=maybe_transform(
+                {
+                    "identifier": identifier,
+                    "name": name,
+                    "client_id": client_id,
+                    "client_secret": client_secret,
+                    "description": description,
+                    "domains": domains,
+                    "metadata": metadata,
+                    "protocols": protocols,
+                },
+                provider_create_params.ProviderCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Provider,
+        )
+
+    def retrieve(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Provider:
+        """
+        Returns details of a specific Provider by ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        return self._get(
+            f"/zones/{zone_id}/providers/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Provider,
+        )
+
+    def update(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        client_id: Optional[str] | Omit = omit,
+        client_secret: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        domains: Optional[SequenceNotStr[str]] | Omit = omit,
+        identifier: str | Omit = omit,
+        metadata: Optional[provider_update_params.Metadata] | Omit = omit,
+        name: str | Omit = omit,
+        protocols: Optional[provider_update_params.Protocols] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Provider:
+        """
+        Updates a Provider's configuration and metadata
+
+        Args:
+          client_id: OAuth 2.0 client identifier. Set to null to remove.
+
+          client_secret: OAuth 2.0 client secret (will be encrypted and stored securely). Set to null to
+              remove.
+
+          description: Human-readable description
+
+          domains: Domains for identifier-first login flow. Must be globally unique across all
+              providers. Set to null to remove all domains.
+
+          identifier: User specified identifier, unique within the zone
+
+          metadata: Provider metadata. Set to null to remove all metadata.
+
+          name: Human-readable name
+
+          protocols: Protocol-specific configuration. Set to null to remove all protocols.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        return self._patch(
+            f"/zones/{zone_id}/providers/{id}",
+            body=maybe_transform(
+                {
+                    "client_id": client_id,
+                    "client_secret": client_secret,
+                    "description": description,
+                    "domains": domains,
+                    "identifier": identifier,
+                    "metadata": metadata,
+                    "name": name,
+                    "protocols": protocols,
+                },
+                provider_update_params.ProviderUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Provider,
+        )
+
+    def list(
+        self,
+        zone_id: str,
+        *,
+        cursor: str | Omit = omit,
+        identifier: str | Omit = omit,
+        limit: int | Omit = omit,
+        slug: str | Omit = omit,
+        type: Literal["external", "keycard-vault", "keycard-sts"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ProviderListResponse:
+        """
+        Returns a list of providers in the specified zone
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        return self._get(
+            f"/zones/{zone_id}/providers",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "cursor": cursor,
+                        "identifier": identifier,
+                        "limit": limit,
+                        "slug": slug,
+                        "type": type,
+                    },
+                    provider_list_params.ProviderListParams,
+                ),
+            ),
+            cast_to=ProviderListResponse,
+        )
+
+    def delete(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """
+        Permanently deletes a provider
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
+        return self._delete(
+            f"/zones/{zone_id}/providers/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
+
+class AsyncProvidersResource(AsyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> AsyncProvidersResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/stainless-sdks/keycard-api-python#accessing-raw-response-data-eg-headers
+        """
+        return AsyncProvidersResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncProvidersResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/stainless-sdks/keycard-api-python#with_streaming_response
+        """
+        return AsyncProvidersResourceWithStreamingResponse(self)
+
+    async def create(
+        self,
+        zone_id: str,
+        *,
+        identifier: str,
+        name: str,
+        client_id: str | Omit = omit,
+        client_secret: str | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        domains: SequenceNotStr[str] | Omit = omit,
+        metadata: provider_create_params.Metadata | Omit = omit,
+        protocols: provider_create_params.Protocols | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Provider:
+        """
+        Creates a new Provider - a system that supplies access to Resources and allows
+        actors to authenticate
+
+        Args:
+          identifier: User specified identifier, unique within the zone
+
+          name: Human-readable name
+
+          client_id: OAuth 2.0 client identifier
+
+          client_secret: OAuth 2.0 client secret (will be encrypted and stored securely)
+
+          description: Human-readable description
+
+          domains: Domains for identifier-first login flow. Must be globally unique across all
+              providers.
+
+          metadata: Provider metadata
+
+          protocols: Protocol-specific configuration for provider creation
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        return await self._post(
+            f"/zones/{zone_id}/providers",
+            body=await async_maybe_transform(
+                {
+                    "identifier": identifier,
+                    "name": name,
+                    "client_id": client_id,
+                    "client_secret": client_secret,
+                    "description": description,
+                    "domains": domains,
+                    "metadata": metadata,
+                    "protocols": protocols,
+                },
+                provider_create_params.ProviderCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Provider,
+        )
+
+    async def retrieve(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Provider:
+        """
+        Returns details of a specific Provider by ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        return await self._get(
+            f"/zones/{zone_id}/providers/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Provider,
+        )
+
+    async def update(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        client_id: Optional[str] | Omit = omit,
+        client_secret: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        domains: Optional[SequenceNotStr[str]] | Omit = omit,
+        identifier: str | Omit = omit,
+        metadata: Optional[provider_update_params.Metadata] | Omit = omit,
+        name: str | Omit = omit,
+        protocols: Optional[provider_update_params.Protocols] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Provider:
+        """
+        Updates a Provider's configuration and metadata
+
+        Args:
+          client_id: OAuth 2.0 client identifier. Set to null to remove.
+
+          client_secret: OAuth 2.0 client secret (will be encrypted and stored securely). Set to null to
+              remove.
+
+          description: Human-readable description
+
+          domains: Domains for identifier-first login flow. Must be globally unique across all
+              providers. Set to null to remove all domains.
+
+          identifier: User specified identifier, unique within the zone
+
+          metadata: Provider metadata. Set to null to remove all metadata.
+
+          name: Human-readable name
+
+          protocols: Protocol-specific configuration. Set to null to remove all protocols.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        return await self._patch(
+            f"/zones/{zone_id}/providers/{id}",
+            body=await async_maybe_transform(
+                {
+                    "client_id": client_id,
+                    "client_secret": client_secret,
+                    "description": description,
+                    "domains": domains,
+                    "identifier": identifier,
+                    "metadata": metadata,
+                    "name": name,
+                    "protocols": protocols,
+                },
+                provider_update_params.ProviderUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Provider,
+        )
+
+    async def list(
+        self,
+        zone_id: str,
+        *,
+        cursor: str | Omit = omit,
+        identifier: str | Omit = omit,
+        limit: int | Omit = omit,
+        slug: str | Omit = omit,
+        type: Literal["external", "keycard-vault", "keycard-sts"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ProviderListResponse:
+        """
+        Returns a list of providers in the specified zone
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        return await self._get(
+            f"/zones/{zone_id}/providers",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "cursor": cursor,
+                        "identifier": identifier,
+                        "limit": limit,
+                        "slug": slug,
+                        "type": type,
+                    },
+                    provider_list_params.ProviderListParams,
+                ),
+            ),
+            cast_to=ProviderListResponse,
+        )
+
+    async def delete(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """
+        Permanently deletes a provider
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
+        return await self._delete(
+            f"/zones/{zone_id}/providers/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
+
+class ProvidersResourceWithRawResponse:
+    def __init__(self, providers: ProvidersResource) -> None:
+        self._providers = providers
+
+        self.create = to_raw_response_wrapper(
+            providers.create,
+        )
+        self.retrieve = to_raw_response_wrapper(
+            providers.retrieve,
+        )
+        self.update = to_raw_response_wrapper(
+            providers.update,
+        )
+        self.list = to_raw_response_wrapper(
+            providers.list,
+        )
+        self.delete = to_raw_response_wrapper(
+            providers.delete,
+        )
+
+
+class AsyncProvidersResourceWithRawResponse:
+    def __init__(self, providers: AsyncProvidersResource) -> None:
+        self._providers = providers
+
+        self.create = async_to_raw_response_wrapper(
+            providers.create,
+        )
+        self.retrieve = async_to_raw_response_wrapper(
+            providers.retrieve,
+        )
+        self.update = async_to_raw_response_wrapper(
+            providers.update,
+        )
+        self.list = async_to_raw_response_wrapper(
+            providers.list,
+        )
+        self.delete = async_to_raw_response_wrapper(
+            providers.delete,
+        )
+
+
+class ProvidersResourceWithStreamingResponse:
+    def __init__(self, providers: ProvidersResource) -> None:
+        self._providers = providers
+
+        self.create = to_streamed_response_wrapper(
+            providers.create,
+        )
+        self.retrieve = to_streamed_response_wrapper(
+            providers.retrieve,
+        )
+        self.update = to_streamed_response_wrapper(
+            providers.update,
+        )
+        self.list = to_streamed_response_wrapper(
+            providers.list,
+        )
+        self.delete = to_streamed_response_wrapper(
+            providers.delete,
+        )
+
+
+class AsyncProvidersResourceWithStreamingResponse:
+    def __init__(self, providers: AsyncProvidersResource) -> None:
+        self._providers = providers
+
+        self.create = async_to_streamed_response_wrapper(
+            providers.create,
+        )
+        self.retrieve = async_to_streamed_response_wrapper(
+            providers.retrieve,
+        )
+        self.update = async_to_streamed_response_wrapper(
+            providers.update,
+        )
+        self.list = async_to_streamed_response_wrapper(
+            providers.list,
+        )
+        self.delete = async_to_streamed_response_wrapper(
+            providers.delete,
+        )
