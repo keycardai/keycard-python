@@ -34,7 +34,6 @@ class TestZones:
     def test_method_create_with_all_params(self, client: KeycardAPI) -> None:
         zone = client.zones.create(
             name="x",
-            cname="cname",
             default_mcp_gateway_application=True,
             description="description",
             directory_open_signups_enabled=True,
@@ -142,7 +141,6 @@ class TestZones:
     def test_method_update_with_all_params(self, client: KeycardAPI) -> None:
         zone = client.zones.update(
             zone_id="zoneId",
-            cname="cname",
             default_mcp_gateway_application_id="default_mcp_gateway_application_id",
             description="description",
             directory_open_signups_enabled=True,
@@ -401,7 +399,6 @@ class TestAsyncZones:
     async def test_method_create_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         zone = await async_client.zones.create(
             name="x",
-            cname="cname",
             default_mcp_gateway_application=True,
             description="description",
             directory_open_signups_enabled=True,
@@ -509,7 +506,6 @@ class TestAsyncZones:
     async def test_method_update_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         zone = await async_client.zones.update(
             zone_id="zoneId",
-            cname="cname",
             default_mcp_gateway_application_id="default_mcp_gateway_application_id",
             description="description",
             directory_open_signups_enabled=True,

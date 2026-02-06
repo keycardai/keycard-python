@@ -6,7 +6,6 @@ from typing import List
 from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
-from .organizations.organization_role import OrganizationRole
 
 __all__ = ["OrganizationListIdentitiesParams"]
 
@@ -28,9 +27,7 @@ class OrganizationListIdentitiesParams(TypedDict, total=False):
     limit: int
     """Maximum number of identities to return"""
 
-    role: OrganizationRole
+    role: Literal["org_admin", "org_member", "org_viewer"]
     """Filter identities by role"""
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]
-
-    x_request_id: Annotated[str, PropertyInfo(alias="X-Request-ID")]

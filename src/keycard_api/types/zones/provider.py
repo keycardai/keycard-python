@@ -1,25 +1,27 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
+from typing import List, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
 from ..._models import BaseModel
 
-__all__ = ["Provider", "Metadata", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
-
-
-class Metadata(BaseModel):
-    """Provider metadata"""
-
-    internal_claims: Optional[Dict[str, object]] = None
-    """Additional claims to inject when provider is used for zone login"""
+__all__ = ["Provider", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
 
 
 class ProtocolsOauth2(BaseModel):
     """OAuth 2.0 protocol configuration"""
 
     authorization_endpoint: Optional[str] = None
+
+    authorization_resource_enabled: Optional[bool] = None
+    """Whether to include the resource parameter in authorization requests."""
+
+    authorization_resource_parameter: Optional[str] = None
+    """The resource parameter value to include in authorization requests.
+
+    Defaults to "resource" when authorization_resource_enabled is true.
+    """
 
     code_challenge_methods_supported: Optional[List[str]] = None
 
@@ -86,13 +88,7 @@ class Provider(BaseModel):
     description: Optional[str] = None
     """Human-readable description"""
 
-    domains: Optional[List[str]] = None
-    """Domains for identifier-first login flow.
-
-    Must be globally unique across all providers.
-    """
-
-    metadata: Optional[Metadata] = None
+    metadata: Optional[object] = None
     """Provider metadata"""
 
     protocols: Optional[Protocols] = None

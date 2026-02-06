@@ -91,9 +91,6 @@ class Zone(BaseModel):
     updated_at: datetime
     """Entity update timestamp"""
 
-    cname: Optional[str] = None
-    """Custom domain name (CNAME) for the zone"""
-
     default_mcp_gateway_application_id: Optional[str] = None
     """Application ID configured as the default MCP Gateway for the zone"""
 

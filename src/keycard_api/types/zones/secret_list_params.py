@@ -17,5 +17,3 @@ class SecretListParams(TypedDict, total=False):
     """The type of secrets to list"""
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]
-
-    x_request_id: Annotated[str, PropertyInfo(alias="X-Request-ID")]

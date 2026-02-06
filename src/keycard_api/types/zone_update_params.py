@@ -9,9 +9,6 @@ __all__ = ["ZoneUpdateParams", "EncryptionKey", "Protocols", "ProtocolsOauth2"]
 
 
 class ZoneUpdateParams(TypedDict, total=False):
-    cname: Optional[str]
-    """Custom domain name (CNAME) for the zone (set to null to remove)"""
-
     default_mcp_gateway_application_id: Optional[str]
     """
     Application ID configured as the default MCP Gateway for the zone (set to null

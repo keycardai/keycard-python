@@ -1,10 +1,9 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from datetime import datetime
+from typing_extensions import Literal
 
 from .._models import BaseModel
-from .organizations.invitation_status import InvitationStatus
-from .organizations.organization_role import OrganizationRole
 
 __all__ = ["InvitationRetrieveResponse"]
 
@@ -24,8 +23,8 @@ class InvitationRetrieveResponse(BaseModel):
     organization_name: str
     """Name of the organization being invited to"""
 
-    role: OrganizationRole
+    role: Literal["org_admin", "org_member", "org_viewer"]
     """Role that will be assigned when invitation is accepted"""
 
-    status: InvitationStatus
+    status: Literal["pending", "accepted", "expired", "revoked"]
     """Status of an invitation"""

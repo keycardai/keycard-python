@@ -14,9 +14,6 @@ class ZoneCreateParams(TypedDict, total=False):
     name: Required[str]
     """Human-readable name"""
 
-    cname: str
-    """Custom domain name (CNAME) for the zone"""
-
     default_mcp_gateway_application: bool
     """Assign a default MCP Gateway application to the zone"""
 

@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
-from .organization_role import OrganizationRole
 
 __all__ = ["InvitationCreateParams"]
 
@@ -14,12 +13,10 @@ class InvitationCreateParams(TypedDict, total=False):
     email: Required[str]
     """Email address to invite"""
 
-    role: OrganizationRole
+    role: Literal["org_admin", "org_member", "org_viewer"]
     """
     Role to assign when invitation is accepted (defaults to org_admin if not
     provided)
     """
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]
-
-    x_request_id: Annotated[str, PropertyInfo(alias="X-Request-ID")]

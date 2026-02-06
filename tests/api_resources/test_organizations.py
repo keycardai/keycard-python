@@ -10,10 +10,12 @@ import pytest
 from keycard_api import KeycardAPI, AsyncKeycardAPI
 from tests.utils import assert_matches_type
 from keycard_api.types import (
-    Organization,
-    TokenResponse,
     OrganizationListResponse,
+    OrganizationCreateResponse,
+    OrganizationUpdateResponse,
+    OrganizationRetrieveResponse,
     OrganizationListRolesResponse,
+    OrganizationExchangeTokenResponse,
     OrganizationListIdentitiesResponse,
 )
 
@@ -27,7 +29,7 @@ class TestOrganizations:
     @parametrize
     def test_method_create(self, client: KeycardAPI) -> None:
         organization = client.organizations.create()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationCreateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -35,9 +37,8 @@ class TestOrganizations:
         organization = client.organizations.create(
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationCreateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -47,7 +48,7 @@ class TestOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationCreateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -57,7 +58,7 @@ class TestOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(OrganizationCreateResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -67,7 +68,7 @@ class TestOrganizations:
         organization = client.organizations.retrieve(
             organization_id="x",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationRetrieveResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -76,9 +77,8 @@ class TestOrganizations:
             organization_id="x",
             expand=["permissions"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationRetrieveResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -90,7 +90,7 @@ class TestOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationRetrieveResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -102,7 +102,7 @@ class TestOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(OrganizationRetrieveResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -120,7 +120,7 @@ class TestOrganizations:
         organization = client.organizations.update(
             organization_id="x",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationUpdateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -129,9 +129,8 @@ class TestOrganizations:
             organization_id="x",
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationUpdateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -143,7 +142,7 @@ class TestOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationUpdateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -155,7 +154,7 @@ class TestOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(OrganizationUpdateResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -182,7 +181,6 @@ class TestOrganizations:
             expand=["permissions"],
             limit=1,
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
@@ -214,7 +212,7 @@ class TestOrganizations:
         organization = client.organizations.exchange_token(
             organization_id="x",
         )
-        assert_matches_type(TokenResponse, organization, path=["response"])
+        assert_matches_type(OrganizationExchangeTokenResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -222,9 +220,8 @@ class TestOrganizations:
         organization = client.organizations.exchange_token(
             organization_id="x",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(TokenResponse, organization, path=["response"])
+        assert_matches_type(OrganizationExchangeTokenResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -236,7 +233,7 @@ class TestOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = response.parse()
-        assert_matches_type(TokenResponse, organization, path=["response"])
+        assert_matches_type(OrganizationExchangeTokenResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -248,7 +245,7 @@ class TestOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = response.parse()
-            assert_matches_type(TokenResponse, organization, path=["response"])
+            assert_matches_type(OrganizationExchangeTokenResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -279,7 +276,6 @@ class TestOrganizations:
             limit=1,
             role="org_admin",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(OrganizationListIdentitiesResponse, organization, path=["response"])
 
@@ -333,7 +329,6 @@ class TestOrganizations:
             expand=["permissions"],
             scope="organization",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(OrganizationListRolesResponse, organization, path=["response"])
 
@@ -381,7 +376,7 @@ class TestAsyncOrganizations:
     @parametrize
     async def test_method_create(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.create()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationCreateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -389,9 +384,8 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.create(
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationCreateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -401,7 +395,7 @@ class TestAsyncOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = await response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationCreateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -411,7 +405,7 @@ class TestAsyncOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = await response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(OrganizationCreateResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -421,7 +415,7 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.retrieve(
             organization_id="x",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationRetrieveResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -430,9 +424,8 @@ class TestAsyncOrganizations:
             organization_id="x",
             expand=["permissions"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationRetrieveResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -444,7 +437,7 @@ class TestAsyncOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = await response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationRetrieveResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -456,7 +449,7 @@ class TestAsyncOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = await response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(OrganizationRetrieveResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -474,7 +467,7 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.update(
             organization_id="x",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationUpdateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -483,9 +476,8 @@ class TestAsyncOrganizations:
             organization_id="x",
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationUpdateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -497,7 +489,7 @@ class TestAsyncOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = await response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(OrganizationUpdateResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -509,7 +501,7 @@ class TestAsyncOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = await response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(OrganizationUpdateResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -536,7 +528,6 @@ class TestAsyncOrganizations:
             expand=["permissions"],
             limit=1,
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
@@ -568,7 +559,7 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.exchange_token(
             organization_id="x",
         )
-        assert_matches_type(TokenResponse, organization, path=["response"])
+        assert_matches_type(OrganizationExchangeTokenResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -576,9 +567,8 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.exchange_token(
             organization_id="x",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(TokenResponse, organization, path=["response"])
+        assert_matches_type(OrganizationExchangeTokenResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -590,7 +580,7 @@ class TestAsyncOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = await response.parse()
-        assert_matches_type(TokenResponse, organization, path=["response"])
+        assert_matches_type(OrganizationExchangeTokenResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -602,7 +592,7 @@ class TestAsyncOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = await response.parse()
-            assert_matches_type(TokenResponse, organization, path=["response"])
+            assert_matches_type(OrganizationExchangeTokenResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -633,7 +623,6 @@ class TestAsyncOrganizations:
             limit=1,
             role="org_admin",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(OrganizationListIdentitiesResponse, organization, path=["response"])
 
@@ -687,7 +676,6 @@ class TestAsyncOrganizations:
             expand=["permissions"],
             scope="organization",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(OrganizationListRolesResponse, organization, path=["response"])
 

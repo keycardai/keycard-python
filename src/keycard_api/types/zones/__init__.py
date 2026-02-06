@@ -7,7 +7,6 @@ from .user import User as User
 from .grant import Grant as Grant
 from .token import Token as Token
 from .public import Public as Public
-from .secret import Secret as Secret
 from .session import Session as Session
 from .metadata import Metadata as Metadata
 from .password import Password as Password
@@ -25,7 +24,6 @@ from .member_add_params import MemberAddParams as MemberAddParams
 from .member_list_params import MemberListParams as MemberListParams
 from .secret_list_params import SecretListParams as SecretListParams
 from .user_list_response import UserListResponse as UserListResponse
-from .secret_token_fields import SecretTokenFields as SecretTokenFields
 from .session_list_params import SessionListParams as SessionListParams
 from .member_list_response import MemberListResponse as MemberListResponse
 from .member_update_params import MemberUpdateParams as MemberUpdateParams
@@ -43,16 +41,15 @@ from .provider_update_params import ProviderUpdateParams as ProviderUpdateParams
 from .resource_create_params import ResourceCreateParams as ResourceCreateParams
 from .resource_list_response import ResourceListResponse as ResourceListResponse
 from .resource_update_params import ResourceUpdateParams as ResourceUpdateParams
-from .secret_password_fields import SecretPasswordFields as SecretPasswordFields
+from .secret_create_response import SecretCreateResponse as SecretCreateResponse
+from .secret_update_response import SecretUpdateResponse as SecretUpdateResponse
 from .application_list_params import ApplicationListParams as ApplicationListParams
 from .secret_retrieve_response import SecretRetrieveResponse as SecretRetrieveResponse
 from .user_agent_list_response import UserAgentListResponse as UserAgentListResponse
 from .application_create_params import ApplicationCreateParams as ApplicationCreateParams
 from .application_list_response import ApplicationListResponse as ApplicationListResponse
 from .application_update_params import ApplicationUpdateParams as ApplicationUpdateParams
-from .secret_token_fields_param import SecretTokenFieldsParam as SecretTokenFieldsParam
 from .delegated_grant_list_params import DelegatedGrantListParams as DelegatedGrantListParams
-from .secret_password_fields_param import SecretPasswordFieldsParam as SecretPasswordFieldsParam
 from .delegated_grant_list_response import DelegatedGrantListResponse as DelegatedGrantListResponse
 from .delegated_grant_update_params import DelegatedGrantUpdateParams as DelegatedGrantUpdateParams
 from .mcp_gateway_create_server_params import McpGatewayCreateServerParams as McpGatewayCreateServerParams

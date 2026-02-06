@@ -73,7 +73,6 @@ class SessionsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Session,
             self._get(
@@ -114,7 +113,6 @@ class SessionsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Session,
             self._patch(
@@ -169,7 +167,6 @@ class SessionsResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/sessions",
             options=make_request_options(
@@ -221,7 +218,6 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/sessions/{id}",
             options=make_request_options(
@@ -279,7 +275,6 @@ class AsyncSessionsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Session,
             await self._get(
@@ -320,7 +315,6 @@ class AsyncSessionsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Session,
             await self._patch(
@@ -375,7 +369,6 @@ class AsyncSessionsResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/sessions",
             options=make_request_options(
@@ -427,7 +420,6 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/sessions/{id}",
             options=make_request_options(

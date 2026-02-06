@@ -16,7 +16,6 @@ from .users import (
     AsyncUsersResourceWithStreamingResponse,
 )
 from ...types import (
-    RoleScope,
     organization_list_params,
     organization_create_params,
     organization_update_params,
@@ -51,10 +50,6 @@ from .sso_connection import (
     SSOConnectionResourceWithStreamingResponse,
     AsyncSSOConnectionResourceWithStreamingResponse,
 )
-from ...types.role_scope import RoleScope
-from ...types.organization import Organization
-from ...types.organizations import OrganizationRole
-from ...types.token_response import TokenResponse
 from .service_accounts.service_accounts import (
     ServiceAccountsResource,
     AsyncServiceAccountsResource,
@@ -64,8 +59,11 @@ from .service_accounts.service_accounts import (
     AsyncServiceAccountsResourceWithStreamingResponse,
 )
 from ...types.organization_list_response import OrganizationListResponse
-from ...types.organizations.organization_role import OrganizationRole
+from ...types.organization_create_response import OrganizationCreateResponse
+from ...types.organization_update_response import OrganizationUpdateResponse
+from ...types.organization_retrieve_response import OrganizationRetrieveResponse
 from ...types.organization_list_roles_response import OrganizationListRolesResponse
+from ...types.organization_exchange_token_response import OrganizationExchangeTokenResponse
 from ...types.organization_list_identities_response import OrganizationListIdentitiesResponse
 
 __all__ = ["OrganizationsResource", "AsyncOrganizationsResource"]
@@ -112,14 +110,13 @@ class OrganizationsResource(SyncAPIResource):
         *,
         name: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Organization:
+    ) -> OrganizationCreateResponse:
         """
         Args:
           name: Organization name
@@ -132,23 +129,14 @@ class OrganizationsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._post(
             "/organizations",
             body=maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Organization,
+            cast_to=OrganizationCreateResponse,
         )
 
     def retrieve(
@@ -157,14 +145,13 @@ class OrganizationsResource(SyncAPIResource):
         *,
         expand: List[Literal["permissions"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Organization:
+    ) -> OrganizationRetrieveResponse:
         """
         Get organization by ID or label
 
@@ -184,16 +171,7 @@ class OrganizationsResource(SyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}",
             options=make_request_options(
@@ -203,7 +181,7 @@ class OrganizationsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams),
             ),
-            cast_to=Organization,
+            cast_to=OrganizationRetrieveResponse,
         )
 
     def update(
@@ -212,14 +190,13 @@ class OrganizationsResource(SyncAPIResource):
         *,
         name: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Organization:
+    ) -> OrganizationUpdateResponse:
         """
         Update organization details
 
@@ -238,23 +215,14 @@ class OrganizationsResource(SyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._patch(
             f"/organizations/{organization_id}",
             body=maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Organization,
+            cast_to=OrganizationUpdateResponse,
         )
 
     def list(
@@ -265,7 +233,6 @@ class OrganizationsResource(SyncAPIResource):
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -294,16 +261,7 @@ class OrganizationsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
             "/organizations",
             options=make_request_options(
@@ -329,14 +287,13 @@ class OrganizationsResource(SyncAPIResource):
         organization_id: str,
         *,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> TokenResponse:
+    ) -> OrganizationExchangeTokenResponse:
         """
         Exchange user token for organization-scoped M2M token
 
@@ -353,22 +310,13 @@ class OrganizationsResource(SyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=TokenResponse,
+            cast_to=OrganizationExchangeTokenResponse,
         )
 
     def list_identities(
@@ -379,9 +327,8 @@ class OrganizationsResource(SyncAPIResource):
         before: str | Omit = omit,
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
-        role: OrganizationRole | Omit = omit,
+        role: Literal["org_admin", "org_member", "org_viewer"] | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -416,16 +363,7 @@ class OrganizationsResource(SyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/identities",
             options=make_request_options(
@@ -452,9 +390,8 @@ class OrganizationsResource(SyncAPIResource):
         organization_id: str,
         *,
         expand: List[Literal["permissions"]] | Omit = omit,
-        scope: RoleScope | Omit = omit,
+        scope: Literal["organization", "zone"] | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -492,16 +429,7 @@ class OrganizationsResource(SyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/roles",
             options=make_request_options(
@@ -562,14 +490,13 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         *,
         name: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Organization:
+    ) -> OrganizationCreateResponse:
         """
         Args:
           name: Organization name
@@ -582,23 +509,14 @@ class AsyncOrganizationsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._post(
             "/organizations",
             body=await async_maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Organization,
+            cast_to=OrganizationCreateResponse,
         )
 
     async def retrieve(
@@ -607,14 +525,13 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         *,
         expand: List[Literal["permissions"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Organization:
+    ) -> OrganizationRetrieveResponse:
         """
         Get organization by ID or label
 
@@ -634,16 +551,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}",
             options=make_request_options(
@@ -655,7 +563,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     {"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams
                 ),
             ),
-            cast_to=Organization,
+            cast_to=OrganizationRetrieveResponse,
         )
 
     async def update(
@@ -664,14 +572,13 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         *,
         name: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Organization:
+    ) -> OrganizationUpdateResponse:
         """
         Update organization details
 
@@ -690,23 +597,14 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._patch(
             f"/organizations/{organization_id}",
             body=await async_maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Organization,
+            cast_to=OrganizationUpdateResponse,
         )
 
     async def list(
@@ -717,7 +615,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -746,16 +643,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
             "/organizations",
             options=make_request_options(
@@ -781,14 +669,13 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         organization_id: str,
         *,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> TokenResponse:
+    ) -> OrganizationExchangeTokenResponse:
         """
         Exchange user token for organization-scoped M2M token
 
@@ -805,22 +692,13 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=TokenResponse,
+            cast_to=OrganizationExchangeTokenResponse,
         )
 
     async def list_identities(
@@ -831,9 +709,8 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         before: str | Omit = omit,
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
-        role: OrganizationRole | Omit = omit,
+        role: Literal["org_admin", "org_member", "org_viewer"] | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -868,16 +745,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/identities",
             options=make_request_options(
@@ -904,9 +772,8 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         organization_id: str,
         *,
         expand: List[Literal["permissions"]] | Omit = omit,
-        scope: RoleScope | Omit = omit,
+        scope: Literal["organization", "zone"] | Omit = omit,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -944,16 +811,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         """
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/roles",
             options=make_request_options(

@@ -14,5 +14,3 @@ class OrganizationCreateParams(TypedDict, total=False):
     """Organization name"""
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]
-
-    x_request_id: Annotated[str, PropertyInfo(alias="X-Request-ID")]

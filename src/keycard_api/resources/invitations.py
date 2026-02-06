@@ -46,7 +46,6 @@ class InvitationsResource(SyncAPIResource):
         token: str,
         *,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -68,16 +67,7 @@ class InvitationsResource(SyncAPIResource):
         """
         if not token:
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
             f"/invitations/{token}",
             options=make_request_options(
@@ -91,7 +81,6 @@ class InvitationsResource(SyncAPIResource):
         token: str,
         *,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -113,16 +102,7 @@ class InvitationsResource(SyncAPIResource):
         """
         if not token:
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._post(
             f"/invitations/{token}/accept",
             options=make_request_options(
@@ -157,7 +137,6 @@ class AsyncInvitationsResource(AsyncAPIResource):
         token: str,
         *,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -179,16 +158,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         """
         if not token:
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
             f"/invitations/{token}",
             options=make_request_options(
@@ -202,7 +172,6 @@ class AsyncInvitationsResource(AsyncAPIResource):
         token: str,
         *,
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -224,16 +193,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         """
         if not token:
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._post(
             f"/invitations/{token}/accept",
             options=make_request_options(

@@ -5,10 +5,8 @@ from datetime import datetime
 from typing_extensions import Literal
 
 from .._models import BaseModel
-from .page_info_cursor import PageInfoCursor
-from .organizations.organization_role import OrganizationRole
 
-__all__ = ["OrganizationListIdentitiesResponse", "Item"]
+__all__ = ["OrganizationListIdentitiesResponse", "Item", "PageInfo"]
 
 
 class Item(BaseModel):
@@ -23,7 +21,7 @@ class Item(BaseModel):
     email: str
     """Email address of the identity"""
 
-    role: OrganizationRole
+    role: Literal["org_admin", "org_member", "org_viewer"]
     """Role in the organization"""
 
     source: str
@@ -50,12 +48,28 @@ class Item(BaseModel):
     """
 
 
+class PageInfo(BaseModel):
+    """Pagination information using cursor-based pagination"""
+
+    has_next_page: bool
+    """Whether there are more items after the current page"""
+
+    has_prev_page: bool
+    """Whether there are more items before the current page"""
+
+    end_cursor: Optional[str] = None
+    """Cursor pointing to the last item in the current page"""
+
+    start_cursor: Optional[str] = None
+    """Cursor pointing to the first item in the current page"""
+
+
 class OrganizationListIdentitiesResponse(BaseModel):
     """List of identities (users and invitations) in an organization"""
 
     items: List[Item]
 
-    page_info: PageInfoCursor
+    page_info: PageInfo
     """Pagination information using cursor-based pagination"""
 
     permissions: Optional[Dict[str, Dict[str, bool]]] = None

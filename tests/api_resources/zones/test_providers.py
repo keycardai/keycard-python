@@ -40,11 +40,12 @@ class TestProviders:
             client_id="client_id",
             client_secret="client_secret",
             description="description",
-            domains=["string"],
-            metadata={"internal_claims": {"foo": "bar"}},
+            metadata={},
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
+                    "authorization_resource_enabled": True,
+                    "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
@@ -166,13 +167,14 @@ class TestProviders:
             client_id="client_id",
             client_secret="client_secret",
             description="description",
-            domains=["string"],
             identifier="x",
-            metadata={"internal_claims": {"foo": "bar"}},
+            metadata={},
             name="x",
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
+                    "authorization_resource_enabled": True,
+                    "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
@@ -360,11 +362,12 @@ class TestAsyncProviders:
             client_id="client_id",
             client_secret="client_secret",
             description="description",
-            domains=["string"],
-            metadata={"internal_claims": {"foo": "bar"}},
+            metadata={},
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
+                    "authorization_resource_enabled": True,
+                    "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
@@ -486,13 +489,14 @@ class TestAsyncProviders:
             client_id="client_id",
             client_secret="client_secret",
             description="description",
-            domains=["string"],
             identifier="x",
-            metadata={"internal_claims": {"foo": "bar"}},
+            metadata={},
             name="x",
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
+                    "authorization_resource_enabled": True,
+                    "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",

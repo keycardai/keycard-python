@@ -31,7 +31,6 @@ class TestInvitations:
         invitation = client.invitations.retrieve(
             token="token",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(InvitationRetrieveResponse, invitation, path=["response"])
 
@@ -83,7 +82,6 @@ class TestInvitations:
         invitation = client.invitations.accept(
             token="token",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(InvitationAcceptResponse, invitation, path=["response"])
 
@@ -141,7 +139,6 @@ class TestAsyncInvitations:
         invitation = await async_client.invitations.retrieve(
             token="token",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(InvitationRetrieveResponse, invitation, path=["response"])
 
@@ -193,7 +190,6 @@ class TestAsyncInvitations:
         invitation = await async_client.invitations.accept(
             token="token",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(InvitationAcceptResponse, invitation, path=["response"])
 

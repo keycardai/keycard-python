@@ -20,5 +20,3 @@ class ServiceAccountTokenCreateParams(TypedDict, total=False):
     """OAuth 2.0 grant type (must be "client_credentials")"""
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]
-
-    x_request_id: Annotated[str, PropertyInfo(alias="X-Request-ID")]

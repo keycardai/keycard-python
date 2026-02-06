@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from typing_extensions import Required, TypedDict
 
 from ..._types import SequenceNotStr
 
-__all__ = ["ProviderCreateParams", "Metadata", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
+__all__ = ["ProviderCreateParams", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
 
 
 class ProviderCreateParams(TypedDict, total=False):
@@ -26,30 +26,26 @@ class ProviderCreateParams(TypedDict, total=False):
     description: Optional[str]
     """Human-readable description"""
 
-    domains: SequenceNotStr[str]
-    """Domains for identifier-first login flow.
-
-    Must be globally unique across all providers.
-    """
-
-    metadata: Metadata
+    metadata: object
     """Provider metadata"""
 
     protocols: Protocols
     """Protocol-specific configuration for provider creation"""
 
 
-class Metadata(TypedDict, total=False):
-    """Provider metadata"""
-
-    internal_claims: Dict[str, object]
-    """Additional claims to inject when provider is used for zone login"""
-
-
 class ProtocolsOauth2(TypedDict, total=False):
     """OAuth 2.0 protocol configuration for provider creation"""
 
     authorization_endpoint: str
+
+    authorization_resource_enabled: bool
+    """Whether to include the resource parameter in authorization requests."""
+
+    authorization_resource_parameter: str
+    """The resource parameter value to include in authorization requests.
+
+    Defaults to "resource" when authorization_resource_enabled is true.
+    """
 
     code_challenge_methods_supported: SequenceNotStr[str]
 

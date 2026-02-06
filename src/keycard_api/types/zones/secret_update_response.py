@@ -1,47 +1,27 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Union, Optional
+from typing import Optional
 from datetime import datetime
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal
 
-from ..._utils import PropertyInfo
 from ..._models import BaseModel
 
-__all__ = ["SecretRetrieveResponse", "Data", "DataVaultAPISecretTokenFields", "DataVaultAPISecretPasswordFields"]
+__all__ = ["SecretUpdateResponse"]
 
 
-class DataVaultAPISecretTokenFields(BaseModel):
-    token: str
-
-    type: Literal["token"]
-
-
-class DataVaultAPISecretPasswordFields(BaseModel):
-    password: str
-
-    type: Literal["password"]
-
-    username: str
-
-
-Data: TypeAlias = Annotated[
-    Union[DataVaultAPISecretTokenFields, DataVaultAPISecretPasswordFields], PropertyInfo(discriminator="type")
-]
-
-
-class SecretRetrieveResponse(BaseModel):
+class SecretUpdateResponse(BaseModel):
     id: str
     """A globally unique opaque identifier"""
 
     created_at: datetime
-
-    data: Data
 
     entity_id: str
     """A globally unique opaque identifier"""
 
     name: str
     """A name for the entity to be displayed in UI"""
+
+    type: Literal["token", "password"]
 
     updated_at: datetime
 

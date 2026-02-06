@@ -6,10 +6,10 @@ from typing_extensions import Literal
 
 from ..._models import BaseModel
 
-__all__ = ["Secret"]
+__all__ = ["SecretCreateResponse"]
 
 
-class Secret(BaseModel):
+class SecretCreateResponse(BaseModel):
     id: str
     """A globally unique opaque identifier"""
 

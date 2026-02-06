@@ -18,7 +18,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.token_response import TokenResponse
+from ..types.service_account_token_create_response import ServiceAccountTokenCreateResponse
 
 __all__ = ["ServiceAccountTokenResource", "AsyncServiceAccountTokenResource"]
 
@@ -50,14 +50,13 @@ class ServiceAccountTokenResource(SyncAPIResource):
         client_secret: str,
         grant_type: Literal["client_credentials"],
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> TokenResponse:
+    ) -> ServiceAccountTokenCreateResponse:
         """
         Exchange service account credentials for organization-scoped M2M token
 
@@ -76,16 +75,7 @@ class ServiceAccountTokenResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._post(
             "/service-account-token",
             body=maybe_transform(
@@ -99,7 +89,7 @@ class ServiceAccountTokenResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=TokenResponse,
+            cast_to=ServiceAccountTokenCreateResponse,
         )
 
 
@@ -130,14 +120,13 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
         client_secret: str,
         grant_type: Literal["client_credentials"],
         x_client_request_id: str | Omit = omit,
-        x_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> TokenResponse:
+    ) -> ServiceAccountTokenCreateResponse:
         """
         Exchange service account credentials for organization-scoped M2M token
 
@@ -156,16 +145,7 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {
-            **strip_not_given(
-                {
-                    "X-Client-Request-ID": x_client_request_id,
-                    "X-Request-ID": x_request_id,
-                }
-            ),
-            **(extra_headers or {}),
-        }
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._post(
             "/service-account-token",
             body=await async_maybe_transform(
@@ -179,7 +159,7 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=TokenResponse,
+            cast_to=ServiceAccountTokenCreateResponse,
         )
 
 

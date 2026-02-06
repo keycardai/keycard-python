@@ -4,10 +4,10 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["TokenResponse"]
+__all__ = ["OrganizationExchangeTokenResponse"]
 
 
-class TokenResponse(BaseModel):
+class OrganizationExchangeTokenResponse(BaseModel):
     """OAuth2-style token response for M2M tokens"""
 
     access_token: str

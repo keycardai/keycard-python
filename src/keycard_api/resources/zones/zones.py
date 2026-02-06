@@ -189,7 +189,6 @@ class ZonesResource(SyncAPIResource):
         self,
         *,
         name: str,
-        cname: str | Omit = omit,
         default_mcp_gateway_application: bool | Omit = omit,
         description: Optional[str] | Omit = omit,
         directory_open_signups_enabled: bool | Omit = omit,
@@ -210,8 +209,6 @@ class ZonesResource(SyncAPIResource):
 
         Args:
           name: Human-readable name
-
-          cname: Custom domain name (CNAME) for the zone
 
           default_mcp_gateway_application: Assign a default MCP Gateway application to the zone
 
@@ -236,13 +233,11 @@ class ZonesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             "/zones",
             body=maybe_transform(
                 {
                     "name": name,
-                    "cname": cname,
                     "default_mcp_gateway_application": default_mcp_gateway_application,
                     "description": description,
                     "directory_open_signups_enabled": directory_open_signups_enabled,
@@ -284,7 +279,6 @@ class ZonesResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}",
             options=make_request_options(
@@ -301,7 +295,6 @@ class ZonesResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
-        cname: Optional[str] | Omit = omit,
         default_mcp_gateway_application_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         directory_open_signups_enabled: bool | Omit = omit,
@@ -321,8 +314,6 @@ class ZonesResource(SyncAPIResource):
         Updates a zone's configuration (partial update)
 
         Args:
-          cname: Custom domain name (CNAME) for the zone (set to null to remove)
-
           default_mcp_gateway_application_id: Application ID configured as the default MCP Gateway for the zone (set to null
               to unset)
 
@@ -354,12 +345,10 @@ class ZonesResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/zones/{zone_id}",
             body=maybe_transform(
                 {
-                    "cname": cname,
                     "default_mcp_gateway_application_id": default_mcp_gateway_application_id,
                     "description": description,
                     "directory_open_signups_enabled": directory_open_signups_enabled,
@@ -402,7 +391,6 @@ class ZonesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             "/zones",
             options=make_request_options(
@@ -448,7 +436,6 @@ class ZonesResource(SyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}",
             options=make_request_options(
@@ -487,7 +474,6 @@ class ZonesResource(SyncAPIResource):
         if not downstream_id:
             raise ValueError(f"Expected a non-empty value for `downstream_id` but received {downstream_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/mcp-servers/{downstream_id}",
             options=make_request_options(
@@ -537,7 +523,6 @@ class ZonesResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/session-resource-access",
             options=make_request_options(
@@ -627,7 +612,6 @@ class AsyncZonesResource(AsyncAPIResource):
         self,
         *,
         name: str,
-        cname: str | Omit = omit,
         default_mcp_gateway_application: bool | Omit = omit,
         description: Optional[str] | Omit = omit,
         directory_open_signups_enabled: bool | Omit = omit,
@@ -648,8 +632,6 @@ class AsyncZonesResource(AsyncAPIResource):
 
         Args:
           name: Human-readable name
-
-          cname: Custom domain name (CNAME) for the zone
 
           default_mcp_gateway_application: Assign a default MCP Gateway application to the zone
 
@@ -674,13 +656,11 @@ class AsyncZonesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             "/zones",
             body=await async_maybe_transform(
                 {
                     "name": name,
-                    "cname": cname,
                     "default_mcp_gateway_application": default_mcp_gateway_application,
                     "description": description,
                     "directory_open_signups_enabled": directory_open_signups_enabled,
@@ -722,7 +702,6 @@ class AsyncZonesResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}",
             options=make_request_options(
@@ -739,7 +718,6 @@ class AsyncZonesResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
-        cname: Optional[str] | Omit = omit,
         default_mcp_gateway_application_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         directory_open_signups_enabled: bool | Omit = omit,
@@ -759,8 +737,6 @@ class AsyncZonesResource(AsyncAPIResource):
         Updates a zone's configuration (partial update)
 
         Args:
-          cname: Custom domain name (CNAME) for the zone (set to null to remove)
-
           default_mcp_gateway_application_id: Application ID configured as the default MCP Gateway for the zone (set to null
               to unset)
 
@@ -792,12 +768,10 @@ class AsyncZonesResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/zones/{zone_id}",
             body=await async_maybe_transform(
                 {
-                    "cname": cname,
                     "default_mcp_gateway_application_id": default_mcp_gateway_application_id,
                     "description": description,
                     "directory_open_signups_enabled": directory_open_signups_enabled,
@@ -840,7 +814,6 @@ class AsyncZonesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             "/zones",
             options=make_request_options(
@@ -886,7 +859,6 @@ class AsyncZonesResource(AsyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}",
             options=make_request_options(
@@ -925,7 +897,6 @@ class AsyncZonesResource(AsyncAPIResource):
         if not downstream_id:
             raise ValueError(f"Expected a non-empty value for `downstream_id` but received {downstream_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/mcp-servers/{downstream_id}",
             options=make_request_options(
@@ -975,7 +946,6 @@ class AsyncZonesResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/session-resource-access",
             options=make_request_options(

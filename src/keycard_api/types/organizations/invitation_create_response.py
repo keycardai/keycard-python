@@ -2,15 +2,14 @@
 
 from typing import Dict, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from ..._models import BaseModel
-from .invitation_status import InvitationStatus
-from .organization_role import OrganizationRole
 
-__all__ = ["Invitation"]
+__all__ = ["InvitationCreateResponse"]
 
 
-class Invitation(BaseModel):
+class InvitationCreateResponse(BaseModel):
     id: str
     """Identifier for API resources. A 26-char nanoid (URL/DNS safe)."""
 
@@ -29,10 +28,10 @@ class Invitation(BaseModel):
     organization_id: str
     """Identifier for API resources. A 26-char nanoid (URL/DNS safe)."""
 
-    role: OrganizationRole
+    role: Literal["org_admin", "org_member", "org_viewer"]
     """Role that will be assigned when invitation is accepted"""
 
-    status: InvitationStatus
+    status: Literal["pending", "accepted", "expired", "revoked"]
     """Status of an invitation"""
 
     updated_at: datetime

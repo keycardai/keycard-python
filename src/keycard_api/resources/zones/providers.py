@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -54,8 +54,7 @@ class ProvidersResource(SyncAPIResource):
         client_id: str | Omit = omit,
         client_secret: str | Omit = omit,
         description: Optional[str] | Omit = omit,
-        domains: SequenceNotStr[str] | Omit = omit,
-        metadata: provider_create_params.Metadata | Omit = omit,
+        metadata: object | Omit = omit,
         protocols: provider_create_params.Protocols | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -79,9 +78,6 @@ class ProvidersResource(SyncAPIResource):
 
           description: Human-readable description
 
-          domains: Domains for identifier-first login flow. Must be globally unique across all
-              providers.
-
           metadata: Provider metadata
 
           protocols: Protocol-specific configuration for provider creation
@@ -96,7 +92,6 @@ class ProvidersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/zones/{zone_id}/providers",
             body=maybe_transform(
@@ -106,7 +101,6 @@ class ProvidersResource(SyncAPIResource):
                     "client_id": client_id,
                     "client_secret": client_secret,
                     "description": description,
-                    "domains": domains,
                     "metadata": metadata,
                     "protocols": protocols,
                 },
@@ -146,7 +140,6 @@ class ProvidersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
@@ -163,9 +156,8 @@ class ProvidersResource(SyncAPIResource):
         client_id: Optional[str] | Omit = omit,
         client_secret: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
-        domains: Optional[SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
-        metadata: Optional[provider_update_params.Metadata] | Omit = omit,
+        metadata: Optional[object] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[provider_update_params.Protocols] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -185,9 +177,6 @@ class ProvidersResource(SyncAPIResource):
               remove.
 
           description: Human-readable description
-
-          domains: Domains for identifier-first login flow. Must be globally unique across all
-              providers. Set to null to remove all domains.
 
           identifier: User specified identifier, unique within the zone
 
@@ -209,7 +198,6 @@ class ProvidersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/zones/{zone_id}/providers/{id}",
             body=maybe_transform(
@@ -217,7 +205,6 @@ class ProvidersResource(SyncAPIResource):
                     "client_id": client_id,
                     "client_secret": client_secret,
                     "description": description,
-                    "domains": domains,
                     "identifier": identifier,
                     "metadata": metadata,
                     "name": name,
@@ -261,7 +248,6 @@ class ProvidersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/providers",
             options=make_request_options(
@@ -312,7 +298,6 @@ class ProvidersResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
@@ -351,8 +336,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         client_id: str | Omit = omit,
         client_secret: str | Omit = omit,
         description: Optional[str] | Omit = omit,
-        domains: SequenceNotStr[str] | Omit = omit,
-        metadata: provider_create_params.Metadata | Omit = omit,
+        metadata: object | Omit = omit,
         protocols: provider_create_params.Protocols | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -376,9 +360,6 @@ class AsyncProvidersResource(AsyncAPIResource):
 
           description: Human-readable description
 
-          domains: Domains for identifier-first login flow. Must be globally unique across all
-              providers.
-
           metadata: Provider metadata
 
           protocols: Protocol-specific configuration for provider creation
@@ -393,7 +374,6 @@ class AsyncProvidersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/zones/{zone_id}/providers",
             body=await async_maybe_transform(
@@ -403,7 +383,6 @@ class AsyncProvidersResource(AsyncAPIResource):
                     "client_id": client_id,
                     "client_secret": client_secret,
                     "description": description,
-                    "domains": domains,
                     "metadata": metadata,
                     "protocols": protocols,
                 },
@@ -443,7 +422,6 @@ class AsyncProvidersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
@@ -460,9 +438,8 @@ class AsyncProvidersResource(AsyncAPIResource):
         client_id: Optional[str] | Omit = omit,
         client_secret: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
-        domains: Optional[SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
-        metadata: Optional[provider_update_params.Metadata] | Omit = omit,
+        metadata: Optional[object] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[provider_update_params.Protocols] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -482,9 +459,6 @@ class AsyncProvidersResource(AsyncAPIResource):
               remove.
 
           description: Human-readable description
-
-          domains: Domains for identifier-first login flow. Must be globally unique across all
-              providers. Set to null to remove all domains.
 
           identifier: User specified identifier, unique within the zone
 
@@ -506,7 +480,6 @@ class AsyncProvidersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/zones/{zone_id}/providers/{id}",
             body=await async_maybe_transform(
@@ -514,7 +487,6 @@ class AsyncProvidersResource(AsyncAPIResource):
                     "client_id": client_id,
                     "client_secret": client_secret,
                     "description": description,
-                    "domains": domains,
                     "identifier": identifier,
                     "metadata": metadata,
                     "name": name,
@@ -558,7 +530,6 @@ class AsyncProvidersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/providers",
             options=make_request_options(
@@ -609,7 +580,6 @@ class AsyncProvidersResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(

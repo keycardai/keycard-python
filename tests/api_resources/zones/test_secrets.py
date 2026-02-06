@@ -10,8 +10,9 @@ import pytest
 from keycard_api import KeycardAPI, AsyncKeycardAPI
 from tests.utils import assert_matches_type
 from keycard_api.types.zones import (
-    Secret,
     SecretListResponse,
+    SecretCreateResponse,
+    SecretUpdateResponse,
     SecretRetrieveResponse,
 )
 
@@ -33,7 +34,7 @@ class TestSecrets:
             entity_id="x",
             name="name",
         )
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretCreateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -49,9 +50,8 @@ class TestSecrets:
             description="description",
             metadata={},
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretCreateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -69,7 +69,7 @@ class TestSecrets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         secret = response.parse()
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretCreateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -87,7 +87,7 @@ class TestSecrets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             secret = response.parse()
-            assert_matches_type(Secret, secret, path=["response"])
+            assert_matches_type(SecretCreateResponse, secret, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -121,7 +121,6 @@ class TestSecrets:
             id="id",
             zone_id="x",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(SecretRetrieveResponse, secret, path=["response"])
 
@@ -175,7 +174,7 @@ class TestSecrets:
             id="id",
             zone_id="x",
         )
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -191,9 +190,8 @@ class TestSecrets:
             metadata={},
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -206,7 +204,7 @@ class TestSecrets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         secret = response.parse()
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -219,7 +217,7 @@ class TestSecrets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             secret = response.parse()
-            assert_matches_type(Secret, secret, path=["response"])
+            assert_matches_type(SecretUpdateResponse, secret, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -254,7 +252,6 @@ class TestSecrets:
             entity_id="entity_id",
             type="token",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(SecretListResponse, secret, path=["response"])
 
@@ -308,7 +305,6 @@ class TestSecrets:
             id="id",
             zone_id="x",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert secret is None
 
@@ -373,7 +369,7 @@ class TestAsyncSecrets:
             entity_id="x",
             name="name",
         )
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretCreateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -389,9 +385,8 @@ class TestAsyncSecrets:
             description="description",
             metadata={},
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretCreateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -409,7 +404,7 @@ class TestAsyncSecrets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         secret = await response.parse()
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretCreateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -427,7 +422,7 @@ class TestAsyncSecrets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             secret = await response.parse()
-            assert_matches_type(Secret, secret, path=["response"])
+            assert_matches_type(SecretCreateResponse, secret, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -461,7 +456,6 @@ class TestAsyncSecrets:
             id="id",
             zone_id="x",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(SecretRetrieveResponse, secret, path=["response"])
 
@@ -515,7 +509,7 @@ class TestAsyncSecrets:
             id="id",
             zone_id="x",
         )
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -531,9 +525,8 @@ class TestAsyncSecrets:
             metadata={},
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -546,7 +539,7 @@ class TestAsyncSecrets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         secret = await response.parse()
-        assert_matches_type(Secret, secret, path=["response"])
+        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -559,7 +552,7 @@ class TestAsyncSecrets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             secret = await response.parse()
-            assert_matches_type(Secret, secret, path=["response"])
+            assert_matches_type(SecretUpdateResponse, secret, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -594,7 +587,6 @@ class TestAsyncSecrets:
             entity_id="entity_id",
             type="token",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(SecretListResponse, secret, path=["response"])
 
@@ -648,7 +640,6 @@ class TestAsyncSecrets:
             id="id",
             zone_id="x",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            x_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert secret is None
 

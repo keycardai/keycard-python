@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from typing_extensions import Required, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
 
-__all__ = ["ProviderUpdateParams", "Metadata", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
+__all__ = ["ProviderUpdateParams", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
 
 
 class ProviderUpdateParams(TypedDict, total=False):
@@ -26,16 +26,10 @@ class ProviderUpdateParams(TypedDict, total=False):
     description: Optional[str]
     """Human-readable description"""
 
-    domains: Optional[SequenceNotStr[str]]
-    """Domains for identifier-first login flow.
-
-    Must be globally unique across all providers. Set to null to remove all domains.
-    """
-
     identifier: str
     """User specified identifier, unique within the zone"""
 
-    metadata: Optional[Metadata]
+    metadata: Optional[object]
     """Provider metadata. Set to null to remove all metadata."""
 
     name: str
@@ -45,20 +39,23 @@ class ProviderUpdateParams(TypedDict, total=False):
     """Protocol-specific configuration. Set to null to remove all protocols."""
 
 
-class Metadata(TypedDict, total=False):
-    """Provider metadata. Set to null to remove all metadata."""
-
-    internal_claims: Optional[Dict[str, object]]
-    """Additional claims to inject when provider is used for zone login.
-
-    Set to null to remove.
-    """
-
-
 class ProtocolsOauth2(TypedDict, total=False):
     """OAuth 2.0 protocol configuration. Set to null to remove all OAuth2 config."""
 
     authorization_endpoint: Optional[str]
+
+    authorization_resource_enabled: Optional[bool]
+    """Whether to include the resource parameter in authorization requests.
+
+    Set to null to unset.
+    """
+
+    authorization_resource_parameter: Optional[str]
+    """The resource parameter value to include in authorization requests.
+
+    Defaults to "resource" when authorization_resource_enabled is true. Set to null
+    to unset.
+    """
 
     code_challenge_methods_supported: Optional[SequenceNotStr[str]]
 
