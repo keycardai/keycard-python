@@ -33,6 +33,12 @@ class Grant(BaseModel):
     provider_id: str
     """ID of the provider that issued this grant"""
 
+    refresh_token_set: bool
+    """Indicates whether a refresh token is stored for this grant.
+
+    Grants with refresh tokens can be refreshed even after access token expiration.
+    """
+
     resource_id: str
     """ID of resource receiving grant"""
 
@@ -57,6 +63,12 @@ class Grant(BaseModel):
     """
     A Provider is a system that supplies access to Resources and allows actors
     (Users or Applications) to authenticate.
+    """
+
+    refreshed_at: Optional[datetime] = None
+    """Timestamp when this grant's tokens were last refreshed.
+
+    Omitted if grant was never refreshed.
     """
 
     resource: Optional[Resource] = None

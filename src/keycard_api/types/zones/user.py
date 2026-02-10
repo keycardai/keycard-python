@@ -20,6 +20,9 @@ class User(BaseModel):
     email: str
     """Email address of the user"""
 
+    email_verified: bool
+    """Whether the email address has been verified"""
+
     issuer: str
     """Issuer identifier of the identity provider"""
 
