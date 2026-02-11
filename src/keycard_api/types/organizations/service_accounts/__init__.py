@@ -8,5 +8,4 @@ from .credential_list_response import CredentialListResponse as CredentialListRe
 from .credential_update_params import CredentialUpdateParams as CredentialUpdateParams
 from .credential_create_response import CredentialCreateResponse as CredentialCreateResponse
 from .credential_retrieve_params import CredentialRetrieveParams as CredentialRetrieveParams
-from .credential_update_response import CredentialUpdateResponse as CredentialUpdateResponse
-from .credential_retrieve_response import CredentialRetrieveResponse as CredentialRetrieveResponse
+from .service_account_credential import ServiceAccountCredential as ServiceAccountCredential

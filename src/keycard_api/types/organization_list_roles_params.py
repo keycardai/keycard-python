@@ -6,6 +6,7 @@ from typing import List
 from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
+from .role_scope import RoleScope
 
 __all__ = ["OrganizationListRolesParams"]
 
@@ -18,7 +19,7 @@ class OrganizationListRolesParams(TypedDict, total=False):
     caller's permissions for the resource.
     """
 
-    scope: Literal["organization", "zone"]
+    scope: RoleScope
     """Filter roles by scope (organization or zone level)"""
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]

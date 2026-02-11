@@ -73,6 +73,7 @@ class DependenciesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         if not dependency_id:
             raise ValueError(f"Expected a non-empty value for `dependency_id` but received {dependency_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
@@ -112,6 +113,7 @@ class DependenciesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/applications/{id}/dependencies",
             options=make_request_options(
@@ -164,6 +166,7 @@ class DependenciesResource(SyncAPIResource):
         if not dependency_id:
             raise ValueError(f"Expected a non-empty value for `dependency_id` but received {dependency_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return self._put(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
@@ -208,6 +211,7 @@ class DependenciesResource(SyncAPIResource):
         if not dependency_id:
             raise ValueError(f"Expected a non-empty value for `dependency_id` but received {dependency_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
@@ -268,6 +272,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         if not dependency_id:
             raise ValueError(f"Expected a non-empty value for `dependency_id` but received {dependency_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
@@ -307,6 +312,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/applications/{id}/dependencies",
             options=make_request_options(
@@ -359,6 +365,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
         if not dependency_id:
             raise ValueError(f"Expected a non-empty value for `dependency_id` but received {dependency_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return await self._put(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
@@ -405,6 +412,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
         if not dependency_id:
             raise ValueError(f"Expected a non-empty value for `dependency_id` but received {dependency_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(

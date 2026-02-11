@@ -3,26 +3,29 @@
 from typing import Dict, Optional
 from datetime import datetime
 
-from ..._models import BaseModel
+from .._models import BaseModel
 
-__all__ = ["ServiceAccountUpdateResponse"]
+__all__ = ["Organization"]
 
 
-class ServiceAccountUpdateResponse(BaseModel):
+class Organization(BaseModel):
     id: str
     """Identifier for API resources. A 26-char nanoid (URL/DNS safe)."""
 
     created_at: datetime
     """The time the entity was created in utc"""
 
+    label: str
+    """A domain name segment for the entity, often derived from the name."""
+
     name: str
     """A name for the entity to be displayed in UI"""
 
+    sso_enabled: bool
+    """Whether SSO is enabled for this organization"""
+
     updated_at: datetime
     """The time the entity was mostly recently updated in utc"""
-
-    description: Optional[str] = None
-    """Optional description of the service account"""
 
     permissions: Optional[Dict[str, Dict[str, bool]]] = None
     """

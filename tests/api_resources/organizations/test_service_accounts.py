@@ -10,10 +10,8 @@ import pytest
 from keycard_api import KeycardAPI, AsyncKeycardAPI
 from tests.utils import assert_matches_type
 from keycard_api.types.organizations import (
+    ServiceAccount,
     ServiceAccountListResponse,
-    ServiceAccountCreateResponse,
-    ServiceAccountUpdateResponse,
-    ServiceAccountRetrieveResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -29,7 +27,7 @@ class TestServiceAccounts:
             organization_id="x",
             name="name",
         )
-        assert_matches_type(ServiceAccountCreateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -40,7 +38,7 @@ class TestServiceAccounts:
             description="description",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ServiceAccountCreateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -53,7 +51,7 @@ class TestServiceAccounts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         service_account = response.parse()
-        assert_matches_type(ServiceAccountCreateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -66,7 +64,7 @@ class TestServiceAccounts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             service_account = response.parse()
-            assert_matches_type(ServiceAccountCreateResponse, service_account, path=["response"])
+            assert_matches_type(ServiceAccount, service_account, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -86,7 +84,7 @@ class TestServiceAccounts:
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
             organization_id="x",
         )
-        assert_matches_type(ServiceAccountRetrieveResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -97,7 +95,7 @@ class TestServiceAccounts:
             expand=["permissions"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ServiceAccountRetrieveResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -110,7 +108,7 @@ class TestServiceAccounts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         service_account = response.parse()
-        assert_matches_type(ServiceAccountRetrieveResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -123,7 +121,7 @@ class TestServiceAccounts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             service_account = response.parse()
-            assert_matches_type(ServiceAccountRetrieveResponse, service_account, path=["response"])
+            assert_matches_type(ServiceAccount, service_account, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -149,7 +147,7 @@ class TestServiceAccounts:
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
             organization_id="x",
         )
-        assert_matches_type(ServiceAccountUpdateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -161,7 +159,7 @@ class TestServiceAccounts:
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ServiceAccountUpdateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -174,7 +172,7 @@ class TestServiceAccounts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         service_account = response.parse()
-        assert_matches_type(ServiceAccountUpdateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -187,7 +185,7 @@ class TestServiceAccounts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             service_account = response.parse()
-            assert_matches_type(ServiceAccountUpdateResponse, service_account, path=["response"])
+            assert_matches_type(ServiceAccount, service_account, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -336,7 +334,7 @@ class TestAsyncServiceAccounts:
             organization_id="x",
             name="name",
         )
-        assert_matches_type(ServiceAccountCreateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -347,7 +345,7 @@ class TestAsyncServiceAccounts:
             description="description",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ServiceAccountCreateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -360,7 +358,7 @@ class TestAsyncServiceAccounts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         service_account = await response.parse()
-        assert_matches_type(ServiceAccountCreateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -373,7 +371,7 @@ class TestAsyncServiceAccounts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             service_account = await response.parse()
-            assert_matches_type(ServiceAccountCreateResponse, service_account, path=["response"])
+            assert_matches_type(ServiceAccount, service_account, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -393,7 +391,7 @@ class TestAsyncServiceAccounts:
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
             organization_id="x",
         )
-        assert_matches_type(ServiceAccountRetrieveResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -404,7 +402,7 @@ class TestAsyncServiceAccounts:
             expand=["permissions"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ServiceAccountRetrieveResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -417,7 +415,7 @@ class TestAsyncServiceAccounts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         service_account = await response.parse()
-        assert_matches_type(ServiceAccountRetrieveResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -430,7 +428,7 @@ class TestAsyncServiceAccounts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             service_account = await response.parse()
-            assert_matches_type(ServiceAccountRetrieveResponse, service_account, path=["response"])
+            assert_matches_type(ServiceAccount, service_account, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -456,7 +454,7 @@ class TestAsyncServiceAccounts:
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
             organization_id="x",
         )
-        assert_matches_type(ServiceAccountUpdateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -468,7 +466,7 @@ class TestAsyncServiceAccounts:
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ServiceAccountUpdateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -481,7 +479,7 @@ class TestAsyncServiceAccounts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         service_account = await response.parse()
-        assert_matches_type(ServiceAccountUpdateResponse, service_account, path=["response"])
+        assert_matches_type(ServiceAccount, service_account, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -494,7 +492,7 @@ class TestAsyncServiceAccounts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             service_account = await response.parse()
-            assert_matches_type(ServiceAccountUpdateResponse, service_account, path=["response"])
+            assert_matches_type(ServiceAccount, service_account, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

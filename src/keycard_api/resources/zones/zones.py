@@ -233,6 +233,7 @@ class ZonesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             "/zones",
             body=maybe_transform(
@@ -279,6 +280,7 @@ class ZonesResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}",
             options=make_request_options(
@@ -345,6 +347,7 @@ class ZonesResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/zones/{zone_id}",
             body=maybe_transform(
@@ -391,6 +394,7 @@ class ZonesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             "/zones",
             options=make_request_options(
@@ -436,6 +440,7 @@ class ZonesResource(SyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}",
             options=make_request_options(
@@ -474,6 +479,7 @@ class ZonesResource(SyncAPIResource):
         if not downstream_id:
             raise ValueError(f"Expected a non-empty value for `downstream_id` but received {downstream_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/mcp-servers/{downstream_id}",
             options=make_request_options(
@@ -523,6 +529,7 @@ class ZonesResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/session-resource-access",
             options=make_request_options(
@@ -656,6 +663,7 @@ class AsyncZonesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             "/zones",
             body=await async_maybe_transform(
@@ -702,6 +710,7 @@ class AsyncZonesResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}",
             options=make_request_options(
@@ -768,6 +777,7 @@ class AsyncZonesResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/zones/{zone_id}",
             body=await async_maybe_transform(
@@ -814,6 +824,7 @@ class AsyncZonesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             "/zones",
             options=make_request_options(
@@ -859,6 +870,7 @@ class AsyncZonesResource(AsyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}",
             options=make_request_options(
@@ -897,6 +909,7 @@ class AsyncZonesResource(AsyncAPIResource):
         if not downstream_id:
             raise ValueError(f"Expected a non-empty value for `downstream_id` but received {downstream_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/mcp-servers/{downstream_id}",
             options=make_request_options(
@@ -946,6 +959,7 @@ class AsyncZonesResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/session-resource-access",
             options=make_request_options(

@@ -3,14 +3,19 @@
 from typing import Dict, Optional
 from datetime import datetime
 
-from ..._models import BaseModel
+from ...._models import BaseModel
 
-__all__ = ["ServiceAccountRetrieveResponse"]
+__all__ = ["ServiceAccountCredential"]
 
 
-class ServiceAccountRetrieveResponse(BaseModel):
+class ServiceAccountCredential(BaseModel):
+    """Service account credential (without secret)"""
+
     id: str
     """Identifier for API resources. A 26-char nanoid (URL/DNS safe)."""
+
+    client_id: str
+    """The client ID for authentication"""
 
     created_at: datetime
     """The time the entity was created in utc"""
@@ -18,11 +23,11 @@ class ServiceAccountRetrieveResponse(BaseModel):
     name: str
     """A name for the entity to be displayed in UI"""
 
-    updated_at: datetime
-    """The time the entity was mostly recently updated in utc"""
-
     description: Optional[str] = None
-    """Optional description of the service account"""
+    """Optional description of the credential"""
+
+    last_used_at: Optional[datetime] = None
+    """When the credential was last used"""
 
     permissions: Optional[Dict[str, Dict[str, bool]]] = None
     """

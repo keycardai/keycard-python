@@ -4,10 +4,10 @@ from .provider import Provider
 from ..._models import BaseModel
 from .applications.resource import Resource
 
-__all__ = ["McpGatewayCreateServerResponse"]
+__all__ = ["McpGatewayCreateMcpServerResponse"]
 
 
-class McpGatewayCreateServerResponse(BaseModel):
+class McpGatewayCreateMcpServerResponse(BaseModel):
     """
     Response containing the created upstream provider, upstream resource, and downstream resource for an MCP server
     """

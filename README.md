@@ -36,6 +36,11 @@ zones = client.zones.list()
 print(zones.items)
 ```
 
+While you can provide a `username` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `KEYCARD_API_USERNAME="My Username"` to your `.env` file
+so that your Username is not stored in source control.
+
 ## Async usage
 
 Simply import `AsyncKeycardAPI` instead of `KeycardAPI` and use `await` with each API call:

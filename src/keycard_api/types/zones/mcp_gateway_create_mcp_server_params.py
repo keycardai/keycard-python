@@ -6,10 +6,10 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
 
-__all__ = ["McpGatewayCreateServerParams", "Downstream", "Upstream", "UpstreamProvider"]
+__all__ = ["McpGatewayCreateMcpServerParams", "Downstream", "Upstream", "UpstreamProvider"]
 
 
-class McpGatewayCreateServerParams(TypedDict, total=False):
+class McpGatewayCreateMcpServerParams(TypedDict, total=False):
     zone_id: Required[Annotated[str, PropertyInfo(alias="zoneId")]]
 
     downstream: Required[Downstream]

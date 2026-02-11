@@ -16,6 +16,7 @@ from .users import (
     AsyncUsersResourceWithStreamingResponse,
 )
 from ...types import (
+    RoleScope,
     organization_list_params,
     organization_create_params,
     organization_update_params,
@@ -50,6 +51,10 @@ from .sso_connection import (
     SSOConnectionResourceWithStreamingResponse,
     AsyncSSOConnectionResourceWithStreamingResponse,
 )
+from ...types.role_scope import RoleScope
+from ...types.organization import Organization
+from ...types.organizations import OrganizationRole
+from ...types.token_response import TokenResponse
 from .service_accounts.service_accounts import (
     ServiceAccountsResource,
     AsyncServiceAccountsResource,
@@ -59,11 +64,8 @@ from .service_accounts.service_accounts import (
     AsyncServiceAccountsResourceWithStreamingResponse,
 )
 from ...types.organization_list_response import OrganizationListResponse
-from ...types.organization_create_response import OrganizationCreateResponse
-from ...types.organization_update_response import OrganizationUpdateResponse
-from ...types.organization_retrieve_response import OrganizationRetrieveResponse
+from ...types.organizations.organization_role import OrganizationRole
 from ...types.organization_list_roles_response import OrganizationListRolesResponse
-from ...types.organization_exchange_token_response import OrganizationExchangeTokenResponse
 from ...types.organization_list_identities_response import OrganizationListIdentitiesResponse
 
 __all__ = ["OrganizationsResource", "AsyncOrganizationsResource"]
@@ -116,7 +118,7 @@ class OrganizationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationCreateResponse:
+    ) -> Organization:
         """
         Args:
           name: Organization name
@@ -130,13 +132,14 @@ class OrganizationsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             "/organizations",
             body=maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrganizationCreateResponse,
+            cast_to=Organization,
         )
 
     def retrieve(
@@ -151,7 +154,7 @@ class OrganizationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationRetrieveResponse:
+    ) -> Organization:
         """
         Get organization by ID or label
 
@@ -172,6 +175,7 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}",
             options=make_request_options(
@@ -181,7 +185,7 @@ class OrganizationsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams),
             ),
-            cast_to=OrganizationRetrieveResponse,
+            cast_to=Organization,
         )
 
     def update(
@@ -196,7 +200,7 @@ class OrganizationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationUpdateResponse:
+    ) -> Organization:
         """
         Update organization details
 
@@ -216,13 +220,14 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/organizations/{organization_id}",
             body=maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrganizationUpdateResponse,
+            cast_to=Organization,
         )
 
     def list(
@@ -262,6 +267,7 @@ class OrganizationsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             "/organizations",
             options=make_request_options(
@@ -293,7 +299,7 @@ class OrganizationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationExchangeTokenResponse:
+    ) -> TokenResponse:
         """
         Exchange user token for organization-scoped M2M token
 
@@ -311,12 +317,13 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrganizationExchangeTokenResponse,
+            cast_to=TokenResponse,
         )
 
     def list_identities(
@@ -327,7 +334,7 @@ class OrganizationsResource(SyncAPIResource):
         before: str | Omit = omit,
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
-        role: Literal["org_admin", "org_member", "org_viewer"] | Omit = omit,
+        role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -364,6 +371,7 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/identities",
             options=make_request_options(
@@ -390,7 +398,7 @@ class OrganizationsResource(SyncAPIResource):
         organization_id: str,
         *,
         expand: List[Literal["permissions"]] | Omit = omit,
-        scope: Literal["organization", "zone"] | Omit = omit,
+        scope: RoleScope | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -430,6 +438,7 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/roles",
             options=make_request_options(
@@ -496,7 +505,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationCreateResponse:
+    ) -> Organization:
         """
         Args:
           name: Organization name
@@ -510,13 +519,14 @@ class AsyncOrganizationsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             "/organizations",
             body=await async_maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrganizationCreateResponse,
+            cast_to=Organization,
         )
 
     async def retrieve(
@@ -531,7 +541,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationRetrieveResponse:
+    ) -> Organization:
         """
         Get organization by ID or label
 
@@ -552,6 +562,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}",
             options=make_request_options(
@@ -563,7 +574,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     {"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams
                 ),
             ),
-            cast_to=OrganizationRetrieveResponse,
+            cast_to=Organization,
         )
 
     async def update(
@@ -578,7 +589,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationUpdateResponse:
+    ) -> Organization:
         """
         Update organization details
 
@@ -598,13 +609,14 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/organizations/{organization_id}",
             body=await async_maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrganizationUpdateResponse,
+            cast_to=Organization,
         )
 
     async def list(
@@ -644,6 +656,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             "/organizations",
             options=make_request_options(
@@ -675,7 +688,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationExchangeTokenResponse:
+    ) -> TokenResponse:
         """
         Exchange user token for organization-scoped M2M token
 
@@ -693,12 +706,13 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrganizationExchangeTokenResponse,
+            cast_to=TokenResponse,
         )
 
     async def list_identities(
@@ -709,7 +723,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         before: str | Omit = omit,
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
-        role: Literal["org_admin", "org_member", "org_viewer"] | Omit = omit,
+        role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -746,6 +760,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/identities",
             options=make_request_options(
@@ -772,7 +787,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         organization_id: str,
         *,
         expand: List[Literal["permissions"]] | Omit = omit,
-        scope: Literal["organization", "zone"] | Omit = omit,
+        scope: RoleScope | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -812,6 +827,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/roles",
             options=make_request_options(

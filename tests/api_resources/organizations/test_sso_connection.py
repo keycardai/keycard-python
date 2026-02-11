@@ -10,9 +10,7 @@ import pytest
 from keycard_api import KeycardAPI, AsyncKeycardAPI
 from tests.utils import assert_matches_type
 from keycard_api.types.organizations import (
-    SSOConnectionEnableResponse,
-    SSOConnectionUpdateResponse,
-    SSOConnectionRetrieveResponse,
+    SSOConnection,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -27,7 +25,7 @@ class TestSSOConnection:
         sso_connection = client.organizations.sso_connection.retrieve(
             organization_id="x",
         )
-        assert_matches_type(SSOConnectionRetrieveResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -37,7 +35,7 @@ class TestSSOConnection:
             expand=["permissions"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SSOConnectionRetrieveResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -49,7 +47,7 @@ class TestSSOConnection:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         sso_connection = response.parse()
-        assert_matches_type(SSOConnectionRetrieveResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -61,7 +59,7 @@ class TestSSOConnection:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             sso_connection = response.parse()
-            assert_matches_type(SSOConnectionRetrieveResponse, sso_connection, path=["response"])
+            assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -79,7 +77,7 @@ class TestSSOConnection:
         sso_connection = client.organizations.sso_connection.update(
             organization_id="x",
         )
-        assert_matches_type(SSOConnectionUpdateResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -102,7 +100,7 @@ class TestSSOConnection:
             },
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SSOConnectionUpdateResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -114,7 +112,7 @@ class TestSSOConnection:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         sso_connection = response.parse()
-        assert_matches_type(SSOConnectionUpdateResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -126,7 +124,7 @@ class TestSSOConnection:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             sso_connection = response.parse()
-            assert_matches_type(SSOConnectionUpdateResponse, sso_connection, path=["response"])
+            assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -197,7 +195,7 @@ class TestSSOConnection:
             client_id="client_id",
             identifier="x",
         )
-        assert_matches_type(SSOConnectionEnableResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -220,7 +218,7 @@ class TestSSOConnection:
             },
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SSOConnectionEnableResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -234,7 +232,7 @@ class TestSSOConnection:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         sso_connection = response.parse()
-        assert_matches_type(SSOConnectionEnableResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -248,7 +246,7 @@ class TestSSOConnection:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             sso_connection = response.parse()
-            assert_matches_type(SSOConnectionEnableResponse, sso_connection, path=["response"])
+            assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -274,7 +272,7 @@ class TestAsyncSSOConnection:
         sso_connection = await async_client.organizations.sso_connection.retrieve(
             organization_id="x",
         )
-        assert_matches_type(SSOConnectionRetrieveResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -284,7 +282,7 @@ class TestAsyncSSOConnection:
             expand=["permissions"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SSOConnectionRetrieveResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -296,7 +294,7 @@ class TestAsyncSSOConnection:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         sso_connection = await response.parse()
-        assert_matches_type(SSOConnectionRetrieveResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -308,7 +306,7 @@ class TestAsyncSSOConnection:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             sso_connection = await response.parse()
-            assert_matches_type(SSOConnectionRetrieveResponse, sso_connection, path=["response"])
+            assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -326,7 +324,7 @@ class TestAsyncSSOConnection:
         sso_connection = await async_client.organizations.sso_connection.update(
             organization_id="x",
         )
-        assert_matches_type(SSOConnectionUpdateResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -349,7 +347,7 @@ class TestAsyncSSOConnection:
             },
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SSOConnectionUpdateResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -361,7 +359,7 @@ class TestAsyncSSOConnection:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         sso_connection = await response.parse()
-        assert_matches_type(SSOConnectionUpdateResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -373,7 +371,7 @@ class TestAsyncSSOConnection:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             sso_connection = await response.parse()
-            assert_matches_type(SSOConnectionUpdateResponse, sso_connection, path=["response"])
+            assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -444,7 +442,7 @@ class TestAsyncSSOConnection:
             client_id="client_id",
             identifier="x",
         )
-        assert_matches_type(SSOConnectionEnableResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -467,7 +465,7 @@ class TestAsyncSSOConnection:
             },
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SSOConnectionEnableResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -481,7 +479,7 @@ class TestAsyncSSOConnection:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         sso_connection = await response.parse()
-        assert_matches_type(SSOConnectionEnableResponse, sso_connection, path=["response"])
+        assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -495,7 +493,7 @@ class TestAsyncSSOConnection:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             sso_connection = await response.parse()
-            assert_matches_type(SSOConnectionEnableResponse, sso_connection, path=["response"])
+            assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

@@ -10,9 +10,8 @@ import pytest
 from keycard_api import KeycardAPI, AsyncKeycardAPI
 from tests.utils import assert_matches_type
 from keycard_api.types.zones import (
+    Secret,
     SecretListResponse,
-    SecretCreateResponse,
-    SecretUpdateResponse,
     SecretRetrieveResponse,
 )
 
@@ -26,7 +25,7 @@ class TestSecrets:
     @parametrize
     def test_method_create(self, client: KeycardAPI) -> None:
         secret = client.zones.secrets.create(
-            zone_id="x",
+            path_zone_id="x",
             data={
                 "token": "token",
                 "type": "token",
@@ -34,13 +33,13 @@ class TestSecrets:
             entity_id="x",
             name="name",
         )
-        assert_matches_type(SecretCreateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: KeycardAPI) -> None:
         secret = client.zones.secrets.create(
-            zone_id="x",
+            path_zone_id="x",
             data={
                 "token": "token",
                 "type": "token",
@@ -49,15 +48,16 @@ class TestSecrets:
             name="name",
             description="description",
             metadata={},
+            body_zone_id="x",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SecretCreateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: KeycardAPI) -> None:
         response = client.zones.secrets.with_raw_response.create(
-            zone_id="x",
+            path_zone_id="x",
             data={
                 "token": "token",
                 "type": "token",
@@ -69,13 +69,13 @@ class TestSecrets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         secret = response.parse()
-        assert_matches_type(SecretCreateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: KeycardAPI) -> None:
         with client.zones.secrets.with_streaming_response.create(
-            zone_id="x",
+            path_zone_id="x",
             data={
                 "token": "token",
                 "type": "token",
@@ -87,16 +87,16 @@ class TestSecrets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             secret = response.parse()
-            assert_matches_type(SecretCreateResponse, secret, path=["response"])
+            assert_matches_type(Secret, secret, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_create(self, client: KeycardAPI) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path_zone_id` but received ''"):
             client.zones.secrets.with_raw_response.create(
-                zone_id="",
+                path_zone_id="",
                 data={
                     "token": "token",
                     "type": "token",
@@ -174,7 +174,7 @@ class TestSecrets:
             id="id",
             zone_id="x",
         )
-        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -191,7 +191,7 @@ class TestSecrets:
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -204,7 +204,7 @@ class TestSecrets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         secret = response.parse()
-        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -217,7 +217,7 @@ class TestSecrets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             secret = response.parse()
-            assert_matches_type(SecretUpdateResponse, secret, path=["response"])
+            assert_matches_type(Secret, secret, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -361,7 +361,7 @@ class TestAsyncSecrets:
     @parametrize
     async def test_method_create(self, async_client: AsyncKeycardAPI) -> None:
         secret = await async_client.zones.secrets.create(
-            zone_id="x",
+            path_zone_id="x",
             data={
                 "token": "token",
                 "type": "token",
@@ -369,13 +369,13 @@ class TestAsyncSecrets:
             entity_id="x",
             name="name",
         )
-        assert_matches_type(SecretCreateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         secret = await async_client.zones.secrets.create(
-            zone_id="x",
+            path_zone_id="x",
             data={
                 "token": "token",
                 "type": "token",
@@ -384,15 +384,16 @@ class TestAsyncSecrets:
             name="name",
             description="description",
             metadata={},
+            body_zone_id="x",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SecretCreateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.zones.secrets.with_raw_response.create(
-            zone_id="x",
+            path_zone_id="x",
             data={
                 "token": "token",
                 "type": "token",
@@ -404,13 +405,13 @@ class TestAsyncSecrets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         secret = await response.parse()
-        assert_matches_type(SecretCreateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.zones.secrets.with_streaming_response.create(
-            zone_id="x",
+            path_zone_id="x",
             data={
                 "token": "token",
                 "type": "token",
@@ -422,16 +423,16 @@ class TestAsyncSecrets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             secret = await response.parse()
-            assert_matches_type(SecretCreateResponse, secret, path=["response"])
+            assert_matches_type(Secret, secret, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_create(self, async_client: AsyncKeycardAPI) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path_zone_id` but received ''"):
             await async_client.zones.secrets.with_raw_response.create(
-                zone_id="",
+                path_zone_id="",
                 data={
                     "token": "token",
                     "type": "token",
@@ -509,7 +510,7 @@ class TestAsyncSecrets:
             id="id",
             zone_id="x",
         )
-        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -526,7 +527,7 @@ class TestAsyncSecrets:
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -539,7 +540,7 @@ class TestAsyncSecrets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         secret = await response.parse()
-        assert_matches_type(SecretUpdateResponse, secret, path=["response"])
+        assert_matches_type(Secret, secret, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -552,7 +553,7 @@ class TestAsyncSecrets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             secret = await response.parse()
-            assert_matches_type(SecretUpdateResponse, secret, path=["response"])
+            assert_matches_type(Secret, secret, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

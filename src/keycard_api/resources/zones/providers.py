@@ -92,6 +92,7 @@ class ProvidersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/zones/{zone_id}/providers",
             body=maybe_transform(
@@ -140,6 +141,7 @@ class ProvidersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
@@ -198,6 +200,7 @@ class ProvidersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/zones/{zone_id}/providers/{id}",
             body=maybe_transform(
@@ -248,6 +251,7 @@ class ProvidersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/providers",
             options=make_request_options(
@@ -298,6 +302,7 @@ class ProvidersResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
@@ -374,6 +379,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/zones/{zone_id}/providers",
             body=await async_maybe_transform(
@@ -422,6 +428,7 @@ class AsyncProvidersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
@@ -480,6 +487,7 @@ class AsyncProvidersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/zones/{zone_id}/providers/{id}",
             body=await async_maybe_transform(
@@ -530,6 +538,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/providers",
             options=make_request_options(
@@ -580,6 +589,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(

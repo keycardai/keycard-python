@@ -2,31 +2,16 @@
 
 from typing import Union, Optional
 from datetime import datetime
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Annotated, TypeAlias
 
 from ..._utils import PropertyInfo
 from ..._models import BaseModel
+from .secret_token_fields import SecretTokenFields
+from .secret_password_fields import SecretPasswordFields
 
-__all__ = ["SecretRetrieveResponse", "Data", "DataVaultAPISecretTokenFields", "DataVaultAPISecretPasswordFields"]
+__all__ = ["SecretRetrieveResponse", "Data"]
 
-
-class DataVaultAPISecretTokenFields(BaseModel):
-    token: str
-
-    type: Literal["token"]
-
-
-class DataVaultAPISecretPasswordFields(BaseModel):
-    password: str
-
-    type: Literal["password"]
-
-    username: str
-
-
-Data: TypeAlias = Annotated[
-    Union[DataVaultAPISecretTokenFields, DataVaultAPISecretPasswordFields], PropertyInfo(discriminator="type")
-]
+Data: TypeAlias = Annotated[Union[SecretTokenFields, SecretPasswordFields], PropertyInfo(discriminator="type")]
 
 
 class SecretRetrieveResponse(BaseModel):

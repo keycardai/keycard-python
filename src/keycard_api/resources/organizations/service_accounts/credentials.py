@@ -26,8 +26,7 @@ from ....types.organizations.service_accounts import (
 )
 from ....types.organizations.service_accounts.credential_list_response import CredentialListResponse
 from ....types.organizations.service_accounts.credential_create_response import CredentialCreateResponse
-from ....types.organizations.service_accounts.credential_update_response import CredentialUpdateResponse
-from ....types.organizations.service_accounts.credential_retrieve_response import CredentialRetrieveResponse
+from ....types.organizations.service_accounts.service_account_credential import ServiceAccountCredential
 
 __all__ = ["CredentialsResource", "AsyncCredentialsResource"]
 
@@ -92,6 +91,7 @@ class CredentialsResource(SyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials",
             body=maybe_transform(
@@ -121,7 +121,7 @@ class CredentialsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CredentialRetrieveResponse:
+    ) -> ServiceAccountCredential:
         """
         Get a specific service account credential
 
@@ -150,6 +150,7 @@ class CredentialsResource(SyncAPIResource):
         if not credential_id:
             raise ValueError(f"Expected a non-empty value for `credential_id` but received {credential_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}",
             options=make_request_options(
@@ -159,7 +160,7 @@ class CredentialsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, credential_retrieve_params.CredentialRetrieveParams),
             ),
-            cast_to=CredentialRetrieveResponse,
+            cast_to=ServiceAccountCredential,
         )
 
     def update(
@@ -177,7 +178,7 @@ class CredentialsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CredentialUpdateResponse:
+    ) -> ServiceAccountCredential:
         """
         Update a service account credential
 
@@ -207,6 +208,7 @@ class CredentialsResource(SyncAPIResource):
         if not credential_id:
             raise ValueError(f"Expected a non-empty value for `credential_id` but received {credential_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}",
             body=maybe_transform(
@@ -219,7 +221,7 @@ class CredentialsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CredentialUpdateResponse,
+            cast_to=ServiceAccountCredential,
         )
 
     def list(
@@ -269,6 +271,7 @@ class CredentialsResource(SyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials",
             options=make_request_options(
@@ -329,6 +332,7 @@ class CredentialsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `credential_id` but received {credential_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}",
             options=make_request_options(
@@ -398,6 +402,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials",
             body=await async_maybe_transform(
@@ -427,7 +432,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CredentialRetrieveResponse:
+    ) -> ServiceAccountCredential:
         """
         Get a specific service account credential
 
@@ -456,6 +461,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         if not credential_id:
             raise ValueError(f"Expected a non-empty value for `credential_id` but received {credential_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}",
             options=make_request_options(
@@ -467,7 +473,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                     {"expand": expand}, credential_retrieve_params.CredentialRetrieveParams
                 ),
             ),
-            cast_to=CredentialRetrieveResponse,
+            cast_to=ServiceAccountCredential,
         )
 
     async def update(
@@ -485,7 +491,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CredentialUpdateResponse:
+    ) -> ServiceAccountCredential:
         """
         Update a service account credential
 
@@ -515,6 +521,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         if not credential_id:
             raise ValueError(f"Expected a non-empty value for `credential_id` but received {credential_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}",
             body=await async_maybe_transform(
@@ -527,7 +534,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CredentialUpdateResponse,
+            cast_to=ServiceAccountCredential,
         )
 
     async def list(
@@ -577,6 +584,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials",
             options=make_request_options(
@@ -637,6 +645,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `credential_id` but received {credential_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}",
             options=make_request_options(

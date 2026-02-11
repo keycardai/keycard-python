@@ -18,10 +18,17 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.organizations import user_list_params, user_update_params, user_retrieve_params
+from ...types.organizations import (
+    OrganizationRole,
+    OrganizationStatus,
+    user_list_params,
+    user_update_params,
+    user_retrieve_params,
+)
+from ...types.organizations.organization_role import OrganizationRole
+from ...types.organizations.organization_user import OrganizationUser
 from ...types.organizations.user_list_response import UserListResponse
-from ...types.organizations.user_update_response import UserUpdateResponse
-from ...types.organizations.user_retrieve_response import UserRetrieveResponse
+from ...types.organizations.organization_status import OrganizationStatus
 
 __all__ = ["UsersResource", "AsyncUsersResource"]
 
@@ -59,7 +66,7 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserRetrieveResponse:
+    ) -> OrganizationUser:
         """
         Get a specific user in an organization
 
@@ -84,6 +91,7 @@ class UsersResource(SyncAPIResource):
         if not user_id:
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/users/{user_id}",
             options=make_request_options(
@@ -93,7 +101,7 @@ class UsersResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, user_retrieve_params.UserRetrieveParams),
             ),
-            cast_to=UserRetrieveResponse,
+            cast_to=OrganizationUser,
         )
 
     def update(
@@ -101,8 +109,8 @@ class UsersResource(SyncAPIResource):
         user_id: str,
         *,
         organization_id: str,
-        role: Literal["org_admin", "org_member", "org_viewer"] | Omit = omit,
-        status: Literal["active", "disabled"] | Omit = omit,
+        role: OrganizationRole | Omit = omit,
+        status: OrganizationStatus | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -110,7 +118,7 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserUpdateResponse:
+    ) -> OrganizationUser:
         """
         Update user status in an organization
 
@@ -136,6 +144,7 @@ class UsersResource(SyncAPIResource):
         if not user_id:
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/organizations/{organization_id}/users/{user_id}",
             body=maybe_transform(
@@ -148,7 +157,7 @@ class UsersResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserUpdateResponse,
+            cast_to=OrganizationUser,
         )
 
     def list(
@@ -159,7 +168,7 @@ class UsersResource(SyncAPIResource):
         before: str | Omit = omit,
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
-        role: Literal["org_admin", "org_member", "org_viewer"] | Omit = omit,
+        role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -196,6 +205,7 @@ class UsersResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/users",
             options=make_request_options(
@@ -252,6 +262,7 @@ class UsersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/organizations/{organization_id}/users/{user_id}",
             options=make_request_options(
@@ -294,7 +305,7 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserRetrieveResponse:
+    ) -> OrganizationUser:
         """
         Get a specific user in an organization
 
@@ -319,6 +330,7 @@ class AsyncUsersResource(AsyncAPIResource):
         if not user_id:
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/users/{user_id}",
             options=make_request_options(
@@ -328,7 +340,7 @@ class AsyncUsersResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform({"expand": expand}, user_retrieve_params.UserRetrieveParams),
             ),
-            cast_to=UserRetrieveResponse,
+            cast_to=OrganizationUser,
         )
 
     async def update(
@@ -336,8 +348,8 @@ class AsyncUsersResource(AsyncAPIResource):
         user_id: str,
         *,
         organization_id: str,
-        role: Literal["org_admin", "org_member", "org_viewer"] | Omit = omit,
-        status: Literal["active", "disabled"] | Omit = omit,
+        role: OrganizationRole | Omit = omit,
+        status: OrganizationStatus | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -345,7 +357,7 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserUpdateResponse:
+    ) -> OrganizationUser:
         """
         Update user status in an organization
 
@@ -371,6 +383,7 @@ class AsyncUsersResource(AsyncAPIResource):
         if not user_id:
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/organizations/{organization_id}/users/{user_id}",
             body=await async_maybe_transform(
@@ -383,7 +396,7 @@ class AsyncUsersResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserUpdateResponse,
+            cast_to=OrganizationUser,
         )
 
     async def list(
@@ -394,7 +407,7 @@ class AsyncUsersResource(AsyncAPIResource):
         before: str | Omit = omit,
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
-        role: Literal["org_admin", "org_member", "org_viewer"] | Omit = omit,
+        role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -431,6 +444,7 @@ class AsyncUsersResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/users",
             options=make_request_options(
@@ -487,6 +501,7 @@ class AsyncUsersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/organizations/{organization_id}/users/{user_id}",
             options=make_request_options(

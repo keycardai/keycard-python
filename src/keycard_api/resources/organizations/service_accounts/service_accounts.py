@@ -32,10 +32,8 @@ from ....types.organizations import (
     service_account_update_params,
     service_account_retrieve_params,
 )
+from ....types.organizations.service_account import ServiceAccount
 from ....types.organizations.service_account_list_response import ServiceAccountListResponse
-from ....types.organizations.service_account_create_response import ServiceAccountCreateResponse
-from ....types.organizations.service_account_update_response import ServiceAccountUpdateResponse
-from ....types.organizations.service_account_retrieve_response import ServiceAccountRetrieveResponse
 
 __all__ = ["ServiceAccountsResource", "AsyncServiceAccountsResource"]
 
@@ -77,7 +75,7 @@ class ServiceAccountsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceAccountCreateResponse:
+    ) -> ServiceAccount:
         """
         Create a new service account for an organization
 
@@ -99,6 +97,7 @@ class ServiceAccountsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/organizations/{organization_id}/service-accounts",
             body=maybe_transform(
@@ -111,7 +110,7 @@ class ServiceAccountsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ServiceAccountCreateResponse,
+            cast_to=ServiceAccount,
         )
 
     def retrieve(
@@ -127,7 +126,7 @@ class ServiceAccountsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceAccountRetrieveResponse:
+    ) -> ServiceAccount:
         """
         Get a specific service account
 
@@ -152,6 +151,7 @@ class ServiceAccountsResource(SyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             options=make_request_options(
@@ -161,7 +161,7 @@ class ServiceAccountsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, service_account_retrieve_params.ServiceAccountRetrieveParams),
             ),
-            cast_to=ServiceAccountRetrieveResponse,
+            cast_to=ServiceAccount,
         )
 
     def update(
@@ -178,7 +178,7 @@ class ServiceAccountsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceAccountUpdateResponse:
+    ) -> ServiceAccount:
         """
         Update a service account
 
@@ -204,6 +204,7 @@ class ServiceAccountsResource(SyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             body=maybe_transform(
@@ -216,7 +217,7 @@ class ServiceAccountsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ServiceAccountUpdateResponse,
+            cast_to=ServiceAccount,
         )
 
     def list(
@@ -261,6 +262,7 @@ class ServiceAccountsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/service-accounts",
             options=make_request_options(
@@ -316,6 +318,7 @@ class ServiceAccountsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             options=make_request_options(
@@ -362,7 +365,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceAccountCreateResponse:
+    ) -> ServiceAccount:
         """
         Create a new service account for an organization
 
@@ -384,6 +387,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/organizations/{organization_id}/service-accounts",
             body=await async_maybe_transform(
@@ -396,7 +400,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ServiceAccountCreateResponse,
+            cast_to=ServiceAccount,
         )
 
     async def retrieve(
@@ -412,7 +416,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceAccountRetrieveResponse:
+    ) -> ServiceAccount:
         """
         Get a specific service account
 
@@ -437,6 +441,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             options=make_request_options(
@@ -448,7 +453,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                     {"expand": expand}, service_account_retrieve_params.ServiceAccountRetrieveParams
                 ),
             ),
-            cast_to=ServiceAccountRetrieveResponse,
+            cast_to=ServiceAccount,
         )
 
     async def update(
@@ -465,7 +470,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceAccountUpdateResponse:
+    ) -> ServiceAccount:
         """
         Update a service account
 
@@ -491,6 +496,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             body=await async_maybe_transform(
@@ -503,7 +509,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ServiceAccountUpdateResponse,
+            cast_to=ServiceAccount,
         )
 
     async def list(
@@ -548,6 +554,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/service-accounts",
             options=make_request_options(
@@ -603,6 +610,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             options=make_request_options(

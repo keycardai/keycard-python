@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 from typing import Union
-from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
+from typing_extensions import Required, Annotated, TypeAlias, TypedDict
 
 from ..._utils import PropertyInfo
+from .secret_token_fields_param import SecretTokenFieldsParam
+from .secret_password_fields_param import SecretPasswordFieldsParam
 
-__all__ = ["SecretUpdateParams", "Data", "DataVaultAPISecretTokenFields", "DataVaultAPISecretPasswordFields"]
+__all__ = ["SecretUpdateParams", "Data"]
 
 
 class SecretUpdateParams(TypedDict, total=False):
@@ -28,18 +30,4 @@ class SecretUpdateParams(TypedDict, total=False):
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]
 
 
-class DataVaultAPISecretTokenFields(TypedDict, total=False):
-    token: Required[str]
-
-    type: Required[Literal["token"]]
-
-
-class DataVaultAPISecretPasswordFields(TypedDict, total=False):
-    password: Required[str]
-
-    type: Required[Literal["password"]]
-
-    username: Required[str]
-
-
-Data: TypeAlias = Union[DataVaultAPISecretTokenFields, DataVaultAPISecretPasswordFields]
+Data: TypeAlias = Union[SecretTokenFieldsParam, SecretPasswordFieldsParam]

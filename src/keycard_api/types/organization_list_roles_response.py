@@ -1,9 +1,9 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Optional
-from typing_extensions import Literal
 
 from .._models import BaseModel
+from .role_scope import RoleScope
 
 __all__ = ["OrganizationListRolesResponse", "Item"]
 
@@ -20,7 +20,7 @@ class Item(BaseModel):
     name: str
     """Internal identifier for the role (e.g., org_admin, zone_manager)"""
 
-    scope: Literal["organization", "zone"]
+    scope: RoleScope
     """The scope at which this role can be assigned (organization or zone)"""
 
 

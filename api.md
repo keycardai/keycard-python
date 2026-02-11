@@ -109,12 +109,12 @@ Methods:
 Types:
 
 ```python
-from keycard_api.types.zones import McpGatewayCreateServerResponse
+from keycard_api.types.zones import McpGatewayCreateMcpServerResponse
 ```
 
 Methods:
 
-- <code title="post /zones/{zoneId}/mcp-gateways/{applicationId}/mcp-servers">client.zones.mcp_gateways.<a href="./src/keycard_api/resources/zones/mcp_gateways.py">create_server</a>(application_id, \*, zone_id, \*\*<a href="src/keycard_api/types/zones/mcp_gateway_create_server_params.py">params</a>) -> <a href="./src/keycard_api/types/zones/mcp_gateway_create_server_response.py">McpGatewayCreateServerResponse</a></code>
+- <code title="post /zones/{zoneId}/mcp-gateways/{applicationId}/mcp-servers">client.zones.mcp_gateways.<a href="./src/keycard_api/resources/zones/mcp_gateways.py">create_mcp_server</a>(application_id, \*, zone_id, \*\*<a href="src/keycard_api/types/zones/mcp_gateway_create_mcp_server_params.py">params</a>) -> <a href="./src/keycard_api/types/zones/mcp_gateway_create_mcp_server_response.py">McpGatewayCreateMcpServerResponse</a></code>
 
 ## Providers
 
@@ -211,18 +211,19 @@ Types:
 
 ```python
 from keycard_api.types.zones import (
-    SecretCreateResponse,
+    Secret,
+    SecretPasswordFields,
+    SecretTokenFields,
     SecretRetrieveResponse,
-    SecretUpdateResponse,
     SecretListResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /zones/{zone_id}/secrets">client.zones.secrets.<a href="./src/keycard_api/resources/zones/secrets.py">create</a>(zone_id, \*\*<a href="src/keycard_api/types/zones/secret_create_params.py">params</a>) -> <a href="./src/keycard_api/types/zones/secret_create_response.py">SecretCreateResponse</a></code>
+- <code title="post /zones/{zone_id}/secrets">client.zones.secrets.<a href="./src/keycard_api/resources/zones/secrets.py">create</a>(path_zone_id, \*\*<a href="src/keycard_api/types/zones/secret_create_params.py">params</a>) -> <a href="./src/keycard_api/types/zones/secret.py">Secret</a></code>
 - <code title="get /zones/{zone_id}/secrets/{id}">client.zones.secrets.<a href="./src/keycard_api/resources/zones/secrets.py">retrieve</a>(id, \*, zone_id) -> <a href="./src/keycard_api/types/zones/secret_retrieve_response.py">SecretRetrieveResponse</a></code>
-- <code title="patch /zones/{zone_id}/secrets/{id}">client.zones.secrets.<a href="./src/keycard_api/resources/zones/secrets.py">update</a>(id, \*, zone_id, \*\*<a href="src/keycard_api/types/zones/secret_update_params.py">params</a>) -> <a href="./src/keycard_api/types/zones/secret_update_response.py">SecretUpdateResponse</a></code>
+- <code title="patch /zones/{zone_id}/secrets/{id}">client.zones.secrets.<a href="./src/keycard_api/resources/zones/secrets.py">update</a>(id, \*, zone_id, \*\*<a href="src/keycard_api/types/zones/secret_update_params.py">params</a>) -> <a href="./src/keycard_api/types/zones/secret.py">Secret</a></code>
 - <code title="get /zones/{zone_id}/secrets">client.zones.secrets.<a href="./src/keycard_api/resources/zones/secrets.py">list</a>(zone_id, \*\*<a href="src/keycard_api/types/zones/secret_list_params.py">params</a>) -> <a href="./src/keycard_api/types/zones/secret_list_response.py">SecretListResponse</a></code>
 - <code title="delete /zones/{zone_id}/secrets/{id}">client.zones.secrets.<a href="./src/keycard_api/resources/zones/secrets.py">delete</a>(id, \*, zone_id) -> None</code>
 
@@ -232,11 +233,11 @@ Types:
 
 ```python
 from keycard_api.types import (
-    OrganizationCreateResponse,
-    OrganizationRetrieveResponse,
-    OrganizationUpdateResponse,
+    Organization,
+    PageInfoCursor,
+    RoleScope,
+    TokenResponse,
     OrganizationListResponse,
-    OrganizationExchangeTokenResponse,
     OrganizationListIdentitiesResponse,
     OrganizationListRolesResponse,
 )
@@ -244,11 +245,11 @@ from keycard_api.types import (
 
 Methods:
 
-- <code title="post /organizations">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">create</a>(\*\*<a href="src/keycard_api/types/organization_create_params.py">params</a>) -> <a href="./src/keycard_api/types/organization_create_response.py">OrganizationCreateResponse</a></code>
-- <code title="get /organizations/{organization_id}">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">retrieve</a>(organization_id, \*\*<a href="src/keycard_api/types/organization_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organization_retrieve_response.py">OrganizationRetrieveResponse</a></code>
-- <code title="patch /organizations/{organization_id}">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">update</a>(organization_id, \*\*<a href="src/keycard_api/types/organization_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organization_update_response.py">OrganizationUpdateResponse</a></code>
+- <code title="post /organizations">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">create</a>(\*\*<a href="src/keycard_api/types/organization_create_params.py">params</a>) -> <a href="./src/keycard_api/types/organization.py">Organization</a></code>
+- <code title="get /organizations/{organization_id}">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">retrieve</a>(organization_id, \*\*<a href="src/keycard_api/types/organization_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organization.py">Organization</a></code>
+- <code title="patch /organizations/{organization_id}">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">update</a>(organization_id, \*\*<a href="src/keycard_api/types/organization_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organization.py">Organization</a></code>
 - <code title="get /organizations">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">list</a>(\*\*<a href="src/keycard_api/types/organization_list_params.py">params</a>) -> <a href="./src/keycard_api/types/organization_list_response.py">OrganizationListResponse</a></code>
-- <code title="post /organizations/{organization_id}/token">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">exchange_token</a>(organization_id) -> <a href="./src/keycard_api/types/organization_exchange_token_response.py">OrganizationExchangeTokenResponse</a></code>
+- <code title="post /organizations/{organization_id}/token">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">exchange_token</a>(organization_id) -> <a href="./src/keycard_api/types/token_response.py">TokenResponse</a></code>
 - <code title="get /organizations/{organization_id}/identities">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">list_identities</a>(organization_id, \*\*<a href="src/keycard_api/types/organization_list_identities_params.py">params</a>) -> <a href="./src/keycard_api/types/organization_list_identities_response.py">OrganizationListIdentitiesResponse</a></code>
 - <code title="get /organizations/{organization_id}/roles">client.organizations.<a href="./src/keycard_api/resources/organizations/organizations.py">list_roles</a>(organization_id, \*\*<a href="src/keycard_api/types/organization_list_roles_params.py">params</a>) -> <a href="./src/keycard_api/types/organization_list_roles_response.py">OrganizationListRolesResponse</a></code>
 
@@ -258,16 +259,17 @@ Types:
 
 ```python
 from keycard_api.types.organizations import (
-    UserRetrieveResponse,
-    UserUpdateResponse,
+    OrganizationRole,
+    OrganizationStatus,
+    OrganizationUser,
     UserListResponse,
 )
 ```
 
 Methods:
 
-- <code title="get /organizations/{organization_id}/users/{user_id}">client.organizations.users.<a href="./src/keycard_api/resources/organizations/users.py">retrieve</a>(user_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/user_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/user_retrieve_response.py">UserRetrieveResponse</a></code>
-- <code title="patch /organizations/{organization_id}/users/{user_id}">client.organizations.users.<a href="./src/keycard_api/resources/organizations/users.py">update</a>(user_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/user_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/user_update_response.py">UserUpdateResponse</a></code>
+- <code title="get /organizations/{organization_id}/users/{user_id}">client.organizations.users.<a href="./src/keycard_api/resources/organizations/users.py">retrieve</a>(user_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/user_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/organization_user.py">OrganizationUser</a></code>
+- <code title="patch /organizations/{organization_id}/users/{user_id}">client.organizations.users.<a href="./src/keycard_api/resources/organizations/users.py">update</a>(user_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/user_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/organization_user.py">OrganizationUser</a></code>
 - <code title="get /organizations/{organization_id}/users">client.organizations.users.<a href="./src/keycard_api/resources/organizations/users.py">list</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/user_list_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/user_list_response.py">UserListResponse</a></code>
 - <code title="delete /organizations/{organization_id}/users/{user_id}">client.organizations.users.<a href="./src/keycard_api/resources/organizations/users.py">delete</a>(user_id, \*, organization_id) -> None</code>
 
@@ -276,12 +278,12 @@ Methods:
 Types:
 
 ```python
-from keycard_api.types.organizations import InvitationCreateResponse, InvitationListResponse
+from keycard_api.types.organizations import Invitation, InvitationStatus, InvitationListResponse
 ```
 
 Methods:
 
-- <code title="post /organizations/{organization_id}/invitations">client.organizations.invitations.<a href="./src/keycard_api/resources/organizations/invitations.py">create</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/invitation_create_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/invitation_create_response.py">InvitationCreateResponse</a></code>
+- <code title="post /organizations/{organization_id}/invitations">client.organizations.invitations.<a href="./src/keycard_api/resources/organizations/invitations.py">create</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/invitation_create_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/invitation.py">Invitation</a></code>
 - <code title="get /organizations/{organization_id}/invitations">client.organizations.invitations.<a href="./src/keycard_api/resources/organizations/invitations.py">list</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/invitation_list_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/invitation_list_response.py">InvitationListResponse</a></code>
 - <code title="delete /organizations/{organization_id}/invitations/{invitation_id}">client.organizations.invitations.<a href="./src/keycard_api/resources/organizations/invitations.py">delete</a>(invitation_id, \*, organization_id) -> None</code>
 
@@ -290,19 +292,14 @@ Methods:
 Types:
 
 ```python
-from keycard_api.types.organizations import (
-    ServiceAccountCreateResponse,
-    ServiceAccountRetrieveResponse,
-    ServiceAccountUpdateResponse,
-    ServiceAccountListResponse,
-)
+from keycard_api.types.organizations import ServiceAccount, ServiceAccountListResponse
 ```
 
 Methods:
 
-- <code title="post /organizations/{organization_id}/service-accounts">client.organizations.service_accounts.<a href="./src/keycard_api/resources/organizations/service_accounts/service_accounts.py">create</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/service_account_create_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_account_create_response.py">ServiceAccountCreateResponse</a></code>
-- <code title="get /organizations/{organization_id}/service-accounts/{service_account_id}">client.organizations.service_accounts.<a href="./src/keycard_api/resources/organizations/service_accounts/service_accounts.py">retrieve</a>(service_account_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/service_account_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_account_retrieve_response.py">ServiceAccountRetrieveResponse</a></code>
-- <code title="patch /organizations/{organization_id}/service-accounts/{service_account_id}">client.organizations.service_accounts.<a href="./src/keycard_api/resources/organizations/service_accounts/service_accounts.py">update</a>(service_account_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/service_account_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_account_update_response.py">ServiceAccountUpdateResponse</a></code>
+- <code title="post /organizations/{organization_id}/service-accounts">client.organizations.service_accounts.<a href="./src/keycard_api/resources/organizations/service_accounts/service_accounts.py">create</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/service_account_create_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_account.py">ServiceAccount</a></code>
+- <code title="get /organizations/{organization_id}/service-accounts/{service_account_id}">client.organizations.service_accounts.<a href="./src/keycard_api/resources/organizations/service_accounts/service_accounts.py">retrieve</a>(service_account_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/service_account_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_account.py">ServiceAccount</a></code>
+- <code title="patch /organizations/{organization_id}/service-accounts/{service_account_id}">client.organizations.service_accounts.<a href="./src/keycard_api/resources/organizations/service_accounts/service_accounts.py">update</a>(service_account_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/service_account_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_account.py">ServiceAccount</a></code>
 - <code title="get /organizations/{organization_id}/service-accounts">client.organizations.service_accounts.<a href="./src/keycard_api/resources/organizations/service_accounts/service_accounts.py">list</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/service_account_list_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_account_list_response.py">ServiceAccountListResponse</a></code>
 - <code title="delete /organizations/{organization_id}/service-accounts/{service_account_id}">client.organizations.service_accounts.<a href="./src/keycard_api/resources/organizations/service_accounts/service_accounts.py">delete</a>(service_account_id, \*, organization_id) -> None</code>
 
@@ -312,9 +309,8 @@ Types:
 
 ```python
 from keycard_api.types.organizations.service_accounts import (
+    ServiceAccountCredential,
     CredentialCreateResponse,
-    CredentialRetrieveResponse,
-    CredentialUpdateResponse,
     CredentialListResponse,
 )
 ```
@@ -322,8 +318,8 @@ from keycard_api.types.organizations.service_accounts import (
 Methods:
 
 - <code title="post /organizations/{organization_id}/service-accounts/{service_account_id}/credentials">client.organizations.service_accounts.credentials.<a href="./src/keycard_api/resources/organizations/service_accounts/credentials.py">create</a>(service_account_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/service_accounts/credential_create_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_accounts/credential_create_response.py">CredentialCreateResponse</a></code>
-- <code title="get /organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}">client.organizations.service_accounts.credentials.<a href="./src/keycard_api/resources/organizations/service_accounts/credentials.py">retrieve</a>(credential_id, \*, organization_id, service_account_id, \*\*<a href="src/keycard_api/types/organizations/service_accounts/credential_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_accounts/credential_retrieve_response.py">CredentialRetrieveResponse</a></code>
-- <code title="patch /organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}">client.organizations.service_accounts.credentials.<a href="./src/keycard_api/resources/organizations/service_accounts/credentials.py">update</a>(credential_id, \*, organization_id, service_account_id, \*\*<a href="src/keycard_api/types/organizations/service_accounts/credential_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_accounts/credential_update_response.py">CredentialUpdateResponse</a></code>
+- <code title="get /organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}">client.organizations.service_accounts.credentials.<a href="./src/keycard_api/resources/organizations/service_accounts/credentials.py">retrieve</a>(credential_id, \*, organization_id, service_account_id, \*\*<a href="src/keycard_api/types/organizations/service_accounts/credential_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_accounts/service_account_credential.py">ServiceAccountCredential</a></code>
+- <code title="patch /organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}">client.organizations.service_accounts.credentials.<a href="./src/keycard_api/resources/organizations/service_accounts/credentials.py">update</a>(credential_id, \*, organization_id, service_account_id, \*\*<a href="src/keycard_api/types/organizations/service_accounts/credential_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_accounts/service_account_credential.py">ServiceAccountCredential</a></code>
 - <code title="get /organizations/{organization_id}/service-accounts/{service_account_id}/credentials">client.organizations.service_accounts.credentials.<a href="./src/keycard_api/resources/organizations/service_accounts/credentials.py">list</a>(service_account_id, \*, organization_id, \*\*<a href="src/keycard_api/types/organizations/service_accounts/credential_list_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/service_accounts/credential_list_response.py">CredentialListResponse</a></code>
 - <code title="delete /organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}">client.organizations.service_accounts.credentials.<a href="./src/keycard_api/resources/organizations/service_accounts/credentials.py">delete</a>(credential_id, \*, organization_id, service_account_id) -> None</code>
 
@@ -332,31 +328,21 @@ Methods:
 Types:
 
 ```python
-from keycard_api.types.organizations import (
-    SSOConnectionRetrieveResponse,
-    SSOConnectionUpdateResponse,
-    SSOConnectionEnableResponse,
-)
+from keycard_api.types.organizations import SSOConnection, SSOConnectionProtocol
 ```
 
 Methods:
 
-- <code title="get /organizations/{organization_id}/sso-connection">client.organizations.sso_connection.<a href="./src/keycard_api/resources/organizations/sso_connection.py">retrieve</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/sso_connection_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/sso_connection_retrieve_response.py">SSOConnectionRetrieveResponse</a></code>
-- <code title="patch /organizations/{organization_id}/sso-connection">client.organizations.sso_connection.<a href="./src/keycard_api/resources/organizations/sso_connection.py">update</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/sso_connection_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/sso_connection_update_response.py">SSOConnectionUpdateResponse</a></code>
+- <code title="get /organizations/{organization_id}/sso-connection">client.organizations.sso_connection.<a href="./src/keycard_api/resources/organizations/sso_connection.py">retrieve</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/sso_connection_retrieve_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/sso_connection.py">SSOConnection</a></code>
+- <code title="patch /organizations/{organization_id}/sso-connection">client.organizations.sso_connection.<a href="./src/keycard_api/resources/organizations/sso_connection.py">update</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/sso_connection_update_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/sso_connection.py">SSOConnection</a></code>
 - <code title="delete /organizations/{organization_id}/sso-connection">client.organizations.sso_connection.<a href="./src/keycard_api/resources/organizations/sso_connection.py">disable</a>(organization_id) -> None</code>
-- <code title="post /organizations/{organization_id}/sso-connection">client.organizations.sso_connection.<a href="./src/keycard_api/resources/organizations/sso_connection.py">enable</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/sso_connection_enable_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/sso_connection_enable_response.py">SSOConnectionEnableResponse</a></code>
+- <code title="post /organizations/{organization_id}/sso-connection">client.organizations.sso_connection.<a href="./src/keycard_api/resources/organizations/sso_connection.py">enable</a>(organization_id, \*\*<a href="src/keycard_api/types/organizations/sso_connection_enable_params.py">params</a>) -> <a href="./src/keycard_api/types/organizations/sso_connection.py">SSOConnection</a></code>
 
 # ServiceAccountToken
 
-Types:
-
-```python
-from keycard_api.types import ServiceAccountTokenCreateResponse
-```
-
 Methods:
 
-- <code title="post /service-account-token">client.service_account_token.<a href="./src/keycard_api/resources/service_account_token.py">create</a>(\*\*<a href="src/keycard_api/types/service_account_token_create_params.py">params</a>) -> <a href="./src/keycard_api/types/service_account_token_create_response.py">ServiceAccountTokenCreateResponse</a></code>
+- <code title="post /service-account-token">client.service_account_token.<a href="./src/keycard_api/resources/service_account_token.py">create</a>(\*\*<a href="src/keycard_api/types/service_account_token_create_params.py">params</a>) -> <a href="./src/keycard_api/types/token_response.py">TokenResponse</a></code>
 
 # Invitations
 

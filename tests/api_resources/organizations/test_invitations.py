@@ -10,8 +10,8 @@ import pytest
 from keycard_api import KeycardAPI, AsyncKeycardAPI
 from tests.utils import assert_matches_type
 from keycard_api.types.organizations import (
+    Invitation,
     InvitationListResponse,
-    InvitationCreateResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -27,7 +27,7 @@ class TestInvitations:
             organization_id="x",
             email="dev@stainless.com",
         )
-        assert_matches_type(InvitationCreateResponse, invitation, path=["response"])
+        assert_matches_type(Invitation, invitation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -38,7 +38,7 @@ class TestInvitations:
             role="org_admin",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(InvitationCreateResponse, invitation, path=["response"])
+        assert_matches_type(Invitation, invitation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -51,7 +51,7 @@ class TestInvitations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         invitation = response.parse()
-        assert_matches_type(InvitationCreateResponse, invitation, path=["response"])
+        assert_matches_type(Invitation, invitation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -64,7 +64,7 @@ class TestInvitations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             invitation = response.parse()
-            assert_matches_type(InvitationCreateResponse, invitation, path=["response"])
+            assert_matches_type(Invitation, invitation, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -207,7 +207,7 @@ class TestAsyncInvitations:
             organization_id="x",
             email="dev@stainless.com",
         )
-        assert_matches_type(InvitationCreateResponse, invitation, path=["response"])
+        assert_matches_type(Invitation, invitation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -218,7 +218,7 @@ class TestAsyncInvitations:
             role="org_admin",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(InvitationCreateResponse, invitation, path=["response"])
+        assert_matches_type(Invitation, invitation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -231,7 +231,7 @@ class TestAsyncInvitations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         invitation = await response.parse()
-        assert_matches_type(InvitationCreateResponse, invitation, path=["response"])
+        assert_matches_type(Invitation, invitation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -244,7 +244,7 @@ class TestAsyncInvitations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             invitation = await response.parse()
-            assert_matches_type(InvitationCreateResponse, invitation, path=["response"])
+            assert_matches_type(Invitation, invitation, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

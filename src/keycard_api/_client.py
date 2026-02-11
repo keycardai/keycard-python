@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import base64
 from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
@@ -12,6 +13,7 @@ from . import _exceptions
 from ._qs import Querystring
 from ._types import (
     Omit,
+    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -102,7 +104,7 @@ class KeycardAPI(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("KEYCARD_API_BASE_URL")
         if base_url is None:
-            base_url = f"/mgmt/v1"
+            base_url = f"https://api.example.com"
 
         super().__init__(
             version=__version__,
@@ -154,12 +156,43 @@ class KeycardAPI(SyncAPIClient):
 
     @property
     @override
+    def auth_headers(self) -> dict[str, str]:
+        return {**self._org_management_basic_auth, **self._vault_api_bearer_auth}
+
+    @property
+    def _org_management_basic_auth(self) -> dict[str, str]:
+        if self.username is None:
+            return {}
+        if self.password is None:
+            return {}
+        credentials = f"{self.username}:{self.password}".encode("ascii")
+        header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
+        return {"Authorization": header}
+
+    @property
+    def _vault_api_bearer_auth(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
+
+    @property
+    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
             "X-Stainless-Async": "false",
             **self._custom_headers,
         }
+
+    @override
+    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
+        if headers.get("Authorization") or isinstance(custom_headers.get("Authorization"), Omit):
+            return
+
+        raise TypeError(
+            '"Could not resolve authentication method. Expected either username, password or api_key to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted"'
+        )
 
     def copy(
         self,
@@ -303,7 +336,7 @@ class AsyncKeycardAPI(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("KEYCARD_API_BASE_URL")
         if base_url is None:
-            base_url = f"/mgmt/v1"
+            base_url = f"https://api.example.com"
 
         super().__init__(
             version=__version__,
@@ -355,12 +388,43 @@ class AsyncKeycardAPI(AsyncAPIClient):
 
     @property
     @override
+    def auth_headers(self) -> dict[str, str]:
+        return {**self._org_management_basic_auth, **self._vault_api_bearer_auth}
+
+    @property
+    def _org_management_basic_auth(self) -> dict[str, str]:
+        if self.username is None:
+            return {}
+        if self.password is None:
+            return {}
+        credentials = f"{self.username}:{self.password}".encode("ascii")
+        header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
+        return {"Authorization": header}
+
+    @property
+    def _vault_api_bearer_auth(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
+
+    @property
+    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
             "X-Stainless-Async": f"async:{get_async_library()}",
             **self._custom_headers,
         }
+
+    @override
+    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
+        if headers.get("Authorization") or isinstance(custom_headers.get("Authorization"), Omit):
+            return
+
+        raise TypeError(
+            '"Could not resolve authentication method. Expected either username, password or api_key to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted"'
+        )
 
     def copy(
         self,

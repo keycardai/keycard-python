@@ -23,9 +23,8 @@ from ...types.organizations import (
     sso_connection_update_params,
     sso_connection_retrieve_params,
 )
-from ...types.organizations.sso_connection_enable_response import SSOConnectionEnableResponse
-from ...types.organizations.sso_connection_update_response import SSOConnectionUpdateResponse
-from ...types.organizations.sso_connection_retrieve_response import SSOConnectionRetrieveResponse
+from ...types.organizations.sso_connection import SSOConnection
+from ...types.organizations.sso_connection_protocol_param import SSOConnectionProtocolParam
 
 __all__ = ["SSOConnectionResource", "AsyncSSOConnectionResource"]
 
@@ -62,7 +61,7 @@ class SSOConnectionResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SSOConnectionRetrieveResponse:
+    ) -> SSOConnection:
         """
         Get SSO connection configuration for organization
 
@@ -83,6 +82,7 @@ class SSOConnectionResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/sso-connection",
             options=make_request_options(
@@ -92,7 +92,7 @@ class SSOConnectionResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, sso_connection_retrieve_params.SSOConnectionRetrieveParams),
             ),
-            cast_to=SSOConnectionRetrieveResponse,
+            cast_to=SSOConnection,
         )
 
     def update(
@@ -102,7 +102,7 @@ class SSOConnectionResource(SyncAPIResource):
         client_id: str | Omit = omit,
         client_secret: str | Omit = omit,
         identifier: str | Omit = omit,
-        protocols: Optional[sso_connection_update_params.Protocols] | Omit = omit,
+        protocols: Optional[SSOConnectionProtocolParam] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -110,7 +110,7 @@ class SSOConnectionResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SSOConnectionUpdateResponse:
+    ) -> SSOConnection:
         """
         Update SSO connection configuration
 
@@ -136,6 +136,7 @@ class SSOConnectionResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/organizations/{organization_id}/sso-connection",
             body=maybe_transform(
@@ -150,7 +151,7 @@ class SSOConnectionResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SSOConnectionUpdateResponse,
+            cast_to=SSOConnection,
         )
 
     def disable(
@@ -183,6 +184,7 @@ class SSOConnectionResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/organizations/{organization_id}/sso-connection",
             options=make_request_options(
@@ -198,7 +200,7 @@ class SSOConnectionResource(SyncAPIResource):
         client_id: str,
         identifier: str,
         client_secret: str | Omit = omit,
-        protocols: Optional[sso_connection_enable_params.Protocols] | Omit = omit,
+        protocols: Optional[SSOConnectionProtocolParam] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -206,7 +208,7 @@ class SSOConnectionResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SSOConnectionEnableResponse:
+    ) -> SSOConnection:
         """
         Enable SSO for organization
 
@@ -232,6 +234,7 @@ class SSOConnectionResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/organizations/{organization_id}/sso-connection",
             body=maybe_transform(
@@ -246,7 +249,7 @@ class SSOConnectionResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SSOConnectionEnableResponse,
+            cast_to=SSOConnection,
         )
 
 
@@ -282,7 +285,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SSOConnectionRetrieveResponse:
+    ) -> SSOConnection:
         """
         Get SSO connection configuration for organization
 
@@ -303,6 +306,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/sso-connection",
             options=make_request_options(
@@ -314,7 +318,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
                     {"expand": expand}, sso_connection_retrieve_params.SSOConnectionRetrieveParams
                 ),
             ),
-            cast_to=SSOConnectionRetrieveResponse,
+            cast_to=SSOConnection,
         )
 
     async def update(
@@ -324,7 +328,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         client_id: str | Omit = omit,
         client_secret: str | Omit = omit,
         identifier: str | Omit = omit,
-        protocols: Optional[sso_connection_update_params.Protocols] | Omit = omit,
+        protocols: Optional[SSOConnectionProtocolParam] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -332,7 +336,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SSOConnectionUpdateResponse:
+    ) -> SSOConnection:
         """
         Update SSO connection configuration
 
@@ -358,6 +362,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/organizations/{organization_id}/sso-connection",
             body=await async_maybe_transform(
@@ -372,7 +377,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SSOConnectionUpdateResponse,
+            cast_to=SSOConnection,
         )
 
     async def disable(
@@ -405,6 +410,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/organizations/{organization_id}/sso-connection",
             options=make_request_options(
@@ -420,7 +426,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         client_id: str,
         identifier: str,
         client_secret: str | Omit = omit,
-        protocols: Optional[sso_connection_enable_params.Protocols] | Omit = omit,
+        protocols: Optional[SSOConnectionProtocolParam] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -428,7 +434,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SSOConnectionEnableResponse:
+    ) -> SSOConnection:
         """
         Enable SSO for organization
 
@@ -454,6 +460,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/organizations/{organization_id}/sso-connection",
             body=await async_maybe_transform(
@@ -468,7 +475,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SSOConnectionEnableResponse,
+            cast_to=SSOConnection,
         )
 
 

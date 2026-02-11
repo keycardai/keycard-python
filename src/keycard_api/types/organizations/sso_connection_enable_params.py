@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, Annotated, TypedDict
 
-from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
+from .sso_connection_protocol_param import SSOConnectionProtocolParam
 
-__all__ = ["SSOConnectionEnableParams", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
+__all__ = ["SSOConnectionEnableParams"]
 
 
 class SSOConnectionEnableParams(TypedDict, total=False):
@@ -21,46 +21,7 @@ class SSOConnectionEnableParams(TypedDict, total=False):
     client_secret: str
     """OAuth 2.0 client secret (optional, will be encrypted if provided)"""
 
-    protocols: Optional[Protocols]
+    protocols: Optional[SSOConnectionProtocolParam]
     """Protocol configuration for SSO connection"""
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]
-
-
-class ProtocolsOauth2(TypedDict, total=False):
-    """OAuth 2.0 protocol configuration for SSO connection"""
-
-    authorization_endpoint: Optional[str]
-    """OAuth 2.0 authorization endpoint"""
-
-    code_challenge_methods_supported: Optional[SequenceNotStr[str]]
-    """Supported PKCE code challenge methods"""
-
-    jwks_uri: Optional[str]
-    """JSON Web Key Set endpoint"""
-
-    registration_endpoint: Optional[str]
-    """OAuth 2.0 registration endpoint"""
-
-    scopes_supported: Optional[SequenceNotStr[str]]
-    """Supported OAuth 2.0 scopes"""
-
-    token_endpoint: Optional[str]
-    """OAuth 2.0 token endpoint"""
-
-
-class ProtocolsOpenid(TypedDict, total=False):
-    """OpenID Connect protocol configuration for SSO connection"""
-
-    userinfo_endpoint: Optional[str]
-    """OpenID Connect UserInfo endpoint"""
-
-
-class Protocols(TypedDict, total=False):
-    """Protocol configuration for SSO connection"""
-
-    oauth2: Optional[ProtocolsOauth2]
-    """OAuth 2.0 protocol configuration for SSO connection"""
-
-    openid: Optional[ProtocolsOpenid]
-    """OpenID Connect protocol configuration for SSO connection"""

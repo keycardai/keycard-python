@@ -12,8 +12,7 @@ from tests.utils import assert_matches_type
 from keycard_api.types.organizations.service_accounts import (
     CredentialListResponse,
     CredentialCreateResponse,
-    CredentialUpdateResponse,
-    CredentialRetrieveResponse,
+    ServiceAccountCredential,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -99,7 +98,7 @@ class TestCredentials:
             organization_id="x",
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
         )
-        assert_matches_type(CredentialRetrieveResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -111,7 +110,7 @@ class TestCredentials:
             expand=["permissions"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(CredentialRetrieveResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -125,7 +124,7 @@ class TestCredentials:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         credential = response.parse()
-        assert_matches_type(CredentialRetrieveResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -139,7 +138,7 @@ class TestCredentials:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             credential = response.parse()
-            assert_matches_type(CredentialRetrieveResponse, credential, path=["response"])
+            assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -175,7 +174,7 @@ class TestCredentials:
             organization_id="x",
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
         )
-        assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -188,7 +187,7 @@ class TestCredentials:
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -202,7 +201,7 @@ class TestCredentials:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         credential = response.parse()
-        assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -216,7 +215,7 @@ class TestCredentials:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             credential = response.parse()
-            assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
+            assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -468,7 +467,7 @@ class TestAsyncCredentials:
             organization_id="x",
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
         )
-        assert_matches_type(CredentialRetrieveResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -480,7 +479,7 @@ class TestAsyncCredentials:
             expand=["permissions"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(CredentialRetrieveResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -494,7 +493,7 @@ class TestAsyncCredentials:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         credential = await response.parse()
-        assert_matches_type(CredentialRetrieveResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -508,7 +507,7 @@ class TestAsyncCredentials:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             credential = await response.parse()
-            assert_matches_type(CredentialRetrieveResponse, credential, path=["response"])
+            assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -544,7 +543,7 @@ class TestAsyncCredentials:
             organization_id="x",
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
         )
-        assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -557,7 +556,7 @@ class TestAsyncCredentials:
             name="name",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -571,7 +570,7 @@ class TestAsyncCredentials:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         credential = await response.parse()
-        assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
+        assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -585,7 +584,7 @@ class TestAsyncCredentials:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             credential = await response.parse()
-            assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
+            assert_matches_type(ServiceAccountCredential, credential, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

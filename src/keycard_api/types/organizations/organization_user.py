@@ -3,31 +3,34 @@
 from typing import Dict, Optional
 from datetime import datetime
 
-from ...._models import BaseModel
+from ..._models import BaseModel
+from .organization_role import OrganizationRole
+from .organization_status import OrganizationStatus
 
-__all__ = ["CredentialUpdateResponse"]
+__all__ = ["OrganizationUser"]
 
 
-class CredentialUpdateResponse(BaseModel):
-    """Service account credential (without secret)"""
-
+class OrganizationUser(BaseModel):
     id: str
-    """Identifier for API resources. A 26-char nanoid (URL/DNS safe)."""
-
-    client_id: str
-    """The client ID for authentication"""
+    """The keycard account ID"""
 
     created_at: datetime
     """The time the entity was created in utc"""
 
-    name: str
-    """A name for the entity to be displayed in UI"""
+    role: OrganizationRole
+    """User's role in the organization"""
 
-    description: Optional[str] = None
-    """Optional description of the credential"""
+    source: str
+    """Identity provider issuer"""
 
-    last_used_at: Optional[datetime] = None
-    """When the credential was last used"""
+    status: OrganizationStatus
+    """Status of organization membership"""
+
+    updated_at: datetime
+    """The time the entity was mostly recently updated in utc"""
+
+    email: Optional[str] = None
+    """User email address"""
 
     permissions: Optional[Dict[str, Dict[str, bool]]] = None
     """

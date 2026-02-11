@@ -6,6 +6,7 @@ from typing import List
 from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
+from .organization_role import OrganizationRole
 
 __all__ = ["UserListParams"]
 
@@ -27,7 +28,7 @@ class UserListParams(TypedDict, total=False):
     limit: int
     """Maximum number of users to return"""
 
-    role: Literal["org_admin", "org_member", "org_viewer"]
+    role: OrganizationRole
     """Filter users by role"""
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..._types import Body, Query, Headers, NotGiven, not_given
+from ..._types import Body, Query, Headers, NotGiven, omit, not_given
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -68,6 +68,7 @@ class UsersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/users/{id}",
             options=make_request_options(
@@ -102,6 +103,7 @@ class UsersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/users",
             options=make_request_options(
@@ -159,6 +161,7 @@ class AsyncUsersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/users/{id}",
             options=make_request_options(
@@ -193,6 +196,7 @@ class AsyncUsersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/users",
             options=make_request_options(

@@ -18,7 +18,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.service_account_token_create_response import ServiceAccountTokenCreateResponse
+from ..types.token_response import TokenResponse
 
 __all__ = ["ServiceAccountTokenResource", "AsyncServiceAccountTokenResource"]
 
@@ -56,7 +56,7 @@ class ServiceAccountTokenResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceAccountTokenCreateResponse:
+    ) -> TokenResponse:
         """
         Exchange service account credentials for organization-scoped M2M token
 
@@ -76,6 +76,7 @@ class ServiceAccountTokenResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             "/service-account-token",
             body=maybe_transform(
@@ -89,7 +90,7 @@ class ServiceAccountTokenResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ServiceAccountTokenCreateResponse,
+            cast_to=TokenResponse,
         )
 
 
@@ -126,7 +127,7 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceAccountTokenCreateResponse:
+    ) -> TokenResponse:
         """
         Exchange service account credentials for organization-scoped M2M token
 
@@ -146,6 +147,7 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             "/service-account-token",
             body=await async_maybe_transform(
@@ -159,7 +161,7 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ServiceAccountTokenCreateResponse,
+            cast_to=TokenResponse,
         )
 
 
