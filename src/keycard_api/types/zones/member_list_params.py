@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, TypedDict
+from typing import List, Union
+from typing_extensions import Literal, Annotated, TypedDict
+
+from ..._utils import PropertyInfo
 
 __all__ = ["MemberListParams"]
 
@@ -13,6 +16,8 @@ class MemberListParams(TypedDict, total=False):
 
     before: str
     """Cursor for backward pagination"""
+
+    expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
 
     limit: int
     """Maximum number of members to return"""

@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import List, Union, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -230,8 +231,12 @@ class ResourcesResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         identifier: str | Omit = omit,
+        limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -244,9 +249,15 @@ class ResourcesResource(SyncAPIResource):
         Returns a list of resources in the specified zone
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
           credential_provider_id: Filter resources by credential provider ID
 
           identifier: Filter resources by identifier
+
+          limit: Maximum number of items to return
 
           extra_headers: Send extra headers
 
@@ -268,8 +279,12 @@ class ResourcesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "credential_provider_id": credential_provider_id,
+                        "expand": expand,
                         "identifier": identifier,
+                        "limit": limit,
                         "slug": slug,
                     },
                     resource_list_params.ResourceListParams,
@@ -517,8 +532,12 @@ class AsyncResourcesResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         identifier: str | Omit = omit,
+        limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -531,9 +550,15 @@ class AsyncResourcesResource(AsyncAPIResource):
         Returns a list of resources in the specified zone
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
           credential_provider_id: Filter resources by credential provider ID
 
           identifier: Filter resources by identifier
+
+          limit: Maximum number of items to return
 
           extra_headers: Send extra headers
 
@@ -555,8 +580,12 @@ class AsyncResourcesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "credential_provider_id": credential_provider_id,
+                        "expand": expand,
                         "identifier": identifier,
+                        "limit": limit,
                         "slug": slug,
                     },
                     resource_list_params.ResourceListParams,

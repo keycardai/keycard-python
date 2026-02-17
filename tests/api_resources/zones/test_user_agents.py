@@ -73,7 +73,19 @@ class TestUserAgents:
     @parametrize
     def test_method_list(self, client: KeycardAPI) -> None:
         user_agent = client.zones.user_agents.list(
-            "zoneId",
+            zone_id="zoneId",
+        )
+        assert_matches_type(UserAgentListResponse, user_agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
+        user_agent = client.zones.user_agents.list(
+            zone_id="zoneId",
+            after="x",
+            before="x",
+            expand="total_count",
+            limit=1,
         )
         assert_matches_type(UserAgentListResponse, user_agent, path=["response"])
 
@@ -81,7 +93,7 @@ class TestUserAgents:
     @parametrize
     def test_raw_response_list(self, client: KeycardAPI) -> None:
         response = client.zones.user_agents.with_raw_response.list(
-            "zoneId",
+            zone_id="zoneId",
         )
 
         assert response.is_closed is True
@@ -93,7 +105,7 @@ class TestUserAgents:
     @parametrize
     def test_streaming_response_list(self, client: KeycardAPI) -> None:
         with client.zones.user_agents.with_streaming_response.list(
-            "zoneId",
+            zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -108,7 +120,7 @@ class TestUserAgents:
     def test_path_params_list(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
             client.zones.user_agents.with_raw_response.list(
-                "",
+                zone_id="",
             )
 
 
@@ -173,7 +185,19 @@ class TestAsyncUserAgents:
     @parametrize
     async def test_method_list(self, async_client: AsyncKeycardAPI) -> None:
         user_agent = await async_client.zones.user_agents.list(
-            "zoneId",
+            zone_id="zoneId",
+        )
+        assert_matches_type(UserAgentListResponse, user_agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
+        user_agent = await async_client.zones.user_agents.list(
+            zone_id="zoneId",
+            after="x",
+            before="x",
+            expand="total_count",
+            limit=1,
         )
         assert_matches_type(UserAgentListResponse, user_agent, path=["response"])
 
@@ -181,7 +205,7 @@ class TestAsyncUserAgents:
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.zones.user_agents.with_raw_response.list(
-            "zoneId",
+            zone_id="zoneId",
         )
 
         assert response.is_closed is True
@@ -193,7 +217,7 @@ class TestAsyncUserAgents:
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.zones.user_agents.with_streaming_response.list(
-            "zoneId",
+            zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -208,5 +232,5 @@ class TestAsyncUserAgents:
     async def test_path_params_list(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
             await async_client.zones.user_agents.with_raw_response.list(
-                "",
+                zone_id="",
             )

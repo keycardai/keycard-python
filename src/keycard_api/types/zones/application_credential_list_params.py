@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing_extensions import Annotated, TypedDict
+from typing import List, Union
+from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
 
@@ -10,10 +11,19 @@ __all__ = ["ApplicationCredentialListParams"]
 
 
 class ApplicationCredentialListParams(TypedDict, total=False):
+    after: str
+    """Cursor for forward pagination"""
+
     application_id: Annotated[str, PropertyInfo(alias="applicationId")]
+
+    before: str
+    """Cursor for backward pagination"""
 
     cursor: str
 
+    expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
+
     limit: int
+    """Maximum number of items to return"""
 
     slug: str

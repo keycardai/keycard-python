@@ -1,12 +1,28 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List
+from typing import List, Optional
 
 from ..._models import BaseModel
 from ..page_info_pagination import PageInfoPagination
 from .applications.resource import Resource
 
-__all__ = ["ApplicationListResourcesResponse"]
+__all__ = ["ApplicationListResourcesResponse", "Pagination"]
+
+
+class Pagination(BaseModel):
+    """Cursor-based pagination metadata"""
+
+    after_cursor: Optional[str] = None
+    """An opaque cursor used for paginating through a list of results"""
+
+    before_cursor: Optional[str] = None
+    """An opaque cursor used for paginating through a list of results"""
+
+    total_count: Optional[int] = None
+    """Total number of items matching the query.
+
+    Only included when expand[]=total_count is requested.
+    """
 
 
 class ApplicationListResourcesResponse(BaseModel):
@@ -14,3 +30,6 @@ class ApplicationListResourcesResponse(BaseModel):
 
     page_info: PageInfoPagination
     """Pagination information"""
+
+    pagination: Pagination
+    """Cursor-based pagination metadata"""

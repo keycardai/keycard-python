@@ -707,8 +707,11 @@ class TestApplicationCredentials:
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
         application_credential = client.zones.application_credentials.list(
             zone_id="zoneId",
+            after="x",
             application_id="applicationId",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
             slug="slug",
         )
@@ -1492,8 +1495,11 @@ class TestAsyncApplicationCredentials:
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         application_credential = await async_client.zones.application_credentials.list(
             zone_id="zoneId",
+            after="x",
             application_id="applicationId",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
             slug="slug",
         )

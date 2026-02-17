@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from typing import List, Union
+from typing_extensions import Literal
+
 import httpx
 
 from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
@@ -87,7 +90,10 @@ class DependenciesResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         when_accessing: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -101,6 +107,12 @@ class DependenciesResource(SyncAPIResource):
         Returns resource dependencies for an application
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -123,7 +135,10 @@ class DependenciesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                         "when_accessing": when_accessing,
                     },
@@ -286,7 +301,10 @@ class AsyncDependenciesResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         when_accessing: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -300,6 +318,12 @@ class AsyncDependenciesResource(AsyncAPIResource):
         Returns resource dependencies for an application
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -322,7 +346,10 @@ class AsyncDependenciesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                         "when_accessing": when_accessing,
                     },

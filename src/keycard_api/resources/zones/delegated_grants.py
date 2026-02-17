@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -125,6 +126,10 @@ class DelegatedGrantsResource(SyncAPIResource):
         zone_id: str,
         *,
         active: Literal["true"] | Omit = omit,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         resource_id: str | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
         user_id: str | Omit = omit,
@@ -141,6 +146,12 @@ class DelegatedGrantsResource(SyncAPIResource):
         user, resource, or status.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           resource_id: Filter by resource ID
 
           user_id: Filter by user ID
@@ -166,6 +177,10 @@ class DelegatedGrantsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "active": active,
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
                         "resource_id": resource_id,
                         "status": status,
                         "user_id": user_id,
@@ -319,6 +334,10 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         zone_id: str,
         *,
         active: Literal["true"] | Omit = omit,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         resource_id: str | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
         user_id: str | Omit = omit,
@@ -335,6 +354,12 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         user, resource, or status.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           resource_id: Filter by resource ID
 
           user_id: Filter by user ID
@@ -360,6 +385,10 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "active": active,
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
                         "resource_id": resource_id,
                         "status": status,
                         "user_id": user_id,

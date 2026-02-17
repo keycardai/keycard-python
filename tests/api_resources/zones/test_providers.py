@@ -248,7 +248,10 @@ class TestProviders:
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
         provider = client.zones.providers.list(
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             identifier="identifier",
             limit=1,
             slug="slug",
@@ -576,7 +579,10 @@ class TestAsyncProviders:
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         provider = await async_client.zones.providers.list(
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             identifier="identifier",
             limit=1,
             slug="slug",

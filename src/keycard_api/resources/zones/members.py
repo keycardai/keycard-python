@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -136,6 +137,7 @@ class MembersResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         role: Literal["zone_manager", "zone_viewer"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -181,6 +183,7 @@ class MembersResource(SyncAPIResource):
                     {
                         "after": after,
                         "before": before,
+                        "expand": expand,
                         "limit": limit,
                         "role": role,
                     },
@@ -392,6 +395,7 @@ class AsyncMembersResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         role: Literal["zone_manager", "zone_viewer"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -437,6 +441,7 @@ class AsyncMembersResource(AsyncAPIResource):
                     {
                         "after": after,
                         "before": before,
+                        "expand": expand,
                         "limit": limit,
                         "role": role,
                     },

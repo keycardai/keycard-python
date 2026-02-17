@@ -99,7 +99,10 @@ class TestDependencies:
         dependency = client.zones.applications.dependencies.list(
             id="id",
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
             when_accessing="when_accessing",
         )
@@ -372,7 +375,10 @@ class TestAsyncDependencies:
         dependency = await async_client.zones.applications.dependencies.list(
             id="id",
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
             when_accessing="when_accessing",
         )

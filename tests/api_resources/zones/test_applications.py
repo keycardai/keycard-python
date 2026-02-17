@@ -234,7 +234,10 @@ class TestApplications:
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
         application = client.zones.applications.list(
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             identifier="identifier",
             limit=1,
             slug="slug",
@@ -344,7 +347,10 @@ class TestApplications:
         application = client.zones.applications.list_credentials(
             id="id",
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
         )
         assert_matches_type(ApplicationListCredentialsResponse, application, path=["response"])
@@ -407,7 +413,10 @@ class TestApplications:
         application = client.zones.applications.list_resources(
             id="id",
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
         )
         assert_matches_type(ApplicationListResourcesResponse, application, path=["response"])
@@ -673,7 +682,10 @@ class TestAsyncApplications:
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         application = await async_client.zones.applications.list(
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             identifier="identifier",
             limit=1,
             slug="slug",
@@ -783,7 +795,10 @@ class TestAsyncApplications:
         application = await async_client.zones.applications.list_credentials(
             id="id",
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
         )
         assert_matches_type(ApplicationListCredentialsResponse, application, path=["response"])
@@ -846,7 +861,10 @@ class TestAsyncApplications:
         application = await async_client.zones.applications.list_resources(
             id="id",
             zone_id="zoneId",
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
         )
         assert_matches_type(ApplicationListResourcesResponse, application, path=["response"])

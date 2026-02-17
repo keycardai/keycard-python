@@ -144,6 +144,7 @@ class TestMembers:
             zone_id="zoneId",
             after="after",
             before="before",
+            expand="total_count",
             limit=1,
             role="zone_manager",
         )
@@ -415,6 +416,7 @@ class TestAsyncMembers:
             zone_id="zoneId",
             after="after",
             before="before",
+            expand="total_count",
             limit=1,
             role="zone_manager",
         )

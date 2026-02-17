@@ -174,7 +174,7 @@ from keycard_api.types.zones import UserAgent, UserAgentListResponse
 Methods:
 
 - <code title="get /zones/{zoneId}/user-agents/{id}">client.zones.user_agents.<a href="./src/keycard_api/resources/zones/user_agents.py">retrieve</a>(id, \*, zone_id) -> <a href="./src/keycard_api/types/zones/user_agent.py">UserAgent</a></code>
-- <code title="get /zones/{zoneId}/user-agents">client.zones.user_agents.<a href="./src/keycard_api/resources/zones/user_agents.py">list</a>(zone_id) -> <a href="./src/keycard_api/types/zones/user_agent_list_response.py">UserAgentListResponse</a></code>
+- <code title="get /zones/{zoneId}/user-agents">client.zones.user_agents.<a href="./src/keycard_api/resources/zones/user_agents.py">list</a>(zone_id, \*\*<a href="src/keycard_api/types/zones/user_agent_list_params.py">params</a>) -> <a href="./src/keycard_api/types/zones/user_agent_list_response.py">UserAgentListResponse</a></code>
 
 ## Users
 
@@ -187,7 +187,7 @@ from keycard_api.types.zones import User, UserListResponse
 Methods:
 
 - <code title="get /zones/{zoneId}/users/{id}">client.zones.users.<a href="./src/keycard_api/resources/zones/users.py">retrieve</a>(id, \*, zone_id) -> <a href="./src/keycard_api/types/zones/user.py">User</a></code>
-- <code title="get /zones/{zoneId}/users">client.zones.users.<a href="./src/keycard_api/resources/zones/users.py">list</a>(zone_id) -> <a href="./src/keycard_api/types/zones/user_list_response.py">UserListResponse</a></code>
+- <code title="get /zones/{zoneId}/users">client.zones.users.<a href="./src/keycard_api/resources/zones/users.py">list</a>(zone_id, \*\*<a href="src/keycard_api/types/zones/user_list_params.py">params</a>) -> <a href="./src/keycard_api/types/zones/user_list_response.py">UserListResponse</a></code>
 
 ## Members
 

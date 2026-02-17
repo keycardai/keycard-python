@@ -143,6 +143,10 @@ class TestDelegatedGrants:
         delegated_grant = client.zones.delegated_grants.list(
             zone_id="zoneId",
             active="true",
+            after="x",
+            before="x",
+            expand="total_count",
+            limit=1,
             resource_id="resource_id",
             status="active",
             user_id="user_id",
@@ -364,6 +368,10 @@ class TestAsyncDelegatedGrants:
         delegated_grant = await async_client.zones.delegated_grants.list(
             zone_id="zoneId",
             active="true",
+            after="x",
+            before="x",
+            expand="total_count",
+            limit=1,
             resource_id="resource_id",
             status="active",
             user_id="user_id",

@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import List, Union, Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -242,7 +243,10 @@ class ApplicationsResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -259,6 +263,12 @@ class ApplicationsResource(SyncAPIResource):
         Returns a list of applications in the specified zone
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           traits: Filter by traits (OR matching - returns applications with any of the specified
               traits)
 
@@ -285,7 +295,10 @@ class ApplicationsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
@@ -341,7 +354,10 @@ class ApplicationsResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -354,6 +370,12 @@ class ApplicationsResource(SyncAPIResource):
         Returns a list of application credentials for a specific application
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -376,7 +398,10 @@ class ApplicationsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
@@ -390,7 +415,10 @@ class ApplicationsResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -403,6 +431,12 @@ class ApplicationsResource(SyncAPIResource):
         Returns a list of resources provided by an application
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -425,7 +459,10 @@ class ApplicationsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                     },
                     application_list_resources_params.ApplicationListResourcesParams,
@@ -634,7 +671,10 @@ class AsyncApplicationsResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -651,6 +691,12 @@ class AsyncApplicationsResource(AsyncAPIResource):
         Returns a list of applications in the specified zone
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           traits: Filter by traits (OR matching - returns applications with any of the specified
               traits)
 
@@ -677,7 +723,10 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
@@ -733,7 +782,10 @@ class AsyncApplicationsResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -746,6 +798,12 @@ class AsyncApplicationsResource(AsyncAPIResource):
         Returns a list of application credentials for a specific application
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -768,7 +826,10 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
@@ -782,7 +843,10 @@ class AsyncApplicationsResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -795,6 +859,12 @@ class AsyncApplicationsResource(AsyncAPIResource):
         Returns a list of resources provided by an application
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -817,7 +887,10 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                     },
                     application_list_resources_params.ApplicationListResourcesParams,

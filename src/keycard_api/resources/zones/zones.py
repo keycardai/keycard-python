@@ -372,7 +372,10 @@ class ZonesResource(SyncAPIResource):
     def list(
         self,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -386,6 +389,12 @@ class ZonesResource(SyncAPIResource):
         Returns a list of zones for the authenticated organization
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -404,7 +413,10 @@ class ZonesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -492,6 +504,10 @@ class ZonesResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         resource_id: str | Omit = omit,
         session_id: str | Omit = omit,
         user_id: str | Omit = omit,
@@ -508,6 +524,12 @@ class ZonesResource(SyncAPIResource):
         resource_id must be provided.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           resource_id: Filter by resource ID
 
           session_id: Filter by session ID
@@ -534,6 +556,10 @@ class ZonesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
                         "resource_id": resource_id,
                         "session_id": session_id,
                         "user_id": user_id,
@@ -796,7 +822,10 @@ class AsyncZonesResource(AsyncAPIResource):
     async def list(
         self,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -810,6 +839,12 @@ class AsyncZonesResource(AsyncAPIResource):
         Returns a list of zones for the authenticated organization
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -828,7 +863,10 @@ class AsyncZonesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -916,6 +954,10 @@ class AsyncZonesResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         resource_id: str | Omit = omit,
         session_id: str | Omit = omit,
         user_id: str | Omit = omit,
@@ -932,6 +974,12 @@ class AsyncZonesResource(AsyncAPIResource):
         resource_id must be provided.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           resource_id: Filter by resource ID
 
           session_id: Filter by session ID
@@ -958,6 +1006,10 @@ class AsyncZonesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
                         "resource_id": resource_id,
                         "session_id": session_id,
                         "user_id": user_id,

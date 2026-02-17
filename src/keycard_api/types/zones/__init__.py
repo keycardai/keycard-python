@@ -20,6 +20,7 @@ from .application import Application as Application
 from .base_fields import BaseFields as BaseFields
 from .zone_member import ZoneMember as ZoneMember
 from .metadata_param import MetadataParam as MetadataParam
+from .user_list_params import UserListParams as UserListParams
 from .application_trait import ApplicationTrait as ApplicationTrait
 from .member_add_params import MemberAddParams as MemberAddParams
 from .member_list_params import MemberListParams as MemberListParams
@@ -44,6 +45,7 @@ from .resource_create_params import ResourceCreateParams as ResourceCreateParams
 from .resource_list_response import ResourceListResponse as ResourceListResponse
 from .resource_update_params import ResourceUpdateParams as ResourceUpdateParams
 from .secret_password_fields import SecretPasswordFields as SecretPasswordFields
+from .user_agent_list_params import UserAgentListParams as UserAgentListParams
 from .application_list_params import ApplicationListParams as ApplicationListParams
 from .secret_retrieve_response import SecretRetrieveResponse as SecretRetrieveResponse
 from .user_agent_list_response import UserAgentListResponse as UserAgentListResponse

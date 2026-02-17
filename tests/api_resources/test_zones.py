@@ -204,7 +204,10 @@ class TestZones:
     @parametrize
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
         zone = client.zones.list(
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
             slug="slug",
         )
@@ -339,6 +342,10 @@ class TestZones:
     def test_method_list_session_resource_access_with_all_params(self, client: KeycardAPI) -> None:
         zone = client.zones.list_session_resource_access(
             zone_id="zoneId",
+            after="x",
+            before="x",
+            expand="total_count",
+            limit=1,
             resource_id="resource_id",
             session_id="session_id",
             user_id="user_id",
@@ -568,7 +575,10 @@ class TestAsyncZones:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         zone = await async_client.zones.list(
+            after="x",
+            before="x",
             cursor="cursor",
+            expand="total_count",
             limit=1,
             slug="slug",
         )
@@ -703,6 +713,10 @@ class TestAsyncZones:
     async def test_method_list_session_resource_access_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         zone = await async_client.zones.list_session_resource_access(
             zone_id="zoneId",
+            after="x",
+            before="x",
+            expand="total_count",
+            limit=1,
             resource_id="resource_id",
             session_id="session_id",
             user_id="user_id",

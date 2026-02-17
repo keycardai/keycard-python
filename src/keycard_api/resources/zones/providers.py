@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import List, Union, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -225,7 +225,10 @@ class ProvidersResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -241,6 +244,12 @@ class ProvidersResource(SyncAPIResource):
         Returns a list of providers in the specified zone
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -261,7 +270,10 @@ class ProvidersResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
@@ -512,7 +524,10 @@ class AsyncProvidersResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -528,6 +543,12 @@ class AsyncProvidersResource(AsyncAPIResource):
         Returns a list of providers in the specified zone
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -548,7 +569,10 @@ class AsyncProvidersResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "after": after,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,

@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+from typing import List, Union
+from typing_extensions import Literal
+
 import httpx
 
-from ..._types import Body, Query, Headers, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -13,6 +17,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ...types.zones import user_agent_list_params
 from ..._base_client import make_request_options
 from ...types.zones.user_agent import UserAgent
 from ...types.zones.user_agent_list_response import UserAgentListResponse
@@ -81,6 +86,10 @@ class UserAgentsResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -95,6 +104,12 @@ class UserAgentsResource(SyncAPIResource):
         Dynamic Client Registration.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -109,7 +124,19 @@ class UserAgentsResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/user-agents",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
+                    },
+                    user_agent_list_params.UserAgentListParams,
+                ),
             ),
             cast_to=UserAgentListResponse,
         )
@@ -176,6 +203,10 @@ class AsyncUserAgentsResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -190,6 +221,12 @@ class AsyncUserAgentsResource(AsyncAPIResource):
         Dynamic Client Registration.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -204,7 +241,19 @@ class AsyncUserAgentsResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/user-agents",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
+                    },
+                    user_agent_list_params.UserAgentListParams,
+                ),
             ),
             cast_to=UserAgentListResponse,
         )

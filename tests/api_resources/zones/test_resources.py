@@ -218,8 +218,12 @@ class TestResources:
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
         resource = client.zones.resources.list(
             zone_id="zoneId",
+            after="x",
+            before="x",
             credential_provider_id="credentialProviderId",
+            expand="total_count",
             identifier="identifier",
+            limit=1,
             slug="slug",
         )
         assert_matches_type(ResourceListResponse, resource, path=["response"])
@@ -514,8 +518,12 @@ class TestAsyncResources:
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         resource = await async_client.zones.resources.list(
             zone_id="zoneId",
+            after="x",
+            before="x",
             credential_provider_id="credentialProviderId",
+            expand="total_count",
             identifier="identifier",
+            limit=1,
             slug="slug",
         )
         assert_matches_type(ResourceListResponse, resource, path=["response"])

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, cast
+from typing import Any, List, Union, cast
 from typing_extensions import Literal
 
 import httpx
@@ -132,6 +132,10 @@ class SessionsResource(SyncAPIResource):
         zone_id: str,
         *,
         active: Literal["true"] | Omit = omit,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         session_type: Literal["user", "application"] | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
         user_id: str | Omit = omit,
@@ -149,6 +153,12 @@ class SessionsResource(SyncAPIResource):
         session. Can be filtered by session type, status, and user.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           user_id: Filter by user ID
 
           extra_headers: Send extra headers
@@ -172,6 +182,10 @@ class SessionsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "active": active,
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
                         "session_type": session_type,
                         "status": status,
                         "user_id": user_id,
@@ -328,6 +342,10 @@ class AsyncSessionsResource(AsyncAPIResource):
         zone_id: str,
         *,
         active: Literal["true"] | Omit = omit,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         session_type: Literal["user", "application"] | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
         user_id: str | Omit = omit,
@@ -345,6 +363,12 @@ class AsyncSessionsResource(AsyncAPIResource):
         session. Can be filtered by session type, status, and user.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           user_id: Filter by user ID
 
           extra_headers: Send extra headers
@@ -368,6 +392,10 @@ class AsyncSessionsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "active": active,
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
                         "session_type": session_type,
                         "status": status,
                         "user_id": user_id,

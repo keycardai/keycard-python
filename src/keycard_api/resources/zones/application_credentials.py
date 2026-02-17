@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional, cast
+from typing import Any, List, Union, Optional, cast
 from typing_extensions import Literal, overload
 
 import httpx
@@ -514,8 +514,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
         application_id: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -529,6 +532,12 @@ class ApplicationCredentialsResource(SyncAPIResource):
         Returns a list of application credentials in the specified zone
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -549,8 +558,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
                         "application_id": application_id,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -1083,8 +1095,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
         application_id: str | Omit = omit,
+        before: str | Omit = omit,
         cursor: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1098,6 +1113,12 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         Returns a list of application credentials in the specified zone
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1118,8 +1139,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "after": after,
                         "application_id": application_id,
+                        "before": before,
                         "cursor": cursor,
+                        "expand": expand,
                         "limit": limit,
                         "slug": slug,
                     },

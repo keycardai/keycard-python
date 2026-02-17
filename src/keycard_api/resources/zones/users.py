@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+from typing import List, Union
+from typing_extensions import Literal
+
 import httpx
 
-from ..._types import Body, Query, Headers, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -13,6 +17,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ...types.zones import user_list_params
 from ..._base_client import make_request_options
 from ...types.zones.user import User
 from ...types.zones.user_list_response import UserListResponse
@@ -81,6 +86,10 @@ class UsersResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -93,6 +102,12 @@ class UsersResource(SyncAPIResource):
         Can be filtered by email address.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -107,7 +122,19 @@ class UsersResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/users",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
+                    },
+                    user_list_params.UserListParams,
+                ),
             ),
             cast_to=UserListResponse,
         )
@@ -174,6 +201,10 @@ class AsyncUsersResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -186,6 +217,12 @@ class AsyncUsersResource(AsyncAPIResource):
         Can be filtered by email address.
 
         Args:
+          after: Cursor for forward pagination
+
+          before: Cursor for backward pagination
+
+          limit: Maximum number of items to return
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -200,7 +237,19 @@ class AsyncUsersResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/users",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "after": after,
+                        "before": before,
+                        "expand": expand,
+                        "limit": limit,
+                    },
+                    user_list_params.UserListParams,
+                ),
             ),
             cast_to=UserListResponse,
         )

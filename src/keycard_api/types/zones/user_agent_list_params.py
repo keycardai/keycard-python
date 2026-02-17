@@ -7,25 +7,17 @@ from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
 
-__all__ = ["ResourceListParams"]
+__all__ = ["UserAgentListParams"]
 
 
-class ResourceListParams(TypedDict, total=False):
+class UserAgentListParams(TypedDict, total=False):
     after: str
     """Cursor for forward pagination"""
 
     before: str
     """Cursor for backward pagination"""
 
-    credential_provider_id: Annotated[str, PropertyInfo(alias="credentialProviderId")]
-    """Filter resources by credential provider ID"""
-
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
-
-    identifier: str
-    """Filter resources by identifier"""
 
     limit: int
     """Maximum number of items to return"""
-
-    slug: str
