@@ -32,7 +32,7 @@ class SessionsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return SessionsResourceWithRawResponse(self)
 
@@ -41,7 +41,7 @@ class SessionsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return SessionsResourceWithStreamingResponse(self)
 
@@ -132,8 +132,6 @@ class SessionsResource(SyncAPIResource):
         zone_id: str,
         *,
         active: Literal["true"] | Omit = omit,
-        has_initiator: Literal["true"] | Omit = omit,
-        parent_id: str | Omit = omit,
         session_type: Literal["user", "application"] | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
         user_id: str | Omit = omit,
@@ -144,19 +142,13 @@ class SessionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionListResponse:
-        """Returns a list of authentication sessions in the specified zone.
+        """Returns entry sessions in the specified zone.
 
-        By default,
-        returns sessions with an initiator (application or user agent). Use parent_id
-        parameter to filter by specific parent session, or has_initiator=true to show
-        only sessions with an initiator. Can be filtered by session type, status, user,
-        and parent.
+        Entry sessions are app user
+        sessions with an initiator that are roots or direct children of a root user
+        session. Can be filtered by session type, status, and user.
 
         Args:
-          has_initiator: Filter sessions that have an initiator (application_id OR user_agent_id is set).
-
-          parent_id: Filter by parent session ID. Omit to show only web sessions (no parent).
-
           user_id: Filter by user ID
 
           extra_headers: Send extra headers
@@ -180,8 +172,6 @@ class SessionsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "active": active,
-                        "has_initiator": has_initiator,
-                        "parent_id": parent_id,
                         "session_type": session_type,
                         "status": status,
                         "user_id": user_id,
@@ -238,7 +228,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncSessionsResourceWithRawResponse(self)
 
@@ -247,7 +237,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncSessionsResourceWithStreamingResponse(self)
 
@@ -338,8 +328,6 @@ class AsyncSessionsResource(AsyncAPIResource):
         zone_id: str,
         *,
         active: Literal["true"] | Omit = omit,
-        has_initiator: Literal["true"] | Omit = omit,
-        parent_id: str | Omit = omit,
         session_type: Literal["user", "application"] | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
         user_id: str | Omit = omit,
@@ -350,19 +338,13 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionListResponse:
-        """Returns a list of authentication sessions in the specified zone.
+        """Returns entry sessions in the specified zone.
 
-        By default,
-        returns sessions with an initiator (application or user agent). Use parent_id
-        parameter to filter by specific parent session, or has_initiator=true to show
-        only sessions with an initiator. Can be filtered by session type, status, user,
-        and parent.
+        Entry sessions are app user
+        sessions with an initiator that are roots or direct children of a root user
+        session. Can be filtered by session type, status, and user.
 
         Args:
-          has_initiator: Filter sessions that have an initiator (application_id OR user_agent_id is set).
-
-          parent_id: Filter by parent session ID. Omit to show only web sessions (no parent).
-
           user_id: Filter by user ID
 
           extra_headers: Send extra headers
@@ -386,8 +368,6 @@ class AsyncSessionsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "active": active,
-                        "has_initiator": has_initiator,
-                        "parent_id": parent_id,
                         "session_type": session_type,
                         "status": status,
                         "user_id": user_id,

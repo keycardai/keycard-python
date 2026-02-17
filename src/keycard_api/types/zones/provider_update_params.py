@@ -63,9 +63,27 @@ class ProtocolsOauth2(TypedDict, total=False):
 
     registration_endpoint: Optional[str]
 
+    scope_parameter: Optional[str]
+    """The query parameter name for scopes in authorization requests.
+
+    Defaults to "scope". Set to null to unset.
+    """
+
+    scope_separator: Optional[str]
+    """The separator character for scope values.
+
+    Defaults to " " (space). Set to null to unset.
+    """
+
     scopes_supported: Optional[SequenceNotStr[str]]
 
     token_endpoint: Optional[str]
+
+    token_response_access_token_pointer: Optional[str]
+    """Dot-separated path to the access token in the token response body.
+
+    Defaults to "access_token". Set to null to unset.
+    """
 
 
 class ProtocolsOpenid(TypedDict, total=False):

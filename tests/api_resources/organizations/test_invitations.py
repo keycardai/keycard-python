@@ -26,6 +26,7 @@ class TestInvitations:
         invitation = client.organizations.invitations.create(
             organization_id="x",
             email="dev@stainless.com",
+            role="org_admin",
         )
         assert_matches_type(Invitation, invitation, path=["response"])
 
@@ -46,6 +47,7 @@ class TestInvitations:
         response = client.organizations.invitations.with_raw_response.create(
             organization_id="x",
             email="dev@stainless.com",
+            role="org_admin",
         )
 
         assert response.is_closed is True
@@ -59,6 +61,7 @@ class TestInvitations:
         with client.organizations.invitations.with_streaming_response.create(
             organization_id="x",
             email="dev@stainless.com",
+            role="org_admin",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -75,6 +78,7 @@ class TestInvitations:
             client.organizations.invitations.with_raw_response.create(
                 organization_id="",
                 email="dev@stainless.com",
+                role="org_admin",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -206,6 +210,7 @@ class TestAsyncInvitations:
         invitation = await async_client.organizations.invitations.create(
             organization_id="x",
             email="dev@stainless.com",
+            role="org_admin",
         )
         assert_matches_type(Invitation, invitation, path=["response"])
 
@@ -226,6 +231,7 @@ class TestAsyncInvitations:
         response = await async_client.organizations.invitations.with_raw_response.create(
             organization_id="x",
             email="dev@stainless.com",
+            role="org_admin",
         )
 
         assert response.is_closed is True
@@ -239,6 +245,7 @@ class TestAsyncInvitations:
         async with async_client.organizations.invitations.with_streaming_response.create(
             organization_id="x",
             email="dev@stainless.com",
+            role="org_admin",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -255,6 +262,7 @@ class TestAsyncInvitations:
             await async_client.organizations.invitations.with_raw_response.create(
                 organization_id="",
                 email="dev@stainless.com",
+                role="org_admin",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")

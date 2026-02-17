@@ -140,8 +140,6 @@ class TestSessions:
         session = client.zones.sessions.list(
             zone_id="zoneId",
             active="true",
-            has_initiator="true",
-            parent_id="parent_id",
             session_type="user",
             status="active",
             user_id="user_id",
@@ -363,8 +361,6 @@ class TestAsyncSessions:
         session = await async_client.zones.sessions.list(
             zone_id="zoneId",
             active="true",
-            has_initiator="true",
-            parent_id="parent_id",
             session_type="user",
             status="active",
             user_id="user_id",

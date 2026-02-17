@@ -29,9 +29,27 @@ class ProtocolsOauth2(BaseModel):
 
     registration_endpoint: Optional[str] = None
 
+    scope_parameter: Optional[str] = None
+    """The query parameter name for scopes in authorization requests.
+
+    Defaults to "scope". Slack v2 uses "user_scope".
+    """
+
+    scope_separator: Optional[str] = None
+    """The separator character for scope values.
+
+    Defaults to " " (space). Slack v2 uses ",".
+    """
+
     scopes_supported: Optional[List[str]] = None
 
     token_endpoint: Optional[str] = None
+
+    token_response_access_token_pointer: Optional[str] = None
+    """Dot-separated path to the access token in the token response body.
+
+    Defaults to "access_token". Slack v2 uses "authed_user.access_token".
+    """
 
 
 class ProtocolsOpenid(BaseModel):

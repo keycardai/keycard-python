@@ -53,9 +53,27 @@ class ProtocolsOauth2(TypedDict, total=False):
 
     registration_endpoint: str
 
+    scope_parameter: str
+    """The query parameter name for scopes in authorization requests.
+
+    Defaults to "scope". Slack v2 uses "user_scope".
+    """
+
+    scope_separator: str
+    """The separator character for scope values.
+
+    Defaults to " " (space). Slack v2 uses ",".
+    """
+
     scopes_supported: SequenceNotStr[str]
 
     token_endpoint: str
+
+    token_response_access_token_pointer: str
+    """Dot-separated path to the access token in the token response body.
+
+    Defaults to "access_token". Slack v2 uses "authed_user.access_token".
+    """
 
 
 class ProtocolsOpenid(TypedDict, total=False):

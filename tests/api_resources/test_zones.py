@@ -339,7 +339,6 @@ class TestZones:
     def test_method_list_session_resource_access_with_all_params(self, client: KeycardAPI) -> None:
         zone = client.zones.list_session_resource_access(
             zone_id="zoneId",
-            has_initiator="true",
             resource_id="resource_id",
             session_id="session_id",
             user_id="user_id",
@@ -704,7 +703,6 @@ class TestAsyncZones:
     async def test_method_list_session_resource_access_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         zone = await async_client.zones.list_session_resource_access(
             zone_id="zoneId",
-            has_initiator="true",
             resource_id="resource_id",
             session_id="session_id",
             user_id="user_id",

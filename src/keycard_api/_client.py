@@ -104,7 +104,7 @@ class KeycardAPI(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("KEYCARD_API_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.example.com"
+            base_url = f"https://api.keycard.ai"
 
         super().__init__(
             version=__version__,
@@ -336,7 +336,7 @@ class AsyncKeycardAPI(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("KEYCARD_API_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.example.com"
+            base_url = f"https://api.keycard.ai"
 
         super().__init__(
             version=__version__,

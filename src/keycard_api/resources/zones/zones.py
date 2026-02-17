@@ -172,7 +172,7 @@ class ZonesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return ZonesResourceWithRawResponse(self)
 
@@ -181,7 +181,7 @@ class ZonesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return ZonesResourceWithStreamingResponse(self)
 
@@ -492,7 +492,6 @@ class ZonesResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
-        has_initiator: Literal["true"] | Omit = omit,
         resource_id: str | Omit = omit,
         session_id: str | Omit = omit,
         user_id: str | Omit = omit,
@@ -503,16 +502,12 @@ class ZonesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ZoneListSessionResourceAccessResponse:
-        """Returns aggregated access records per session-resource pair.
-
-        At least one of
-        user_id, session_id, or resource_id must be provided. By default when filtering
-        by user_id, returns sessions with an initiator (application or user agent). Use
-        has_initiator=true to explicitly filter to sessions with an initiator.
+        """
+        Returns aggregated access records per entry session-resource pair, including
+        access from descendant sessions. At least one of user_id, session_id, or
+        resource_id must be provided.
 
         Args:
-          has_initiator: Filter sessions that have an initiator (application_id OR user_agent_id is set).
-
           resource_id: Filter by resource ID
 
           session_id: Filter by session ID
@@ -539,7 +534,6 @@ class ZonesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "has_initiator": has_initiator,
                         "resource_id": resource_id,
                         "session_id": session_id,
                         "user_id": user_id,
@@ -602,7 +596,7 @@ class AsyncZonesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncZonesResourceWithRawResponse(self)
 
@@ -611,7 +605,7 @@ class AsyncZonesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncZonesResourceWithStreamingResponse(self)
 
@@ -922,7 +916,6 @@ class AsyncZonesResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
-        has_initiator: Literal["true"] | Omit = omit,
         resource_id: str | Omit = omit,
         session_id: str | Omit = omit,
         user_id: str | Omit = omit,
@@ -933,16 +926,12 @@ class AsyncZonesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ZoneListSessionResourceAccessResponse:
-        """Returns aggregated access records per session-resource pair.
-
-        At least one of
-        user_id, session_id, or resource_id must be provided. By default when filtering
-        by user_id, returns sessions with an initiator (application or user agent). Use
-        has_initiator=true to explicitly filter to sessions with an initiator.
+        """
+        Returns aggregated access records per entry session-resource pair, including
+        access from descendant sessions. At least one of user_id, session_id, or
+        resource_id must be provided.
 
         Args:
-          has_initiator: Filter sessions that have an initiator (application_id OR user_agent_id is set).
-
           resource_id: Filter by resource ID
 
           session_id: Filter by session ID
@@ -969,7 +958,6 @@ class AsyncZonesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "has_initiator": has_initiator,
                         "resource_id": resource_id,
                         "session_id": session_id,
                         "user_id": user_id,

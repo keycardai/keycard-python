@@ -14,10 +14,7 @@ class InvitationCreateParams(TypedDict, total=False):
     email: Required[str]
     """Email address to invite"""
 
-    role: OrganizationRole
-    """
-    Role to assign when invitation is accepted (defaults to org_admin if not
-    provided)
-    """
+    role: Required[OrganizationRole]
+    """Role to assign when invitation is accepted"""
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]

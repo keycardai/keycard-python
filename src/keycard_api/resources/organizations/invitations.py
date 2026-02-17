@@ -33,7 +33,7 @@ class InvitationsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return InvitationsResourceWithRawResponse(self)
 
@@ -42,7 +42,7 @@ class InvitationsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return InvitationsResourceWithStreamingResponse(self)
 
@@ -51,7 +51,7 @@ class InvitationsResource(SyncAPIResource):
         organization_id: str,
         *,
         email: str,
-        role: OrganizationRole | Omit = omit,
+        role: OrganizationRole,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -68,8 +68,7 @@ class InvitationsResource(SyncAPIResource):
 
           email: Email address to invite
 
-          role: Role to assign when invitation is accepted (defaults to org_admin if not
-              provided)
+          role: Role to assign when invitation is accepted
 
           extra_headers: Send extra headers
 
@@ -213,7 +212,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncInvitationsResourceWithRawResponse(self)
 
@@ -222,7 +221,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncInvitationsResourceWithStreamingResponse(self)
 
@@ -231,7 +230,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         organization_id: str,
         *,
         email: str,
-        role: OrganizationRole | Omit = omit,
+        role: OrganizationRole,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -248,8 +247,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
 
           email: Email address to invite
 
-          role: Role to assign when invitation is accepted (defaults to org_admin if not
-              provided)
+          role: Role to assign when invitation is accepted
 
           extra_headers: Send extra headers
 
