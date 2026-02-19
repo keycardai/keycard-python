@@ -49,6 +49,13 @@ class ProtocolsOauth2(TypedDict, total=False):
 
     code_challenge_methods_supported: SequenceNotStr[str]
 
+    issuer: str
+    """OIDC issuer URL for discovery and token validation.
+
+    When omitted, the provider identifier is used as the issuer. New clients should
+    always set this explicitly.
+    """
+
     jwks_uri: str
 
     registration_endpoint: str

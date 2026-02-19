@@ -12,6 +12,9 @@ __all__ = ["Provider", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
 class ProtocolsOauth2(BaseModel):
     """OAuth 2.0 protocol configuration"""
 
+    issuer: str
+    """OIDC issuer URL used for discovery and token validation."""
+
     authorization_endpoint: Optional[str] = None
 
     authorization_resource_enabled: Optional[bool] = None

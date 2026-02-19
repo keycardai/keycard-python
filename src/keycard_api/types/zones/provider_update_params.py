@@ -59,6 +59,9 @@ class ProtocolsOauth2(TypedDict, total=False):
 
     code_challenge_methods_supported: Optional[SequenceNotStr[str]]
 
+    issuer: str
+    """OIDC issuer URL for discovery and token validation. Cannot be set to null."""
+
     jwks_uri: Optional[str]
 
     registration_endpoint: Optional[str]
