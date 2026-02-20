@@ -17,7 +17,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestServiceAccountToken:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: KeycardAPI) -> None:
         service_account_token = client.service_account_token.create(
@@ -27,7 +27,7 @@ class TestServiceAccountToken:
         )
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: KeycardAPI) -> None:
         service_account_token = client.service_account_token.create(
@@ -38,7 +38,7 @@ class TestServiceAccountToken:
         )
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: KeycardAPI) -> None:
         response = client.service_account_token.with_raw_response.create(
@@ -52,7 +52,7 @@ class TestServiceAccountToken:
         service_account_token = response.parse()
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: KeycardAPI) -> None:
         with client.service_account_token.with_streaming_response.create(
@@ -74,7 +74,7 @@ class TestAsyncServiceAccountToken:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncKeycardAPI) -> None:
         service_account_token = await async_client.service_account_token.create(
@@ -84,7 +84,7 @@ class TestAsyncServiceAccountToken:
         )
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         service_account_token = await async_client.service_account_token.create(
@@ -95,7 +95,7 @@ class TestAsyncServiceAccountToken:
         )
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.service_account_token.with_raw_response.create(
@@ -109,7 +109,7 @@ class TestAsyncServiceAccountToken:
         service_account_token = await response.parse()
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.service_account_token.with_streaming_response.create(

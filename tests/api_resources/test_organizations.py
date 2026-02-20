@@ -23,13 +23,13 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestOrganizations:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: KeycardAPI) -> None:
         organization = client.organizations.create()
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: KeycardAPI) -> None:
         organization = client.organizations.create(
@@ -38,7 +38,7 @@ class TestOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: KeycardAPI) -> None:
         response = client.organizations.with_raw_response.create()
@@ -48,7 +48,7 @@ class TestOrganizations:
         organization = response.parse()
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: KeycardAPI) -> None:
         with client.organizations.with_streaming_response.create() as response:
@@ -60,7 +60,7 @@ class TestOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: KeycardAPI) -> None:
         organization = client.organizations.retrieve(
@@ -68,7 +68,7 @@ class TestOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve_with_all_params(self, client: KeycardAPI) -> None:
         organization = client.organizations.retrieve(
@@ -78,7 +78,7 @@ class TestOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: KeycardAPI) -> None:
         response = client.organizations.with_raw_response.retrieve(
@@ -90,7 +90,7 @@ class TestOrganizations:
         organization = response.parse()
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: KeycardAPI) -> None:
         with client.organizations.with_streaming_response.retrieve(
@@ -104,7 +104,7 @@ class TestOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -112,7 +112,7 @@ class TestOrganizations:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: KeycardAPI) -> None:
         organization = client.organizations.update(
@@ -120,7 +120,7 @@ class TestOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: KeycardAPI) -> None:
         organization = client.organizations.update(
@@ -130,7 +130,7 @@ class TestOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: KeycardAPI) -> None:
         response = client.organizations.with_raw_response.update(
@@ -142,7 +142,7 @@ class TestOrganizations:
         organization = response.parse()
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: KeycardAPI) -> None:
         with client.organizations.with_streaming_response.update(
@@ -156,7 +156,7 @@ class TestOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -164,13 +164,13 @@ class TestOrganizations:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: KeycardAPI) -> None:
         organization = client.organizations.list()
         assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
         organization = client.organizations.list(
@@ -182,7 +182,7 @@ class TestOrganizations:
         )
         assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: KeycardAPI) -> None:
         response = client.organizations.with_raw_response.list()
@@ -192,7 +192,7 @@ class TestOrganizations:
         organization = response.parse()
         assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: KeycardAPI) -> None:
         with client.organizations.with_streaming_response.list() as response:
@@ -204,7 +204,7 @@ class TestOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_exchange_token(self, client: KeycardAPI) -> None:
         organization = client.organizations.exchange_token(
@@ -212,7 +212,7 @@ class TestOrganizations:
         )
         assert_matches_type(TokenResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_exchange_token_with_all_params(self, client: KeycardAPI) -> None:
         organization = client.organizations.exchange_token(
@@ -221,7 +221,7 @@ class TestOrganizations:
         )
         assert_matches_type(TokenResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_exchange_token(self, client: KeycardAPI) -> None:
         response = client.organizations.with_raw_response.exchange_token(
@@ -233,7 +233,7 @@ class TestOrganizations:
         organization = response.parse()
         assert_matches_type(TokenResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_exchange_token(self, client: KeycardAPI) -> None:
         with client.organizations.with_streaming_response.exchange_token(
@@ -247,7 +247,7 @@ class TestOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_exchange_token(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -255,7 +255,7 @@ class TestOrganizations:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_identities(self, client: KeycardAPI) -> None:
         organization = client.organizations.list_identities(
@@ -263,7 +263,7 @@ class TestOrganizations:
         )
         assert_matches_type(OrganizationListIdentitiesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_identities_with_all_params(self, client: KeycardAPI) -> None:
         organization = client.organizations.list_identities(
@@ -277,7 +277,7 @@ class TestOrganizations:
         )
         assert_matches_type(OrganizationListIdentitiesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list_identities(self, client: KeycardAPI) -> None:
         response = client.organizations.with_raw_response.list_identities(
@@ -289,7 +289,7 @@ class TestOrganizations:
         organization = response.parse()
         assert_matches_type(OrganizationListIdentitiesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list_identities(self, client: KeycardAPI) -> None:
         with client.organizations.with_streaming_response.list_identities(
@@ -303,7 +303,7 @@ class TestOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_list_identities(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -311,7 +311,7 @@ class TestOrganizations:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_roles(self, client: KeycardAPI) -> None:
         organization = client.organizations.list_roles(
@@ -319,7 +319,7 @@ class TestOrganizations:
         )
         assert_matches_type(OrganizationListRolesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_roles_with_all_params(self, client: KeycardAPI) -> None:
         organization = client.organizations.list_roles(
@@ -330,7 +330,7 @@ class TestOrganizations:
         )
         assert_matches_type(OrganizationListRolesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list_roles(self, client: KeycardAPI) -> None:
         response = client.organizations.with_raw_response.list_roles(
@@ -342,7 +342,7 @@ class TestOrganizations:
         organization = response.parse()
         assert_matches_type(OrganizationListRolesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list_roles(self, client: KeycardAPI) -> None:
         with client.organizations.with_streaming_response.list_roles(
@@ -356,7 +356,7 @@ class TestOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_list_roles(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -370,13 +370,13 @@ class TestAsyncOrganizations:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.create()
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.create(
@@ -385,7 +385,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.with_raw_response.create()
@@ -395,7 +395,7 @@ class TestAsyncOrganizations:
         organization = await response.parse()
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.with_streaming_response.create() as response:
@@ -407,7 +407,7 @@ class TestAsyncOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.retrieve(
@@ -415,7 +415,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.retrieve(
@@ -425,7 +425,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.with_raw_response.retrieve(
@@ -437,7 +437,7 @@ class TestAsyncOrganizations:
         organization = await response.parse()
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.with_streaming_response.retrieve(
@@ -451,7 +451,7 @@ class TestAsyncOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -459,7 +459,7 @@ class TestAsyncOrganizations:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.update(
@@ -467,7 +467,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.update(
@@ -477,7 +477,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.with_raw_response.update(
@@ -489,7 +489,7 @@ class TestAsyncOrganizations:
         organization = await response.parse()
         assert_matches_type(Organization, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.with_streaming_response.update(
@@ -503,7 +503,7 @@ class TestAsyncOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -511,13 +511,13 @@ class TestAsyncOrganizations:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.list()
         assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.list(
@@ -529,7 +529,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.with_raw_response.list()
@@ -539,7 +539,7 @@ class TestAsyncOrganizations:
         organization = await response.parse()
         assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.with_streaming_response.list() as response:
@@ -551,7 +551,7 @@ class TestAsyncOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_exchange_token(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.exchange_token(
@@ -559,7 +559,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(TokenResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_exchange_token_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.exchange_token(
@@ -568,7 +568,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(TokenResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_exchange_token(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.with_raw_response.exchange_token(
@@ -580,7 +580,7 @@ class TestAsyncOrganizations:
         organization = await response.parse()
         assert_matches_type(TokenResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_exchange_token(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.with_streaming_response.exchange_token(
@@ -594,7 +594,7 @@ class TestAsyncOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_exchange_token(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -602,7 +602,7 @@ class TestAsyncOrganizations:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_identities(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.list_identities(
@@ -610,7 +610,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(OrganizationListIdentitiesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_identities_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.list_identities(
@@ -624,7 +624,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(OrganizationListIdentitiesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list_identities(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.with_raw_response.list_identities(
@@ -636,7 +636,7 @@ class TestAsyncOrganizations:
         organization = await response.parse()
         assert_matches_type(OrganizationListIdentitiesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list_identities(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.with_streaming_response.list_identities(
@@ -650,7 +650,7 @@ class TestAsyncOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_list_identities(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -658,7 +658,7 @@ class TestAsyncOrganizations:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_roles(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.list_roles(
@@ -666,7 +666,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(OrganizationListRolesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_roles_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.list_roles(
@@ -677,7 +677,7 @@ class TestAsyncOrganizations:
         )
         assert_matches_type(OrganizationListRolesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list_roles(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.with_raw_response.list_roles(
@@ -689,7 +689,7 @@ class TestAsyncOrganizations:
         organization = await response.parse()
         assert_matches_type(OrganizationListRolesResponse, organization, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list_roles(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.with_streaming_response.list_roles(
@@ -703,7 +703,7 @@ class TestAsyncOrganizations:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_list_roles(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):

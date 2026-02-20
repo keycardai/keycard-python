@@ -20,7 +20,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestMembers:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: KeycardAPI) -> None:
         member = client.zones.members.retrieve(
@@ -29,7 +29,7 @@ class TestMembers:
         )
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: KeycardAPI) -> None:
         response = client.zones.members.with_raw_response.retrieve(
@@ -42,7 +42,7 @@ class TestMembers:
         member = response.parse()
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: KeycardAPI) -> None:
         with client.zones.members.with_streaming_response.retrieve(
@@ -57,7 +57,7 @@ class TestMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -72,7 +72,7 @@ class TestMembers:
                 zone_id="zoneId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: KeycardAPI) -> None:
         member = client.zones.members.update(
@@ -82,7 +82,7 @@ class TestMembers:
         )
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: KeycardAPI) -> None:
         response = client.zones.members.with_raw_response.update(
@@ -96,7 +96,7 @@ class TestMembers:
         member = response.parse()
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: KeycardAPI) -> None:
         with client.zones.members.with_streaming_response.update(
@@ -112,7 +112,7 @@ class TestMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -129,7 +129,7 @@ class TestMembers:
                 role="zone_manager",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: KeycardAPI) -> None:
         member = client.zones.members.list(
@@ -137,7 +137,7 @@ class TestMembers:
         )
         assert_matches_type(MemberListResponse, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
         member = client.zones.members.list(
@@ -150,7 +150,7 @@ class TestMembers:
         )
         assert_matches_type(MemberListResponse, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: KeycardAPI) -> None:
         response = client.zones.members.with_raw_response.list(
@@ -162,7 +162,7 @@ class TestMembers:
         member = response.parse()
         assert_matches_type(MemberListResponse, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: KeycardAPI) -> None:
         with client.zones.members.with_streaming_response.list(
@@ -176,7 +176,7 @@ class TestMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_list(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -184,7 +184,7 @@ class TestMembers:
                 zone_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: KeycardAPI) -> None:
         member = client.zones.members.delete(
@@ -193,7 +193,7 @@ class TestMembers:
         )
         assert member is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: KeycardAPI) -> None:
         response = client.zones.members.with_raw_response.delete(
@@ -206,7 +206,7 @@ class TestMembers:
         member = response.parse()
         assert member is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: KeycardAPI) -> None:
         with client.zones.members.with_streaming_response.delete(
@@ -221,7 +221,7 @@ class TestMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -236,7 +236,7 @@ class TestMembers:
                 zone_id="zoneId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_add(self, client: KeycardAPI) -> None:
         member = client.zones.members.add(
@@ -246,7 +246,7 @@ class TestMembers:
         )
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_add(self, client: KeycardAPI) -> None:
         response = client.zones.members.with_raw_response.add(
@@ -260,7 +260,7 @@ class TestMembers:
         member = response.parse()
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_add(self, client: KeycardAPI) -> None:
         with client.zones.members.with_streaming_response.add(
@@ -276,7 +276,7 @@ class TestMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_add(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -292,7 +292,7 @@ class TestAsyncMembers:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         member = await async_client.zones.members.retrieve(
@@ -301,7 +301,7 @@ class TestAsyncMembers:
         )
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.zones.members.with_raw_response.retrieve(
@@ -314,7 +314,7 @@ class TestAsyncMembers:
         member = await response.parse()
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.zones.members.with_streaming_response.retrieve(
@@ -329,7 +329,7 @@ class TestAsyncMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -344,7 +344,7 @@ class TestAsyncMembers:
                 zone_id="zoneId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncKeycardAPI) -> None:
         member = await async_client.zones.members.update(
@@ -354,7 +354,7 @@ class TestAsyncMembers:
         )
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.zones.members.with_raw_response.update(
@@ -368,7 +368,7 @@ class TestAsyncMembers:
         member = await response.parse()
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.zones.members.with_streaming_response.update(
@@ -384,7 +384,7 @@ class TestAsyncMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -401,7 +401,7 @@ class TestAsyncMembers:
                 role="zone_manager",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncKeycardAPI) -> None:
         member = await async_client.zones.members.list(
@@ -409,7 +409,7 @@ class TestAsyncMembers:
         )
         assert_matches_type(MemberListResponse, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         member = await async_client.zones.members.list(
@@ -422,7 +422,7 @@ class TestAsyncMembers:
         )
         assert_matches_type(MemberListResponse, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.zones.members.with_raw_response.list(
@@ -434,7 +434,7 @@ class TestAsyncMembers:
         member = await response.parse()
         assert_matches_type(MemberListResponse, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.zones.members.with_streaming_response.list(
@@ -448,7 +448,7 @@ class TestAsyncMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_list(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -456,7 +456,7 @@ class TestAsyncMembers:
                 zone_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncKeycardAPI) -> None:
         member = await async_client.zones.members.delete(
@@ -465,7 +465,7 @@ class TestAsyncMembers:
         )
         assert member is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.zones.members.with_raw_response.delete(
@@ -478,7 +478,7 @@ class TestAsyncMembers:
         member = await response.parse()
         assert member is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.zones.members.with_streaming_response.delete(
@@ -493,7 +493,7 @@ class TestAsyncMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -508,7 +508,7 @@ class TestAsyncMembers:
                 zone_id="zoneId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_add(self, async_client: AsyncKeycardAPI) -> None:
         member = await async_client.zones.members.add(
@@ -518,7 +518,7 @@ class TestAsyncMembers:
         )
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_add(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.zones.members.with_raw_response.add(
@@ -532,7 +532,7 @@ class TestAsyncMembers:
         member = await response.parse()
         assert_matches_type(ZoneMember, member, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_add(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.zones.members.with_streaming_response.add(
@@ -548,7 +548,7 @@ class TestAsyncMembers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_add(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):

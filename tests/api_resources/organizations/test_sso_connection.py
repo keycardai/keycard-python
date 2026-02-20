@@ -19,7 +19,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestSSOConnection:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: KeycardAPI) -> None:
         sso_connection = client.organizations.sso_connection.retrieve(
@@ -27,7 +27,7 @@ class TestSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve_with_all_params(self, client: KeycardAPI) -> None:
         sso_connection = client.organizations.sso_connection.retrieve(
@@ -37,7 +37,7 @@ class TestSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: KeycardAPI) -> None:
         response = client.organizations.sso_connection.with_raw_response.retrieve(
@@ -49,7 +49,7 @@ class TestSSOConnection:
         sso_connection = response.parse()
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: KeycardAPI) -> None:
         with client.organizations.sso_connection.with_streaming_response.retrieve(
@@ -63,7 +63,7 @@ class TestSSOConnection:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -71,7 +71,7 @@ class TestSSOConnection:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: KeycardAPI) -> None:
         sso_connection = client.organizations.sso_connection.update(
@@ -79,7 +79,7 @@ class TestSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: KeycardAPI) -> None:
         sso_connection = client.organizations.sso_connection.update(
@@ -102,7 +102,7 @@ class TestSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: KeycardAPI) -> None:
         response = client.organizations.sso_connection.with_raw_response.update(
@@ -114,7 +114,7 @@ class TestSSOConnection:
         sso_connection = response.parse()
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: KeycardAPI) -> None:
         with client.organizations.sso_connection.with_streaming_response.update(
@@ -128,7 +128,7 @@ class TestSSOConnection:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -136,7 +136,7 @@ class TestSSOConnection:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_disable(self, client: KeycardAPI) -> None:
         sso_connection = client.organizations.sso_connection.disable(
@@ -144,7 +144,7 @@ class TestSSOConnection:
         )
         assert sso_connection is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_disable_with_all_params(self, client: KeycardAPI) -> None:
         sso_connection = client.organizations.sso_connection.disable(
@@ -153,7 +153,7 @@ class TestSSOConnection:
         )
         assert sso_connection is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_disable(self, client: KeycardAPI) -> None:
         response = client.organizations.sso_connection.with_raw_response.disable(
@@ -165,7 +165,7 @@ class TestSSOConnection:
         sso_connection = response.parse()
         assert sso_connection is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_disable(self, client: KeycardAPI) -> None:
         with client.organizations.sso_connection.with_streaming_response.disable(
@@ -179,7 +179,7 @@ class TestSSOConnection:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_disable(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -187,7 +187,7 @@ class TestSSOConnection:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_enable(self, client: KeycardAPI) -> None:
         sso_connection = client.organizations.sso_connection.enable(
@@ -197,7 +197,7 @@ class TestSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_enable_with_all_params(self, client: KeycardAPI) -> None:
         sso_connection = client.organizations.sso_connection.enable(
@@ -220,7 +220,7 @@ class TestSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_enable(self, client: KeycardAPI) -> None:
         response = client.organizations.sso_connection.with_raw_response.enable(
@@ -234,7 +234,7 @@ class TestSSOConnection:
         sso_connection = response.parse()
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_enable(self, client: KeycardAPI) -> None:
         with client.organizations.sso_connection.with_streaming_response.enable(
@@ -250,7 +250,7 @@ class TestSSOConnection:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_enable(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -266,7 +266,7 @@ class TestAsyncSSOConnection:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         sso_connection = await async_client.organizations.sso_connection.retrieve(
@@ -274,7 +274,7 @@ class TestAsyncSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         sso_connection = await async_client.organizations.sso_connection.retrieve(
@@ -284,7 +284,7 @@ class TestAsyncSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.sso_connection.with_raw_response.retrieve(
@@ -296,7 +296,7 @@ class TestAsyncSSOConnection:
         sso_connection = await response.parse()
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.sso_connection.with_streaming_response.retrieve(
@@ -310,7 +310,7 @@ class TestAsyncSSOConnection:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -318,7 +318,7 @@ class TestAsyncSSOConnection:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncKeycardAPI) -> None:
         sso_connection = await async_client.organizations.sso_connection.update(
@@ -326,7 +326,7 @@ class TestAsyncSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         sso_connection = await async_client.organizations.sso_connection.update(
@@ -349,7 +349,7 @@ class TestAsyncSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.sso_connection.with_raw_response.update(
@@ -361,7 +361,7 @@ class TestAsyncSSOConnection:
         sso_connection = await response.parse()
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.sso_connection.with_streaming_response.update(
@@ -375,7 +375,7 @@ class TestAsyncSSOConnection:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -383,7 +383,7 @@ class TestAsyncSSOConnection:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_disable(self, async_client: AsyncKeycardAPI) -> None:
         sso_connection = await async_client.organizations.sso_connection.disable(
@@ -391,7 +391,7 @@ class TestAsyncSSOConnection:
         )
         assert sso_connection is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_disable_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         sso_connection = await async_client.organizations.sso_connection.disable(
@@ -400,7 +400,7 @@ class TestAsyncSSOConnection:
         )
         assert sso_connection is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_disable(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.sso_connection.with_raw_response.disable(
@@ -412,7 +412,7 @@ class TestAsyncSSOConnection:
         sso_connection = await response.parse()
         assert sso_connection is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_disable(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.sso_connection.with_streaming_response.disable(
@@ -426,7 +426,7 @@ class TestAsyncSSOConnection:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_disable(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
@@ -434,7 +434,7 @@ class TestAsyncSSOConnection:
                 organization_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_enable(self, async_client: AsyncKeycardAPI) -> None:
         sso_connection = await async_client.organizations.sso_connection.enable(
@@ -444,7 +444,7 @@ class TestAsyncSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_enable_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         sso_connection = await async_client.organizations.sso_connection.enable(
@@ -467,7 +467,7 @@ class TestAsyncSSOConnection:
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_enable(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.organizations.sso_connection.with_raw_response.enable(
@@ -481,7 +481,7 @@ class TestAsyncSSOConnection:
         sso_connection = await response.parse()
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_enable(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.organizations.sso_connection.with_streaming_response.enable(
@@ -497,7 +497,7 @@ class TestAsyncSSOConnection:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_enable(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
