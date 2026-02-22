@@ -1,7 +1,7 @@
 # Keycard API Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/keycard_api.svg?label=pypi%20(stable))](https://pypi.org/project/keycard_api/)
+[![PyPI version](https://img.shields.io/pypi/v/keycard-api.svg?label=pypi%20(stable))](https://pypi.org/project/keycard-api/)
 
 The Keycard API Python library provides convenient access to the Keycard API REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
@@ -16,12 +16,9 @@ The REST API documentation can be found on [docs.keycard.ai](https://docs.keycar
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/keycardai/keycard-python.git
+# install from PyPI
+pip install keycard-api
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install keycard_api`
 
 ## Usage
 
@@ -69,8 +66,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'keycard_api[aiohttp] @ git+ssh://git@github.com/keycardai/keycard-python.git'
+# install from PyPI
+pip install keycard-api[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:

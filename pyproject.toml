@@ -1,5 +1,5 @@
 [project]
-name = "keycard_api"
+name = "keycard-api"
 version = "0.0.1"
 description = "The official Python library for the keycard-api API"
 dynamic = ["readme"]
