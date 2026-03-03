@@ -115,7 +115,6 @@ class ApplicationsResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/zones/{zone_id}/applications",
             body=maybe_transform(
@@ -131,7 +130,11 @@ class ApplicationsResource(SyncAPIResource):
                 application_create_params.ApplicationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -164,11 +167,14 @@ class ApplicationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -219,7 +225,6 @@ class ApplicationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/zones/{zone_id}/applications/{id}",
             body=maybe_transform(
@@ -234,7 +239,11 @@ class ApplicationsResource(SyncAPIResource):
                 application_update_params.ApplicationUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -285,7 +294,6 @@ class ApplicationsResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/applications",
             options=make_request_options(
@@ -307,6 +315,7 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_params.ApplicationListParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListResponse,
         )
@@ -340,11 +349,14 @@ class ApplicationsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -388,7 +400,6 @@ class ApplicationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/applications/{id}/application-credentials",
             options=make_request_options(
@@ -406,6 +417,7 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListCredentialsResponse,
         )
@@ -449,7 +461,6 @@ class ApplicationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/applications/{id}/resources",
             options=make_request_options(
@@ -467,6 +478,7 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_resources_params.ApplicationListResourcesParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListResourcesResponse,
         )
@@ -543,7 +555,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/zones/{zone_id}/applications",
             body=await async_maybe_transform(
@@ -559,7 +570,11 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 application_create_params.ApplicationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -592,11 +607,14 @@ class AsyncApplicationsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -647,7 +665,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/zones/{zone_id}/applications/{id}",
             body=await async_maybe_transform(
@@ -662,7 +679,11 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 application_update_params.ApplicationUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -713,7 +734,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/applications",
             options=make_request_options(
@@ -735,6 +755,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_params.ApplicationListParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListResponse,
         )
@@ -768,11 +789,14 @@ class AsyncApplicationsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -816,7 +840,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/applications/{id}/application-credentials",
             options=make_request_options(
@@ -834,6 +857,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListCredentialsResponse,
         )
@@ -877,7 +901,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/applications/{id}/resources",
             options=make_request_options(
@@ -895,6 +918,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_resources_params.ApplicationListResourcesParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListResourcesResponse,
         )

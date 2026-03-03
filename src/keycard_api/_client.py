@@ -23,6 +23,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._compat import cached_property
+from ._models import SecurityOptions
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
@@ -154,10 +155,12 @@ class KeycardAPI(SyncAPIClient):
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
 
-    @property
     @override
-    def auth_headers(self) -> dict[str, str]:
-        return {**self._org_management_basic_auth, **self._vault_api_bearer_auth}
+    def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
+        return {
+            **(self._org_management_basic_auth if security.get("org_management_basic_auth", False) else {}),
+            **(self._vault_api_bearer_auth if security.get("vault_api_bearer_auth", False) else {}),
+        }
 
     @property
     def _org_management_basic_auth(self) -> dict[str, str]:
@@ -386,10 +389,12 @@ class AsyncKeycardAPI(AsyncAPIClient):
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
 
-    @property
     @override
-    def auth_headers(self) -> dict[str, str]:
-        return {**self._org_management_basic_auth, **self._vault_api_bearer_auth}
+    def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
+        return {
+            **(self._org_management_basic_auth if security.get("org_management_basic_auth", False) else {}),
+            **(self._vault_api_bearer_auth if security.get("vault_api_bearer_auth", False) else {}),
+        }
 
     @property
     def _org_management_basic_auth(self) -> dict[str, str]:

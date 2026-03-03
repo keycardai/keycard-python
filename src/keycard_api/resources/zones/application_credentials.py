@@ -250,7 +250,6 @@ class ApplicationCredentialsResource(SyncAPIResource):
     ) -> ApplicationCredentialCreateResponse:
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             ApplicationCredentialCreateResponse,
             self._post(
@@ -267,7 +266,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     application_credential_create_params.ApplicationCredentialCreateParams,
                 ),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(
                     Any, ApplicationCredentialCreateResponse
@@ -303,13 +306,16 @@ class ApplicationCredentialsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Credential,
             self._get(
                 f"/zones/{zone_id}/application-credentials/{id}",
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -490,7 +496,6 @@ class ApplicationCredentialsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Credential,
             self._patch(
@@ -504,7 +509,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     application_credential_update_params.ApplicationCredentialUpdateParams,
                 ),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -548,7 +557,6 @@ class ApplicationCredentialsResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/application-credentials",
             options=make_request_options(
@@ -568,6 +576,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     },
                     application_credential_list_params.ApplicationCredentialListParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationCredentialListResponse,
         )
@@ -601,11 +610,14 @@ class ApplicationCredentialsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/application-credentials/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -831,7 +843,6 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
     ) -> ApplicationCredentialCreateResponse:
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             ApplicationCredentialCreateResponse,
             await self._post(
@@ -848,7 +859,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     application_credential_create_params.ApplicationCredentialCreateParams,
                 ),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(
                     Any, ApplicationCredentialCreateResponse
@@ -884,13 +899,16 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Credential,
             await self._get(
                 f"/zones/{zone_id}/application-credentials/{id}",
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -1071,7 +1089,6 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Credential,
             await self._patch(
@@ -1085,7 +1102,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     application_credential_update_params.ApplicationCredentialUpdateParams,
                 ),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -1129,7 +1150,6 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/application-credentials",
             options=make_request_options(
@@ -1149,6 +1169,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     },
                     application_credential_list_params.ApplicationCredentialListParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationCredentialListResponse,
         )
@@ -1182,11 +1203,14 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/application-credentials/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )

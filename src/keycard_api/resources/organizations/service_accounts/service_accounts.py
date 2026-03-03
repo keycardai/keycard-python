@@ -97,7 +97,6 @@ class ServiceAccountsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/organizations/{organization_id}/service-accounts",
             body=maybe_transform(
@@ -108,7 +107,11 @@ class ServiceAccountsResource(SyncAPIResource):
                 service_account_create_params.ServiceAccountCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ServiceAccount,
         )
@@ -151,7 +154,6 @@ class ServiceAccountsResource(SyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             options=make_request_options(
@@ -160,6 +162,7 @@ class ServiceAccountsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, service_account_retrieve_params.ServiceAccountRetrieveParams),
+                security={},
             ),
             cast_to=ServiceAccount,
         )
@@ -204,7 +207,6 @@ class ServiceAccountsResource(SyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             body=maybe_transform(
@@ -215,7 +217,11 @@ class ServiceAccountsResource(SyncAPIResource):
                 service_account_update_params.ServiceAccountUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ServiceAccount,
         )
@@ -262,7 +268,6 @@ class ServiceAccountsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/service-accounts",
             options=make_request_options(
@@ -279,6 +284,7 @@ class ServiceAccountsResource(SyncAPIResource):
                     },
                     service_account_list_params.ServiceAccountListParams,
                 ),
+                security={},
             ),
             cast_to=ServiceAccountListResponse,
         )
@@ -318,11 +324,14 @@ class ServiceAccountsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -387,7 +396,6 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/organizations/{organization_id}/service-accounts",
             body=await async_maybe_transform(
@@ -398,7 +406,11 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                 service_account_create_params.ServiceAccountCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ServiceAccount,
         )
@@ -441,7 +453,6 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             options=make_request_options(
@@ -452,6 +463,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, service_account_retrieve_params.ServiceAccountRetrieveParams
                 ),
+                security={},
             ),
             cast_to=ServiceAccount,
         )
@@ -496,7 +508,6 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         if not service_account_id:
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             body=await async_maybe_transform(
@@ -507,7 +518,11 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                 service_account_update_params.ServiceAccountUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ServiceAccount,
         )
@@ -554,7 +569,6 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/service-accounts",
             options=make_request_options(
@@ -571,6 +585,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                     },
                     service_account_list_params.ServiceAccountListParams,
                 ),
+                security={},
             ),
             cast_to=ServiceAccountListResponse,
         )
@@ -610,11 +625,14 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )

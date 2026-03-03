@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..._types import Body, Query, Headers, NotGiven, omit, not_given
+from ..._types import Body, Query, Headers, NotGiven, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -78,7 +78,6 @@ class McpGatewaysResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not application_id:
             raise ValueError(f"Expected a non-empty value for `application_id` but received {application_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/zones/{zone_id}/mcp-gateways/{application_id}/mcp-servers",
             body=maybe_transform(
@@ -90,7 +89,11 @@ class McpGatewaysResource(SyncAPIResource):
                 mcp_gateway_create_mcp_server_params.McpGatewayCreateMcpServerParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=McpGatewayCreateMcpServerResponse,
         )
@@ -153,7 +156,6 @@ class AsyncMcpGatewaysResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not application_id:
             raise ValueError(f"Expected a non-empty value for `application_id` but received {application_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/zones/{zone_id}/mcp-gateways/{application_id}/mcp-servers",
             body=await async_maybe_transform(
@@ -165,7 +167,11 @@ class AsyncMcpGatewaysResource(AsyncAPIResource):
                 mcp_gateway_create_mcp_server_params.McpGatewayCreateMcpServerParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=McpGatewayCreateMcpServerResponse,
         )

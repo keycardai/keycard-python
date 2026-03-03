@@ -132,12 +132,15 @@ class OrganizationsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             "/organizations",
             body=maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Organization,
         )
@@ -175,7 +178,6 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}",
             options=make_request_options(
@@ -184,6 +186,7 @@ class OrganizationsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams),
+                security={},
             ),
             cast_to=Organization,
         )
@@ -220,12 +223,15 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/organizations/{organization_id}",
             body=maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Organization,
         )
@@ -267,7 +273,6 @@ class OrganizationsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             "/organizations",
             options=make_request_options(
@@ -284,6 +289,7 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_params.OrganizationListParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListResponse,
         )
@@ -317,11 +323,14 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=TokenResponse,
         )
@@ -371,7 +380,6 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/identities",
             options=make_request_options(
@@ -389,6 +397,7 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListIdentitiesResponse,
         )
@@ -438,7 +447,6 @@ class OrganizationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/roles",
             options=make_request_options(
@@ -453,6 +461,7 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_roles_params.OrganizationListRolesParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListRolesResponse,
         )
@@ -519,12 +528,15 @@ class AsyncOrganizationsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             "/organizations",
             body=await async_maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Organization,
         )
@@ -562,7 +574,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}",
             options=make_request_options(
@@ -573,6 +584,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams
                 ),
+                security={},
             ),
             cast_to=Organization,
         )
@@ -609,12 +621,15 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/organizations/{organization_id}",
             body=await async_maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Organization,
         )
@@ -656,7 +671,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             "/organizations",
             options=make_request_options(
@@ -673,6 +687,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_params.OrganizationListParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListResponse,
         )
@@ -706,11 +721,14 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=TokenResponse,
         )
@@ -760,7 +778,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/identities",
             options=make_request_options(
@@ -778,6 +795,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListIdentitiesResponse,
         )
@@ -827,7 +845,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/roles",
             options=make_request_options(
@@ -842,6 +859,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_roles_params.OrganizationListRolesParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListRolesResponse,
         )

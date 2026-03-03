@@ -68,11 +68,14 @@ class InvitationsResource(SyncAPIResource):
         if not token:
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/invitations/{token}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=InvitationRetrieveResponse,
         )
@@ -104,11 +107,14 @@ class InvitationsResource(SyncAPIResource):
         if not token:
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/invitations/{token}/accept",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=InvitationAcceptResponse,
         )
@@ -161,11 +167,14 @@ class AsyncInvitationsResource(AsyncAPIResource):
         if not token:
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/invitations/{token}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=InvitationRetrieveResponse,
         )
@@ -197,11 +206,14 @@ class AsyncInvitationsResource(AsyncAPIResource):
         if not token:
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/invitations/{token}/accept",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=InvitationAcceptResponse,
         )

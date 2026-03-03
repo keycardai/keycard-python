@@ -73,13 +73,16 @@ class SessionsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Session,
             self._get(
                 f"/zones/{zone_id}/sessions/{id}",
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -114,14 +117,17 @@ class SessionsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Session,
             self._patch(
                 f"/zones/{zone_id}/sessions/{id}",
                 body=maybe_transform({"status": status}, session_update_params.SessionUpdateParams),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -171,7 +177,6 @@ class SessionsResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/sessions",
             options=make_request_options(
@@ -192,6 +197,7 @@ class SessionsResource(SyncAPIResource):
                     },
                     session_list_params.SessionListParams,
                 ),
+                security={},
             ),
             cast_to=SessionListResponse,
         )
@@ -225,11 +231,14 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/sessions/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -283,13 +292,16 @@ class AsyncSessionsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Session,
             await self._get(
                 f"/zones/{zone_id}/sessions/{id}",
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -324,14 +336,17 @@ class AsyncSessionsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return cast(
             Session,
             await self._patch(
                 f"/zones/{zone_id}/sessions/{id}",
                 body=await async_maybe_transform({"status": status}, session_update_params.SessionUpdateParams),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -381,7 +396,6 @@ class AsyncSessionsResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/sessions",
             options=make_request_options(
@@ -402,6 +416,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     },
                     session_list_params.SessionListParams,
                 ),
+                security={},
             ),
             cast_to=SessionListResponse,
         )
@@ -435,11 +450,14 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/sessions/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )

@@ -76,11 +76,14 @@ class MembersResource(SyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `organization_user_id` but received {organization_user_id!r}"
             )
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/members/{organization_user_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ZoneMember,
         )
@@ -121,12 +124,15 @@ class MembersResource(SyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `organization_user_id` but received {organization_user_id!r}"
             )
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._patch(
             f"/zones/{zone_id}/members/{organization_user_id}",
             body=maybe_transform({"role": role}, member_update_params.MemberUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ZoneMember,
         )
@@ -171,7 +177,6 @@ class MembersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/members",
             options=make_request_options(
@@ -189,6 +194,7 @@ class MembersResource(SyncAPIResource):
                     },
                     member_list_params.MemberListParams,
                 ),
+                security={},
             ),
             cast_to=MemberListResponse,
         )
@@ -226,11 +232,14 @@ class MembersResource(SyncAPIResource):
                 f"Expected a non-empty value for `organization_user_id` but received {organization_user_id!r}"
             )
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/zones/{zone_id}/members/{organization_user_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -267,7 +276,6 @@ class MembersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/zones/{zone_id}/members",
             body=maybe_transform(
@@ -278,7 +286,11 @@ class MembersResource(SyncAPIResource):
                 member_add_params.MemberAddParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ZoneMember,
         )
@@ -334,11 +346,14 @@ class AsyncMembersResource(AsyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `organization_user_id` but received {organization_user_id!r}"
             )
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/members/{organization_user_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ZoneMember,
         )
@@ -379,12 +394,15 @@ class AsyncMembersResource(AsyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `organization_user_id` but received {organization_user_id!r}"
             )
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._patch(
             f"/zones/{zone_id}/members/{organization_user_id}",
             body=await async_maybe_transform({"role": role}, member_update_params.MemberUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ZoneMember,
         )
@@ -429,7 +447,6 @@ class AsyncMembersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/members",
             options=make_request_options(
@@ -447,6 +464,7 @@ class AsyncMembersResource(AsyncAPIResource):
                     },
                     member_list_params.MemberListParams,
                 ),
+                security={},
             ),
             cast_to=MemberListResponse,
         )
@@ -484,11 +502,14 @@ class AsyncMembersResource(AsyncAPIResource):
                 f"Expected a non-empty value for `organization_user_id` but received {organization_user_id!r}"
             )
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/zones/{zone_id}/members/{organization_user_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -525,7 +546,6 @@ class AsyncMembersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/zones/{zone_id}/members",
             body=await async_maybe_transform(
@@ -536,7 +556,11 @@ class AsyncMembersResource(AsyncAPIResource):
                 member_add_params.MemberAddParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=ZoneMember,
         )

@@ -90,7 +90,6 @@ class SecretsResource(SyncAPIResource):
         if not path_zone_id:
             raise ValueError(f"Expected a non-empty value for `path_zone_id` but received {path_zone_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {**self._client._vault_api_bearer_auth, **(extra_headers or {})}
         return self._post(
             f"/zones/{path_zone_id}/secrets",
             body=maybe_transform(
@@ -105,7 +104,11 @@ class SecretsResource(SyncAPIResource):
                 secret_create_params.SecretCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=Secret,
         )
@@ -140,11 +143,14 @@ class SecretsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {**self._client._vault_api_bearer_auth, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/secrets/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=SecretRetrieveResponse,
         )
@@ -189,7 +195,6 @@ class SecretsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {**self._client._vault_api_bearer_auth, **(extra_headers or {})}
         return self._patch(
             f"/zones/{zone_id}/secrets/{id}",
             body=maybe_transform(
@@ -202,7 +207,11 @@ class SecretsResource(SyncAPIResource):
                 secret_update_params.SecretUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=Secret,
         )
@@ -240,7 +249,6 @@ class SecretsResource(SyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {**self._client._vault_api_bearer_auth, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/secrets",
             options=make_request_options(
@@ -255,6 +263,7 @@ class SecretsResource(SyncAPIResource):
                     },
                     secret_list_params.SecretListParams,
                 ),
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=SecretListResponse,
         )
@@ -290,11 +299,14 @@ class SecretsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers.update({**self._client._vault_api_bearer_auth})
         return self._delete(
             f"/zones/{zone_id}/secrets/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -365,7 +377,6 @@ class AsyncSecretsResource(AsyncAPIResource):
         if not path_zone_id:
             raise ValueError(f"Expected a non-empty value for `path_zone_id` but received {path_zone_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {**self._client._vault_api_bearer_auth, **(extra_headers or {})}
         return await self._post(
             f"/zones/{path_zone_id}/secrets",
             body=await async_maybe_transform(
@@ -380,7 +391,11 @@ class AsyncSecretsResource(AsyncAPIResource):
                 secret_create_params.SecretCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=Secret,
         )
@@ -415,11 +430,14 @@ class AsyncSecretsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {**self._client._vault_api_bearer_auth, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/secrets/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=SecretRetrieveResponse,
         )
@@ -464,7 +482,6 @@ class AsyncSecretsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {**self._client._vault_api_bearer_auth, **(extra_headers or {})}
         return await self._patch(
             f"/zones/{zone_id}/secrets/{id}",
             body=await async_maybe_transform(
@@ -477,7 +494,11 @@ class AsyncSecretsResource(AsyncAPIResource):
                 secret_update_params.SecretUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=Secret,
         )
@@ -515,7 +536,6 @@ class AsyncSecretsResource(AsyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {**self._client._vault_api_bearer_auth, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/secrets",
             options=make_request_options(
@@ -530,6 +550,7 @@ class AsyncSecretsResource(AsyncAPIResource):
                     },
                     secret_list_params.SecretListParams,
                 ),
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=SecretListResponse,
         )
@@ -565,11 +586,14 @@ class AsyncSecretsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers.update({**self._client._vault_api_bearer_auth})
         return await self._delete(
             f"/zones/{zone_id}/secrets/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={"vault_api_bearer_auth": True},
             ),
             cast_to=NoneType,
         )

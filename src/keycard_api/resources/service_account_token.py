@@ -76,7 +76,6 @@ class ServiceAccountTokenResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             "/service-account-token",
             body=maybe_transform(
@@ -88,7 +87,11 @@ class ServiceAccountTokenResource(SyncAPIResource):
                 service_account_token_create_params.ServiceAccountTokenCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=TokenResponse,
         )
@@ -147,7 +150,6 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             "/service-account-token",
             body=await async_maybe_transform(
@@ -159,7 +161,11 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
                 service_account_token_create_params.ServiceAccountTokenCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=TokenResponse,
         )

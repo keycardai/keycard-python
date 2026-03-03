@@ -81,7 +81,6 @@ class InvitationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._post(
             f"/organizations/{organization_id}/invitations",
             body=maybe_transform(
@@ -92,7 +91,11 @@ class InvitationsResource(SyncAPIResource):
                 invitation_create_params.InvitationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Invitation,
         )
@@ -139,7 +142,6 @@ class InvitationsResource(SyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/organizations/{organization_id}/invitations",
             options=make_request_options(
@@ -156,6 +158,7 @@ class InvitationsResource(SyncAPIResource):
                     },
                     invitation_list_params.InvitationListParams,
                 ),
+                security={},
             ),
             cast_to=InvitationListResponse,
         )
@@ -195,11 +198,14 @@ class InvitationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `invitation_id` but received {invitation_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return self._delete(
             f"/organizations/{organization_id}/invitations/{invitation_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -260,7 +266,6 @@ class AsyncInvitationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._post(
             f"/organizations/{organization_id}/invitations",
             body=await async_maybe_transform(
@@ -271,7 +276,11 @@ class AsyncInvitationsResource(AsyncAPIResource):
                 invitation_create_params.InvitationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Invitation,
         )
@@ -318,7 +327,6 @@ class AsyncInvitationsResource(AsyncAPIResource):
         if not organization_id:
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/organizations/{organization_id}/invitations",
             options=make_request_options(
@@ -335,6 +343,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                     },
                     invitation_list_params.InvitationListParams,
                 ),
+                security={},
             ),
             cast_to=InvitationListResponse,
         )
@@ -374,11 +383,14 @@ class AsyncInvitationsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `invitation_id` but received {invitation_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        extra_headers.update({"Authorization": omit})
         return await self._delete(
             f"/organizations/{organization_id}/invitations/{invitation_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )

@@ -73,11 +73,14 @@ class UserAgentsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/user-agents/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=UserAgent,
         )
@@ -120,7 +123,6 @@ class UserAgentsResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return self._get(
             f"/zones/{zone_id}/user-agents",
             options=make_request_options(
@@ -137,6 +139,7 @@ class UserAgentsResource(SyncAPIResource):
                     },
                     user_agent_list_params.UserAgentListParams,
                 ),
+                security={},
             ),
             cast_to=UserAgentListResponse,
         )
@@ -190,11 +193,14 @@ class AsyncUserAgentsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/user-agents/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=UserAgent,
         )
@@ -237,7 +243,6 @@ class AsyncUserAgentsResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        extra_headers = {"Authorization": omit, **(extra_headers or {})}
         return await self._get(
             f"/zones/{zone_id}/user-agents",
             options=make_request_options(
@@ -254,6 +259,7 @@ class AsyncUserAgentsResource(AsyncAPIResource):
                     },
                     user_agent_list_params.UserAgentListParams,
                 ),
+                security={},
             ),
             cast_to=UserAgentListResponse,
         )
