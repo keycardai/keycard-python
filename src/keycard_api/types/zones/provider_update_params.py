@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Dict, Optional
 from typing_extensions import Required, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
@@ -43,6 +43,12 @@ class ProtocolsOauth2(TypedDict, total=False):
     """OAuth 2.0 protocol configuration. Set to null to remove all OAuth2 config."""
 
     authorization_endpoint: Optional[str]
+
+    authorization_parameters: Optional[Dict[str, str]]
+    """Custom query parameters appended to authorization redirect URLs.
+
+    Set to null to unset.
+    """
 
     authorization_resource_enabled: Optional[bool]
     """Whether to include the resource parameter in authorization requests.

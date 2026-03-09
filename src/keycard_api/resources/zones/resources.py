@@ -38,7 +38,7 @@ class ResourcesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
         """
         return ResourcesResourceWithRawResponse(self)
 
@@ -47,7 +47,7 @@ class ResourcesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
         """
         return ResourcesResourceWithStreamingResponse(self)
 
@@ -58,6 +58,7 @@ class ResourcesResource(SyncAPIResource):
         identifier: str,
         name: str,
         application_id: str | Omit = omit,
+        application_type: Literal["native", "web"] | Omit = omit,
         credential_provider_id: str | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
@@ -79,6 +80,10 @@ class ResourcesResource(SyncAPIResource):
           name: Human-readable name
 
           application_id: ID of the application that provides this resource
+
+          application_type: The expected type of client for this credential. Native clients must use
+              localhost URLs for redirect_uris or URIs with custom schemes. Web clients must
+              use https URLs and must not use localhost as the hostname.
 
           credential_provider_id: ID of the credential provider to associate with the resource
 
@@ -105,6 +110,7 @@ class ResourcesResource(SyncAPIResource):
                     "identifier": identifier,
                     "name": name,
                     "application_id": application_id,
+                    "application_type": application_type,
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "metadata": metadata,
@@ -168,6 +174,7 @@ class ResourcesResource(SyncAPIResource):
         *,
         zone_id: str,
         application_id: Optional[str] | Omit = omit,
+        application_type: Literal["native", "web"] | Omit = omit,
         credential_provider_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
@@ -186,6 +193,10 @@ class ResourcesResource(SyncAPIResource):
 
         Args:
           application_id: ID of the application that provides this resource (set to null to unset)
+
+          application_type: The expected type of client for this credential. Native clients must use
+              localhost URLs for redirect_uris or URIs with custom schemes. Web clients must
+              use https URLs and must not use localhost as the hostname.
 
           credential_provider_id: ID of the credential provider to associate with the resource (set to null to
               unset)
@@ -217,6 +228,7 @@ class ResourcesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "application_id": application_id,
+                    "application_type": application_type,
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "identifier": identifier,
@@ -351,7 +363,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncResourcesResourceWithRawResponse(self)
 
@@ -360,7 +372,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
         """
         return AsyncResourcesResourceWithStreamingResponse(self)
 
@@ -371,6 +383,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         identifier: str,
         name: str,
         application_id: str | Omit = omit,
+        application_type: Literal["native", "web"] | Omit = omit,
         credential_provider_id: str | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
@@ -392,6 +405,10 @@ class AsyncResourcesResource(AsyncAPIResource):
           name: Human-readable name
 
           application_id: ID of the application that provides this resource
+
+          application_type: The expected type of client for this credential. Native clients must use
+              localhost URLs for redirect_uris or URIs with custom schemes. Web clients must
+              use https URLs and must not use localhost as the hostname.
 
           credential_provider_id: ID of the credential provider to associate with the resource
 
@@ -418,6 +435,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                     "identifier": identifier,
                     "name": name,
                     "application_id": application_id,
+                    "application_type": application_type,
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "metadata": metadata,
@@ -481,6 +499,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         *,
         zone_id: str,
         application_id: Optional[str] | Omit = omit,
+        application_type: Literal["native", "web"] | Omit = omit,
         credential_provider_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
@@ -499,6 +518,10 @@ class AsyncResourcesResource(AsyncAPIResource):
 
         Args:
           application_id: ID of the application that provides this resource (set to null to unset)
+
+          application_type: The expected type of client for this credential. Native clients must use
+              localhost URLs for redirect_uris or URIs with custom schemes. Web clients must
+              use https URLs and must not use localhost as the hostname.
 
           credential_provider_id: ID of the credential provider to associate with the resource (set to null to
               unset)
@@ -530,6 +553,7 @@ class AsyncResourcesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "application_id": application_id,
+                    "application_type": application_type,
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "identifier": identifier,

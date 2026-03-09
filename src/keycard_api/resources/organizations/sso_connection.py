@@ -36,7 +36,7 @@ class SSOConnectionResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
         """
         return SSOConnectionResourceWithRawResponse(self)
 
@@ -45,7 +45,7 @@ class SSOConnectionResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
         """
         return SSOConnectionResourceWithStreamingResponse(self)
 
@@ -269,7 +269,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncSSOConnectionResourceWithRawResponse(self)
 
@@ -278,7 +278,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
         """
         return AsyncSSOConnectionResourceWithStreamingResponse(self)
 

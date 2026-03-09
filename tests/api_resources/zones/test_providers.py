@@ -44,6 +44,7 @@ class TestProviders:
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
+                    "authorization_parameters": {"foo": "string"},
                     "authorization_resource_enabled": True,
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
@@ -177,6 +178,7 @@ class TestProviders:
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
+                    "authorization_parameters": {"foo": "string"},
                     "authorization_resource_enabled": True,
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
@@ -377,6 +379,7 @@ class TestAsyncProviders:
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
+                    "authorization_parameters": {"foo": "string"},
                     "authorization_resource_enabled": True,
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
@@ -510,6 +513,7 @@ class TestAsyncProviders:
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
+                    "authorization_parameters": {"foo": "string"},
                     "authorization_resource_enabled": True,
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],

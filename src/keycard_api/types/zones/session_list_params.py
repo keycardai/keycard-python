@@ -21,6 +21,14 @@ class SessionListParams(TypedDict, total=False):
 
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
 
+    include_nested: Literal["true"]
+    """Include nested sessions.
+
+    When false (default), only returns entry sessions (direct children of root user
+    sessions). When true, returns all sessions with an initiator, including nested
+    sessions.
+    """
+
     limit: int
     """Maximum number of items to return"""
 

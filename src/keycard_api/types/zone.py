@@ -97,12 +97,6 @@ class Zone(BaseModel):
     description: Optional[str] = None
     """Human-readable description"""
 
-    directory_open_signups_enabled: Optional[bool] = None
-    """
-    Whether directory open signups are enabled for the zone, only applies when
-    user_identity_provider_id is not set
-    """
-
     encryption_key: Optional[EncryptionKeyAwsKmsConfig] = None
     """AWS KMS configuration for zone encryption.
 
@@ -121,6 +115,12 @@ class Zone(BaseModel):
 
     Only populated when expand[]=permissions query parameter is provided. Keys are
     resource types, values are objects mapping action names to boolean values.
+    """
+
+    requires_invitation: Optional[bool] = None
+    """
+    Whether the zone requires an invitation for email/password registration, only
+    applies when user_identity_provider_id is not set
     """
 
     user_identity_provider_id: Optional[str] = None

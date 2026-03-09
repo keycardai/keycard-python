@@ -36,7 +36,6 @@ class TestZones:
             name="x",
             default_mcp_gateway_application=True,
             description="description",
-            directory_open_signups_enabled=True,
             encryption_key={
                 "arn": "x",
                 "type": "aws",
@@ -48,6 +47,7 @@ class TestZones:
                     "pkce_required": True,
                 }
             },
+            requires_invitation=True,
         )
         assert_matches_type(Zone, zone, path=["response"])
 
@@ -143,7 +143,6 @@ class TestZones:
             zone_id="zoneId",
             default_mcp_gateway_application_id="default_mcp_gateway_application_id",
             description="description",
-            directory_open_signups_enabled=True,
             encryption_key={
                 "arn": "x",
                 "type": "aws",
@@ -156,6 +155,7 @@ class TestZones:
                     "pkce_required": True,
                 }
             },
+            requires_invitation=True,
             user_identity_provider_id="user_identity_provider_id",
         )
         assert_matches_type(Zone, zone, path=["response"])
@@ -347,6 +347,7 @@ class TestZones:
             expand="total_count",
             limit=1,
             resource_id="resource_id",
+            rollup_children=True,
             session_id="session_id",
             user_id="user_id",
         )
@@ -407,7 +408,6 @@ class TestAsyncZones:
             name="x",
             default_mcp_gateway_application=True,
             description="description",
-            directory_open_signups_enabled=True,
             encryption_key={
                 "arn": "x",
                 "type": "aws",
@@ -419,6 +419,7 @@ class TestAsyncZones:
                     "pkce_required": True,
                 }
             },
+            requires_invitation=True,
         )
         assert_matches_type(Zone, zone, path=["response"])
 
@@ -514,7 +515,6 @@ class TestAsyncZones:
             zone_id="zoneId",
             default_mcp_gateway_application_id="default_mcp_gateway_application_id",
             description="description",
-            directory_open_signups_enabled=True,
             encryption_key={
                 "arn": "x",
                 "type": "aws",
@@ -527,6 +527,7 @@ class TestAsyncZones:
                     "pkce_required": True,
                 }
             },
+            requires_invitation=True,
             user_identity_provider_id="user_identity_provider_id",
         )
         assert_matches_type(Zone, zone, path=["response"])
@@ -718,6 +719,7 @@ class TestAsyncZones:
             expand="total_count",
             limit=1,
             resource_id="resource_id",
+            rollup_children=True,
             session_id="session_id",
             user_id="user_id",
         )

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 from ..._types import SequenceNotStr
 from .metadata_param import MetadataParam
@@ -20,6 +20,14 @@ class ResourceCreateParams(TypedDict, total=False):
 
     application_id: str
     """ID of the application that provides this resource"""
+
+    application_type: Literal["native", "web"]
+    """The expected type of client for this credential.
+
+    Native clients must use localhost URLs for redirect_uris or URIs with custom
+    schemes. Web clients must use https URLs and must not use localhost as the
+    hostname.
+    """
 
     credential_provider_id: str
     """ID of the credential provider to associate with the resource"""

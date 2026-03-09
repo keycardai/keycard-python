@@ -172,7 +172,7 @@ class ZonesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
         """
         return ZonesResourceWithRawResponse(self)
 
@@ -181,7 +181,7 @@ class ZonesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
         """
         return ZonesResourceWithStreamingResponse(self)
 
@@ -191,10 +191,10 @@ class ZonesResource(SyncAPIResource):
         name: str,
         default_mcp_gateway_application: bool | Omit = omit,
         description: Optional[str] | Omit = omit,
-        directory_open_signups_enabled: bool | Omit = omit,
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
         login_flow: Literal["default", "identifier_first"] | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
+        requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -214,9 +214,6 @@ class ZonesResource(SyncAPIResource):
 
           description: Human-readable description
 
-          directory_open_signups_enabled: Whether directory open signups are enabled for the zone, only applies when
-              user_identity_provider_id is not set
-
           encryption_key: AWS KMS configuration for zone encryption. When not specified, the default
               Keycard Cloud encryption key will be used.
 
@@ -224,6 +221,9 @@ class ZonesResource(SyncAPIResource):
               'identifier_first' uses identifier-based provider routing.
 
           protocols: Protocol configuration for zone creation
+
+          requires_invitation: Whether the zone requires an invitation for email/password registration, only
+              applies when user_identity_provider_id is not set. Defaults to true.
 
           extra_headers: Send extra headers
 
@@ -240,10 +240,10 @@ class ZonesResource(SyncAPIResource):
                     "name": name,
                     "default_mcp_gateway_application": default_mcp_gateway_application,
                     "description": description,
-                    "directory_open_signups_enabled": directory_open_signups_enabled,
                     "encryption_key": encryption_key,
                     "login_flow": login_flow,
                     "protocols": protocols,
+                    "requires_invitation": requires_invitation,
                 },
                 zone_create_params.ZoneCreateParams,
             ),
@@ -302,11 +302,11 @@ class ZonesResource(SyncAPIResource):
         *,
         default_mcp_gateway_application_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
-        directory_open_signups_enabled: bool | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
         login_flow: Optional[Literal["default", "identifier_first"]] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
+        requires_invitation: bool | Omit = omit,
         user_identity_provider_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -324,9 +324,6 @@ class ZonesResource(SyncAPIResource):
 
           description: Human-readable description
 
-          directory_open_signups_enabled: Whether directory open signups are enabled for the zone, only applies when
-              user_identity_provider_id is not set
-
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
 
@@ -337,6 +334,9 @@ class ZonesResource(SyncAPIResource):
           name: Human-readable name
 
           protocols: Protocol configuration update for a zone (partial update)
+
+          requires_invitation: Whether the zone requires an invitation for email/password registration, only
+              applies when user_identity_provider_id is not set
 
           user_identity_provider_id: Provider ID to configure for user login (set to null to unset)
 
@@ -356,11 +356,11 @@ class ZonesResource(SyncAPIResource):
                 {
                     "default_mcp_gateway_application_id": default_mcp_gateway_application_id,
                     "description": description,
-                    "directory_open_signups_enabled": directory_open_signups_enabled,
                     "encryption_key": encryption_key,
                     "login_flow": login_flow,
                     "name": name,
                     "protocols": protocols,
+                    "requires_invitation": requires_invitation,
                     "user_identity_provider_id": user_identity_provider_id,
                 },
                 zone_update_params.ZoneUpdateParams,
@@ -521,6 +521,7 @@ class ZonesResource(SyncAPIResource):
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         resource_id: str | Omit = omit,
+        rollup_children: bool | Omit = omit,
         session_id: str | Omit = omit,
         user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -530,10 +531,12 @@ class ZonesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ZoneListSessionResourceAccessResponse:
-        """
-        Returns aggregated access records per entry session-resource pair, including
-        access from descendant sessions. At least one of user_id, session_id, or
-        resource_id must be provided.
+        """Returns aggregated access records per session-resource pair.
+
+        By default
+        (rollup_children=true), includes access from descendant sessions. Set
+        rollup_children=false to return only direct session access. At least one of
+        user_id, session_id, or resource_id must be provided.
 
         Args:
           after: Cursor for forward pagination
@@ -543,6 +546,10 @@ class ZonesResource(SyncAPIResource):
           limit: Maximum number of items to return
 
           resource_id: Filter by resource ID
+
+          rollup_children: Include resource access from descendant sessions. When true (default),
+              aggregates access from the session and all its descendants. When false, returns
+              only direct access for the session.
 
           session_id: Filter by session ID
 
@@ -572,6 +579,7 @@ class ZonesResource(SyncAPIResource):
                         "expand": expand,
                         "limit": limit,
                         "resource_id": resource_id,
+                        "rollup_children": rollup_children,
                         "session_id": session_id,
                         "user_id": user_id,
                     },
@@ -634,7 +642,7 @@ class AsyncZonesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncZonesResourceWithRawResponse(self)
 
@@ -643,7 +651,7 @@ class AsyncZonesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
         """
         return AsyncZonesResourceWithStreamingResponse(self)
 
@@ -653,10 +661,10 @@ class AsyncZonesResource(AsyncAPIResource):
         name: str,
         default_mcp_gateway_application: bool | Omit = omit,
         description: Optional[str] | Omit = omit,
-        directory_open_signups_enabled: bool | Omit = omit,
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
         login_flow: Literal["default", "identifier_first"] | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
+        requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -676,9 +684,6 @@ class AsyncZonesResource(AsyncAPIResource):
 
           description: Human-readable description
 
-          directory_open_signups_enabled: Whether directory open signups are enabled for the zone, only applies when
-              user_identity_provider_id is not set
-
           encryption_key: AWS KMS configuration for zone encryption. When not specified, the default
               Keycard Cloud encryption key will be used.
 
@@ -686,6 +691,9 @@ class AsyncZonesResource(AsyncAPIResource):
               'identifier_first' uses identifier-based provider routing.
 
           protocols: Protocol configuration for zone creation
+
+          requires_invitation: Whether the zone requires an invitation for email/password registration, only
+              applies when user_identity_provider_id is not set. Defaults to true.
 
           extra_headers: Send extra headers
 
@@ -702,10 +710,10 @@ class AsyncZonesResource(AsyncAPIResource):
                     "name": name,
                     "default_mcp_gateway_application": default_mcp_gateway_application,
                     "description": description,
-                    "directory_open_signups_enabled": directory_open_signups_enabled,
                     "encryption_key": encryption_key,
                     "login_flow": login_flow,
                     "protocols": protocols,
+                    "requires_invitation": requires_invitation,
                 },
                 zone_create_params.ZoneCreateParams,
             ),
@@ -764,11 +772,11 @@ class AsyncZonesResource(AsyncAPIResource):
         *,
         default_mcp_gateway_application_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
-        directory_open_signups_enabled: bool | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
         login_flow: Optional[Literal["default", "identifier_first"]] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
+        requires_invitation: bool | Omit = omit,
         user_identity_provider_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -786,9 +794,6 @@ class AsyncZonesResource(AsyncAPIResource):
 
           description: Human-readable description
 
-          directory_open_signups_enabled: Whether directory open signups are enabled for the zone, only applies when
-              user_identity_provider_id is not set
-
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
 
@@ -799,6 +804,9 @@ class AsyncZonesResource(AsyncAPIResource):
           name: Human-readable name
 
           protocols: Protocol configuration update for a zone (partial update)
+
+          requires_invitation: Whether the zone requires an invitation for email/password registration, only
+              applies when user_identity_provider_id is not set
 
           user_identity_provider_id: Provider ID to configure for user login (set to null to unset)
 
@@ -818,11 +826,11 @@ class AsyncZonesResource(AsyncAPIResource):
                 {
                     "default_mcp_gateway_application_id": default_mcp_gateway_application_id,
                     "description": description,
-                    "directory_open_signups_enabled": directory_open_signups_enabled,
                     "encryption_key": encryption_key,
                     "login_flow": login_flow,
                     "name": name,
                     "protocols": protocols,
+                    "requires_invitation": requires_invitation,
                     "user_identity_provider_id": user_identity_provider_id,
                 },
                 zone_update_params.ZoneUpdateParams,
@@ -983,6 +991,7 @@ class AsyncZonesResource(AsyncAPIResource):
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         resource_id: str | Omit = omit,
+        rollup_children: bool | Omit = omit,
         session_id: str | Omit = omit,
         user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -992,10 +1001,12 @@ class AsyncZonesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ZoneListSessionResourceAccessResponse:
-        """
-        Returns aggregated access records per entry session-resource pair, including
-        access from descendant sessions. At least one of user_id, session_id, or
-        resource_id must be provided.
+        """Returns aggregated access records per session-resource pair.
+
+        By default
+        (rollup_children=true), includes access from descendant sessions. Set
+        rollup_children=false to return only direct session access. At least one of
+        user_id, session_id, or resource_id must be provided.
 
         Args:
           after: Cursor for forward pagination
@@ -1005,6 +1016,10 @@ class AsyncZonesResource(AsyncAPIResource):
           limit: Maximum number of items to return
 
           resource_id: Filter by resource ID
+
+          rollup_children: Include resource access from descendant sessions. When true (default),
+              aggregates access from the session and all its descendants. When false, returns
+              only direct access for the session.
 
           session_id: Filter by session ID
 
@@ -1034,6 +1049,7 @@ class AsyncZonesResource(AsyncAPIResource):
                         "expand": expand,
                         "limit": limit,
                         "resource_id": resource_id,
+                        "rollup_children": rollup_children,
                         "session_id": session_id,
                         "user_id": user_id,
                     },
