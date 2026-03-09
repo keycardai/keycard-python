@@ -5,8 +5,8 @@ from typing import Union
 
 import pydantic
 
-from keycard_api import _compat
-from keycard_api._utils._json import openapi_dumps
+from keycardai_api import _compat
+from keycardai_api._utils._json import openapi_dumps
 
 
 class TestOpenapiDumps:

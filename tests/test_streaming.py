@@ -5,8 +5,8 @@ from typing import Iterator, AsyncIterator
 import httpx
 import pytest
 
-from keycard_api import KeycardAPI, AsyncKeycardAPI
-from keycard_api._streaming import Stream, AsyncStream, ServerSentEvent
+from keycardai_api import KeycardAPI, AsyncKeycardAPI
+from keycardai_api._streaming import Stream, AsyncStream, ServerSentEvent
 
 
 @pytest.mark.asyncio

@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from keycard_api._types import FileTypes
-from keycard_api._utils import extract_files
+from keycardai_api._types import FileTypes
+from keycardai_api._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:

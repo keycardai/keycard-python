@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from keycard_api import KeycardAPI, AsyncKeycardAPI
 from tests.utils import assert_matches_type
-from keycard_api.types.organizations import (
+from keycardai_api import KeycardAPI, AsyncKeycardAPI
+from keycardai_api.types.organizations import (
     Invitation,
     InvitationListResponse,
 )
