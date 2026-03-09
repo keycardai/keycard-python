@@ -7,12 +7,12 @@ from typing import Any, cast
 
 import pytest
 
-from keycard_api import KeycardAPI, AsyncKeycardAPI
 from tests.utils import assert_matches_type
-from keycard_api.types.zones import (
+from keycardai_api import KeycardAPI, AsyncKeycardAPI
+from keycardai_api.types.zones import (
     ResourceListResponse,
 )
-from keycard_api.types.zones.applications import Resource
+from keycardai_api.types.zones.applications import Resource
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 

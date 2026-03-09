@@ -10,15 +10,15 @@ import httpx
 import pytest
 from pytest_asyncio import is_async_test
 
-from keycard_api import KeycardAPI, AsyncKeycardAPI, DefaultAioHttpClient
-from keycard_api._utils import is_dict
+from keycardai_api import KeycardAPI, AsyncKeycardAPI, DefaultAioHttpClient
+from keycardai_api._utils import is_dict
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest  # pyright: ignore[reportPrivateImportUsage]
 
 pytest.register_assert_rewrite("tests.utils")
 
-logging.getLogger("keycard_api").setLevel(logging.DEBUG)
+logging.getLogger("keycardai_api").setLevel(logging.DEBUG)
 
 
 # automatically add `pytest.mark.asyncio()` to all of our async tests

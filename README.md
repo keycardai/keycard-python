@@ -1,7 +1,7 @@
 # Keycard API Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/keycard_api.svg?label=pypi%20(stable))](https://pypi.org/project/keycard_api/)
+[![PyPI version](https://img.shields.io/pypi/v/keycardai-api.svg?label=pypi%20(stable))](https://pypi.org/project/keycardai-api/)
 
 The Keycard API Python library provides convenient access to the Keycard API REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
@@ -17,7 +17,7 @@ The REST API documentation can be found on [docs.keycard.ai](https://docs.keycar
 
 ```sh
 # install from PyPI
-pip install keycard_api
+pip install keycardai-api
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ pip install keycard_api
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-from keycard_api import KeycardAPI
+from keycardai_api import KeycardAPI
 
 client = KeycardAPI()
 
@@ -44,7 +44,7 @@ Simply import `AsyncKeycardAPI` instead of `KeycardAPI` and use `await` with eac
 
 ```python
 import asyncio
-from keycard_api import AsyncKeycardAPI
+from keycardai_api import AsyncKeycardAPI
 
 client = AsyncKeycardAPI()
 
@@ -67,15 +67,15 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install keycard_api[aiohttp]
+pip install keycardai-api[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
 import asyncio
-from keycard_api import DefaultAioHttpClient
-from keycard_api import AsyncKeycardAPI
+from keycardai_api import DefaultAioHttpClient
+from keycardai_api import AsyncKeycardAPI
 
 
 async def main() -> None:
@@ -103,7 +103,7 @@ Typed requests and responses provide autocomplete and documentation within your 
 Nested parameters are dictionaries, typed using `TypedDict`, for example:
 
 ```python
-from keycard_api import KeycardAPI
+from keycardai_api import KeycardAPI
 
 client = KeycardAPI()
 
@@ -119,27 +119,27 @@ print(zone.encryption_key)
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `keycard_api.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `keycardai_api.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `keycard_api.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `keycardai_api.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `keycard_api.APIError`.
+All errors inherit from `keycardai_api.APIError`.
 
 ```python
-import keycard_api
-from keycard_api import KeycardAPI
+import keycardai_api
+from keycardai_api import KeycardAPI
 
 client = KeycardAPI()
 
 try:
     client.zones.list()
-except keycard_api.APIConnectionError as e:
+except keycardai_api.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except keycard_api.RateLimitError as e:
+except keycardai_api.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except keycard_api.APIStatusError as e:
+except keycardai_api.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -167,7 +167,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from keycard_api import KeycardAPI
+from keycardai_api import KeycardAPI
 
 # Configure the default for all requests:
 client = KeycardAPI(
@@ -185,7 +185,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
-from keycard_api import KeycardAPI
+from keycardai_api import KeycardAPI
 
 # Configure the default for all requests:
 client = KeycardAPI(
@@ -237,7 +237,7 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from keycard_api import KeycardAPI
+from keycardai_api import KeycardAPI
 
 client = KeycardAPI()
 response = client.zones.with_raw_response.list()
@@ -247,9 +247,9 @@ zone = response.parse()  # get the object that `zones.list()` would have returne
 print(zone.items)
 ```
 
-These methods return an [`APIResponse`](https://github.com/keycardlabs/keycard-python/tree/main/src/keycard_api/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/keycardlabs/keycard-python/tree/main/src/keycardai_api/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/keycardlabs/keycard-python/tree/main/src/keycard_api/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/keycardlabs/keycard-python/tree/main/src/keycardai_api/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -311,7 +311,7 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from keycard_api import KeycardAPI, DefaultHttpxClient
+from keycardai_api import KeycardAPI, DefaultHttpxClient
 
 client = KeycardAPI(
     # Or use the `KEYCARD_API_BASE_URL` env var
@@ -334,7 +334,7 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from keycard_api import KeycardAPI
+from keycardai_api import KeycardAPI
 
 with KeycardAPI() as client:
   # make requests here
@@ -362,8 +362,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import keycard_api
-print(keycard_api.__version__)
+import keycardai_api
+print(keycardai_api.__version__)
 ```
 
 ## Requirements

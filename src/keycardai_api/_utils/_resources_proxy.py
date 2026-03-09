@@ -7,17 +7,17 @@ from ._proxy import LazyProxy
 
 
 class ResourcesProxy(LazyProxy[Any]):
-    """A proxy for the `keycard_api.resources` module.
+    """A proxy for the `keycardai_api.resources` module.
 
-    This is used so that we can lazily import `keycard_api.resources` only when
-    needed *and* so that users can just import `keycard_api` and reference `keycard_api.resources`
+    This is used so that we can lazily import `keycardai_api.resources` only when
+    needed *and* so that users can just import `keycardai_api` and reference `keycardai_api.resources`
     """
 
     @override
     def __load__(self) -> Any:
         import importlib
 
-        mod = importlib.import_module("keycard_api.resources")
+        mod = importlib.import_module("keycardai_api.resources")
         return mod
 
 

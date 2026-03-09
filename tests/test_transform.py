@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from keycard_api._types import Base64FileInput, omit, not_given
-from keycard_api._utils import (
+from keycardai_api._types import Base64FileInput, omit, not_given
+from keycardai_api._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from keycard_api._compat import PYDANTIC_V1
-from keycard_api._models import BaseModel
+from keycardai_api._compat import PYDANTIC_V1
+from keycardai_api._models import BaseModel
 
 _T = TypeVar("_T")
 

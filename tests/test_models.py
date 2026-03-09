@@ -7,9 +7,9 @@ import pytest
 import pydantic
 from pydantic import Field
 
-from keycard_api._utils import PropertyInfo
-from keycard_api._compat import PYDANTIC_V1, parse_obj, model_dump, model_json
-from keycard_api._models import DISCRIMINATOR_CACHE, BaseModel, construct_type
+from keycardai_api._utils import PropertyInfo
+from keycardai_api._compat import PYDANTIC_V1, parse_obj, model_dump, model_json
+from keycardai_api._models import DISCRIMINATOR_CACHE, BaseModel, construct_type
 
 
 class BasicModel(BaseModel):
