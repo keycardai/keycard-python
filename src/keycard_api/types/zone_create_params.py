@@ -20,12 +20,6 @@ class ZoneCreateParams(TypedDict, total=False):
     description: Optional[str]
     """Human-readable description"""
 
-    directory_open_signups_enabled: bool
-    """
-    Whether directory open signups are enabled for the zone, only applies when
-    user_identity_provider_id is not set
-    """
-
     encryption_key: EncryptionKeyAwsKmsConfigParam
     """AWS KMS configuration for zone encryption.
 
@@ -41,6 +35,12 @@ class ZoneCreateParams(TypedDict, total=False):
 
     protocols: Protocols
     """Protocol configuration for zone creation"""
+
+    requires_invitation: bool
+    """
+    Whether the zone requires an invitation for email/password registration, only
+    applies when user_identity_provider_id is not set. Defaults to true.
+    """
 
 
 class ProtocolsOauth2(TypedDict, total=False):

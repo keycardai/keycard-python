@@ -25,6 +25,13 @@ class ZoneListSessionResourceAccessParams(TypedDict, total=False):
     resource_id: str
     """Filter by resource ID"""
 
+    rollup_children: bool
+    """Include resource access from descendant sessions.
+
+    When true (default), aggregates access from the session and all its descendants.
+    When false, returns only direct access for the session.
+    """
+
     session_id: str
     """Filter by session ID"""
 

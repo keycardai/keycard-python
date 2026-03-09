@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Dict, Optional
 from typing_extensions import Required, TypedDict
 
 from ..._types import SequenceNotStr
@@ -37,6 +37,13 @@ class ProtocolsOauth2(TypedDict, total=False):
     """OAuth 2.0 protocol configuration for provider creation"""
 
     authorization_endpoint: str
+
+    authorization_parameters: Dict[str, str]
+    """Custom query parameters appended to authorization redirect URLs.
+
+    Use for non-standard providers (e.g. Google prompt=consent,
+    access_type=offline).
+    """
 
     authorization_resource_enabled: bool
     """Whether to include the resource parameter in authorization requests."""

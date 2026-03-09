@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -16,6 +16,13 @@ class ProtocolsOauth2(BaseModel):
     """OIDC issuer URL used for discovery and token validation."""
 
     authorization_endpoint: Optional[str] = None
+
+    authorization_parameters: Optional[Dict[str, str]] = None
+    """Custom query parameters appended to authorization redirect URLs.
+
+    Use for non-standard providers (e.g. Google prompt=consent,
+    access_type=offline).
+    """
 
     authorization_resource_enabled: Optional[bool] = None
     """Whether to include the resource parameter in authorization requests."""
@@ -90,6 +97,9 @@ class Provider(BaseModel):
 
     organization_id: str
     """Organization that owns this provider"""
+
+    owner_type: Literal["platform", "customer"]
+    """Who owns this provider. Platform-owned providers cannot be modified via API."""
 
     slug: str
     """URL-safe identifier, unique within the zone"""

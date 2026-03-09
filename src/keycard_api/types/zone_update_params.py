@@ -18,12 +18,6 @@ class ZoneUpdateParams(TypedDict, total=False):
     description: Optional[str]
     """Human-readable description"""
 
-    directory_open_signups_enabled: bool
-    """
-    Whether directory open signups are enabled for the zone, only applies when
-    user_identity_provider_id is not set
-    """
-
     encryption_key: Optional[EncryptionKey]
     """
     AWS KMS configuration for zone encryption update (set to null to remove
@@ -42,6 +36,12 @@ class ZoneUpdateParams(TypedDict, total=False):
 
     protocols: Optional[Protocols]
     """Protocol configuration update for a zone (partial update)"""
+
+    requires_invitation: bool
+    """
+    Whether the zone requires an invitation for email/password registration, only
+    applies when user_identity_provider_id is not set
+    """
 
     user_identity_provider_id: Optional[str]
     """Provider ID to configure for user login (set to null to unset)"""

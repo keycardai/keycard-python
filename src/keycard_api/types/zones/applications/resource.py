@@ -2,6 +2,7 @@
 
 from typing import List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from ..metadata import Metadata
 from ..provider import Provider
@@ -20,6 +21,14 @@ class Resource(BaseModel):
     id: str
     """Unique identifier of the resource"""
 
+    application_type: Literal["native", "web"]
+    """The expected type of client for this credential.
+
+    Native clients must use localhost URLs for redirect_uris or URIs with custom
+    schemes. Web clients must use https URLs and must not use localhost as the
+    hostname.
+    """
+
     created_at: datetime
     """Entity creation timestamp"""
 
@@ -31,6 +40,9 @@ class Resource(BaseModel):
 
     organization_id: str
     """Organization that owns this resource"""
+
+    owner_type: Literal["platform", "customer"]
+    """Who owns this resource. Platform-owned resources cannot be modified via API."""
 
     slug: str
     """URL-safe identifier, unique within the zone"""

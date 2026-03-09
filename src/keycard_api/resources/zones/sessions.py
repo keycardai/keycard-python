@@ -32,7 +32,7 @@ class SessionsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
         """
         return SessionsResourceWithRawResponse(self)
 
@@ -41,7 +41,7 @@ class SessionsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
         """
         return SessionsResourceWithStreamingResponse(self)
 
@@ -141,6 +141,7 @@ class SessionsResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        include_nested: Literal["true"] | Omit = omit,
         limit: int | Omit = omit,
         session_type: Literal["user", "application"] | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
@@ -152,16 +153,21 @@ class SessionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionListResponse:
-        """Returns entry sessions in the specified zone.
+        """Returns sessions in the specified zone.
 
-        Entry sessions are app user
-        sessions with an initiator that are roots or direct children of a root user
-        session. Can be filtered by session type, status, and user.
+        By default, returns entry sessions (app
+        user sessions with an initiator that are roots or direct children of a root user
+        session). Use include_nested=true to include nested sessions. Can be filtered by
+        session type, status, and user.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          include_nested: Include nested sessions. When false (default), only returns entry sessions
+              (direct children of root user sessions). When true, returns all sessions with an
+              initiator, including nested sessions.
 
           limit: Maximum number of items to return
 
@@ -190,6 +196,7 @@ class SessionsResource(SyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "include_nested": include_nested,
                         "limit": limit,
                         "session_type": session_type,
                         "status": status,
@@ -251,7 +258,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncSessionsResourceWithRawResponse(self)
 
@@ -260,7 +267,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
         """
         return AsyncSessionsResourceWithStreamingResponse(self)
 
@@ -360,6 +367,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        include_nested: Literal["true"] | Omit = omit,
         limit: int | Omit = omit,
         session_type: Literal["user", "application"] | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
@@ -371,16 +379,21 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionListResponse:
-        """Returns entry sessions in the specified zone.
+        """Returns sessions in the specified zone.
 
-        Entry sessions are app user
-        sessions with an initiator that are roots or direct children of a root user
-        session. Can be filtered by session type, status, and user.
+        By default, returns entry sessions (app
+        user sessions with an initiator that are roots or direct children of a root user
+        session). Use include_nested=true to include nested sessions. Can be filtered by
+        session type, status, and user.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          include_nested: Include nested sessions. When false (default), only returns entry sessions
+              (direct children of root user sessions). When true, returns all sessions with an
+              initiator, including nested sessions.
 
           limit: Maximum number of items to return
 
@@ -409,6 +422,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "include_nested": include_nested,
                         "limit": limit,
                         "session_type": session_type,
                         "status": status,
