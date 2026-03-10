@@ -40,7 +40,7 @@ class UsersResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return UsersResourceWithRawResponse(self)
 
@@ -49,7 +49,7 @@ class UsersResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return UsersResourceWithStreamingResponse(self)
 
@@ -99,7 +99,6 @@ class UsersResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, user_retrieve_params.UserRetrieveParams),
-                security={},
             ),
             cast_to=OrganizationUser,
         )
@@ -154,11 +153,7 @@ class UsersResource(SyncAPIResource):
                 user_update_params.UserUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=OrganizationUser,
         )
@@ -225,7 +220,6 @@ class UsersResource(SyncAPIResource):
                     },
                     user_list_params.UserListParams,
                 ),
-                security={},
             ),
             cast_to=UserListResponse,
         )
@@ -268,11 +262,7 @@ class UsersResource(SyncAPIResource):
         return self._delete(
             f"/organizations/{organization_id}/users/{user_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -285,7 +275,7 @@ class AsyncUsersResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncUsersResourceWithRawResponse(self)
 
@@ -294,7 +284,7 @@ class AsyncUsersResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncUsersResourceWithStreamingResponse(self)
 
@@ -344,7 +334,6 @@ class AsyncUsersResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform({"expand": expand}, user_retrieve_params.UserRetrieveParams),
-                security={},
             ),
             cast_to=OrganizationUser,
         )
@@ -399,11 +388,7 @@ class AsyncUsersResource(AsyncAPIResource):
                 user_update_params.UserUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=OrganizationUser,
         )
@@ -470,7 +455,6 @@ class AsyncUsersResource(AsyncAPIResource):
                     },
                     user_list_params.UserListParams,
                 ),
-                security={},
             ),
             cast_to=UserListResponse,
         )
@@ -513,11 +497,7 @@ class AsyncUsersResource(AsyncAPIResource):
         return await self._delete(
             f"/organizations/{organization_id}/users/{user_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )

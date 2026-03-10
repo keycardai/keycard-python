@@ -32,7 +32,7 @@ class DependenciesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return DependenciesResourceWithRawResponse(self)
 
@@ -41,7 +41,7 @@ class DependenciesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return DependenciesResourceWithStreamingResponse(self)
 
@@ -79,11 +79,7 @@ class DependenciesResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -146,7 +142,6 @@ class DependenciesResource(SyncAPIResource):
                     },
                     dependency_list_params.DependencyListParams,
                 ),
-                security={},
             ),
             cast_to=DependencyListResponse,
         )
@@ -192,7 +187,6 @@ class DependenciesResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"when_accessing": when_accessing}, dependency_add_params.DependencyAddParams),
-                security={},
             ),
             cast_to=NoneType,
         )
@@ -232,11 +226,7 @@ class DependenciesResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -249,7 +239,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncDependenciesResourceWithRawResponse(self)
 
@@ -258,7 +248,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncDependenciesResourceWithStreamingResponse(self)
 
@@ -296,11 +286,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -363,7 +349,6 @@ class AsyncDependenciesResource(AsyncAPIResource):
                     },
                     dependency_list_params.DependencyListParams,
                 ),
-                security={},
             ),
             cast_to=DependencyListResponse,
         )
@@ -411,7 +396,6 @@ class AsyncDependenciesResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"when_accessing": when_accessing}, dependency_add_params.DependencyAddParams
                 ),
-                security={},
             ),
             cast_to=NoneType,
         )
@@ -451,11 +435,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )

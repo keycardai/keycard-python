@@ -121,7 +121,16 @@ class IamApplicationSessionType(BaseModel):
     application_id: str
     """Application ID that initiated this session"""
 
+    issuer: str
+    """Issuer URL from IdP"""
+
+    provider_id: str
+    """Provider ID"""
+
     session_type: Literal["application"]
+
+    subject: str
+    """Subject claim from IdP"""
 
     id: Optional[str] = None
     """Session ID"""
@@ -145,25 +154,11 @@ class IamApplicationSessionType(BaseModel):
     expires_at: Optional[datetime] = None
     """Date when session expires"""
 
-    issuer: Optional[str] = None
-    """Issuer URL from IdP"""
-
     metadata: Optional[IamApplicationSessionTypeMetadata] = None
     """Session metadata"""
 
     organization_id: Optional[str] = None
     """Organization that owns this session"""
-
-    parent_id: Optional[str] = None
-    """Parent session ID for hierarchical sessions (user sessions only).
-
-    When null, this is a web session - a top-level session initiated directly by a
-    user. When set, this is a child session derived from the parent, used for token
-    refresh or delegation. Application sessions cannot have parents.
-    """
-
-    provider_id: Optional[str] = None
-    """Provider ID"""
 
     session_data: Optional[Dict[str, object]] = None
     """
@@ -172,9 +167,6 @@ class IamApplicationSessionType(BaseModel):
     """
 
     status: Optional[Literal["active", "expired", "revoked"]] = None
-
-    subject: Optional[str] = None
-    """Subject claim from IdP"""
 
     updated_at: Optional[datetime] = None
     """Entity update timestamp"""

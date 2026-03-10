@@ -55,7 +55,7 @@ class ApplicationsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return ApplicationsResourceWithRawResponse(self)
 
@@ -64,7 +64,7 @@ class ApplicationsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return ApplicationsResourceWithStreamingResponse(self)
 
@@ -130,11 +130,7 @@ class ApplicationsResource(SyncAPIResource):
                 application_create_params.ApplicationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Application,
         )
@@ -170,11 +166,7 @@ class ApplicationsResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Application,
         )
@@ -239,11 +231,7 @@ class ApplicationsResource(SyncAPIResource):
                 application_update_params.ApplicationUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Application,
         )
@@ -315,7 +303,6 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_params.ApplicationListParams,
                 ),
-                security={},
             ),
             cast_to=ApplicationListResponse,
         )
@@ -352,11 +339,7 @@ class ApplicationsResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -417,7 +400,6 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
                 ),
-                security={},
             ),
             cast_to=ApplicationListCredentialsResponse,
         )
@@ -478,7 +460,6 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_resources_params.ApplicationListResourcesParams,
                 ),
-                security={},
             ),
             cast_to=ApplicationListResourcesResponse,
         )
@@ -495,7 +476,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncApplicationsResourceWithRawResponse(self)
 
@@ -504,7 +485,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncApplicationsResourceWithStreamingResponse(self)
 
@@ -570,11 +551,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 application_create_params.ApplicationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Application,
         )
@@ -610,11 +587,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Application,
         )
@@ -679,11 +652,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 application_update_params.ApplicationUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Application,
         )
@@ -755,7 +724,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_params.ApplicationListParams,
                 ),
-                security={},
             ),
             cast_to=ApplicationListResponse,
         )
@@ -792,11 +760,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -857,7 +821,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
                 ),
-                security={},
             ),
             cast_to=ApplicationListCredentialsResponse,
         )
@@ -918,7 +881,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_resources_params.ApplicationListResourcesParams,
                 ),
-                security={},
             ),
             cast_to=ApplicationListResourcesResponse,
         )

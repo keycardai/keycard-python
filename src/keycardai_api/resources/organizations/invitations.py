@@ -33,7 +33,7 @@ class InvitationsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return InvitationsResourceWithRawResponse(self)
 
@@ -42,7 +42,7 @@ class InvitationsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return InvitationsResourceWithStreamingResponse(self)
 
@@ -91,11 +91,7 @@ class InvitationsResource(SyncAPIResource):
                 invitation_create_params.InvitationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Invitation,
         )
@@ -158,7 +154,6 @@ class InvitationsResource(SyncAPIResource):
                     },
                     invitation_list_params.InvitationListParams,
                 ),
-                security={},
             ),
             cast_to=InvitationListResponse,
         )
@@ -201,11 +196,7 @@ class InvitationsResource(SyncAPIResource):
         return self._delete(
             f"/organizations/{organization_id}/invitations/{invitation_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -218,7 +209,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncInvitationsResourceWithRawResponse(self)
 
@@ -227,7 +218,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncInvitationsResourceWithStreamingResponse(self)
 
@@ -276,11 +267,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                 invitation_create_params.InvitationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Invitation,
         )
@@ -343,7 +330,6 @@ class AsyncInvitationsResource(AsyncAPIResource):
                     },
                     invitation_list_params.InvitationListParams,
                 ),
-                security={},
             ),
             cast_to=InvitationListResponse,
         )
@@ -386,11 +372,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         return await self._delete(
             f"/organizations/{organization_id}/invitations/{invitation_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )

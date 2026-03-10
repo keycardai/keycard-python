@@ -38,7 +38,7 @@ class ResourcesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return ResourcesResourceWithRawResponse(self)
 
@@ -47,7 +47,7 @@ class ResourcesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return ResourcesResourceWithStreamingResponse(self)
 
@@ -119,11 +119,7 @@ class ResourcesResource(SyncAPIResource):
                 resource_create_params.ResourceCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -159,11 +155,7 @@ class ResourcesResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/resources/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -239,11 +231,7 @@ class ResourcesResource(SyncAPIResource):
                 resource_update_params.ResourceUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -309,7 +297,6 @@ class ResourcesResource(SyncAPIResource):
                     },
                     resource_list_params.ResourceListParams,
                 ),
-                security={},
             ),
             cast_to=ResourceListResponse,
         )
@@ -346,11 +333,7 @@ class ResourcesResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/resources/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -363,7 +346,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncResourcesResourceWithRawResponse(self)
 
@@ -372,7 +355,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncResourcesResourceWithStreamingResponse(self)
 
@@ -444,11 +427,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                 resource_create_params.ResourceCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -484,11 +463,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/resources/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -564,11 +539,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                 resource_update_params.ResourceUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -634,7 +605,6 @@ class AsyncResourcesResource(AsyncAPIResource):
                     },
                     resource_list_params.ResourceListParams,
                 ),
-                security={},
             ),
             cast_to=ResourceListResponse,
         )
@@ -671,11 +641,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/resources/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )

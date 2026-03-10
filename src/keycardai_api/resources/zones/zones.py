@@ -172,7 +172,7 @@ class ZonesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return ZonesResourceWithRawResponse(self)
 
@@ -181,7 +181,7 @@ class ZonesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return ZonesResourceWithStreamingResponse(self)
 
@@ -248,11 +248,7 @@ class ZonesResource(SyncAPIResource):
                 zone_create_params.ZoneCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Zone,
         )
@@ -291,7 +287,6 @@ class ZonesResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, zone_retrieve_params.ZoneRetrieveParams),
-                security={},
             ),
             cast_to=Zone,
         )
@@ -366,11 +361,7 @@ class ZonesResource(SyncAPIResource):
                 zone_update_params.ZoneUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Zone,
         )
@@ -427,7 +418,6 @@ class ZonesResource(SyncAPIResource):
                     },
                     zone_list_params.ZoneListParams,
                 ),
-                security={},
             ),
             cast_to=ZoneListResponse,
         )
@@ -461,11 +451,7 @@ class ZonesResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -503,11 +489,7 @@ class ZonesResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/mcp-servers/{downstream_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -585,7 +567,6 @@ class ZonesResource(SyncAPIResource):
                     },
                     zone_list_session_resource_access_params.ZoneListSessionResourceAccessParams,
                 ),
-                security={},
             ),
             cast_to=ZoneListSessionResourceAccessResponse,
         )
@@ -642,7 +623,7 @@ class AsyncZonesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncZonesResourceWithRawResponse(self)
 
@@ -651,7 +632,7 @@ class AsyncZonesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncZonesResourceWithStreamingResponse(self)
 
@@ -718,11 +699,7 @@ class AsyncZonesResource(AsyncAPIResource):
                 zone_create_params.ZoneCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Zone,
         )
@@ -761,7 +738,6 @@ class AsyncZonesResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform({"expand": expand}, zone_retrieve_params.ZoneRetrieveParams),
-                security={},
             ),
             cast_to=Zone,
         )
@@ -836,11 +812,7 @@ class AsyncZonesResource(AsyncAPIResource):
                 zone_update_params.ZoneUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Zone,
         )
@@ -897,7 +869,6 @@ class AsyncZonesResource(AsyncAPIResource):
                     },
                     zone_list_params.ZoneListParams,
                 ),
-                security={},
             ),
             cast_to=ZoneListResponse,
         )
@@ -931,11 +902,7 @@ class AsyncZonesResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -973,11 +940,7 @@ class AsyncZonesResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/mcp-servers/{downstream_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -1055,7 +1018,6 @@ class AsyncZonesResource(AsyncAPIResource):
                     },
                     zone_list_session_resource_access_params.ZoneListSessionResourceAccessParams,
                 ),
-                security={},
             ),
             cast_to=ZoneListSessionResourceAccessResponse,
         )

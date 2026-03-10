@@ -32,7 +32,7 @@ class DelegatedGrantsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return DelegatedGrantsResourceWithRawResponse(self)
 
@@ -41,7 +41,7 @@ class DelegatedGrantsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return DelegatedGrantsResourceWithStreamingResponse(self)
 
@@ -76,11 +76,7 @@ class DelegatedGrantsResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/delegated-grants/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Grant,
         )
@@ -118,11 +114,7 @@ class DelegatedGrantsResource(SyncAPIResource):
             f"/zones/{zone_id}/delegated-grants/{id}",
             body=maybe_transform({"status": status}, delegated_grant_update_params.DelegatedGrantUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Grant,
         )
@@ -192,7 +184,6 @@ class DelegatedGrantsResource(SyncAPIResource):
                     },
                     delegated_grant_list_params.DelegatedGrantListParams,
                 ),
-                security={},
             ),
             cast_to=DelegatedGrantListResponse,
         )
@@ -230,11 +221,7 @@ class DelegatedGrantsResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/delegated-grants/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -247,7 +234,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncDelegatedGrantsResourceWithRawResponse(self)
 
@@ -256,7 +243,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncDelegatedGrantsResourceWithStreamingResponse(self)
 
@@ -291,11 +278,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/delegated-grants/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Grant,
         )
@@ -335,11 +318,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                 {"status": status}, delegated_grant_update_params.DelegatedGrantUpdateParams
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Grant,
         )
@@ -409,7 +388,6 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                     },
                     delegated_grant_list_params.DelegatedGrantListParams,
                 ),
-                security={},
             ),
             cast_to=DelegatedGrantListResponse,
         )
@@ -447,11 +425,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/delegated-grants/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )

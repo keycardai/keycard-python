@@ -94,7 +94,7 @@ class OrganizationsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return OrganizationsResourceWithRawResponse(self)
 
@@ -103,7 +103,7 @@ class OrganizationsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return OrganizationsResourceWithStreamingResponse(self)
 
@@ -136,11 +136,7 @@ class OrganizationsResource(SyncAPIResource):
             "/organizations",
             body=maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Organization,
         )
@@ -186,7 +182,6 @@ class OrganizationsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams),
-                security={},
             ),
             cast_to=Organization,
         )
@@ -227,11 +222,7 @@ class OrganizationsResource(SyncAPIResource):
             f"/organizations/{organization_id}",
             body=maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Organization,
         )
@@ -289,7 +280,6 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_params.OrganizationListParams,
                 ),
-                security={},
             ),
             cast_to=OrganizationListResponse,
         )
@@ -326,11 +316,7 @@ class OrganizationsResource(SyncAPIResource):
         return self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=TokenResponse,
         )
@@ -397,7 +383,6 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
                 ),
-                security={},
             ),
             cast_to=OrganizationListIdentitiesResponse,
         )
@@ -461,7 +446,6 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_roles_params.OrganizationListRolesParams,
                 ),
-                security={},
             ),
             cast_to=OrganizationListRolesResponse,
         )
@@ -490,7 +474,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncOrganizationsResourceWithRawResponse(self)
 
@@ -499,7 +483,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncOrganizationsResourceWithStreamingResponse(self)
 
@@ -532,11 +516,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             "/organizations",
             body=await async_maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Organization,
         )
@@ -584,7 +564,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams
                 ),
-                security={},
             ),
             cast_to=Organization,
         )
@@ -625,11 +604,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             f"/organizations/{organization_id}",
             body=await async_maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Organization,
         )
@@ -687,7 +662,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_params.OrganizationListParams,
                 ),
-                security={},
             ),
             cast_to=OrganizationListResponse,
         )
@@ -724,11 +698,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         return await self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=TokenResponse,
         )
@@ -795,7 +765,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
                 ),
-                security={},
             ),
             cast_to=OrganizationListIdentitiesResponse,
         )
@@ -859,7 +828,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_roles_params.OrganizationListRolesParams,
                 ),
-                security={},
             ),
             cast_to=OrganizationListRolesResponse,
         )

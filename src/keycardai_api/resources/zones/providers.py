@@ -32,7 +32,7 @@ class ProvidersResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return ProvidersResourceWithRawResponse(self)
 
@@ -41,7 +41,7 @@ class ProvidersResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return ProvidersResourceWithStreamingResponse(self)
 
@@ -107,11 +107,7 @@ class ProvidersResource(SyncAPIResource):
                 provider_create_params.ProviderCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Provider,
         )
@@ -147,11 +143,7 @@ class ProvidersResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Provider,
         )
@@ -221,11 +213,7 @@ class ProvidersResource(SyncAPIResource):
                 provider_update_params.ProviderUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Provider,
         )
@@ -289,7 +277,6 @@ class ProvidersResource(SyncAPIResource):
                     },
                     provider_list_params.ProviderListParams,
                 ),
-                security={},
             ),
             cast_to=ProviderListResponse,
         )
@@ -326,11 +313,7 @@ class ProvidersResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -343,7 +326,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
         return AsyncProvidersResourceWithRawResponse(self)
 
@@ -352,7 +335,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/keycardlabs/keycard-python#with_streaming_response
+        For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
         return AsyncProvidersResourceWithStreamingResponse(self)
 
@@ -418,11 +401,7 @@ class AsyncProvidersResource(AsyncAPIResource):
                 provider_create_params.ProviderCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Provider,
         )
@@ -458,11 +437,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Provider,
         )
@@ -532,11 +507,7 @@ class AsyncProvidersResource(AsyncAPIResource):
                 provider_update_params.ProviderUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Provider,
         )
@@ -600,7 +571,6 @@ class AsyncProvidersResource(AsyncAPIResource):
                     },
                     provider_list_params.ProviderListParams,
                 ),
-                security={},
             ),
             cast_to=ProviderListResponse,
         )
@@ -637,11 +607,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
