@@ -252,7 +252,7 @@ class ZonesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Zone,
         )
@@ -291,7 +291,7 @@ class ZonesResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, zone_retrieve_params.ZoneRetrieveParams),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Zone,
         )
@@ -370,7 +370,7 @@ class ZonesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Zone,
         )
@@ -427,7 +427,7 @@ class ZonesResource(SyncAPIResource):
                     },
                     zone_list_params.ZoneListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneListResponse,
         )
@@ -465,7 +465,7 @@ class ZonesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -507,7 +507,7 @@ class ZonesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -585,7 +585,7 @@ class ZonesResource(SyncAPIResource):
                     },
                     zone_list_session_resource_access_params.ZoneListSessionResourceAccessParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneListSessionResourceAccessResponse,
         )
@@ -722,7 +722,7 @@ class AsyncZonesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Zone,
         )
@@ -761,7 +761,7 @@ class AsyncZonesResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform({"expand": expand}, zone_retrieve_params.ZoneRetrieveParams),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Zone,
         )
@@ -840,7 +840,7 @@ class AsyncZonesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Zone,
         )
@@ -897,7 +897,7 @@ class AsyncZonesResource(AsyncAPIResource):
                     },
                     zone_list_params.ZoneListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneListResponse,
         )
@@ -935,7 +935,7 @@ class AsyncZonesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -977,7 +977,7 @@ class AsyncZonesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -1055,7 +1055,7 @@ class AsyncZonesResource(AsyncAPIResource):
                     },
                     zone_list_session_resource_access_params.ZoneListSessionResourceAccessParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneListSessionResourceAccessResponse,
         )

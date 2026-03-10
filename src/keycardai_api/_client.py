@@ -158,12 +158,19 @@ class KeycardAPI(SyncAPIClient):
     @override
     def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
         return {
-            **(self._org_management_basic_auth if security.get("org_management_basic_auth", False) else {}),
-            **(self._vault_api_bearer_auth if security.get("vault_api_bearer_auth", False) else {}),
+            **(self._bearer_auth if security.get("bearer_auth", False) else {}),
+            **(self._basic_auth if security.get("basic_auth", False) else {}),
         }
 
     @property
-    def _org_management_basic_auth(self) -> dict[str, str]:
+    def _bearer_auth(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
+
+    @property
+    def _basic_auth(self) -> dict[str, str]:
         if self.username is None:
             return {}
         if self.password is None:
@@ -171,13 +178,6 @@ class KeycardAPI(SyncAPIClient):
         credentials = f"{self.username}:{self.password}".encode("ascii")
         header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
         return {"Authorization": header}
-
-    @property
-    def _vault_api_bearer_auth(self) -> dict[str, str]:
-        api_key = self.api_key
-        if api_key is None:
-            return {}
-        return {"Authorization": f"Bearer {api_key}"}
 
     @property
     @override
@@ -194,7 +194,7 @@ class KeycardAPI(SyncAPIClient):
             return
 
         raise TypeError(
-            '"Could not resolve authentication method. Expected either username, password or api_key to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted"'
+            '"Could not resolve authentication method. Expected either api_key, username or password to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted"'
         )
 
     def copy(
@@ -392,12 +392,19 @@ class AsyncKeycardAPI(AsyncAPIClient):
     @override
     def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
         return {
-            **(self._org_management_basic_auth if security.get("org_management_basic_auth", False) else {}),
-            **(self._vault_api_bearer_auth if security.get("vault_api_bearer_auth", False) else {}),
+            **(self._bearer_auth if security.get("bearer_auth", False) else {}),
+            **(self._basic_auth if security.get("basic_auth", False) else {}),
         }
 
     @property
-    def _org_management_basic_auth(self) -> dict[str, str]:
+    def _bearer_auth(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
+
+    @property
+    def _basic_auth(self) -> dict[str, str]:
         if self.username is None:
             return {}
         if self.password is None:
@@ -405,13 +412,6 @@ class AsyncKeycardAPI(AsyncAPIClient):
         credentials = f"{self.username}:{self.password}".encode("ascii")
         header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
         return {"Authorization": header}
-
-    @property
-    def _vault_api_bearer_auth(self) -> dict[str, str]:
-        api_key = self.api_key
-        if api_key is None:
-            return {}
-        return {"Authorization": f"Bearer {api_key}"}
 
     @property
     @override
@@ -428,7 +428,7 @@ class AsyncKeycardAPI(AsyncAPIClient):
             return
 
         raise TypeError(
-            '"Could not resolve authentication method. Expected either username, password or api_key to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted"'
+            '"Could not resolve authentication method. Expected either api_key, username or password to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted"'
         )
 
     def copy(

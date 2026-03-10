@@ -140,7 +140,7 @@ class OrganizationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Organization,
         )
@@ -186,7 +186,7 @@ class OrganizationsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Organization,
         )
@@ -231,7 +231,7 @@ class OrganizationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Organization,
         )
@@ -289,7 +289,7 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_params.OrganizationListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationListResponse,
         )
@@ -330,7 +330,7 @@ class OrganizationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=TokenResponse,
         )
@@ -397,7 +397,7 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationListIdentitiesResponse,
         )
@@ -461,7 +461,7 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_roles_params.OrganizationListRolesParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationListRolesResponse,
         )
@@ -536,7 +536,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Organization,
         )
@@ -584,7 +584,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Organization,
         )
@@ -629,7 +629,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Organization,
         )
@@ -687,7 +687,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_params.OrganizationListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationListResponse,
         )
@@ -728,7 +728,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=TokenResponse,
         )
@@ -795,7 +795,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationListIdentitiesResponse,
         )
@@ -859,7 +859,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_roles_params.OrganizationListRolesParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationListRolesResponse,
         )

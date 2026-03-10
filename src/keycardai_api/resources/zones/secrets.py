@@ -108,7 +108,7 @@ class SecretsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=Secret,
         )
@@ -150,7 +150,7 @@ class SecretsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=SecretRetrieveResponse,
         )
@@ -211,7 +211,7 @@ class SecretsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=Secret,
         )
@@ -263,7 +263,7 @@ class SecretsResource(SyncAPIResource):
                     },
                     secret_list_params.SecretListParams,
                 ),
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=SecretListResponse,
         )
@@ -306,7 +306,7 @@ class SecretsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -395,7 +395,7 @@ class AsyncSecretsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=Secret,
         )
@@ -437,7 +437,7 @@ class AsyncSecretsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=SecretRetrieveResponse,
         )
@@ -498,7 +498,7 @@ class AsyncSecretsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=Secret,
         )
@@ -550,7 +550,7 @@ class AsyncSecretsResource(AsyncAPIResource):
                     },
                     secret_list_params.SecretListParams,
                 ),
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=SecretListResponse,
         )
@@ -593,7 +593,7 @@ class AsyncSecretsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={"vault_api_bearer_auth": True},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

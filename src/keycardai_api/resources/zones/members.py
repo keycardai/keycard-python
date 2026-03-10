@@ -83,7 +83,7 @@ class MembersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneMember,
         )
@@ -132,7 +132,7 @@ class MembersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneMember,
         )
@@ -194,7 +194,7 @@ class MembersResource(SyncAPIResource):
                     },
                     member_list_params.MemberListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=MemberListResponse,
         )
@@ -239,7 +239,7 @@ class MembersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -290,7 +290,7 @@ class MembersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneMember,
         )
@@ -353,7 +353,7 @@ class AsyncMembersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneMember,
         )
@@ -402,7 +402,7 @@ class AsyncMembersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneMember,
         )
@@ -464,7 +464,7 @@ class AsyncMembersResource(AsyncAPIResource):
                     },
                     member_list_params.MemberListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=MemberListResponse,
         )
@@ -509,7 +509,7 @@ class AsyncMembersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -560,7 +560,7 @@ class AsyncMembersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ZoneMember,
         )

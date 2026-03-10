@@ -80,7 +80,7 @@ class UserAgentsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=UserAgent,
         )
@@ -139,7 +139,7 @@ class UserAgentsResource(SyncAPIResource):
                     },
                     user_agent_list_params.UserAgentListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=UserAgentListResponse,
         )
@@ -200,7 +200,7 @@ class AsyncUserAgentsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=UserAgent,
         )
@@ -259,7 +259,7 @@ class AsyncUserAgentsResource(AsyncAPIResource):
                     },
                     user_agent_list_params.UserAgentListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=UserAgentListResponse,
         )

@@ -111,7 +111,7 @@ class ServiceAccountsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccount,
         )
@@ -162,7 +162,7 @@ class ServiceAccountsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, service_account_retrieve_params.ServiceAccountRetrieveParams),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccount,
         )
@@ -221,7 +221,7 @@ class ServiceAccountsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccount,
         )
@@ -284,7 +284,7 @@ class ServiceAccountsResource(SyncAPIResource):
                     },
                     service_account_list_params.ServiceAccountListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccountListResponse,
         )
@@ -331,7 +331,7 @@ class ServiceAccountsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -410,7 +410,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccount,
         )
@@ -463,7 +463,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, service_account_retrieve_params.ServiceAccountRetrieveParams
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccount,
         )
@@ -522,7 +522,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccount,
         )
@@ -585,7 +585,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                     },
                     service_account_list_params.ServiceAccountListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccountListResponse,
         )
@@ -632,7 +632,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

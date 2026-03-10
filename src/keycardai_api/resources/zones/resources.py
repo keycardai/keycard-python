@@ -123,7 +123,7 @@ class ResourcesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Resource,
         )
@@ -163,7 +163,7 @@ class ResourcesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Resource,
         )
@@ -243,7 +243,7 @@ class ResourcesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Resource,
         )
@@ -309,7 +309,7 @@ class ResourcesResource(SyncAPIResource):
                     },
                     resource_list_params.ResourceListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ResourceListResponse,
         )
@@ -350,7 +350,7 @@ class ResourcesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -448,7 +448,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Resource,
         )
@@ -488,7 +488,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Resource,
         )
@@ -568,7 +568,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Resource,
         )
@@ -634,7 +634,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                     },
                     resource_list_params.ResourceListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ResourceListResponse,
         )
@@ -675,7 +675,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

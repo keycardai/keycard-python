@@ -114,7 +114,7 @@ class InvitationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=InvitationAcceptResponse,
         )
@@ -213,7 +213,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=InvitationAcceptResponse,
         )
