@@ -99,7 +99,6 @@ class UsersResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, user_retrieve_params.UserRetrieveParams),
-                security={"bearer_auth": True},
             ),
             cast_to=OrganizationUser,
         )
@@ -154,11 +153,7 @@ class UsersResource(SyncAPIResource):
                 user_update_params.UserUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=OrganizationUser,
         )
@@ -225,7 +220,6 @@ class UsersResource(SyncAPIResource):
                     },
                     user_list_params.UserListParams,
                 ),
-                security={"bearer_auth": True},
             ),
             cast_to=UserListResponse,
         )
@@ -268,11 +262,7 @@ class UsersResource(SyncAPIResource):
         return self._delete(
             f"/organizations/{organization_id}/users/{user_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -344,7 +334,6 @@ class AsyncUsersResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform({"expand": expand}, user_retrieve_params.UserRetrieveParams),
-                security={"bearer_auth": True},
             ),
             cast_to=OrganizationUser,
         )
@@ -399,11 +388,7 @@ class AsyncUsersResource(AsyncAPIResource):
                 user_update_params.UserUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=OrganizationUser,
         )
@@ -470,7 +455,6 @@ class AsyncUsersResource(AsyncAPIResource):
                     },
                     user_list_params.UserListParams,
                 ),
-                security={"bearer_auth": True},
             ),
             cast_to=UserListResponse,
         )
@@ -513,11 +497,7 @@ class AsyncUsersResource(AsyncAPIResource):
         return await self._delete(
             f"/organizations/{organization_id}/users/{user_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
