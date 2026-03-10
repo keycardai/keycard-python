@@ -130,7 +130,11 @@ class ApplicationsResource(SyncAPIResource):
                 application_create_params.ApplicationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -166,7 +170,11 @@ class ApplicationsResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -231,7 +239,11 @@ class ApplicationsResource(SyncAPIResource):
                 application_update_params.ApplicationUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -303,6 +315,7 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_params.ApplicationListParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListResponse,
         )
@@ -339,7 +352,11 @@ class ApplicationsResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -400,6 +417,7 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListCredentialsResponse,
         )
@@ -460,6 +478,7 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_resources_params.ApplicationListResourcesParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListResourcesResponse,
         )
@@ -551,7 +570,11 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 application_create_params.ApplicationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -587,7 +610,11 @@ class AsyncApplicationsResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -652,7 +679,11 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 application_update_params.ApplicationUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Application,
         )
@@ -724,6 +755,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_params.ApplicationListParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListResponse,
         )
@@ -760,7 +792,11 @@ class AsyncApplicationsResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/applications/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -821,6 +857,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListCredentialsResponse,
         )
@@ -881,6 +918,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_resources_params.ApplicationListResourcesParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationListResourcesResponse,
         )

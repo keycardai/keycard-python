@@ -107,7 +107,11 @@ class ProvidersResource(SyncAPIResource):
                 provider_create_params.ProviderCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Provider,
         )
@@ -143,7 +147,11 @@ class ProvidersResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Provider,
         )
@@ -213,7 +221,11 @@ class ProvidersResource(SyncAPIResource):
                 provider_update_params.ProviderUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Provider,
         )
@@ -277,6 +289,7 @@ class ProvidersResource(SyncAPIResource):
                     },
                     provider_list_params.ProviderListParams,
                 ),
+                security={},
             ),
             cast_to=ProviderListResponse,
         )
@@ -313,7 +326,11 @@ class ProvidersResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -401,7 +418,11 @@ class AsyncProvidersResource(AsyncAPIResource):
                 provider_create_params.ProviderCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Provider,
         )
@@ -437,7 +458,11 @@ class AsyncProvidersResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Provider,
         )
@@ -507,7 +532,11 @@ class AsyncProvidersResource(AsyncAPIResource):
                 provider_update_params.ProviderUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Provider,
         )
@@ -571,6 +600,7 @@ class AsyncProvidersResource(AsyncAPIResource):
                     },
                     provider_list_params.ProviderListParams,
                 ),
+                security={},
             ),
             cast_to=ProviderListResponse,
         )
@@ -607,7 +637,11 @@ class AsyncProvidersResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/providers/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )

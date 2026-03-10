@@ -76,7 +76,11 @@ class DelegatedGrantsResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/delegated-grants/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Grant,
         )
@@ -114,7 +118,11 @@ class DelegatedGrantsResource(SyncAPIResource):
             f"/zones/{zone_id}/delegated-grants/{id}",
             body=maybe_transform({"status": status}, delegated_grant_update_params.DelegatedGrantUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Grant,
         )
@@ -184,6 +192,7 @@ class DelegatedGrantsResource(SyncAPIResource):
                     },
                     delegated_grant_list_params.DelegatedGrantListParams,
                 ),
+                security={},
             ),
             cast_to=DelegatedGrantListResponse,
         )
@@ -221,7 +230,11 @@ class DelegatedGrantsResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/delegated-grants/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -278,7 +291,11 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/delegated-grants/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Grant,
         )
@@ -318,7 +335,11 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                 {"status": status}, delegated_grant_update_params.DelegatedGrantUpdateParams
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Grant,
         )
@@ -388,6 +409,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                     },
                     delegated_grant_list_params.DelegatedGrantListParams,
                 ),
+                security={},
             ),
             cast_to=DelegatedGrantListResponse,
         )
@@ -425,7 +447,11 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/delegated-grants/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )

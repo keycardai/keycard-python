@@ -248,7 +248,11 @@ class ZonesResource(SyncAPIResource):
                 zone_create_params.ZoneCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Zone,
         )
@@ -287,6 +291,7 @@ class ZonesResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, zone_retrieve_params.ZoneRetrieveParams),
+                security={},
             ),
             cast_to=Zone,
         )
@@ -361,7 +366,11 @@ class ZonesResource(SyncAPIResource):
                 zone_update_params.ZoneUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Zone,
         )
@@ -418,6 +427,7 @@ class ZonesResource(SyncAPIResource):
                     },
                     zone_list_params.ZoneListParams,
                 ),
+                security={},
             ),
             cast_to=ZoneListResponse,
         )
@@ -451,7 +461,11 @@ class ZonesResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -489,7 +503,11 @@ class ZonesResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/mcp-servers/{downstream_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -567,6 +585,7 @@ class ZonesResource(SyncAPIResource):
                     },
                     zone_list_session_resource_access_params.ZoneListSessionResourceAccessParams,
                 ),
+                security={},
             ),
             cast_to=ZoneListSessionResourceAccessResponse,
         )
@@ -699,7 +718,11 @@ class AsyncZonesResource(AsyncAPIResource):
                 zone_create_params.ZoneCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Zone,
         )
@@ -738,6 +761,7 @@ class AsyncZonesResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform({"expand": expand}, zone_retrieve_params.ZoneRetrieveParams),
+                security={},
             ),
             cast_to=Zone,
         )
@@ -812,7 +836,11 @@ class AsyncZonesResource(AsyncAPIResource):
                 zone_update_params.ZoneUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Zone,
         )
@@ -869,6 +897,7 @@ class AsyncZonesResource(AsyncAPIResource):
                     },
                     zone_list_params.ZoneListParams,
                 ),
+                security={},
             ),
             cast_to=ZoneListResponse,
         )
@@ -902,7 +931,11 @@ class AsyncZonesResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -940,7 +973,11 @@ class AsyncZonesResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/mcp-servers/{downstream_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -1018,6 +1055,7 @@ class AsyncZonesResource(AsyncAPIResource):
                     },
                     zone_list_session_resource_access_params.ZoneListSessionResourceAccessParams,
                 ),
+                security={},
             ),
             cast_to=ZoneListSessionResourceAccessResponse,
         )

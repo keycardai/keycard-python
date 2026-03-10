@@ -25,34 +25,23 @@ pip install keycardai-api
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from keycardai_api import KeycardAPI
 
-client = KeycardAPI(
-    api_key=os.environ.get("KEYCARD_API_API_KEY"),  # This is the default and can be omitted
-)
+client = KeycardAPI()
 
 zones = client.zones.list()
 print(zones.items)
 ```
-
-While you can provide an `api_key` keyword argument,
-we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `KEYCARD_API_API_KEY="My API Key"` to your `.env` file
-so that your API Key is not stored in source control.
 
 ## Async usage
 
 Simply import `AsyncKeycardAPI` instead of `KeycardAPI` and use `await` with each API call:
 
 ```python
-import os
 import asyncio
 from keycardai_api import AsyncKeycardAPI
 
-client = AsyncKeycardAPI(
-    api_key=os.environ.get("KEYCARD_API_API_KEY"),  # This is the default and can be omitted
-)
+client = AsyncKeycardAPI()
 
 
 async def main() -> None:
@@ -79,7 +68,6 @@ pip install keycardai-api[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
-import os
 import asyncio
 from keycardai_api import DefaultAioHttpClient
 from keycardai_api import AsyncKeycardAPI
@@ -87,7 +75,6 @@ from keycardai_api import AsyncKeycardAPI
 
 async def main() -> None:
     async with AsyncKeycardAPI(
-        api_key=os.environ.get("KEYCARD_API_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         zones = await client.zones.list()

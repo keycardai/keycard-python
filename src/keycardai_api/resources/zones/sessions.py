@@ -78,7 +78,11 @@ class SessionsResource(SyncAPIResource):
             self._get(
                 f"/zones/{zone_id}/sessions/{id}",
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -119,7 +123,11 @@ class SessionsResource(SyncAPIResource):
                 f"/zones/{zone_id}/sessions/{id}",
                 body=maybe_transform({"status": status}, session_update_params.SessionUpdateParams),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -196,6 +204,7 @@ class SessionsResource(SyncAPIResource):
                     },
                     session_list_params.SessionListParams,
                 ),
+                security={},
             ),
             cast_to=SessionListResponse,
         )
@@ -232,7 +241,11 @@ class SessionsResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/sessions/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -291,7 +304,11 @@ class AsyncSessionsResource(AsyncAPIResource):
             await self._get(
                 f"/zones/{zone_id}/sessions/{id}",
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -332,7 +349,11 @@ class AsyncSessionsResource(AsyncAPIResource):
                 f"/zones/{zone_id}/sessions/{id}",
                 body=await async_maybe_transform({"status": status}, session_update_params.SessionUpdateParams),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -409,6 +430,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     },
                     session_list_params.SessionListParams,
                 ),
+                security={},
             ),
             cast_to=SessionListResponse,
         )
@@ -445,7 +467,11 @@ class AsyncSessionsResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/sessions/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
