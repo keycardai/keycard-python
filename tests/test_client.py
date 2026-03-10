@@ -452,12 +452,14 @@ class TestKeycardAPI:
         client = KeycardAPI(
             base_url=base_url, api_key=api_key, username=username, password=password, _strict_response_validation=True
         )
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
         with update_env(
             **{
+                "KEYCARD_API_API_KEY": Omit(),
                 "KEYCARD_API_USERNAME": Omit(),
                 "KEYCARD_API_PASSWORD": Omit(),
-                "KEYCARD_API_API_KEY": Omit(),
             }
         ):
             client2 = KeycardAPI(
@@ -466,9 +468,14 @@ class TestKeycardAPI:
 
         with pytest.raises(
             TypeError,
-            match="Could not resolve authentication method. Expected either username, password or api_key to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted",
+            match="Could not resolve authentication method. Expected either api_key, username or password to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted",
         ):
             client2._build_request(FinalRequestOptions(method="get", url="/foo"))
+
+        request2 = client2._build_request(
+            FinalRequestOptions(method="get", url="/foo", headers={"Authorization": Omit()})
+        )
+        assert request2.headers.get("Authorization") is None
 
     def test_default_query_option(self) -> None:
         client = KeycardAPI(
@@ -1454,12 +1461,14 @@ class TestAsyncKeycardAPI:
         client = AsyncKeycardAPI(
             base_url=base_url, api_key=api_key, username=username, password=password, _strict_response_validation=True
         )
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
         with update_env(
             **{
+                "KEYCARD_API_API_KEY": Omit(),
                 "KEYCARD_API_USERNAME": Omit(),
                 "KEYCARD_API_PASSWORD": Omit(),
-                "KEYCARD_API_API_KEY": Omit(),
             }
         ):
             client2 = AsyncKeycardAPI(
@@ -1468,9 +1477,14 @@ class TestAsyncKeycardAPI:
 
         with pytest.raises(
             TypeError,
-            match="Could not resolve authentication method. Expected either username, password or api_key to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted",
+            match="Could not resolve authentication method. Expected either api_key, username or password to be set. Or for one of the `Authorization` or `Authorization` headers to be explicitly omitted",
         ):
             client2._build_request(FinalRequestOptions(method="get", url="/foo"))
+
+        request2 = client2._build_request(
+            FinalRequestOptions(method="get", url="/foo", headers={"Authorization": Omit()})
+        )
+        assert request2.headers.get("Authorization") is None
 
     async def test_default_query_option(self) -> None:
         client = AsyncKeycardAPI(

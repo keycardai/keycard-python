@@ -95,7 +95,7 @@ class InvitationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Invitation,
         )
@@ -158,7 +158,7 @@ class InvitationsResource(SyncAPIResource):
                     },
                     invitation_list_params.InvitationListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=InvitationListResponse,
         )
@@ -205,7 +205,7 @@ class InvitationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -280,7 +280,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Invitation,
         )
@@ -343,7 +343,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                     },
                     invitation_list_params.InvitationListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=InvitationListResponse,
         )
@@ -390,7 +390,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

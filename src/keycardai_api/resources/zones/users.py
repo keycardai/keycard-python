@@ -80,7 +80,7 @@ class UsersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=User,
         )
@@ -137,7 +137,7 @@ class UsersResource(SyncAPIResource):
                     },
                     user_list_params.UserListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=UserListResponse,
         )
@@ -198,7 +198,7 @@ class AsyncUsersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=User,
         )
@@ -255,7 +255,7 @@ class AsyncUsersResource(AsyncAPIResource):
                     },
                     user_list_params.UserListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=UserListResponse,
         )

@@ -80,7 +80,7 @@ class DelegatedGrantsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Grant,
         )
@@ -122,7 +122,7 @@ class DelegatedGrantsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Grant,
         )
@@ -192,7 +192,7 @@ class DelegatedGrantsResource(SyncAPIResource):
                     },
                     delegated_grant_list_params.DelegatedGrantListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=DelegatedGrantListResponse,
         )
@@ -234,7 +234,7 @@ class DelegatedGrantsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -295,7 +295,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Grant,
         )
@@ -339,7 +339,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Grant,
         )
@@ -409,7 +409,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                     },
                     delegated_grant_list_params.DelegatedGrantListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=DelegatedGrantListResponse,
         )
@@ -451,7 +451,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

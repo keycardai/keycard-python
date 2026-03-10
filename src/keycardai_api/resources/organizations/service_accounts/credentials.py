@@ -105,7 +105,7 @@ class CredentialsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=CredentialCreateResponse,
         )
@@ -161,7 +161,7 @@ class CredentialsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, credential_retrieve_params.CredentialRetrieveParams),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccountCredential,
         )
@@ -225,7 +225,7 @@ class CredentialsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccountCredential,
         )
@@ -293,7 +293,7 @@ class CredentialsResource(SyncAPIResource):
                     },
                     credential_list_params.CredentialListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=CredentialListResponse,
         )
@@ -345,7 +345,7 @@ class CredentialsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -425,7 +425,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=CredentialCreateResponse,
         )
@@ -483,7 +483,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, credential_retrieve_params.CredentialRetrieveParams
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccountCredential,
         )
@@ -547,7 +547,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ServiceAccountCredential,
         )
@@ -615,7 +615,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                     },
                     credential_list_params.CredentialListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=CredentialListResponse,
         )
@@ -667,7 +667,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

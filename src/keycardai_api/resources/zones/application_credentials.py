@@ -270,7 +270,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(
                     Any, ApplicationCredentialCreateResponse
@@ -315,7 +315,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -513,7 +513,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -576,7 +576,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     },
                     application_credential_list_params.ApplicationCredentialListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ApplicationCredentialListResponse,
         )
@@ -617,7 +617,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -863,7 +863,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(
                     Any, ApplicationCredentialCreateResponse
@@ -908,7 +908,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -1106,7 +1106,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -1169,7 +1169,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     },
                     application_credential_list_params.ApplicationCredentialListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ApplicationCredentialListResponse,
         )
@@ -1210,7 +1210,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

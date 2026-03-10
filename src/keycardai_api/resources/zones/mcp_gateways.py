@@ -93,7 +93,7 @@ class McpGatewaysResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=McpGatewayCreateMcpServerResponse,
         )
@@ -171,7 +171,7 @@ class AsyncMcpGatewaysResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=McpGatewayCreateMcpServerResponse,
         )

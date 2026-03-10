@@ -134,7 +134,7 @@ class ApplicationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Application,
         )
@@ -174,7 +174,7 @@ class ApplicationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Application,
         )
@@ -243,7 +243,7 @@ class ApplicationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Application,
         )
@@ -315,7 +315,7 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_params.ApplicationListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ApplicationListResponse,
         )
@@ -356,7 +356,7 @@ class ApplicationsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -417,7 +417,7 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ApplicationListCredentialsResponse,
         )
@@ -478,7 +478,7 @@ class ApplicationsResource(SyncAPIResource):
                     },
                     application_list_resources_params.ApplicationListResourcesParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ApplicationListResourcesResponse,
         )
@@ -574,7 +574,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Application,
         )
@@ -614,7 +614,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Application,
         )
@@ -683,7 +683,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Application,
         )
@@ -755,7 +755,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_params.ApplicationListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ApplicationListResponse,
         )
@@ -796,7 +796,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -857,7 +857,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_credentials_params.ApplicationListCredentialsParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ApplicationListCredentialsResponse,
         )
@@ -918,7 +918,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     },
                     application_list_resources_params.ApplicationListResourcesParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ApplicationListResourcesResponse,
         )

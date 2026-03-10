@@ -82,7 +82,7 @@ class SessionsResource(SyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -127,7 +127,7 @@ class SessionsResource(SyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -204,7 +204,7 @@ class SessionsResource(SyncAPIResource):
                     },
                     session_list_params.SessionListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=SessionListResponse,
         )
@@ -245,7 +245,7 @@ class SessionsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -308,7 +308,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -353,7 +353,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     extra_query=extra_query,
                     extra_body=extra_body,
                     timeout=timeout,
-                    security={},
+                    security={"bearer_auth": True},
                 ),
                 cast_to=cast(Any, Session),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -430,7 +430,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     },
                     session_list_params.SessionListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=SessionListResponse,
         )
@@ -471,7 +471,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

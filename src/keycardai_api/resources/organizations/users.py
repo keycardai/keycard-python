@@ -99,7 +99,7 @@ class UsersResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, user_retrieve_params.UserRetrieveParams),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationUser,
         )
@@ -158,7 +158,7 @@ class UsersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationUser,
         )
@@ -225,7 +225,7 @@ class UsersResource(SyncAPIResource):
                     },
                     user_list_params.UserListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=UserListResponse,
         )
@@ -272,7 +272,7 @@ class UsersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -344,7 +344,7 @@ class AsyncUsersResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform({"expand": expand}, user_retrieve_params.UserRetrieveParams),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationUser,
         )
@@ -403,7 +403,7 @@ class AsyncUsersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=OrganizationUser,
         )
@@ -470,7 +470,7 @@ class AsyncUsersResource(AsyncAPIResource):
                     },
                     user_list_params.UserListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=UserListResponse,
         )
@@ -517,7 +517,7 @@ class AsyncUsersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

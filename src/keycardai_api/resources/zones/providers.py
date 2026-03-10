@@ -111,7 +111,7 @@ class ProvidersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Provider,
         )
@@ -151,7 +151,7 @@ class ProvidersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Provider,
         )
@@ -225,7 +225,7 @@ class ProvidersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Provider,
         )
@@ -289,7 +289,7 @@ class ProvidersResource(SyncAPIResource):
                     },
                     provider_list_params.ProviderListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ProviderListResponse,
         )
@@ -330,7 +330,7 @@ class ProvidersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -422,7 +422,7 @@ class AsyncProvidersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Provider,
         )
@@ -462,7 +462,7 @@ class AsyncProvidersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Provider,
         )
@@ -536,7 +536,7 @@ class AsyncProvidersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Provider,
         )
@@ -600,7 +600,7 @@ class AsyncProvidersResource(AsyncAPIResource):
                     },
                     provider_list_params.ProviderListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=ProviderListResponse,
         )
@@ -641,7 +641,7 @@ class AsyncProvidersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )

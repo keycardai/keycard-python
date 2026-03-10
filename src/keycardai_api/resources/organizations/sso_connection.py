@@ -90,7 +90,7 @@ class SSOConnectionResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, sso_connection_retrieve_params.SSOConnectionRetrieveParams),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=SSOConnection,
         )
@@ -152,7 +152,7 @@ class SSOConnectionResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=SSOConnection,
         )
@@ -194,7 +194,7 @@ class SSOConnectionResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -256,7 +256,7 @@ class SSOConnectionResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=SSOConnection,
         )
@@ -325,7 +325,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, sso_connection_retrieve_params.SSOConnectionRetrieveParams
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=SSOConnection,
         )
@@ -387,7 +387,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=SSOConnection,
         )
@@ -429,7 +429,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -491,7 +491,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=SSOConnection,
         )

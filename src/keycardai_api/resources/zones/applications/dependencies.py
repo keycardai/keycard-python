@@ -83,7 +83,7 @@ class DependenciesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Resource,
         )
@@ -146,7 +146,7 @@ class DependenciesResource(SyncAPIResource):
                     },
                     dependency_list_params.DependencyListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=DependencyListResponse,
         )
@@ -192,7 +192,7 @@ class DependenciesResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"when_accessing": when_accessing}, dependency_add_params.DependencyAddParams),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -236,7 +236,7 @@ class DependenciesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -300,7 +300,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=Resource,
         )
@@ -363,7 +363,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
                     },
                     dependency_list_params.DependencyListParams,
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=DependencyListResponse,
         )
@@ -411,7 +411,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"when_accessing": when_accessing}, dependency_add_params.DependencyAddParams
                 ),
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -455,7 +455,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                security={},
+                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
