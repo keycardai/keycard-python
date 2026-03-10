@@ -23,14 +23,8 @@ class User(BaseModel):
     email_verified: bool
     """Whether the email address has been verified"""
 
-    issuer: str
-    """Issuer identifier of the identity provider"""
-
     organization_id: str
     """Organization that owns this user"""
-
-    subject: str
-    """Subject identifier from the identity provider"""
 
     updated_at: datetime
     """Entity update timestamp"""
@@ -41,9 +35,15 @@ class User(BaseModel):
     authenticated_at: Optional[str] = None
     """Date when the user was last authenticated"""
 
+    issuer: Optional[str] = None
+    """Issuer identifier of the identity provider"""
+
     provider_id: Optional[str] = None
     """Reference to the identity provider.
 
     This field is undefined when the source identity provider is deleted but the
     user is not deleted.
     """
+
+    subject: Optional[str] = None
+    """Subject identifier from the identity provider"""
