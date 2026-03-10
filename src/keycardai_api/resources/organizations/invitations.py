@@ -91,7 +91,11 @@ class InvitationsResource(SyncAPIResource):
                 invitation_create_params.InvitationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Invitation,
         )
@@ -154,6 +158,7 @@ class InvitationsResource(SyncAPIResource):
                     },
                     invitation_list_params.InvitationListParams,
                 ),
+                security={},
             ),
             cast_to=InvitationListResponse,
         )
@@ -196,7 +201,11 @@ class InvitationsResource(SyncAPIResource):
         return self._delete(
             f"/organizations/{organization_id}/invitations/{invitation_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -267,7 +276,11 @@ class AsyncInvitationsResource(AsyncAPIResource):
                 invitation_create_params.InvitationCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Invitation,
         )
@@ -330,6 +343,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                     },
                     invitation_list_params.InvitationListParams,
                 ),
+                security={},
             ),
             cast_to=InvitationListResponse,
         )
@@ -372,7 +386,11 @@ class AsyncInvitationsResource(AsyncAPIResource):
         return await self._delete(
             f"/organizations/{organization_id}/invitations/{invitation_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )

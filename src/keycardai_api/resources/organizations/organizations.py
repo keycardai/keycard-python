@@ -136,7 +136,11 @@ class OrganizationsResource(SyncAPIResource):
             "/organizations",
             body=maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Organization,
         )
@@ -182,6 +186,7 @@ class OrganizationsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams),
+                security={},
             ),
             cast_to=Organization,
         )
@@ -222,7 +227,11 @@ class OrganizationsResource(SyncAPIResource):
             f"/organizations/{organization_id}",
             body=maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Organization,
         )
@@ -280,6 +289,7 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_params.OrganizationListParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListResponse,
         )
@@ -316,7 +326,11 @@ class OrganizationsResource(SyncAPIResource):
         return self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=TokenResponse,
         )
@@ -383,6 +397,7 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListIdentitiesResponse,
         )
@@ -446,6 +461,7 @@ class OrganizationsResource(SyncAPIResource):
                     },
                     organization_list_roles_params.OrganizationListRolesParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListRolesResponse,
         )
@@ -516,7 +532,11 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             "/organizations",
             body=await async_maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Organization,
         )
@@ -564,6 +584,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, organization_retrieve_params.OrganizationRetrieveParams
                 ),
+                security={},
             ),
             cast_to=Organization,
         )
@@ -604,7 +625,11 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             f"/organizations/{organization_id}",
             body=await async_maybe_transform({"name": name}, organization_update_params.OrganizationUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=Organization,
         )
@@ -662,6 +687,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_params.OrganizationListParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListResponse,
         )
@@ -698,7 +724,11 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         return await self._post(
             f"/organizations/{organization_id}/token",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=TokenResponse,
         )
@@ -765,6 +795,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListIdentitiesResponse,
         )
@@ -828,6 +859,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     },
                     organization_list_roles_params.OrganizationListRolesParams,
                 ),
+                security={},
             ),
             cast_to=OrganizationListRolesResponse,
         )

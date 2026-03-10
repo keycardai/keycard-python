@@ -266,7 +266,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     application_credential_create_params.ApplicationCredentialCreateParams,
                 ),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(
                     Any, ApplicationCredentialCreateResponse
@@ -307,7 +311,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
             self._get(
                 f"/zones/{zone_id}/application-credentials/{id}",
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -501,7 +509,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     application_credential_update_params.ApplicationCredentialUpdateParams,
                 ),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -564,6 +576,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     },
                     application_credential_list_params.ApplicationCredentialListParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationCredentialListResponse,
         )
@@ -600,7 +613,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/application-credentials/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
@@ -842,7 +859,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     application_credential_create_params.ApplicationCredentialCreateParams,
                 ),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(
                     Any, ApplicationCredentialCreateResponse
@@ -883,7 +904,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
             await self._get(
                 f"/zones/{zone_id}/application-credentials/{id}",
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -1077,7 +1102,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     application_credential_update_params.ApplicationCredentialUpdateParams,
                 ),
                 options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    security={},
                 ),
                 cast_to=cast(Any, Credential),  # Union types cannot be passed in as arguments in the type system
             ),
@@ -1140,6 +1169,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     },
                     application_credential_list_params.ApplicationCredentialListParams,
                 ),
+                security={},
             ),
             cast_to=ApplicationCredentialListResponse,
         )
@@ -1176,7 +1206,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/application-credentials/{id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                security={},
             ),
             cast_to=NoneType,
         )
