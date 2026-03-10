@@ -119,11 +119,7 @@ class ResourcesResource(SyncAPIResource):
                 resource_create_params.ResourceCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -159,11 +155,7 @@ class ResourcesResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/resources/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -239,11 +231,7 @@ class ResourcesResource(SyncAPIResource):
                 resource_update_params.ResourceUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -309,7 +297,6 @@ class ResourcesResource(SyncAPIResource):
                     },
                     resource_list_params.ResourceListParams,
                 ),
-                security={"bearer_auth": True},
             ),
             cast_to=ResourceListResponse,
         )
@@ -346,11 +333,7 @@ class ResourcesResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/resources/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -444,11 +427,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                 resource_create_params.ResourceCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -484,11 +463,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/resources/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -564,11 +539,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                 resource_update_params.ResourceUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -634,7 +605,6 @@ class AsyncResourcesResource(AsyncAPIResource):
                     },
                     resource_list_params.ResourceListParams,
                 ),
-                security={"bearer_auth": True},
             ),
             cast_to=ResourceListResponse,
         )
@@ -671,11 +641,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/resources/{id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )

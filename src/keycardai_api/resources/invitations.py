@@ -110,11 +110,7 @@ class InvitationsResource(SyncAPIResource):
         return self._post(
             f"/invitations/{token}/accept",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=InvitationAcceptResponse,
         )
@@ -209,11 +205,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         return await self._post(
             f"/invitations/{token}/accept",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=InvitationAcceptResponse,
         )

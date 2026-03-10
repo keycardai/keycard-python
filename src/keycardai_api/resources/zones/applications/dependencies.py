@@ -79,11 +79,7 @@ class DependenciesResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -146,7 +142,6 @@ class DependenciesResource(SyncAPIResource):
                     },
                     dependency_list_params.DependencyListParams,
                 ),
-                security={"bearer_auth": True},
             ),
             cast_to=DependencyListResponse,
         )
@@ -192,7 +187,6 @@ class DependenciesResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"when_accessing": when_accessing}, dependency_add_params.DependencyAddParams),
-                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -232,11 +226,7 @@ class DependenciesResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -296,11 +286,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Resource,
         )
@@ -363,7 +349,6 @@ class AsyncDependenciesResource(AsyncAPIResource):
                     },
                     dependency_list_params.DependencyListParams,
                 ),
-                security={"bearer_auth": True},
             ),
             cast_to=DependencyListResponse,
         )
@@ -411,7 +396,6 @@ class AsyncDependenciesResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"when_accessing": when_accessing}, dependency_add_params.DependencyAddParams
                 ),
-                security={"bearer_auth": True},
             ),
             cast_to=NoneType,
         )
@@ -451,11 +435,7 @@ class AsyncDependenciesResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/applications/{id}/dependencies/{dependency_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={"bearer_auth": True},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
