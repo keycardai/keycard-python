@@ -21,8 +21,6 @@ class TestServiceAccountToken:
     @parametrize
     def test_method_create(self, client: KeycardAPI) -> None:
         service_account_token = client.service_account_token.create(
-            client_id="client_id",
-            client_secret="client_secret",
             grant_type="client_credentials",
         )
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
@@ -31,9 +29,9 @@ class TestServiceAccountToken:
     @parametrize
     def test_method_create_with_all_params(self, client: KeycardAPI) -> None:
         service_account_token = client.service_account_token.create(
+            grant_type="client_credentials",
             client_id="client_id",
             client_secret="client_secret",
-            grant_type="client_credentials",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
@@ -42,8 +40,6 @@ class TestServiceAccountToken:
     @parametrize
     def test_raw_response_create(self, client: KeycardAPI) -> None:
         response = client.service_account_token.with_raw_response.create(
-            client_id="client_id",
-            client_secret="client_secret",
             grant_type="client_credentials",
         )
 
@@ -56,8 +52,6 @@ class TestServiceAccountToken:
     @parametrize
     def test_streaming_response_create(self, client: KeycardAPI) -> None:
         with client.service_account_token.with_streaming_response.create(
-            client_id="client_id",
-            client_secret="client_secret",
             grant_type="client_credentials",
         ) as response:
             assert not response.is_closed
@@ -78,8 +72,6 @@ class TestAsyncServiceAccountToken:
     @parametrize
     async def test_method_create(self, async_client: AsyncKeycardAPI) -> None:
         service_account_token = await async_client.service_account_token.create(
-            client_id="client_id",
-            client_secret="client_secret",
             grant_type="client_credentials",
         )
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
@@ -88,9 +80,9 @@ class TestAsyncServiceAccountToken:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         service_account_token = await async_client.service_account_token.create(
+            grant_type="client_credentials",
             client_id="client_id",
             client_secret="client_secret",
-            grant_type="client_credentials",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(TokenResponse, service_account_token, path=["response"])
@@ -99,8 +91,6 @@ class TestAsyncServiceAccountToken:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.service_account_token.with_raw_response.create(
-            client_id="client_id",
-            client_secret="client_secret",
             grant_type="client_credentials",
         )
 
@@ -113,8 +103,6 @@ class TestAsyncServiceAccountToken:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncKeycardAPI) -> None:
         async with async_client.service_account_token.with_streaming_response.create(
-            client_id="client_id",
-            client_secret="client_secret",
             grant_type="client_credentials",
         ) as response:
             assert not response.is_closed
