@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import Literal
 
 import httpx
@@ -46,9 +47,9 @@ class ServiceAccountTokenResource(SyncAPIResource):
     def create(
         self,
         *,
-        client_id: str,
-        client_secret: str,
         grant_type: Literal["client_credentials"],
+        client_id: Optional[str] | Omit = omit,
+        client_secret: Optional[str] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -58,14 +59,19 @@ class ServiceAccountTokenResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TokenResponse:
         """
-        Exchange service account credentials for organization-scoped M2M token
+        Exchange service account credentials for an organization-scoped M2M token.
+
+        Credentials may be provided via HTTP Basic Authentication (RFC 6749 Section
+        2.3.1, preferred) or as form body parameters. The server MUST NOT accept
+        credentials in both locations simultaneously and will reject such requests with
+        a 400 error.
 
         Args:
-          client_id: Service account client ID
-
-          client_secret: Service account client secret
-
           grant_type: OAuth 2.0 grant type (must be "client_credentials")
+
+          client_id: Service account client ID. Required if not using HTTP Basic Authentication.
+
+          client_secret: Service account client secret. Required if not using HTTP Basic Authentication.
 
           extra_headers: Send extra headers
 
@@ -80,9 +86,9 @@ class ServiceAccountTokenResource(SyncAPIResource):
             "/service-account-token",
             body=maybe_transform(
                 {
+                    "grant_type": grant_type,
                     "client_id": client_id,
                     "client_secret": client_secret,
-                    "grant_type": grant_type,
                 },
                 service_account_token_create_params.ServiceAccountTokenCreateParams,
             ),
@@ -120,9 +126,9 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        client_id: str,
-        client_secret: str,
         grant_type: Literal["client_credentials"],
+        client_id: Optional[str] | Omit = omit,
+        client_secret: Optional[str] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -132,14 +138,19 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TokenResponse:
         """
-        Exchange service account credentials for organization-scoped M2M token
+        Exchange service account credentials for an organization-scoped M2M token.
+
+        Credentials may be provided via HTTP Basic Authentication (RFC 6749 Section
+        2.3.1, preferred) or as form body parameters. The server MUST NOT accept
+        credentials in both locations simultaneously and will reject such requests with
+        a 400 error.
 
         Args:
-          client_id: Service account client ID
-
-          client_secret: Service account client secret
-
           grant_type: OAuth 2.0 grant type (must be "client_credentials")
+
+          client_id: Service account client ID. Required if not using HTTP Basic Authentication.
+
+          client_secret: Service account client secret. Required if not using HTTP Basic Authentication.
 
           extra_headers: Send extra headers
 
@@ -154,9 +165,9 @@ class AsyncServiceAccountTokenResource(AsyncAPIResource):
             "/service-account-token",
             body=await async_maybe_transform(
                 {
+                    "grant_type": grant_type,
                     "client_id": client_id,
                     "client_secret": client_secret,
-                    "grant_type": grant_type,
                 },
                 service_account_token_create_params.ServiceAccountTokenCreateParams,
             ),
