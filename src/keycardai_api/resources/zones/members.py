@@ -79,11 +79,7 @@ class MembersResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/members/{organization_user_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ZoneMember,
         )
@@ -128,11 +124,7 @@ class MembersResource(SyncAPIResource):
             f"/zones/{zone_id}/members/{organization_user_id}",
             body=maybe_transform({"role": role}, member_update_params.MemberUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ZoneMember,
         )
@@ -194,7 +186,6 @@ class MembersResource(SyncAPIResource):
                     },
                     member_list_params.MemberListParams,
                 ),
-                security={},
             ),
             cast_to=MemberListResponse,
         )
@@ -235,11 +226,7 @@ class MembersResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/members/{organization_user_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -286,11 +273,7 @@ class MembersResource(SyncAPIResource):
                 member_add_params.MemberAddParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ZoneMember,
         )
@@ -349,11 +332,7 @@ class AsyncMembersResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/members/{organization_user_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ZoneMember,
         )
@@ -398,11 +377,7 @@ class AsyncMembersResource(AsyncAPIResource):
             f"/zones/{zone_id}/members/{organization_user_id}",
             body=await async_maybe_transform({"role": role}, member_update_params.MemberUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ZoneMember,
         )
@@ -464,7 +439,6 @@ class AsyncMembersResource(AsyncAPIResource):
                     },
                     member_list_params.MemberListParams,
                 ),
-                security={},
             ),
             cast_to=MemberListResponse,
         )
@@ -505,11 +479,7 @@ class AsyncMembersResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/members/{organization_user_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -556,11 +526,7 @@ class AsyncMembersResource(AsyncAPIResource):
                 member_add_params.MemberAddParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ZoneMember,
         )

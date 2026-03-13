@@ -89,11 +89,7 @@ class McpGatewaysResource(SyncAPIResource):
                 mcp_gateway_create_mcp_server_params.McpGatewayCreateMcpServerParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=McpGatewayCreateMcpServerResponse,
         )
@@ -167,11 +163,7 @@ class AsyncMcpGatewaysResource(AsyncAPIResource):
                 mcp_gateway_create_mcp_server_params.McpGatewayCreateMcpServerParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=McpGatewayCreateMcpServerResponse,
         )
