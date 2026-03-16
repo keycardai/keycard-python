@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.3.0 (2026-03-16)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/keycardai/keycard-python/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* use common bearerAuth and OAuth2 security schemes ([367a8c2](https://github.com/keycardai/keycard-python/commit/367a8c261a1d7a289a092949da25e6da04cd16f3))
+
+
+### Bug Fixes
+
+* **deps:** bump minimum typing-extensions version ([8d6df39](https://github.com/keycardai/keycard-python/commit/8d6df397c7b9a5c176b599ca6e012400ff452fdf))
+* **pydantic:** do not pass `by_alias` unless set ([2a6ae9b](https://github.com/keycardai/keycard-python/commit/2a6ae9bc20c6c3a2b483613799cc16001a495d0d))
+
+
+### Chores
+
+* configure new SDK language ([37fcdc3](https://github.com/keycardai/keycard-python/commit/37fcdc3d805b5a0c0f449a3c45ad27dedb8e5ea0))
+* **internal:** tweak CI branches ([e58ab99](https://github.com/keycardai/keycard-python/commit/e58ab9952115c67eb8614bd4c441ee9426f5364e))
+
 ## 0.2.0 (2026-03-16)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/keycardai/keycard-python/compare/v0.1.0...v0.2.0)
