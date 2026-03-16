@@ -101,11 +101,7 @@ class CredentialsResource(SyncAPIResource):
                 credential_create_params.CredentialCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=CredentialCreateResponse,
         )
@@ -161,7 +157,6 @@ class CredentialsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, credential_retrieve_params.CredentialRetrieveParams),
-                security={},
             ),
             cast_to=ServiceAccountCredential,
         )
@@ -221,11 +216,7 @@ class CredentialsResource(SyncAPIResource):
                 credential_update_params.CredentialUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ServiceAccountCredential,
         )
@@ -293,7 +284,6 @@ class CredentialsResource(SyncAPIResource):
                     },
                     credential_list_params.CredentialListParams,
                 ),
-                security={},
             ),
             cast_to=CredentialListResponse,
         )
@@ -341,11 +331,7 @@ class CredentialsResource(SyncAPIResource):
         return self._delete(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -421,11 +407,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                 credential_create_params.CredentialCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=CredentialCreateResponse,
         )
@@ -483,7 +465,6 @@ class AsyncCredentialsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, credential_retrieve_params.CredentialRetrieveParams
                 ),
-                security={},
             ),
             cast_to=ServiceAccountCredential,
         )
@@ -543,11 +524,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                 credential_update_params.CredentialUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ServiceAccountCredential,
         )
@@ -615,7 +592,6 @@ class AsyncCredentialsResource(AsyncAPIResource):
                     },
                     credential_list_params.CredentialListParams,
                 ),
-                security={},
             ),
             cast_to=CredentialListResponse,
         )
@@ -663,11 +639,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         return await self._delete(
             f"/organizations/{organization_id}/service-accounts/{service_account_id}/credentials/{credential_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
