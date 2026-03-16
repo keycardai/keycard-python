@@ -105,11 +105,7 @@ class VersionsResource(SyncAPIResource):
                 version_create_params.VersionCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PolicySetVersion,
         )
@@ -159,11 +155,7 @@ class VersionsResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/policy-sets/{policy_set_id}/versions/{version_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PolicySetVersion,
         )
@@ -217,11 +209,7 @@ class VersionsResource(SyncAPIResource):
             f"/zones/{zone_id}/policy-sets/{policy_set_id}/versions/{version_id}",
             body=maybe_transform({"active": active}, version_update_params.VersionUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PolicySetVersion,
         )
@@ -303,7 +291,6 @@ class VersionsResource(SyncAPIResource):
                     },
                     version_list_params.VersionListParams,
                 ),
-                security={},
             ),
             cast_to=VersionListResponse,
         )
@@ -353,11 +340,7 @@ class VersionsResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/policy-sets/{policy_set_id}/versions/{version_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PolicySetVersion,
         )
@@ -448,7 +431,6 @@ class VersionsResource(SyncAPIResource):
                     },
                     version_list_policies_params.VersionListPoliciesParams,
                 ),
-                security={},
             ),
             cast_to=VersionListPoliciesResponse,
         )
@@ -527,11 +509,7 @@ class AsyncVersionsResource(AsyncAPIResource):
                 version_create_params.VersionCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PolicySetVersion,
         )
@@ -581,11 +559,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/policy-sets/{policy_set_id}/versions/{version_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PolicySetVersion,
         )
@@ -639,11 +613,7 @@ class AsyncVersionsResource(AsyncAPIResource):
             f"/zones/{zone_id}/policy-sets/{policy_set_id}/versions/{version_id}",
             body=await async_maybe_transform({"active": active}, version_update_params.VersionUpdateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PolicySetVersion,
         )
@@ -725,7 +695,6 @@ class AsyncVersionsResource(AsyncAPIResource):
                     },
                     version_list_params.VersionListParams,
                 ),
-                security={},
             ),
             cast_to=VersionListResponse,
         )
@@ -775,11 +744,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/policy-sets/{policy_set_id}/versions/{version_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PolicySetVersion,
         )
@@ -870,7 +835,6 @@ class AsyncVersionsResource(AsyncAPIResource):
                     },
                     version_list_policies_params.VersionListPoliciesParams,
                 ),
-                security={},
             ),
             cast_to=VersionListPoliciesResponse,
         )

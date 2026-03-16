@@ -108,11 +108,7 @@ class PoliciesResource(SyncAPIResource):
                 policy_create_params.PolicyCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Policy,
         )
@@ -159,11 +155,7 @@ class PoliciesResource(SyncAPIResource):
         return self._get(
             f"/zones/{zone_id}/policies/{policy_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Policy,
         )
@@ -221,11 +213,7 @@ class PoliciesResource(SyncAPIResource):
                 policy_update_params.PolicyUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Policy,
         )
@@ -304,7 +292,6 @@ class PoliciesResource(SyncAPIResource):
                     },
                     policy_list_params.PolicyListParams,
                 ),
-                security={},
             ),
             cast_to=PolicyListResponse,
         )
@@ -351,11 +338,7 @@ class PoliciesResource(SyncAPIResource):
         return self._delete(
             f"/zones/{zone_id}/policies/{policy_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Policy,
         )
@@ -436,11 +419,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
                 policy_create_params.PolicyCreateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Policy,
         )
@@ -487,11 +466,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
         return await self._get(
             f"/zones/{zone_id}/policies/{policy_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Policy,
         )
@@ -549,11 +524,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
                 policy_update_params.PolicyUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Policy,
         )
@@ -632,7 +603,6 @@ class AsyncPoliciesResource(AsyncAPIResource):
                     },
                     policy_list_params.PolicyListParams,
                 ),
-                security={},
             ),
             cast_to=PolicyListResponse,
         )
@@ -679,11 +649,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
         return await self._delete(
             f"/zones/{zone_id}/policies/{policy_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Policy,
         )
