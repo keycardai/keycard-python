@@ -82,6 +82,14 @@ from .user_agents import (
 )
 from ...types.zone import Zone
 from ..._base_client import make_request_options
+from .policy_schemas import (
+    PolicySchemasResource,
+    AsyncPolicySchemasResource,
+    PolicySchemasResourceWithRawResponse,
+    AsyncPolicySchemasResourceWithRawResponse,
+    PolicySchemasResourceWithStreamingResponse,
+    AsyncPolicySchemasResourceWithStreamingResponse,
+)
 from .delegated_grants import (
     DelegatedGrantsResource,
     AsyncDelegatedGrantsResource,
@@ -90,6 +98,14 @@ from .delegated_grants import (
     DelegatedGrantsResourceWithStreamingResponse,
     AsyncDelegatedGrantsResourceWithStreamingResponse,
 )
+from .policies.policies import (
+    PoliciesResource,
+    AsyncPoliciesResource,
+    PoliciesResourceWithRawResponse,
+    AsyncPoliciesResourceWithRawResponse,
+    PoliciesResourceWithStreamingResponse,
+    AsyncPoliciesResourceWithStreamingResponse,
+)
 from .application_credentials import (
     ApplicationCredentialsResource,
     AsyncApplicationCredentialsResource,
@@ -97,6 +113,14 @@ from .application_credentials import (
     AsyncApplicationCredentialsResourceWithRawResponse,
     ApplicationCredentialsResourceWithStreamingResponse,
     AsyncApplicationCredentialsResourceWithStreamingResponse,
+)
+from .policy_sets.policy_sets import (
+    PolicySetsResource,
+    AsyncPolicySetsResource,
+    PolicySetsResourceWithRawResponse,
+    AsyncPolicySetsResourceWithRawResponse,
+    PolicySetsResourceWithStreamingResponse,
+    AsyncPolicySetsResourceWithStreamingResponse,
 )
 from .applications.applications import (
     ApplicationsResource,
@@ -153,6 +177,21 @@ class ZonesResource(SyncAPIResource):
     @cached_property
     def secrets(self) -> SecretsResource:
         return SecretsResource(self._client)
+
+    @cached_property
+    def policy_schemas(self) -> PolicySchemasResource:
+        """Zone-scoped Cedar schema management"""
+        return PolicySchemasResource(self._client)
+
+    @cached_property
+    def policies(self) -> PoliciesResource:
+        """Policy CRUD operations"""
+        return PoliciesResource(self._client)
+
+    @cached_property
+    def policy_sets(self) -> PolicySetsResource:
+        """Policy set CRUD and binding management"""
+        return PolicySetsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> ZonesResourceWithRawResponse:
@@ -562,6 +601,21 @@ class AsyncZonesResource(AsyncAPIResource):
     @cached_property
     def secrets(self) -> AsyncSecretsResource:
         return AsyncSecretsResource(self._client)
+
+    @cached_property
+    def policy_schemas(self) -> AsyncPolicySchemasResource:
+        """Zone-scoped Cedar schema management"""
+        return AsyncPolicySchemasResource(self._client)
+
+    @cached_property
+    def policies(self) -> AsyncPoliciesResource:
+        """Policy CRUD operations"""
+        return AsyncPoliciesResource(self._client)
+
+    @cached_property
+    def policy_sets(self) -> AsyncPolicySetsResource:
+        """Policy set CRUD and binding management"""
+        return AsyncPolicySetsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncZonesResourceWithRawResponse:
@@ -994,6 +1048,21 @@ class ZonesResourceWithRawResponse:
     def secrets(self) -> SecretsResourceWithRawResponse:
         return SecretsResourceWithRawResponse(self._zones.secrets)
 
+    @cached_property
+    def policy_schemas(self) -> PolicySchemasResourceWithRawResponse:
+        """Zone-scoped Cedar schema management"""
+        return PolicySchemasResourceWithRawResponse(self._zones.policy_schemas)
+
+    @cached_property
+    def policies(self) -> PoliciesResourceWithRawResponse:
+        """Policy CRUD operations"""
+        return PoliciesResourceWithRawResponse(self._zones.policies)
+
+    @cached_property
+    def policy_sets(self) -> PolicySetsResourceWithRawResponse:
+        """Policy set CRUD and binding management"""
+        return PolicySetsResourceWithRawResponse(self._zones.policy_sets)
+
 
 class AsyncZonesResourceWithRawResponse:
     def __init__(self, zones: AsyncZonesResource) -> None:
@@ -1057,6 +1126,21 @@ class AsyncZonesResourceWithRawResponse:
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithRawResponse:
         return AsyncSecretsResourceWithRawResponse(self._zones.secrets)
+
+    @cached_property
+    def policy_schemas(self) -> AsyncPolicySchemasResourceWithRawResponse:
+        """Zone-scoped Cedar schema management"""
+        return AsyncPolicySchemasResourceWithRawResponse(self._zones.policy_schemas)
+
+    @cached_property
+    def policies(self) -> AsyncPoliciesResourceWithRawResponse:
+        """Policy CRUD operations"""
+        return AsyncPoliciesResourceWithRawResponse(self._zones.policies)
+
+    @cached_property
+    def policy_sets(self) -> AsyncPolicySetsResourceWithRawResponse:
+        """Policy set CRUD and binding management"""
+        return AsyncPolicySetsResourceWithRawResponse(self._zones.policy_sets)
 
 
 class ZonesResourceWithStreamingResponse:
@@ -1122,6 +1206,21 @@ class ZonesResourceWithStreamingResponse:
     def secrets(self) -> SecretsResourceWithStreamingResponse:
         return SecretsResourceWithStreamingResponse(self._zones.secrets)
 
+    @cached_property
+    def policy_schemas(self) -> PolicySchemasResourceWithStreamingResponse:
+        """Zone-scoped Cedar schema management"""
+        return PolicySchemasResourceWithStreamingResponse(self._zones.policy_schemas)
+
+    @cached_property
+    def policies(self) -> PoliciesResourceWithStreamingResponse:
+        """Policy CRUD operations"""
+        return PoliciesResourceWithStreamingResponse(self._zones.policies)
+
+    @cached_property
+    def policy_sets(self) -> PolicySetsResourceWithStreamingResponse:
+        """Policy set CRUD and binding management"""
+        return PolicySetsResourceWithStreamingResponse(self._zones.policy_sets)
+
 
 class AsyncZonesResourceWithStreamingResponse:
     def __init__(self, zones: AsyncZonesResource) -> None:
@@ -1185,3 +1284,18 @@ class AsyncZonesResourceWithStreamingResponse:
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithStreamingResponse:
         return AsyncSecretsResourceWithStreamingResponse(self._zones.secrets)
+
+    @cached_property
+    def policy_schemas(self) -> AsyncPolicySchemasResourceWithStreamingResponse:
+        """Zone-scoped Cedar schema management"""
+        return AsyncPolicySchemasResourceWithStreamingResponse(self._zones.policy_schemas)
+
+    @cached_property
+    def policies(self) -> AsyncPoliciesResourceWithStreamingResponse:
+        """Policy CRUD operations"""
+        return AsyncPoliciesResourceWithStreamingResponse(self._zones.policies)
+
+    @cached_property
+    def policy_sets(self) -> AsyncPolicySetsResourceWithStreamingResponse:
+        """Policy set CRUD and binding management"""
+        return AsyncPolicySetsResourceWithStreamingResponse(self._zones.policy_sets)
