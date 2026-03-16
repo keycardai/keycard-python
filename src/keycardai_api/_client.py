@@ -33,10 +33,9 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import zones, invitations, organizations, service_account_token
+    from .resources import zones, invitations, organizations
     from .resources.invitations import InvitationsResource, AsyncInvitationsResource
     from .resources.zones.zones import ZonesResource, AsyncZonesResource
-    from .resources.service_account_token import ServiceAccountTokenResource, AsyncServiceAccountTokenResource
     from .resources.organizations.organizations import OrganizationsResource, AsyncOrganizationsResource
 
 __all__ = [
@@ -128,12 +127,6 @@ class KeycardAPI(SyncAPIClient):
         from .resources.organizations import OrganizationsResource
 
         return OrganizationsResource(self)
-
-    @cached_property
-    def service_account_token(self) -> ServiceAccountTokenResource:
-        from .resources.service_account_token import ServiceAccountTokenResource
-
-        return ServiceAccountTokenResource(self)
 
     @cached_property
     def invitations(self) -> InvitationsResource:
@@ -357,12 +350,6 @@ class AsyncKeycardAPI(AsyncAPIClient):
         return AsyncOrganizationsResource(self)
 
     @cached_property
-    def service_account_token(self) -> AsyncServiceAccountTokenResource:
-        from .resources.service_account_token import AsyncServiceAccountTokenResource
-
-        return AsyncServiceAccountTokenResource(self)
-
-    @cached_property
     def invitations(self) -> AsyncInvitationsResource:
         from .resources.invitations import AsyncInvitationsResource
 
@@ -524,12 +511,6 @@ class KeycardAPIWithRawResponse:
         return OrganizationsResourceWithRawResponse(self._client.organizations)
 
     @cached_property
-    def service_account_token(self) -> service_account_token.ServiceAccountTokenResourceWithRawResponse:
-        from .resources.service_account_token import ServiceAccountTokenResourceWithRawResponse
-
-        return ServiceAccountTokenResourceWithRawResponse(self._client.service_account_token)
-
-    @cached_property
     def invitations(self) -> invitations.InvitationsResourceWithRawResponse:
         from .resources.invitations import InvitationsResourceWithRawResponse
 
@@ -553,12 +534,6 @@ class AsyncKeycardAPIWithRawResponse:
         from .resources.organizations import AsyncOrganizationsResourceWithRawResponse
 
         return AsyncOrganizationsResourceWithRawResponse(self._client.organizations)
-
-    @cached_property
-    def service_account_token(self) -> service_account_token.AsyncServiceAccountTokenResourceWithRawResponse:
-        from .resources.service_account_token import AsyncServiceAccountTokenResourceWithRawResponse
-
-        return AsyncServiceAccountTokenResourceWithRawResponse(self._client.service_account_token)
 
     @cached_property
     def invitations(self) -> invitations.AsyncInvitationsResourceWithRawResponse:
@@ -586,12 +561,6 @@ class KeycardAPIWithStreamedResponse:
         return OrganizationsResourceWithStreamingResponse(self._client.organizations)
 
     @cached_property
-    def service_account_token(self) -> service_account_token.ServiceAccountTokenResourceWithStreamingResponse:
-        from .resources.service_account_token import ServiceAccountTokenResourceWithStreamingResponse
-
-        return ServiceAccountTokenResourceWithStreamingResponse(self._client.service_account_token)
-
-    @cached_property
     def invitations(self) -> invitations.InvitationsResourceWithStreamingResponse:
         from .resources.invitations import InvitationsResourceWithStreamingResponse
 
@@ -615,12 +584,6 @@ class AsyncKeycardAPIWithStreamedResponse:
         from .resources.organizations import AsyncOrganizationsResourceWithStreamingResponse
 
         return AsyncOrganizationsResourceWithStreamingResponse(self._client.organizations)
-
-    @cached_property
-    def service_account_token(self) -> service_account_token.AsyncServiceAccountTokenResourceWithStreamingResponse:
-        from .resources.service_account_token import AsyncServiceAccountTokenResourceWithStreamingResponse
-
-        return AsyncServiceAccountTokenResourceWithStreamingResponse(self._client.service_account_token)
 
     @cached_property
     def invitations(self) -> invitations.AsyncInvitationsResourceWithStreamingResponse:

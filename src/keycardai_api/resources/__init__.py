@@ -24,14 +24,6 @@ from .organizations import (
     OrganizationsResourceWithStreamingResponse,
     AsyncOrganizationsResourceWithStreamingResponse,
 )
-from .service_account_token import (
-    ServiceAccountTokenResource,
-    AsyncServiceAccountTokenResource,
-    ServiceAccountTokenResourceWithRawResponse,
-    AsyncServiceAccountTokenResourceWithRawResponse,
-    ServiceAccountTokenResourceWithStreamingResponse,
-    AsyncServiceAccountTokenResourceWithStreamingResponse,
-)
 
 __all__ = [
     "ZonesResource",
@@ -46,12 +38,6 @@ __all__ = [
     "AsyncOrganizationsResourceWithRawResponse",
     "OrganizationsResourceWithStreamingResponse",
     "AsyncOrganizationsResourceWithStreamingResponse",
-    "ServiceAccountTokenResource",
-    "AsyncServiceAccountTokenResource",
-    "ServiceAccountTokenResourceWithRawResponse",
-    "AsyncServiceAccountTokenResourceWithRawResponse",
-    "ServiceAccountTokenResourceWithStreamingResponse",
-    "AsyncServiceAccountTokenResourceWithStreamingResponse",
     "InvitationsResource",
     "AsyncInvitationsResource",
     "InvitationsResourceWithRawResponse",

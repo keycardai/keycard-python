@@ -25,7 +25,6 @@ from .organization_list_roles_params import OrganizationListRolesParams as Organ
 from .organization_list_roles_response import OrganizationListRolesResponse as OrganizationListRolesResponse
 from .encryption_key_aws_kms_config_param import EncryptionKeyAwsKmsConfigParam as EncryptionKeyAwsKmsConfigParam
 from .organization_list_identities_params import OrganizationListIdentitiesParams as OrganizationListIdentitiesParams
-from .service_account_token_create_params import ServiceAccountTokenCreateParams as ServiceAccountTokenCreateParams
 from .organization_list_identities_response import (
     OrganizationListIdentitiesResponse as OrganizationListIdentitiesResponse,
 )

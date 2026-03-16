@@ -420,12 +420,6 @@ Methods:
 - <code title="delete /organizations/{organization_id}/sso-connection">client.organizations.sso_connection.<a href="./src/keycardai_api/resources/organizations/sso_connection.py">disable</a>(organization_id) -> None</code>
 - <code title="post /organizations/{organization_id}/sso-connection">client.organizations.sso_connection.<a href="./src/keycardai_api/resources/organizations/sso_connection.py">enable</a>(organization_id, \*\*<a href="src/keycardai_api/types/organizations/sso_connection_enable_params.py">params</a>) -> <a href="./src/keycardai_api/types/organizations/sso_connection.py">SSOConnection</a></code>
 
-# ServiceAccountToken
-
-Methods:
-
-- <code title="post /service-account-token">client.service_account_token.<a href="./src/keycardai_api/resources/service_account_token.py">create</a>(\*\*<a href="src/keycardai_api/types/service_account_token_create_params.py">params</a>) -> <a href="./src/keycardai_api/types/token_response.py">TokenResponse</a></code>
-
 # Invitations
 
 Types:
