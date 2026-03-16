@@ -6,7 +6,6 @@ from typing_extensions import Literal
 
 from .metadata import Metadata
 from ..._models import BaseModel
-from .application_trait import ApplicationTrait
 
 __all__ = ["Application", "Protocols", "ProtocolsOauth2"]
 
@@ -74,6 +73,3 @@ class Application(BaseModel):
 
     protocols: Optional[Protocols] = None
     """Protocol-specific configuration"""
-
-    traits: Optional[List[ApplicationTrait]] = None
-    """Traits of the application"""

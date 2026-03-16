@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import Iterable, Optional
 from typing_extensions import Required, TypedDict
 
 from ..._types import SequenceNotStr
 from .metadata_param import MetadataParam
-from .application_trait import ApplicationTrait
 
 __all__ = ["ApplicationCreateParams", "Dependency", "Protocols", "ProtocolsOauth2"]
 
@@ -30,9 +29,6 @@ class ApplicationCreateParams(TypedDict, total=False):
 
     protocols: Protocols
     """Protocol-specific configuration for application creation"""
-
-    traits: List[ApplicationTrait]
-    """Traits of the application"""
 
 
 class Dependency(TypedDict, total=False):
