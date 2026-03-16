@@ -99,7 +99,6 @@ class PolicySchemasResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"format": format}, policy_schema_retrieve_params.PolicySchemaRetrieveParams),
-                security={},
             ),
             cast_to=SchemaVersionWithZoneInfo,
         )
@@ -189,7 +188,6 @@ class PolicySchemasResource(SyncAPIResource):
                     },
                     policy_schema_list_params.PolicySchemaListParams,
                 ),
-                security={},
             ),
             cast_to=PolicySchemaListResponse,
         )
@@ -238,11 +236,7 @@ class PolicySchemasResource(SyncAPIResource):
             f"/zones/{zone_id}/policy-schemas/{version}",
             body=maybe_transform(body, policy_schema_set_default_params.PolicySchemaSetDefaultParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=SchemaVersionWithZoneInfo,
         )
@@ -324,7 +318,6 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"format": format}, policy_schema_retrieve_params.PolicySchemaRetrieveParams
                 ),
-                security={},
             ),
             cast_to=SchemaVersionWithZoneInfo,
         )
@@ -414,7 +407,6 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
                     },
                     policy_schema_list_params.PolicySchemaListParams,
                 ),
-                security={},
             ),
             cast_to=PolicySchemaListResponse,
         )
@@ -463,11 +455,7 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
             f"/zones/{zone_id}/policy-schemas/{version}",
             body=await async_maybe_transform(body, policy_schema_set_default_params.PolicySchemaSetDefaultParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=SchemaVersionWithZoneInfo,
         )
