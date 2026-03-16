@@ -90,7 +90,6 @@ class SSOConnectionResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"expand": expand}, sso_connection_retrieve_params.SSOConnectionRetrieveParams),
-                security={},
             ),
             cast_to=SSOConnection,
         )
@@ -148,11 +147,7 @@ class SSOConnectionResource(SyncAPIResource):
                 sso_connection_update_params.SSOConnectionUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=SSOConnection,
         )
@@ -190,11 +185,7 @@ class SSOConnectionResource(SyncAPIResource):
         return self._delete(
             f"/organizations/{organization_id}/sso-connection",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -252,11 +243,7 @@ class SSOConnectionResource(SyncAPIResource):
                 sso_connection_enable_params.SSOConnectionEnableParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=SSOConnection,
         )
@@ -325,7 +312,6 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {"expand": expand}, sso_connection_retrieve_params.SSOConnectionRetrieveParams
                 ),
-                security={},
             ),
             cast_to=SSOConnection,
         )
@@ -383,11 +369,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
                 sso_connection_update_params.SSOConnectionUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=SSOConnection,
         )
@@ -425,11 +407,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         return await self._delete(
             f"/organizations/{organization_id}/sso-connection",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -487,11 +465,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
                 sso_connection_enable_params.SSOConnectionEnableParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                security={},
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=SSOConnection,
         )
