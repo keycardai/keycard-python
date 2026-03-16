@@ -81,14 +81,6 @@ from .user_agents import (
     AsyncUserAgentsResourceWithStreamingResponse,
 )
 from ...types.zone import Zone
-from .mcp_gateways import (
-    McpGatewaysResource,
-    AsyncMcpGatewaysResource,
-    McpGatewaysResourceWithRawResponse,
-    AsyncMcpGatewaysResourceWithRawResponse,
-    McpGatewaysResourceWithStreamingResponse,
-    AsyncMcpGatewaysResourceWithStreamingResponse,
-)
 from ..._base_client import make_request_options
 from .delegated_grants import (
     DelegatedGrantsResource,
@@ -133,10 +125,6 @@ class ZonesResource(SyncAPIResource):
     @cached_property
     def delegated_grants(self) -> DelegatedGrantsResource:
         return DelegatedGrantsResource(self._client)
-
-    @cached_property
-    def mcp_gateways(self) -> McpGatewaysResource:
-        return McpGatewaysResource(self._client)
 
     @cached_property
     def providers(self) -> ProvidersResource:
@@ -456,44 +444,6 @@ class ZonesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
-    def delete_mcp_server(
-        self,
-        downstream_id: str,
-        *,
-        zone_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Removes downstream resource, dependency, and optionally upstream
-        resource/provider
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not zone_id:
-            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not downstream_id:
-            raise ValueError(f"Expected a non-empty value for `downstream_id` but received {downstream_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._delete(
-            f"/zones/{zone_id}/mcp-servers/{downstream_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
     def list_session_resource_access(
         self,
         zone_id: str,
@@ -584,10 +534,6 @@ class AsyncZonesResource(AsyncAPIResource):
     @cached_property
     def delegated_grants(self) -> AsyncDelegatedGrantsResource:
         return AsyncDelegatedGrantsResource(self._client)
-
-    @cached_property
-    def mcp_gateways(self) -> AsyncMcpGatewaysResource:
-        return AsyncMcpGatewaysResource(self._client)
 
     @cached_property
     def providers(self) -> AsyncProvidersResource:
@@ -907,44 +853,6 @@ class AsyncZonesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def delete_mcp_server(
-        self,
-        downstream_id: str,
-        *,
-        zone_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Removes downstream resource, dependency, and optionally upstream
-        resource/provider
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not zone_id:
-            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not downstream_id:
-            raise ValueError(f"Expected a non-empty value for `downstream_id` but received {downstream_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._delete(
-            f"/zones/{zone_id}/mcp-servers/{downstream_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
     async def list_session_resource_access(
         self,
         zone_id: str,
@@ -1042,9 +950,6 @@ class ZonesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             zones.delete,
         )
-        self.delete_mcp_server = to_raw_response_wrapper(
-            zones.delete_mcp_server,
-        )
         self.list_session_resource_access = to_raw_response_wrapper(
             zones.list_session_resource_access,
         )
@@ -1060,10 +965,6 @@ class ZonesResourceWithRawResponse:
     @cached_property
     def delegated_grants(self) -> DelegatedGrantsResourceWithRawResponse:
         return DelegatedGrantsResourceWithRawResponse(self._zones.delegated_grants)
-
-    @cached_property
-    def mcp_gateways(self) -> McpGatewaysResourceWithRawResponse:
-        return McpGatewaysResourceWithRawResponse(self._zones.mcp_gateways)
 
     @cached_property
     def providers(self) -> ProvidersResourceWithRawResponse:
@@ -1113,9 +1014,6 @@ class AsyncZonesResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             zones.delete,
         )
-        self.delete_mcp_server = async_to_raw_response_wrapper(
-            zones.delete_mcp_server,
-        )
         self.list_session_resource_access = async_to_raw_response_wrapper(
             zones.list_session_resource_access,
         )
@@ -1131,10 +1029,6 @@ class AsyncZonesResourceWithRawResponse:
     @cached_property
     def delegated_grants(self) -> AsyncDelegatedGrantsResourceWithRawResponse:
         return AsyncDelegatedGrantsResourceWithRawResponse(self._zones.delegated_grants)
-
-    @cached_property
-    def mcp_gateways(self) -> AsyncMcpGatewaysResourceWithRawResponse:
-        return AsyncMcpGatewaysResourceWithRawResponse(self._zones.mcp_gateways)
 
     @cached_property
     def providers(self) -> AsyncProvidersResourceWithRawResponse:
@@ -1184,9 +1078,6 @@ class ZonesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             zones.delete,
         )
-        self.delete_mcp_server = to_streamed_response_wrapper(
-            zones.delete_mcp_server,
-        )
         self.list_session_resource_access = to_streamed_response_wrapper(
             zones.list_session_resource_access,
         )
@@ -1202,10 +1093,6 @@ class ZonesResourceWithStreamingResponse:
     @cached_property
     def delegated_grants(self) -> DelegatedGrantsResourceWithStreamingResponse:
         return DelegatedGrantsResourceWithStreamingResponse(self._zones.delegated_grants)
-
-    @cached_property
-    def mcp_gateways(self) -> McpGatewaysResourceWithStreamingResponse:
-        return McpGatewaysResourceWithStreamingResponse(self._zones.mcp_gateways)
 
     @cached_property
     def providers(self) -> ProvidersResourceWithStreamingResponse:
@@ -1255,9 +1142,6 @@ class AsyncZonesResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             zones.delete,
         )
-        self.delete_mcp_server = async_to_streamed_response_wrapper(
-            zones.delete_mcp_server,
-        )
         self.list_session_resource_access = async_to_streamed_response_wrapper(
             zones.list_session_resource_access,
         )
@@ -1273,10 +1157,6 @@ class AsyncZonesResourceWithStreamingResponse:
     @cached_property
     def delegated_grants(self) -> AsyncDelegatedGrantsResourceWithStreamingResponse:
         return AsyncDelegatedGrantsResourceWithStreamingResponse(self._zones.delegated_grants)
-
-    @cached_property
-    def mcp_gateways(self) -> AsyncMcpGatewaysResourceWithStreamingResponse:
-        return AsyncMcpGatewaysResourceWithStreamingResponse(self._zones.mcp_gateways)
 
     @cached_property
     def providers(self) -> AsyncProvidersResourceWithStreamingResponse:

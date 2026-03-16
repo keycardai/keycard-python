@@ -19,7 +19,6 @@ Methods:
 - <code title="patch /zones/{zoneId}">client.zones.<a href="./src/keycardai_api/resources/zones/zones.py">update</a>(zone_id, \*\*<a href="src/keycardai_api/types/zone_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/zone.py">Zone</a></code>
 - <code title="get /zones">client.zones.<a href="./src/keycardai_api/resources/zones/zones.py">list</a>(\*\*<a href="src/keycardai_api/types/zone_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zone_list_response.py">ZoneListResponse</a></code>
 - <code title="delete /zones/{zoneId}">client.zones.<a href="./src/keycardai_api/resources/zones/zones.py">delete</a>(zone_id) -> None</code>
-- <code title="delete /zones/{zoneId}/mcp-servers/{downstreamId}">client.zones.<a href="./src/keycardai_api/resources/zones/zones.py">delete_mcp_server</a>(downstream_id, \*, zone_id) -> None</code>
 - <code title="get /zones/{zoneId}/session-resource-access">client.zones.<a href="./src/keycardai_api/resources/zones/zones.py">list_session_resource_access</a>(zone_id, \*\*<a href="src/keycardai_api/types/zone_list_session_resource_access_params.py">params</a>) -> <a href="./src/keycardai_api/types/zone_list_session_resource_access_response.py">ZoneListSessionResourceAccessResponse</a></code>
 
 ## Applications
@@ -103,18 +102,6 @@ Methods:
 - <code title="patch /zones/{zoneId}/delegated-grants/{id}">client.zones.delegated_grants.<a href="./src/keycardai_api/resources/zones/delegated_grants.py">update</a>(id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/delegated_grant_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/grant.py">Grant</a></code>
 - <code title="get /zones/{zoneId}/delegated-grants">client.zones.delegated_grants.<a href="./src/keycardai_api/resources/zones/delegated_grants.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/delegated_grant_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/delegated_grant_list_response.py">DelegatedGrantListResponse</a></code>
 - <code title="delete /zones/{zoneId}/delegated-grants/{id}">client.zones.delegated_grants.<a href="./src/keycardai_api/resources/zones/delegated_grants.py">delete</a>(id, \*, zone_id) -> None</code>
-
-## McpGateways
-
-Types:
-
-```python
-from keycardai_api.types.zones import McpGatewayCreateMcpServerResponse
-```
-
-Methods:
-
-- <code title="post /zones/{zoneId}/mcp-gateways/{applicationId}/mcp-servers">client.zones.mcp_gateways.<a href="./src/keycardai_api/resources/zones/mcp_gateways.py">create_mcp_server</a>(application_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/mcp_gateway_create_mcp_server_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/mcp_gateway_create_mcp_server_response.py">McpGatewayCreateMcpServerResponse</a></code>
 
 ## Providers
 

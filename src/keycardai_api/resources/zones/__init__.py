@@ -72,14 +72,6 @@ from .applications import (
     ApplicationsResourceWithStreamingResponse,
     AsyncApplicationsResourceWithStreamingResponse,
 )
-from .mcp_gateways import (
-    McpGatewaysResource,
-    AsyncMcpGatewaysResource,
-    McpGatewaysResourceWithRawResponse,
-    AsyncMcpGatewaysResourceWithRawResponse,
-    McpGatewaysResourceWithStreamingResponse,
-    AsyncMcpGatewaysResourceWithStreamingResponse,
-)
 from .delegated_grants import (
     DelegatedGrantsResource,
     AsyncDelegatedGrantsResource,
@@ -116,12 +108,6 @@ __all__ = [
     "AsyncDelegatedGrantsResourceWithRawResponse",
     "DelegatedGrantsResourceWithStreamingResponse",
     "AsyncDelegatedGrantsResourceWithStreamingResponse",
-    "McpGatewaysResource",
-    "AsyncMcpGatewaysResource",
-    "McpGatewaysResourceWithRawResponse",
-    "AsyncMcpGatewaysResourceWithRawResponse",
-    "McpGatewaysResourceWithStreamingResponse",
-    "AsyncMcpGatewaysResourceWithStreamingResponse",
     "ProvidersResource",
     "AsyncProvidersResource",
     "ProvidersResourceWithRawResponse",

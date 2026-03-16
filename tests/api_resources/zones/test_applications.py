@@ -53,7 +53,6 @@ class TestApplications:
                     "redirect_uris": ["https://example.com"],
                 }
             },
-            traits=["gateway"],
         )
         assert_matches_type(Application, application, path=["response"])
 
@@ -174,7 +173,6 @@ class TestApplications:
                     "redirect_uris": ["https://example.com"],
                 }
             },
-            traits=["gateway"],
         )
         assert_matches_type(Application, application, path=["response"])
 
@@ -501,7 +499,6 @@ class TestAsyncApplications:
                     "redirect_uris": ["https://example.com"],
                 }
             },
-            traits=["gateway"],
         )
         assert_matches_type(Application, application, path=["response"])
 
@@ -622,7 +619,6 @@ class TestAsyncApplications:
                     "redirect_uris": ["https://example.com"],
                 }
             },
-            traits=["gateway"],
         )
         assert_matches_type(Application, application, path=["response"])
 

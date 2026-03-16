@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import Required, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
-from .application_trait import ApplicationTrait
 from .metadata_update_param import MetadataUpdateParam
 
 __all__ = ["ApplicationUpdateParams", "Protocols", "ProtocolsOauth2"]
@@ -30,9 +29,6 @@ class ApplicationUpdateParams(TypedDict, total=False):
 
     protocols: Optional[Protocols]
     """Protocol-specific configuration for application update"""
-
-    traits: Optional[List[ApplicationTrait]]
-    """Traits of the application"""
 
 
 class ProtocolsOauth2(TypedDict, total=False):

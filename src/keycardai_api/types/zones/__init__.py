@@ -64,13 +64,9 @@ from .application_list_resources_response import ApplicationListResourcesRespons
 from .application_credential_create_params import ApplicationCredentialCreateParams as ApplicationCredentialCreateParams
 from .application_credential_list_response import ApplicationCredentialListResponse as ApplicationCredentialListResponse
 from .application_credential_update_params import ApplicationCredentialUpdateParams as ApplicationCredentialUpdateParams
-from .mcp_gateway_create_mcp_server_params import McpGatewayCreateMcpServerParams as McpGatewayCreateMcpServerParams
 from .application_list_credentials_response import (
     ApplicationListCredentialsResponse as ApplicationListCredentialsResponse,
 )
 from .application_credential_create_response import (
     ApplicationCredentialCreateResponse as ApplicationCredentialCreateResponse,
-)
-from .mcp_gateway_create_mcp_server_response import (
-    McpGatewayCreateMcpServerResponse as McpGatewayCreateMcpServerResponse,
 )
