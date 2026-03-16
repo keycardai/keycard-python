@@ -78,7 +78,6 @@ class ApplicationsResource(SyncAPIResource):
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
         protocols: application_create_params.Protocols | Omit = omit,
-        traits: List[ApplicationTrait] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -103,8 +102,6 @@ class ApplicationsResource(SyncAPIResource):
 
           protocols: Protocol-specific configuration for application creation
 
-          traits: Traits of the application
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -125,7 +122,6 @@ class ApplicationsResource(SyncAPIResource):
                     "description": description,
                     "metadata": metadata,
                     "protocols": protocols,
-                    "traits": traits,
                 },
                 application_create_params.ApplicationCreateParams,
             ),
@@ -181,7 +177,6 @@ class ApplicationsResource(SyncAPIResource):
         metadata: Optional[MetadataUpdateParam] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[application_update_params.Protocols] | Omit = omit,
-        traits: Optional[List[ApplicationTrait]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -202,8 +197,6 @@ class ApplicationsResource(SyncAPIResource):
           name: Human-readable name
 
           protocols: Protocol-specific configuration for application update
-
-          traits: Traits of the application
 
           extra_headers: Send extra headers
 
@@ -226,7 +219,6 @@ class ApplicationsResource(SyncAPIResource):
                     "metadata": metadata,
                     "name": name,
                     "protocols": protocols,
-                    "traits": traits,
                 },
                 application_update_params.ApplicationUpdateParams,
             ),
@@ -499,7 +491,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
         protocols: application_create_params.Protocols | Omit = omit,
-        traits: List[ApplicationTrait] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -524,8 +515,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
 
           protocols: Protocol-specific configuration for application creation
 
-          traits: Traits of the application
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -546,7 +535,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     "description": description,
                     "metadata": metadata,
                     "protocols": protocols,
-                    "traits": traits,
                 },
                 application_create_params.ApplicationCreateParams,
             ),
@@ -602,7 +590,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
         metadata: Optional[MetadataUpdateParam] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[application_update_params.Protocols] | Omit = omit,
-        traits: Optional[List[ApplicationTrait]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -623,8 +610,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
           name: Human-readable name
 
           protocols: Protocol-specific configuration for application update
-
-          traits: Traits of the application
 
           extra_headers: Send extra headers
 
@@ -647,7 +632,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     "metadata": metadata,
                     "name": name,
                     "protocols": protocols,
-                    "traits": traits,
                 },
                 application_update_params.ApplicationUpdateParams,
             ),

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 import logging
-from typing import TYPE_CHECKING, Iterator, AsyncIterator
+from typing import TYPE_CHECKING, Iterator, Generator, AsyncIterator, AsyncGenerator
 
 import httpx
 import pytest
@@ -12,6 +12,7 @@ from pytest_asyncio import is_async_test
 
 from keycardai_api import KeycardAPI, AsyncKeycardAPI, DefaultAioHttpClient
 from keycardai_api._utils import is_dict
+from keycardai_api._oauth2 import OAuth2ClientCredentials
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest  # pyright: ignore[reportPrivateImportUsage]
@@ -45,7 +46,8 @@ def pytest_collection_modifyitems(items: list[pytest.Function]) -> None:
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
-api_key = "My API Key"
+client_id = "My Client ID"
+client_secret = "My Client Secret"
 
 
 @pytest.fixture(scope="session")
@@ -54,7 +56,9 @@ def client(request: FixtureRequest) -> Iterator[KeycardAPI]:
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    with KeycardAPI(base_url=base_url, api_key=api_key, _strict_response_validation=strict) as client:
+    with KeycardAPI(
+        base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=strict
+    ) as client:
         yield client
 
 
@@ -79,6 +83,29 @@ async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncKeycardAPI
         raise TypeError(f"Unexpected fixture parameter type {type(param)}, expected bool or dict")
 
     async with AsyncKeycardAPI(
-        base_url=base_url, api_key=api_key, _strict_response_validation=strict, http_client=http_client
+        base_url=base_url,
+        client_id=client_id,
+        client_secret=client_secret,
+        _strict_response_validation=strict,
+        http_client=http_client,
     ) as client:
         yield client
+
+
+@pytest.fixture(autouse=True)
+def _mock_oauth2_auth_flow(monkeypatch: pytest.MonkeyPatch) -> None:  # type: ignore[reportUnusedFunction]
+    def mock_sync_auth_flow(
+        self: OAuth2ClientCredentials, request: httpx.Request
+    ) -> Generator[httpx.Request, httpx.Response, None]:
+        request.headers[self._header] = "Bearer mock-test-token"
+        yield request
+
+    async def mock_async_auth_flow(
+        self: OAuth2ClientCredentials, request: httpx.Request
+    ) -> AsyncGenerator[httpx.Request, httpx.Response]:
+        request.headers[self._header] = "Bearer mock-test-token"
+        yield request
+
+    monkeypatch.setattr(OAuth2ClientCredentials, "sync_auth_flow", mock_sync_auth_flow)
+    monkeypatch.setattr(OAuth2ClientCredentials, "auth_flow", mock_sync_auth_flow)
+    monkeypatch.setattr(OAuth2ClientCredentials, "async_auth_flow", mock_async_auth_flow)

@@ -32,6 +32,14 @@ from .secrets import (
     SecretsResourceWithStreamingResponse,
     AsyncSecretsResourceWithStreamingResponse,
 )
+from .policies import (
+    PoliciesResource,
+    AsyncPoliciesResource,
+    PoliciesResourceWithRawResponse,
+    AsyncPoliciesResourceWithRawResponse,
+    PoliciesResourceWithStreamingResponse,
+    AsyncPoliciesResourceWithStreamingResponse,
+)
 from .sessions import (
     SessionsResource,
     AsyncSessionsResource,
@@ -56,6 +64,14 @@ from .resources import (
     ResourcesResourceWithStreamingResponse,
     AsyncResourcesResourceWithStreamingResponse,
 )
+from .policy_sets import (
+    PolicySetsResource,
+    AsyncPolicySetsResource,
+    PolicySetsResourceWithRawResponse,
+    AsyncPolicySetsResourceWithRawResponse,
+    PolicySetsResourceWithStreamingResponse,
+    AsyncPolicySetsResourceWithStreamingResponse,
+)
 from .user_agents import (
     UserAgentsResource,
     AsyncUserAgentsResource,
@@ -72,13 +88,13 @@ from .applications import (
     ApplicationsResourceWithStreamingResponse,
     AsyncApplicationsResourceWithStreamingResponse,
 )
-from .mcp_gateways import (
-    McpGatewaysResource,
-    AsyncMcpGatewaysResource,
-    McpGatewaysResourceWithRawResponse,
-    AsyncMcpGatewaysResourceWithRawResponse,
-    McpGatewaysResourceWithStreamingResponse,
-    AsyncMcpGatewaysResourceWithStreamingResponse,
+from .policy_schemas import (
+    PolicySchemasResource,
+    AsyncPolicySchemasResource,
+    PolicySchemasResourceWithRawResponse,
+    AsyncPolicySchemasResourceWithRawResponse,
+    PolicySchemasResourceWithStreamingResponse,
+    AsyncPolicySchemasResourceWithStreamingResponse,
 )
 from .delegated_grants import (
     DelegatedGrantsResource,
@@ -116,12 +132,6 @@ __all__ = [
     "AsyncDelegatedGrantsResourceWithRawResponse",
     "DelegatedGrantsResourceWithStreamingResponse",
     "AsyncDelegatedGrantsResourceWithStreamingResponse",
-    "McpGatewaysResource",
-    "AsyncMcpGatewaysResource",
-    "McpGatewaysResourceWithRawResponse",
-    "AsyncMcpGatewaysResourceWithRawResponse",
-    "McpGatewaysResourceWithStreamingResponse",
-    "AsyncMcpGatewaysResourceWithStreamingResponse",
     "ProvidersResource",
     "AsyncProvidersResource",
     "ProvidersResourceWithRawResponse",
@@ -164,6 +174,24 @@ __all__ = [
     "AsyncSecretsResourceWithRawResponse",
     "SecretsResourceWithStreamingResponse",
     "AsyncSecretsResourceWithStreamingResponse",
+    "PolicySchemasResource",
+    "AsyncPolicySchemasResource",
+    "PolicySchemasResourceWithRawResponse",
+    "AsyncPolicySchemasResourceWithRawResponse",
+    "PolicySchemasResourceWithStreamingResponse",
+    "AsyncPolicySchemasResourceWithStreamingResponse",
+    "PoliciesResource",
+    "AsyncPoliciesResource",
+    "PoliciesResourceWithRawResponse",
+    "AsyncPoliciesResourceWithRawResponse",
+    "PoliciesResourceWithStreamingResponse",
+    "AsyncPoliciesResourceWithStreamingResponse",
+    "PolicySetsResource",
+    "AsyncPolicySetsResource",
+    "PolicySetsResourceWithRawResponse",
+    "AsyncPolicySetsResourceWithRawResponse",
+    "PolicySetsResourceWithStreamingResponse",
+    "AsyncPolicySetsResourceWithStreamingResponse",
     "ZonesResource",
     "AsyncZonesResource",
     "ZonesResourceWithRawResponse",

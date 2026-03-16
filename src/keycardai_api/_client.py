@@ -12,7 +12,6 @@ from . import _exceptions
 from ._qs import Querystring
 from ._types import (
     Omit,
-    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -23,6 +22,7 @@ from ._types import (
 from ._utils import is_given, get_async_library
 from ._compat import cached_property
 from ._models import SecurityOptions
+from ._oauth2 import OAuth2ClientCredentials, make_oauth2
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
@@ -33,10 +33,9 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import zones, invitations, organizations, service_account_token
+    from .resources import zones, invitations, organizations
     from .resources.invitations import InvitationsResource, AsyncInvitationsResource
     from .resources.zones.zones import ZonesResource, AsyncZonesResource
-    from .resources.service_account_token import ServiceAccountTokenResource, AsyncServiceAccountTokenResource
     from .resources.organizations.organizations import OrganizationsResource, AsyncOrganizationsResource
 
 __all__ = [
@@ -54,11 +53,15 @@ __all__ = [
 class KeycardAPI(SyncAPIClient):
     # client options
     api_key: str | None
+    client_id: str | None
+    client_secret: str | None
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
+        client_id: str | None = None,
+        client_secret: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -80,11 +83,22 @@ class KeycardAPI(SyncAPIClient):
     ) -> None:
         """Construct a new synchronous KeycardAPI client instance.
 
-        This automatically infers the `api_key` argument from the `KEYCARD_API_API_KEY` environment variable if it is not provided.
+        This automatically infers the following arguments from their corresponding environment variables if they are not provided:
+        - `api_key` from `KEYCARD_API_API_KEY`
+        - `client_id` from `KEYCARD_API_CLIENT_ID`
+        - `client_secret` from `KEYCARD_API_CLIENT_SECRET`
         """
         if api_key is None:
             api_key = os.environ.get("KEYCARD_API_API_KEY")
         self.api_key = api_key
+
+        if client_id is None:
+            client_id = os.environ.get("KEYCARD_API_CLIENT_ID")
+        self.client_id = client_id
+
+        if client_secret is None:
+            client_secret = os.environ.get("KEYCARD_API_CLIENT_SECRET")
+        self.client_secret = client_secret
 
         if base_url is None:
             base_url = os.environ.get("KEYCARD_API_BASE_URL")
@@ -115,12 +129,6 @@ class KeycardAPI(SyncAPIClient):
         return OrganizationsResource(self)
 
     @cached_property
-    def service_account_token(self) -> ServiceAccountTokenResource:
-        from .resources.service_account_token import ServiceAccountTokenResource
-
-        return ServiceAccountTokenResource(self)
-
-    @cached_property
     def invitations(self) -> InvitationsResource:
         from .resources.invitations import InvitationsResource
 
@@ -137,20 +145,24 @@ class KeycardAPI(SyncAPIClient):
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="comma")
+        return Querystring(array_format="brackets")
 
     @override
-    def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
-        return {
-            **(self._bearer_auth if security.get("bearer_auth", False) else {}),
-        }
+    def _custom_auth(self, security: SecurityOptions) -> httpx.Auth | None:
+        if security.get("o_auth2", False) and self._o_auth2 is not None:
+            return self._o_auth2
+        return None
 
     @property
-    def _bearer_auth(self) -> dict[str, str]:
-        api_key = self.api_key
-        if api_key is None:
-            return {}
-        return {"Authorization": f"Bearer {api_key}"}
+    def _o_auth2(self) -> httpx.Auth | None:
+        if self.client_id and self.client_secret:
+            return make_oauth2(
+                client_id=self.client_id,
+                client_secret=self.client_secret,
+                token_url=self._prepare_url("https://api.keycard.ai/service-account-token"),
+                header="Authorization",
+            )
+        return None
 
     @property
     @override
@@ -162,18 +174,20 @@ class KeycardAPI(SyncAPIClient):
         }
 
     @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if headers.get("Authorization") or isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
+    def _should_retry(self, response: httpx.Response) -> bool:
+        # Retry on 401 if we are using OAuth2 and the token might be expired
+        if response.status_code == 401 and isinstance(self.custom_auth, OAuth2ClientCredentials):
+            if self.custom_auth.token_is_expired():
+                self.custom_auth.invalidate_token()
+                return True
+        return super()._should_retry(response)
 
     def copy(
         self,
         *,
         api_key: str | None = None,
+        client_id: str | None = None,
+        client_secret: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
@@ -208,6 +222,8 @@ class KeycardAPI(SyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             api_key=api_key or self.api_key,
+            client_id=client_id or self.client_id,
+            client_secret=client_secret or self.client_secret,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -258,11 +274,15 @@ class KeycardAPI(SyncAPIClient):
 class AsyncKeycardAPI(AsyncAPIClient):
     # client options
     api_key: str | None
+    client_id: str | None
+    client_secret: str | None
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
+        client_id: str | None = None,
+        client_secret: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -284,11 +304,22 @@ class AsyncKeycardAPI(AsyncAPIClient):
     ) -> None:
         """Construct a new async AsyncKeycardAPI client instance.
 
-        This automatically infers the `api_key` argument from the `KEYCARD_API_API_KEY` environment variable if it is not provided.
+        This automatically infers the following arguments from their corresponding environment variables if they are not provided:
+        - `api_key` from `KEYCARD_API_API_KEY`
+        - `client_id` from `KEYCARD_API_CLIENT_ID`
+        - `client_secret` from `KEYCARD_API_CLIENT_SECRET`
         """
         if api_key is None:
             api_key = os.environ.get("KEYCARD_API_API_KEY")
         self.api_key = api_key
+
+        if client_id is None:
+            client_id = os.environ.get("KEYCARD_API_CLIENT_ID")
+        self.client_id = client_id
+
+        if client_secret is None:
+            client_secret = os.environ.get("KEYCARD_API_CLIENT_SECRET")
+        self.client_secret = client_secret
 
         if base_url is None:
             base_url = os.environ.get("KEYCARD_API_BASE_URL")
@@ -319,12 +350,6 @@ class AsyncKeycardAPI(AsyncAPIClient):
         return AsyncOrganizationsResource(self)
 
     @cached_property
-    def service_account_token(self) -> AsyncServiceAccountTokenResource:
-        from .resources.service_account_token import AsyncServiceAccountTokenResource
-
-        return AsyncServiceAccountTokenResource(self)
-
-    @cached_property
     def invitations(self) -> AsyncInvitationsResource:
         from .resources.invitations import AsyncInvitationsResource
 
@@ -341,20 +366,24 @@ class AsyncKeycardAPI(AsyncAPIClient):
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="comma")
+        return Querystring(array_format="brackets")
 
     @override
-    def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
-        return {
-            **(self._bearer_auth if security.get("bearer_auth", False) else {}),
-        }
+    def _custom_auth(self, security: SecurityOptions) -> httpx.Auth | None:
+        if security.get("o_auth2", False) and self._o_auth2 is not None:
+            return self._o_auth2
+        return None
 
     @property
-    def _bearer_auth(self) -> dict[str, str]:
-        api_key = self.api_key
-        if api_key is None:
-            return {}
-        return {"Authorization": f"Bearer {api_key}"}
+    def _o_auth2(self) -> httpx.Auth | None:
+        if self.client_id and self.client_secret:
+            return make_oauth2(
+                client_id=self.client_id,
+                client_secret=self.client_secret,
+                token_url=self._prepare_url("https://api.keycard.ai/service-account-token"),
+                header="Authorization",
+            )
+        return None
 
     @property
     @override
@@ -366,18 +395,20 @@ class AsyncKeycardAPI(AsyncAPIClient):
         }
 
     @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if headers.get("Authorization") or isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
+    def _should_retry(self, response: httpx.Response) -> bool:
+        # Retry on 401 if we are using OAuth2 and the token might be expired
+        if response.status_code == 401 and isinstance(self.custom_auth, OAuth2ClientCredentials):
+            if self.custom_auth.token_is_expired():
+                self.custom_auth.invalidate_token()
+                return True
+        return super()._should_retry(response)
 
     def copy(
         self,
         *,
         api_key: str | None = None,
+        client_id: str | None = None,
+        client_secret: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,
@@ -412,6 +443,8 @@ class AsyncKeycardAPI(AsyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             api_key=api_key or self.api_key,
+            client_id=client_id or self.client_id,
+            client_secret=client_secret or self.client_secret,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -478,12 +511,6 @@ class KeycardAPIWithRawResponse:
         return OrganizationsResourceWithRawResponse(self._client.organizations)
 
     @cached_property
-    def service_account_token(self) -> service_account_token.ServiceAccountTokenResourceWithRawResponse:
-        from .resources.service_account_token import ServiceAccountTokenResourceWithRawResponse
-
-        return ServiceAccountTokenResourceWithRawResponse(self._client.service_account_token)
-
-    @cached_property
     def invitations(self) -> invitations.InvitationsResourceWithRawResponse:
         from .resources.invitations import InvitationsResourceWithRawResponse
 
@@ -507,12 +534,6 @@ class AsyncKeycardAPIWithRawResponse:
         from .resources.organizations import AsyncOrganizationsResourceWithRawResponse
 
         return AsyncOrganizationsResourceWithRawResponse(self._client.organizations)
-
-    @cached_property
-    def service_account_token(self) -> service_account_token.AsyncServiceAccountTokenResourceWithRawResponse:
-        from .resources.service_account_token import AsyncServiceAccountTokenResourceWithRawResponse
-
-        return AsyncServiceAccountTokenResourceWithRawResponse(self._client.service_account_token)
 
     @cached_property
     def invitations(self) -> invitations.AsyncInvitationsResourceWithRawResponse:
@@ -540,12 +561,6 @@ class KeycardAPIWithStreamedResponse:
         return OrganizationsResourceWithStreamingResponse(self._client.organizations)
 
     @cached_property
-    def service_account_token(self) -> service_account_token.ServiceAccountTokenResourceWithStreamingResponse:
-        from .resources.service_account_token import ServiceAccountTokenResourceWithStreamingResponse
-
-        return ServiceAccountTokenResourceWithStreamingResponse(self._client.service_account_token)
-
-    @cached_property
     def invitations(self) -> invitations.InvitationsResourceWithStreamingResponse:
         from .resources.invitations import InvitationsResourceWithStreamingResponse
 
@@ -569,12 +584,6 @@ class AsyncKeycardAPIWithStreamedResponse:
         from .resources.organizations import AsyncOrganizationsResourceWithStreamingResponse
 
         return AsyncOrganizationsResourceWithStreamingResponse(self._client.organizations)
-
-    @cached_property
-    def service_account_token(self) -> service_account_token.AsyncServiceAccountTokenResourceWithStreamingResponse:
-        from .resources.service_account_token import AsyncServiceAccountTokenResourceWithStreamingResponse
-
-        return AsyncServiceAccountTokenResourceWithStreamingResponse(self._client.service_account_token)
 
     @cached_property
     def invitations(self) -> invitations.AsyncInvitationsResourceWithStreamingResponse:
