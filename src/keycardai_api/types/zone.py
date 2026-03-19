@@ -94,6 +94,9 @@ class Zone(BaseModel):
     default_mcp_gateway_application_id: Optional[str] = None
     """Application ID configured as the default MCP Gateway for the zone"""
 
+    default_resource_id: Optional[str] = None
+    """Resource ID configured as the default resource for the zone"""
+
     description: Optional[str] = None
     """Human-readable description"""
 

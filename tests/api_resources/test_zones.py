@@ -141,6 +141,7 @@ class TestZones:
         zone = client.zones.update(
             zone_id="zoneId",
             default_mcp_gateway_application_id="default_mcp_gateway_application_id",
+            default_resource_id="default_resource_id",
             description="description",
             encryption_key={
                 "arn": "x",
@@ -403,6 +404,7 @@ class TestAsyncZones:
         zone = await async_client.zones.update(
             zone_id="zoneId",
             default_mcp_gateway_application_id="default_mcp_gateway_application_id",
+            default_resource_id="default_resource_id",
             description="description",
             encryption_key={
                 "arn": "x",

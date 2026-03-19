@@ -15,6 +15,12 @@ class ZoneUpdateParams(TypedDict, total=False):
     to unset)
     """
 
+    default_resource_id: Optional[str]
+    """
+    Resource ID to configure as the default resource for the zone (set to null to
+    unset)
+    """
+
     description: Optional[str]
     """Human-readable description"""
 
