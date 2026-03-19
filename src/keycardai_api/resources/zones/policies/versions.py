@@ -68,6 +68,8 @@ class VersionsResource(SyncAPIResource):
         Create a new immutable policy version
 
         Args:
+          schema_version: Schema version to validate this policy against. Must not be archived.
+
           cedar_json: Cedar policy in JSON representation. Mutually exclusive with cedar_raw.
 
           cedar_raw: Cedar policy in human-readable Cedar syntax. Mutually exclusive with cedar_json.
@@ -348,6 +350,8 @@ class AsyncVersionsResource(AsyncAPIResource):
         Create a new immutable policy version
 
         Args:
+          schema_version: Schema version to validate this policy against. Must not be archived.
+
           cedar_json: Cedar policy in JSON representation. Mutually exclusive with cedar_raw.
 
           cedar_raw: Cedar policy in human-readable Cedar syntax. Mutually exclusive with cedar_json.

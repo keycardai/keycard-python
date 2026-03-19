@@ -18,6 +18,7 @@ class PolicyVersion(BaseModel):
     policy_id: str
 
     schema_version: str
+    """Schema version this policy was validated against when created."""
 
     sha: str
     """Hex-encoded content hash"""

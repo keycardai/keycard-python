@@ -74,6 +74,8 @@ class VersionsResource(SyncAPIResource):
         Validates the manifest, computes SHA, and creates an immutable version snapshot.
 
         Args:
+          schema_version: Schema version to pin to this policy set version.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -478,6 +480,8 @@ class AsyncVersionsResource(AsyncAPIResource):
         Validates the manifest, computes SHA, and creates an immutable version snapshot.
 
         Args:
+          schema_version: Schema version to pin to this policy set version.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request

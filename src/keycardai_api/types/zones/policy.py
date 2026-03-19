@@ -19,6 +19,11 @@ class Policy(BaseModel):
     name: str
 
     owner_type: Literal["platform", "customer"]
+    """Who manages this policy:
+
+    - `"platform"` — managed by the Keycard platform (system policies).
+    - `"customer"` — managed by the tenant (custom policies).
+    """
 
     updated_at: datetime
 

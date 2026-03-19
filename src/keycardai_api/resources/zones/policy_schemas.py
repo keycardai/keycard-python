@@ -26,7 +26,22 @@ __all__ = ["PolicySchemasResource", "AsyncPolicySchemasResource"]
 
 
 class PolicySchemasResource(SyncAPIResource):
-    """Zone-scoped Cedar schema management"""
+    """Zone-scoped Cedar schema management.
+
+    The Cedar schema defines the entity model used for authorization decisions.
+    Key entity types and their attributes:
+
+    - **Keycard::User** — `email` (String), `groups` (Set of String)
+    - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+    - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+    - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+    - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+    - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+    Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+    In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+    See the Credentials API spec for the full entity model reference.
+    """
 
     @cached_property
     def with_raw_response(self) -> PolicySchemasResourceWithRawResponse:
@@ -243,7 +258,22 @@ class PolicySchemasResource(SyncAPIResource):
 
 
 class AsyncPolicySchemasResource(AsyncAPIResource):
-    """Zone-scoped Cedar schema management"""
+    """Zone-scoped Cedar schema management.
+
+    The Cedar schema defines the entity model used for authorization decisions.
+    Key entity types and their attributes:
+
+    - **Keycard::User** — `email` (String), `groups` (Set of String)
+    - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+    - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+    - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+    - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+    - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+    Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+    In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+    See the Credentials API spec for the full entity model reference.
+    """
 
     @cached_property
     def with_raw_response(self) -> AsyncPolicySchemasResourceWithRawResponse:

@@ -16,6 +16,7 @@ class VersionCreateParams(TypedDict, total=False):
     manifest: Required[PolicySetManifestParam]
 
     schema_version: Required[str]
+    """Schema version to pin to this policy set version."""
 
     x_api_version: Annotated[str, PropertyInfo(alias="X-API-Version")]
 

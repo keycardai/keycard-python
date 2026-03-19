@@ -14,6 +14,7 @@ class VersionCreateParams(TypedDict, total=False):
     zone_id: Required[str]
 
     schema_version: Required[str]
+    """Schema version to validate this policy against. Must not be archived."""
 
     cedar_json: Optional[object]
     """Cedar policy in JSON representation. Mutually exclusive with cedar_raw."""
