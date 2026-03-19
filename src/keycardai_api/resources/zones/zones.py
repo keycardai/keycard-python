@@ -336,6 +336,7 @@ class ZonesResource(SyncAPIResource):
         zone_id: str,
         *,
         default_mcp_gateway_application_id: Optional[str] | Omit = omit,
+        default_resource_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
         login_flow: Optional[Literal["default", "identifier_first"]] | Omit = omit,
@@ -356,6 +357,9 @@ class ZonesResource(SyncAPIResource):
         Args:
           default_mcp_gateway_application_id: Application ID configured as the default MCP Gateway for the zone (set to null
               to unset)
+
+          default_resource_id: Resource ID to configure as the default resource for the zone (set to null to
+              unset)
 
           description: Human-readable description
 
@@ -390,6 +394,7 @@ class ZonesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "default_mcp_gateway_application_id": default_mcp_gateway_application_id,
+                    "default_resource_id": default_resource_id,
                     "description": description,
                     "encryption_key": encryption_key,
                     "login_flow": login_flow,
@@ -698,6 +703,7 @@ class AsyncZonesResource(AsyncAPIResource):
         zone_id: str,
         *,
         default_mcp_gateway_application_id: Optional[str] | Omit = omit,
+        default_resource_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
         login_flow: Optional[Literal["default", "identifier_first"]] | Omit = omit,
@@ -718,6 +724,9 @@ class AsyncZonesResource(AsyncAPIResource):
         Args:
           default_mcp_gateway_application_id: Application ID configured as the default MCP Gateway for the zone (set to null
               to unset)
+
+          default_resource_id: Resource ID to configure as the default resource for the zone (set to null to
+              unset)
 
           description: Human-readable description
 
@@ -752,6 +761,7 @@ class AsyncZonesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "default_mcp_gateway_application_id": default_mcp_gateway_application_id,
+                    "default_resource_id": default_resource_id,
                     "description": description,
                     "encryption_key": encryption_key,
                     "login_flow": login_flow,
