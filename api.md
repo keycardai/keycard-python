@@ -8,7 +8,6 @@ from keycardai_api.types import (
     PageInfoPagination,
     Zone,
     ZoneListResponse,
-    ZoneListSessionResourceAccessResponse,
 )
 ```
 
@@ -19,7 +18,6 @@ Methods:
 - <code title="patch /zones/{zoneId}">client.zones.<a href="./src/keycardai_api/resources/zones/zones.py">update</a>(zone_id, \*\*<a href="src/keycardai_api/types/zone_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/zone.py">Zone</a></code>
 - <code title="get /zones">client.zones.<a href="./src/keycardai_api/resources/zones/zones.py">list</a>(\*\*<a href="src/keycardai_api/types/zone_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zone_list_response.py">ZoneListResponse</a></code>
 - <code title="delete /zones/{zoneId}">client.zones.<a href="./src/keycardai_api/resources/zones/zones.py">delete</a>(zone_id) -> None</code>
-- <code title="get /zones/{zoneId}/session-resource-access">client.zones.<a href="./src/keycardai_api/resources/zones/zones.py">list_session_resource_access</a>(zone_id, \*\*<a href="src/keycardai_api/types/zone_list_session_resource_access_params.py">params</a>) -> <a href="./src/keycardai_api/types/zone_list_session_resource_access_response.py">ZoneListSessionResourceAccessResponse</a></code>
 
 ## Applications
 

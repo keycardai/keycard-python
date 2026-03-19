@@ -81,6 +81,14 @@ class PolicySetsResource(SyncAPIResource):
         version.
 
         Args:
+          scope_type:
+              The scope at which this policy set applies:
+
+              - `"zone"` — applies to all requests in the zone.
+              - `"resource"` — scoped to a specific resource.
+              - `"user"` — scoped to a specific user.
+              - `"session"` — scoped to a specific session.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -391,6 +399,14 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         version.
 
         Args:
+          scope_type:
+              The scope at which this policy set applies:
+
+              - `"zone"` — applies to all requests in the zone.
+              - `"resource"` — scoped to a specific resource.
+              - `"user"` — scoped to a specific user.
+              - `"session"` — scoped to a specific session.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request

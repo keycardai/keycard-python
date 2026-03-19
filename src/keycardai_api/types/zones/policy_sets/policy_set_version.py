@@ -25,6 +25,10 @@ class PolicySetVersion(BaseModel):
     policy_set_id: str
 
     schema_version: str
+    """Schema version pinned to this policy set version.
+
+    Determines the Cedar schema used for evaluation when activated.
+    """
 
     version: int
 

@@ -20,7 +20,6 @@ from ...types import (
     zone_create_params,
     zone_update_params,
     zone_retrieve_params,
-    zone_list_session_resource_access_params,
 )
 from .members import (
     MembersResource,
@@ -132,7 +131,6 @@ from .applications.applications import (
 )
 from ...types.zone_list_response import ZoneListResponse
 from ...types.encryption_key_aws_kms_config_param import EncryptionKeyAwsKmsConfigParam
-from ...types.zone_list_session_resource_access_response import ZoneListSessionResourceAccessResponse
 
 __all__ = ["ZonesResource", "AsyncZonesResource"]
 
@@ -180,7 +178,22 @@ class ZonesResource(SyncAPIResource):
 
     @cached_property
     def policy_schemas(self) -> PolicySchemasResource:
-        """Zone-scoped Cedar schema management"""
+        """Zone-scoped Cedar schema management.
+
+        The Cedar schema defines the entity model used for authorization decisions.
+        Key entity types and their attributes:
+
+        - **Keycard::User** — `email` (String), `groups` (Set of String)
+        - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+        - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+        - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+        - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+        - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+        Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+        In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+        See the Credentials API spec for the full entity model reference.
+        """
         return PolicySchemasResource(self._client)
 
     @cached_property
@@ -483,83 +496,6 @@ class ZonesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
-    def list_session_resource_access(
-        self,
-        zone_id: str,
-        *,
-        after: str | Omit = omit,
-        before: str | Omit = omit,
-        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
-        limit: int | Omit = omit,
-        resource_id: str | Omit = omit,
-        rollup_children: bool | Omit = omit,
-        session_id: str | Omit = omit,
-        user_id: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ZoneListSessionResourceAccessResponse:
-        """Returns aggregated access records per session-resource pair.
-
-        By default
-        (rollup_children=true), includes access from descendant sessions. Set
-        rollup_children=false to return only direct session access. At least one of
-        user_id, session_id, or resource_id must be provided.
-
-        Args:
-          after: Cursor for forward pagination
-
-          before: Cursor for backward pagination
-
-          limit: Maximum number of items to return
-
-          resource_id: Filter by resource ID
-
-          rollup_children: Include resource access from descendant sessions. When true (default),
-              aggregates access from the session and all its descendants. When false, returns
-              only direct access for the session.
-
-          session_id: Filter by session ID
-
-          user_id: Filter by user ID
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not zone_id:
-            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        return self._get(
-            f"/zones/{zone_id}/session-resource-access",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "after": after,
-                        "before": before,
-                        "expand": expand,
-                        "limit": limit,
-                        "resource_id": resource_id,
-                        "rollup_children": rollup_children,
-                        "session_id": session_id,
-                        "user_id": user_id,
-                    },
-                    zone_list_session_resource_access_params.ZoneListSessionResourceAccessParams,
-                ),
-            ),
-            cast_to=ZoneListSessionResourceAccessResponse,
-        )
-
 
 class AsyncZonesResource(AsyncAPIResource):
     @cached_property
@@ -604,7 +540,22 @@ class AsyncZonesResource(AsyncAPIResource):
 
     @cached_property
     def policy_schemas(self) -> AsyncPolicySchemasResource:
-        """Zone-scoped Cedar schema management"""
+        """Zone-scoped Cedar schema management.
+
+        The Cedar schema defines the entity model used for authorization decisions.
+        Key entity types and their attributes:
+
+        - **Keycard::User** — `email` (String), `groups` (Set of String)
+        - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+        - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+        - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+        - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+        - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+        Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+        In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+        See the Credentials API spec for the full entity model reference.
+        """
         return AsyncPolicySchemasResource(self._client)
 
     @cached_property
@@ -907,83 +858,6 @@ class AsyncZonesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def list_session_resource_access(
-        self,
-        zone_id: str,
-        *,
-        after: str | Omit = omit,
-        before: str | Omit = omit,
-        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
-        limit: int | Omit = omit,
-        resource_id: str | Omit = omit,
-        rollup_children: bool | Omit = omit,
-        session_id: str | Omit = omit,
-        user_id: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ZoneListSessionResourceAccessResponse:
-        """Returns aggregated access records per session-resource pair.
-
-        By default
-        (rollup_children=true), includes access from descendant sessions. Set
-        rollup_children=false to return only direct session access. At least one of
-        user_id, session_id, or resource_id must be provided.
-
-        Args:
-          after: Cursor for forward pagination
-
-          before: Cursor for backward pagination
-
-          limit: Maximum number of items to return
-
-          resource_id: Filter by resource ID
-
-          rollup_children: Include resource access from descendant sessions. When true (default),
-              aggregates access from the session and all its descendants. When false, returns
-              only direct access for the session.
-
-          session_id: Filter by session ID
-
-          user_id: Filter by user ID
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not zone_id:
-            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        return await self._get(
-            f"/zones/{zone_id}/session-resource-access",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "after": after,
-                        "before": before,
-                        "expand": expand,
-                        "limit": limit,
-                        "resource_id": resource_id,
-                        "rollup_children": rollup_children,
-                        "session_id": session_id,
-                        "user_id": user_id,
-                    },
-                    zone_list_session_resource_access_params.ZoneListSessionResourceAccessParams,
-                ),
-            ),
-            cast_to=ZoneListSessionResourceAccessResponse,
-        )
-
 
 class ZonesResourceWithRawResponse:
     def __init__(self, zones: ZonesResource) -> None:
@@ -1003,9 +877,6 @@ class ZonesResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             zones.delete,
-        )
-        self.list_session_resource_access = to_raw_response_wrapper(
-            zones.list_session_resource_access,
         )
 
     @cached_property
@@ -1050,7 +921,22 @@ class ZonesResourceWithRawResponse:
 
     @cached_property
     def policy_schemas(self) -> PolicySchemasResourceWithRawResponse:
-        """Zone-scoped Cedar schema management"""
+        """Zone-scoped Cedar schema management.
+
+        The Cedar schema defines the entity model used for authorization decisions.
+        Key entity types and their attributes:
+
+        - **Keycard::User** — `email` (String), `groups` (Set of String)
+        - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+        - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+        - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+        - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+        - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+        Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+        In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+        See the Credentials API spec for the full entity model reference.
+        """
         return PolicySchemasResourceWithRawResponse(self._zones.policy_schemas)
 
     @cached_property
@@ -1082,9 +968,6 @@ class AsyncZonesResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             zones.delete,
-        )
-        self.list_session_resource_access = async_to_raw_response_wrapper(
-            zones.list_session_resource_access,
         )
 
     @cached_property
@@ -1129,7 +1012,22 @@ class AsyncZonesResourceWithRawResponse:
 
     @cached_property
     def policy_schemas(self) -> AsyncPolicySchemasResourceWithRawResponse:
-        """Zone-scoped Cedar schema management"""
+        """Zone-scoped Cedar schema management.
+
+        The Cedar schema defines the entity model used for authorization decisions.
+        Key entity types and their attributes:
+
+        - **Keycard::User** — `email` (String), `groups` (Set of String)
+        - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+        - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+        - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+        - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+        - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+        Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+        In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+        See the Credentials API spec for the full entity model reference.
+        """
         return AsyncPolicySchemasResourceWithRawResponse(self._zones.policy_schemas)
 
     @cached_property
@@ -1161,9 +1059,6 @@ class ZonesResourceWithStreamingResponse:
         )
         self.delete = to_streamed_response_wrapper(
             zones.delete,
-        )
-        self.list_session_resource_access = to_streamed_response_wrapper(
-            zones.list_session_resource_access,
         )
 
     @cached_property
@@ -1208,7 +1103,22 @@ class ZonesResourceWithStreamingResponse:
 
     @cached_property
     def policy_schemas(self) -> PolicySchemasResourceWithStreamingResponse:
-        """Zone-scoped Cedar schema management"""
+        """Zone-scoped Cedar schema management.
+
+        The Cedar schema defines the entity model used for authorization decisions.
+        Key entity types and their attributes:
+
+        - **Keycard::User** — `email` (String), `groups` (Set of String)
+        - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+        - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+        - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+        - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+        - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+        Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+        In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+        See the Credentials API spec for the full entity model reference.
+        """
         return PolicySchemasResourceWithStreamingResponse(self._zones.policy_schemas)
 
     @cached_property
@@ -1240,9 +1150,6 @@ class AsyncZonesResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             zones.delete,
-        )
-        self.list_session_resource_access = async_to_streamed_response_wrapper(
-            zones.list_session_resource_access,
         )
 
     @cached_property
@@ -1287,7 +1194,22 @@ class AsyncZonesResourceWithStreamingResponse:
 
     @cached_property
     def policy_schemas(self) -> AsyncPolicySchemasResourceWithStreamingResponse:
-        """Zone-scoped Cedar schema management"""
+        """Zone-scoped Cedar schema management.
+
+        The Cedar schema defines the entity model used for authorization decisions.
+        Key entity types and their attributes:
+
+        - **Keycard::User** — `email` (String), `groups` (Set of String)
+        - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+        - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+        - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+        - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+        - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+        Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+        In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+        See the Credentials API spec for the full entity model reference.
+        """
         return AsyncPolicySchemasResourceWithStreamingResponse(self._zones.policy_schemas)
 
     @cached_property
