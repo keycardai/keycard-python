@@ -8,7 +8,7 @@ from typing_extensions import Literal, overload
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import required_args, maybe_transform, async_maybe_transform
+from ..._utils import path_template, required_args, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -253,7 +253,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
         return cast(
             ApplicationCredentialCreateResponse,
             self._post(
-                f"/zones/{zone_id}/application-credentials",
+                path_template("/zones/{zone_id}/application-credentials", zone_id=zone_id),
                 body=maybe_transform(
                     {
                         "application_id": application_id,
@@ -305,7 +305,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
         return cast(
             Credential,
             self._get(
-                f"/zones/{zone_id}/application-credentials/{id}",
+                path_template("/zones/{zone_id}/application-credentials/{id}", zone_id=zone_id, id=id),
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
@@ -491,7 +491,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
         return cast(
             Credential,
             self._patch(
-                f"/zones/{zone_id}/application-credentials/{id}",
+                path_template("/zones/{zone_id}/application-credentials/{id}", zone_id=zone_id, id=id),
                 body=maybe_transform(
                     {
                         "subject": subject,
@@ -546,7 +546,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return self._get(
-            f"/zones/{zone_id}/application-credentials",
+            path_template("/zones/{zone_id}/application-credentials", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -598,7 +598,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/zones/{zone_id}/application-credentials/{id}",
+            path_template("/zones/{zone_id}/application-credentials/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -829,7 +829,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         return cast(
             ApplicationCredentialCreateResponse,
             await self._post(
-                f"/zones/{zone_id}/application-credentials",
+                path_template("/zones/{zone_id}/application-credentials", zone_id=zone_id),
                 body=await async_maybe_transform(
                     {
                         "application_id": application_id,
@@ -881,7 +881,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         return cast(
             Credential,
             await self._get(
-                f"/zones/{zone_id}/application-credentials/{id}",
+                path_template("/zones/{zone_id}/application-credentials/{id}", zone_id=zone_id, id=id),
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
@@ -1067,7 +1067,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         return cast(
             Credential,
             await self._patch(
-                f"/zones/{zone_id}/application-credentials/{id}",
+                path_template("/zones/{zone_id}/application-credentials/{id}", zone_id=zone_id, id=id),
                 body=await async_maybe_transform(
                     {
                         "subject": subject,
@@ -1122,7 +1122,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return await self._get(
-            f"/zones/{zone_id}/application-credentials",
+            path_template("/zones/{zone_id}/application-credentials", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -1174,7 +1174,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/zones/{zone_id}/application-credentials/{id}",
+            path_template("/zones/{zone_id}/application-credentials/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

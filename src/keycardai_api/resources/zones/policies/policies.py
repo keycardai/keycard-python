@@ -16,7 +16,7 @@ from .versions import (
     AsyncVersionsResourceWithStreamingResponse,
 )
 from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ...._utils import maybe_transform, strip_not_given, async_maybe_transform
+from ...._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -99,7 +99,7 @@ class PoliciesResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._post(
-            f"/zones/{zone_id}/policies",
+            path_template("/zones/{zone_id}/policies", zone_id=zone_id),
             body=maybe_transform(
                 {
                     "name": name,
@@ -153,7 +153,7 @@ class PoliciesResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._get(
-            f"/zones/{zone_id}/policies/{policy_id}",
+            path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -204,7 +204,7 @@ class PoliciesResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._patch(
-            f"/zones/{zone_id}/policies/{policy_id}",
+            path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             body=maybe_transform(
                 {
                     "description": description,
@@ -275,7 +275,7 @@ class PoliciesResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._get(
-            f"/zones/{zone_id}/policies",
+            path_template("/zones/{zone_id}/policies", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -336,7 +336,7 @@ class PoliciesResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._delete(
-            f"/zones/{zone_id}/policies/{policy_id}",
+            path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -410,7 +410,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._post(
-            f"/zones/{zone_id}/policies",
+            path_template("/zones/{zone_id}/policies", zone_id=zone_id),
             body=await async_maybe_transform(
                 {
                     "name": name,
@@ -464,7 +464,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._get(
-            f"/zones/{zone_id}/policies/{policy_id}",
+            path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -515,7 +515,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._patch(
-            f"/zones/{zone_id}/policies/{policy_id}",
+            path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             body=await async_maybe_transform(
                 {
                     "description": description,
@@ -586,7 +586,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._get(
-            f"/zones/{zone_id}/policies",
+            path_template("/zones/{zone_id}/policies", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -647,7 +647,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._delete(
-            f"/zones/{zone_id}/policies/{policy_id}",
+            path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

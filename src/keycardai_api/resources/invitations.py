@@ -5,7 +5,7 @@ from __future__ import annotations
 import httpx
 
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from .._utils import strip_not_given
+from .._utils import path_template, strip_not_given
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -69,7 +69,7 @@ class InvitationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
-            f"/invitations/{token}",
+            path_template("/invitations/{token}", token=token),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -108,7 +108,7 @@ class InvitationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._post(
-            f"/invitations/{token}/accept",
+            path_template("/invitations/{token}/accept", token=token),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -164,7 +164,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
-            f"/invitations/{token}",
+            path_template("/invitations/{token}", token=token),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -203,7 +203,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `token` but received {token!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._post(
-            f"/invitations/{token}/accept",
+            path_template("/invitations/{token}/accept", token=token),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

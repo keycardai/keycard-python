@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ...._utils import maybe_transform, strip_not_given, async_maybe_transform
+from ...._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from .credentials import (
     CredentialsResource,
@@ -98,7 +98,7 @@ class ServiceAccountsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._post(
-            f"/organizations/{organization_id}/service-accounts",
+            path_template("/organizations/{organization_id}/service-accounts", organization_id=organization_id),
             body=maybe_transform(
                 {
                     "name": name,
@@ -151,7 +151,11 @@ class ServiceAccountsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
-            f"/organizations/{organization_id}/service-accounts/{service_account_id}",
+            path_template(
+                "/organizations/{organization_id}/service-accounts/{service_account_id}",
+                organization_id=organization_id,
+                service_account_id=service_account_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -203,7 +207,11 @@ class ServiceAccountsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._patch(
-            f"/organizations/{organization_id}/service-accounts/{service_account_id}",
+            path_template(
+                "/organizations/{organization_id}/service-accounts/{service_account_id}",
+                organization_id=organization_id,
+                service_account_id=service_account_id,
+            ),
             body=maybe_transform(
                 {
                     "description": description,
@@ -260,7 +268,7 @@ class ServiceAccountsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
-            f"/organizations/{organization_id}/service-accounts",
+            path_template("/organizations/{organization_id}/service-accounts", organization_id=organization_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -315,7 +323,11 @@ class ServiceAccountsResource(SyncAPIResource):
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._delete(
-            f"/organizations/{organization_id}/service-accounts/{service_account_id}",
+            path_template(
+                "/organizations/{organization_id}/service-accounts/{service_account_id}",
+                organization_id=organization_id,
+                service_account_id=service_account_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -383,7 +395,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._post(
-            f"/organizations/{organization_id}/service-accounts",
+            path_template("/organizations/{organization_id}/service-accounts", organization_id=organization_id),
             body=await async_maybe_transform(
                 {
                     "name": name,
@@ -436,7 +448,11 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
-            f"/organizations/{organization_id}/service-accounts/{service_account_id}",
+            path_template(
+                "/organizations/{organization_id}/service-accounts/{service_account_id}",
+                organization_id=organization_id,
+                service_account_id=service_account_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -490,7 +506,11 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `service_account_id` but received {service_account_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._patch(
-            f"/organizations/{organization_id}/service-accounts/{service_account_id}",
+            path_template(
+                "/organizations/{organization_id}/service-accounts/{service_account_id}",
+                organization_id=organization_id,
+                service_account_id=service_account_id,
+            ),
             body=await async_maybe_transform(
                 {
                     "description": description,
@@ -547,7 +567,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
-            f"/organizations/{organization_id}/service-accounts",
+            path_template("/organizations/{organization_id}/service-accounts", organization_id=organization_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -602,7 +622,11 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._delete(
-            f"/organizations/{organization_id}/service-accounts/{service_account_id}",
+            path_template(
+                "/organizations/{organization_id}/service-accounts/{service_account_id}",
+                organization_id=organization_id,
+                service_account_id=service_account_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, strip_not_given, async_maybe_transform
+from ..._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -92,7 +92,9 @@ class UsersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -144,7 +146,9 @@ class UsersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._patch(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             body=maybe_transform(
                 {
                     "role": role,
@@ -204,7 +208,7 @@ class UsersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
-            f"/organizations/{organization_id}/users",
+            path_template("/organizations/{organization_id}/users", organization_id=organization_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -260,7 +264,9 @@ class UsersResource(SyncAPIResource):
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._delete(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -327,7 +333,9 @@ class AsyncUsersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -379,7 +387,9 @@ class AsyncUsersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._patch(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             body=await async_maybe_transform(
                 {
                     "role": role,
@@ -439,7 +449,7 @@ class AsyncUsersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
-            f"/organizations/{organization_id}/users",
+            path_template("/organizations/{organization_id}/users", organization_id=organization_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -495,7 +505,9 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._delete(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
