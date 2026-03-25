@@ -19,7 +19,6 @@ from .policy_set import PolicySet as PolicySet
 from .public_key import PublicKey as PublicKey
 from .user_agent import UserAgent as UserAgent
 from .application import Application as Application
-from .attestation import Attestation as Attestation
 from .base_fields import BaseFields as BaseFields
 from .zone_member import ZoneMember as ZoneMember
 from .metadata_param import MetadataParam as MetadataParam
@@ -44,6 +43,7 @@ from .resource_list_params import ResourceListParams as ResourceListParams
 from .secret_create_params import SecretCreateParams as SecretCreateParams
 from .secret_list_response import SecretListResponse as SecretListResponse
 from .secret_update_params import SecretUpdateParams as SecretUpdateParams
+from .attestation_statement import AttestationStatement as AttestationStatement
 from .metadata_update_param import MetadataUpdateParam as MetadataUpdateParam
 from .session_list_response import SessionListResponse as SessionListResponse
 from .session_update_params import SessionUpdateParams as SessionUpdateParams
