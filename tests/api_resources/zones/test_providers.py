@@ -57,7 +57,10 @@ class TestProviders:
                     "token_endpoint": "https://example.com",
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
-                "openid": {"userinfo_endpoint": "https://example.com"},
+                "openid": {
+                    "user_identifier_claim": "user_identifier_claim",
+                    "userinfo_endpoint": "https://example.com",
+                },
             },
         )
         assert_matches_type(Provider, provider, path=["response"])
@@ -191,7 +194,10 @@ class TestProviders:
                     "token_endpoint": "https://example.com",
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
-                "openid": {"userinfo_endpoint": "https://example.com"},
+                "openid": {
+                    "user_identifier_claim": "user_identifier_claim",
+                    "userinfo_endpoint": "https://example.com",
+                },
             },
         )
         assert_matches_type(Provider, provider, path=["response"])
@@ -392,7 +398,10 @@ class TestAsyncProviders:
                     "token_endpoint": "https://example.com",
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
-                "openid": {"userinfo_endpoint": "https://example.com"},
+                "openid": {
+                    "user_identifier_claim": "user_identifier_claim",
+                    "userinfo_endpoint": "https://example.com",
+                },
             },
         )
         assert_matches_type(Provider, provider, path=["response"])
@@ -526,7 +535,10 @@ class TestAsyncProviders:
                     "token_endpoint": "https://example.com",
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
-                "openid": {"userinfo_endpoint": "https://example.com"},
+                "openid": {
+                    "user_identifier_claim": "user_identifier_claim",
+                    "userinfo_endpoint": "https://example.com",
+                },
             },
         )
         assert_matches_type(Provider, provider, path=["response"])
