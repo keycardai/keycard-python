@@ -2,7 +2,6 @@
 
 from typing import Optional
 from datetime import datetime
-from typing_extensions import Literal
 
 from ...._models import BaseModel
 from ..policy_set_manifest import PolicySetManifest
@@ -22,13 +21,6 @@ class PolicySetVersion(BaseModel):
 
     manifest_sha: str
     """Hex-encoded SHA-256 of the canonicalized manifest"""
-
-    owner_type: Literal["platform", "customer"]
-    """Who manages this policy set version:
-
-    - `"platform"` — managed by the Keycard platform (system policy set versions).
-    - `"customer"` — managed by the tenant (custom policy set versions).
-    """
 
     policy_set_id: str
 

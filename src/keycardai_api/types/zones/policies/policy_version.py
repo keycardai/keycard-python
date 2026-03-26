@@ -2,7 +2,6 @@
 
 from typing import Optional
 from datetime import datetime
-from typing_extensions import Literal
 
 from ...._models import BaseModel
 
@@ -15,13 +14,6 @@ class PolicyVersion(BaseModel):
     created_at: datetime
 
     created_by: str
-
-    owner_type: Literal["platform", "customer"]
-    """Who manages this policy version:
-
-    - `"platform"` — managed by the Keycard platform (system policy versions).
-    - `"customer"` — managed by the tenant (custom policy versions).
-    """
 
     policy_id: str
 

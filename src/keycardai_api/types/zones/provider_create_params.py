@@ -93,6 +93,12 @@ class ProtocolsOauth2(TypedDict, total=False):
 class ProtocolsOpenid(TypedDict, total=False):
     """OpenID Connect protocol configuration for provider creation"""
 
+    user_identifier_claim: str
+    """
+    Name of a top-level string claim in this provider's ID Token to use as the user
+    identifier on user creation. When not set, the user's Keycard ID is used.
+    """
+
     userinfo_endpoint: str
 
 
