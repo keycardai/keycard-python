@@ -272,6 +272,7 @@ class TestOrganizations:
             before="x",
             expand=["permissions"],
             limit=1,
+            query_email="x",
             role="org_admin",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -619,6 +620,7 @@ class TestAsyncOrganizations:
             before="x",
             expand=["permissions"],
             limit=1,
+            query_email="x",
             role="org_admin",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
