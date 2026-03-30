@@ -28,6 +28,9 @@ class OrganizationListIdentitiesParams(TypedDict, total=False):
     limit: int
     """Maximum number of identities to return"""
 
+    query_email: Annotated[str, PropertyInfo(alias="query[email]")]
+    """Search identities by email substring (case-insensitive)"""
+
     role: OrganizationRole
     """Filter identities by role"""
 

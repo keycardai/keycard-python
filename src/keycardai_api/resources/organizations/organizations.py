@@ -329,6 +329,7 @@ class OrganizationsResource(SyncAPIResource):
         before: str | Omit = omit,
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
+        query_email: str | Omit = omit,
         role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -352,6 +353,8 @@ class OrganizationsResource(SyncAPIResource):
               the permissions field with the caller's permissions for the resource.
 
           limit: Maximum number of identities to return
+
+          query_email: Search identities by email substring (case-insensitive)
 
           role: Filter identities by role
 
@@ -379,6 +382,7 @@ class OrganizationsResource(SyncAPIResource):
                         "before": before,
                         "expand": expand,
                         "limit": limit,
+                        "query_email": query_email,
                         "role": role,
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
@@ -711,6 +715,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         before: str | Omit = omit,
         expand: List[Literal["permissions"]] | Omit = omit,
         limit: int | Omit = omit,
+        query_email: str | Omit = omit,
         role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -734,6 +739,8 @@ class AsyncOrganizationsResource(AsyncAPIResource):
               the permissions field with the caller's permissions for the resource.
 
           limit: Maximum number of identities to return
+
+          query_email: Search identities by email substring (case-insensitive)
 
           role: Filter identities by role
 
@@ -761,6 +768,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                         "before": before,
                         "expand": expand,
                         "limit": limit,
+                        "query_email": query_email,
                         "role": role,
                     },
                     organization_list_identities_params.OrganizationListIdentitiesParams,
