@@ -117,7 +117,7 @@ class ServiceAccountsResource(SyncAPIResource):
         service_account_id: str,
         *,
         organization_id: str,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -134,8 +134,11 @@ class ServiceAccountsResource(SyncAPIResource):
 
           service_account_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           extra_headers: Send extra headers
 
@@ -231,7 +234,7 @@ class ServiceAccountsResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -251,8 +254,11 @@ class ServiceAccountsResource(SyncAPIResource):
 
           before: Cursor for backward pagination
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           limit: Maximum number of service accounts to return
 
@@ -414,7 +420,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         service_account_id: str,
         *,
         organization_id: str,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -431,8 +437,11 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
 
           service_account_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           extra_headers: Send extra headers
 
@@ -530,7 +539,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -550,8 +559,11 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
 
           before: Cursor for backward pagination
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           limit: Maximum number of service accounts to return
 
