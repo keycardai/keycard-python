@@ -53,7 +53,7 @@ class SSOConnectionResource(SyncAPIResource):
         self,
         organization_id: str,
         *,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -68,8 +68,11 @@ class SSOConnectionResource(SyncAPIResource):
         Args:
           organization_id: Organization ID or label identifier
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           extra_headers: Send extra headers
 
@@ -273,7 +276,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         self,
         organization_id: str,
         *,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -288,8 +291,11 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         Args:
           organization_id: Organization ID or label identifier
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           extra_headers: Send extra headers
 

@@ -8,7 +8,7 @@ from .._models import BaseModel
 from .page_info_cursor import PageInfoCursor
 from .organizations.organization_role import OrganizationRole
 
-__all__ = ["OrganizationListIdentitiesResponse", "Item"]
+__all__ = ["OrganizationListIdentitiesResponse", "Item", "Pagination"]
 
 
 class Item(BaseModel):
@@ -50,6 +50,22 @@ class Item(BaseModel):
     """
 
 
+class Pagination(BaseModel):
+    """Cursor-based pagination metadata returned alongside a list of results"""
+
+    after_cursor: str
+    """An opaque cursor used for paginating through a list of results"""
+
+    before_cursor: str
+    """An opaque cursor used for paginating through a list of results"""
+
+    total_count: Optional[int] = None
+    """Total number of items across all pages.
+
+    Only present when the request includes ?expand=total_count.
+    """
+
+
 class OrganizationListIdentitiesResponse(BaseModel):
     """List of identities (users and invitations) in an organization"""
 
@@ -57,6 +73,9 @@ class OrganizationListIdentitiesResponse(BaseModel):
 
     page_info: PageInfoCursor
     """Pagination information using cursor-based pagination"""
+
+    pagination: Pagination
+    """Cursor-based pagination metadata returned alongside a list of results"""
 
     permissions: Optional[Dict[str, Dict[str, bool]]] = None
     """

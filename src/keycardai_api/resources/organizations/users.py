@@ -58,7 +58,7 @@ class UsersResource(SyncAPIResource):
         user_id: str,
         *,
         organization_id: str,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -75,8 +75,11 @@ class UsersResource(SyncAPIResource):
 
           user_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           extra_headers: Send extra headers
 
@@ -168,7 +171,7 @@ class UsersResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         limit: int | Omit = omit,
         role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -189,8 +192,11 @@ class UsersResource(SyncAPIResource):
 
           before: Cursor for backward pagination
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           limit: Maximum number of users to return
 
@@ -299,7 +305,7 @@ class AsyncUsersResource(AsyncAPIResource):
         user_id: str,
         *,
         organization_id: str,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -316,8 +322,11 @@ class AsyncUsersResource(AsyncAPIResource):
 
           user_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           extra_headers: Send extra headers
 
@@ -409,7 +418,7 @@ class AsyncUsersResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         limit: int | Omit = omit,
         role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -430,8 +439,11 @@ class AsyncUsersResource(AsyncAPIResource):
 
           before: Cursor for backward pagination
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           limit: Maximum number of users to return
 
