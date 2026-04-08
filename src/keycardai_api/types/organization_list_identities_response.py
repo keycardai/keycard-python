@@ -53,10 +53,10 @@ class Item(BaseModel):
 class Pagination(BaseModel):
     """Cursor-based pagination metadata returned alongside a list of results"""
 
-    after_cursor: str
+    after_cursor: Optional[str] = None
     """An opaque cursor used for paginating through a list of results"""
 
-    before_cursor: str
+    before_cursor: Optional[str] = None
     """An opaque cursor used for paginating through a list of results"""
 
     total_count: Optional[int] = None
