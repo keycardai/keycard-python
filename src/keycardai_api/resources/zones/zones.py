@@ -248,11 +248,13 @@ class ZonesResource(SyncAPIResource):
         environment for IAM resources.
 
         Args:
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           default_mcp_gateway_application: Assign a default MCP Gateway application to the zone
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           encryption_key: AWS KMS configuration for zone encryption. When not specified, the default
               Keycard Cloud encryption key will be used.
@@ -361,7 +363,8 @@ class ZonesResource(SyncAPIResource):
           default_resource_id: Resource ID to configure as the default resource for the zone (set to null to
               unset)
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
@@ -370,7 +373,8 @@ class ZonesResource(SyncAPIResource):
               'identifier_first' uses identifier-based provider routing. Set to null to reset
               to 'default'.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           protocols: Protocol configuration update for a zone (partial update)
 
@@ -615,11 +619,13 @@ class AsyncZonesResource(AsyncAPIResource):
         environment for IAM resources.
 
         Args:
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           default_mcp_gateway_application: Assign a default MCP Gateway application to the zone
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           encryption_key: AWS KMS configuration for zone encryption. When not specified, the default
               Keycard Cloud encryption key will be used.
@@ -728,7 +734,8 @@ class AsyncZonesResource(AsyncAPIResource):
           default_resource_id: Resource ID to configure as the default resource for the zone (set to null to
               unset)
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
@@ -737,7 +744,8 @@ class AsyncZonesResource(AsyncAPIResource):
               'identifier_first' uses identifier-based provider routing. Set to null to reset
               to 'default'.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           protocols: Protocol configuration update for a zone (partial update)
 

@@ -33,16 +33,25 @@ class ResourceUpdateParams(TypedDict, total=False):
     """
 
     description: Optional[str]
-    """Human-readable description"""
+    """Human-readable description.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     identifier: str
-    """User specified identifier, unique within the zone"""
+    """User specified identifier, unique within the zone.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     metadata: Optional[MetadataUpdateParam]
     """Entity metadata (set to null or {} to remove metadata)"""
 
     name: str
-    """Human-readable name"""
+    """Human-readable name.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     scopes: Optional[SequenceNotStr[str]]
     """Scopes supported by the resource (set to null to unset)"""

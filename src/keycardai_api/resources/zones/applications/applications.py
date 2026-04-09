@@ -74,6 +74,7 @@ class ApplicationsResource(SyncAPIResource):
         *,
         identifier: str,
         name: str,
+        consent: Literal["implicit", "required"] | Omit = omit,
         dependencies: Iterable[application_create_params.Dependency] | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
@@ -90,13 +91,18 @@ class ApplicationsResource(SyncAPIResource):
         Resources
 
         Args:
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
+
+          consent: Consent mode for the application. Defaults to 'required'.
 
           dependencies: Dependencies of the application
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           metadata: Entity metadata
 
@@ -118,6 +124,7 @@ class ApplicationsResource(SyncAPIResource):
                 {
                     "identifier": identifier,
                     "name": name,
+                    "consent": consent,
                     "dependencies": dependencies,
                     "description": description,
                     "metadata": metadata,
@@ -172,6 +179,7 @@ class ApplicationsResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        consent: Literal["implicit", "required"] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
         metadata: Optional[MetadataUpdateParam] | Omit = omit,
@@ -188,13 +196,19 @@ class ApplicationsResource(SyncAPIResource):
         Updates an Application's configuration and metadata
 
         Args:
-          description: Human-readable description
+          consent: Consent mode for the application. 'implicit' means consent is automatically
+              granted, 'required' means explicit user consent is needed.
 
-          identifier: User specified identifier, unique within the zone
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
+
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
           metadata: Entity metadata (set to null or {} to remove metadata)
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           protocols: Protocol-specific configuration for application update
 
@@ -214,6 +228,7 @@ class ApplicationsResource(SyncAPIResource):
             path_template("/zones/{zone_id}/applications/{id}", zone_id=zone_id, id=id),
             body=maybe_transform(
                 {
+                    "consent": consent,
                     "description": description,
                     "identifier": identifier,
                     "metadata": metadata,
@@ -487,6 +502,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         *,
         identifier: str,
         name: str,
+        consent: Literal["implicit", "required"] | Omit = omit,
         dependencies: Iterable[application_create_params.Dependency] | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
@@ -503,13 +519,18 @@ class AsyncApplicationsResource(AsyncAPIResource):
         Resources
 
         Args:
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
+
+          consent: Consent mode for the application. Defaults to 'required'.
 
           dependencies: Dependencies of the application
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           metadata: Entity metadata
 
@@ -531,6 +552,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
                 {
                     "identifier": identifier,
                     "name": name,
+                    "consent": consent,
                     "dependencies": dependencies,
                     "description": description,
                     "metadata": metadata,
@@ -585,6 +607,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        consent: Literal["implicit", "required"] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
         metadata: Optional[MetadataUpdateParam] | Omit = omit,
@@ -601,13 +624,19 @@ class AsyncApplicationsResource(AsyncAPIResource):
         Updates an Application's configuration and metadata
 
         Args:
-          description: Human-readable description
+          consent: Consent mode for the application. 'implicit' means consent is automatically
+              granted, 'required' means explicit user consent is needed.
 
-          identifier: User specified identifier, unique within the zone
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
+
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
           metadata: Entity metadata (set to null or {} to remove metadata)
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           protocols: Protocol-specific configuration for application update
 
@@ -627,6 +656,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
             path_template("/zones/{zone_id}/applications/{id}", zone_id=zone_id, id=id),
             body=await async_maybe_transform(
                 {
+                    "consent": consent,
                     "description": description,
                     "identifier": identifier,
                     "metadata": metadata,

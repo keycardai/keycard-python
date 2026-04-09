@@ -75,9 +75,11 @@ class ResourcesResource(SyncAPIResource):
         functionality requiring authentication
 
         Args:
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           application_id: ID of the application that provides this resource
 
@@ -87,7 +89,8 @@ class ResourcesResource(SyncAPIResource):
 
           credential_provider_id: ID of the credential provider to associate with the resource
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           metadata: Entity metadata
 
@@ -193,13 +196,16 @@ class ResourcesResource(SyncAPIResource):
           credential_provider_id: ID of the credential provider to associate with the resource (set to null to
               unset)
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
           metadata: Entity metadata (set to null or {} to remove metadata)
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           scopes: Scopes supported by the resource (set to null to unset)
 
@@ -383,9 +389,11 @@ class AsyncResourcesResource(AsyncAPIResource):
         functionality requiring authentication
 
         Args:
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           application_id: ID of the application that provides this resource
 
@@ -395,7 +403,8 @@ class AsyncResourcesResource(AsyncAPIResource):
 
           credential_provider_id: ID of the credential provider to associate with the resource
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           metadata: Entity metadata
 
@@ -501,13 +510,16 @@ class AsyncResourcesResource(AsyncAPIResource):
           credential_provider_id: ID of the credential provider to associate with the resource (set to null to
               unset)
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
           metadata: Entity metadata (set to null or {} to remove metadata)
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           scopes: Scopes supported by the resource (set to null to unset)
 

@@ -68,15 +68,18 @@ class ProvidersResource(SyncAPIResource):
         actors to authenticate
 
         Args:
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           client_id: OAuth 2.0 client identifier
 
           client_secret: OAuth 2.0 client secret (will be encrypted and stored securely)
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           metadata: Provider metadata
 
@@ -176,13 +179,16 @@ class ProvidersResource(SyncAPIResource):
           client_secret: OAuth 2.0 client secret (will be encrypted and stored securely). Set to null to
               remove.
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
           metadata: Provider metadata. Set to null to remove all metadata.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           protocols: Protocol-specific configuration. Set to null to remove all protocols.
 
@@ -362,15 +368,18 @@ class AsyncProvidersResource(AsyncAPIResource):
         actors to authenticate
 
         Args:
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           client_id: OAuth 2.0 client identifier
 
           client_secret: OAuth 2.0 client secret (will be encrypted and stored securely)
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           metadata: Provider metadata
 
@@ -470,13 +479,16 @@ class AsyncProvidersResource(AsyncAPIResource):
           client_secret: OAuth 2.0 client secret (will be encrypted and stored securely). Set to null to
               remove.
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
           metadata: Provider metadata. Set to null to remove all metadata.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           protocols: Protocol-specific configuration. Set to null to remove all protocols.
 
