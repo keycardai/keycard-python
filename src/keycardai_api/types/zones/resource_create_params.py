@@ -13,10 +13,16 @@ __all__ = ["ResourceCreateParams"]
 
 class ResourceCreateParams(TypedDict, total=False):
     identifier: Required[str]
-    """User specified identifier, unique within the zone"""
+    """User specified identifier, unique within the zone.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     name: Required[str]
-    """Human-readable name"""
+    """Human-readable name.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     application_id: str
     """ID of the application that provides this resource"""
@@ -33,7 +39,10 @@ class ResourceCreateParams(TypedDict, total=False):
     """ID of the credential provider to associate with the resource"""
 
     description: Optional[str]
-    """Human-readable description"""
+    """Human-readable description.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     metadata: MetadataParam
     """Entity metadata"""

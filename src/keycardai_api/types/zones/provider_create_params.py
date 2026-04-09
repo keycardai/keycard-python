@@ -12,10 +12,16 @@ __all__ = ["ProviderCreateParams", "Protocols", "ProtocolsOauth2", "ProtocolsOpe
 
 class ProviderCreateParams(TypedDict, total=False):
     identifier: Required[str]
-    """User specified identifier, unique within the zone"""
+    """User specified identifier, unique within the zone.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     name: Required[str]
-    """Human-readable name"""
+    """Human-readable name.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     client_id: str
     """OAuth 2.0 client identifier"""
@@ -24,7 +30,10 @@ class ProviderCreateParams(TypedDict, total=False):
     """OAuth 2.0 client secret (will be encrypted and stored securely)"""
 
     description: Optional[str]
-    """Human-readable description"""
+    """Human-readable description.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     metadata: object
     """Provider metadata"""
