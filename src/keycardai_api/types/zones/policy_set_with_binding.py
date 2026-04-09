@@ -21,3 +21,9 @@ class PolicySetWithBinding(PolicySet):
     mode: Optional[Literal["active", "shadow"]] = None
 
     scope_target_id: Optional[str] = None
+
+    shadow_version: Optional[int] = None
+    """Human-readable version number of the shadow version"""
+
+    shadow_version_id: Optional[str] = None
+    """Public ID of the shadow (observed) version, if any"""
