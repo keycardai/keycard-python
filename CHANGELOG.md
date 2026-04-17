@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.4.0 (2026-04-17)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/keycardai/keycard-python/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* add email search to list organization identities endpoint ([f9b2707](https://github.com/keycardai/keycard-python/commit/f9b2707b0649678407423d2f5b3007a6d7bcc2e6))
+* add openapi-yaml command ([b37854a](https://github.com/keycardai/keycard-python/commit/b37854a0910db1c34df7509b706c34306a160ebf))
+* add owner_type and enforce protection for platform-owned versions (ACC-29) ([bfac76d](https://github.com/keycardai/keycard-python/commit/bfac76da47db6264d00d9df73c387a8e5e175840))
+* add PRM discovery to MCP gateway endpoint ([fbc502d](https://github.com/keycardai/keycard-python/commit/fbc502dc075d7a0f6890317fc59203ca51d644a7))
+* improved identities pagination ([d4c4d1b](https://github.com/keycardai/keycard-python/commit/d4c4d1ba4d76d709e6067d36f1848d293d227a81))
+* **internal:** implement indices array format for query and form serialization ([617099d](https://github.com/keycardai/keycard-python/commit/617099df6ed00538530a5f4ed285130dd5ac13c7))
+* normalize and validate user input (ACC-107) ([7bb7c97](https://github.com/keycardai/keycard-python/commit/7bb7c970e37b50353c54b4afc6307608c5bcdd94))
+* provide more context for policy schema ([46bea8a](https://github.com/keycardai/keycard-python/commit/46bea8a4493318b0b37904119e057cb7b4e50550))
+* shadow testing (ACC-14) ([f8f9ac8](https://github.com/keycardai/keycard-python/commit/f8f9ac8089531b5613cb9147dd736de348de2d33))
+* Support for user identifier and provider user identifier claim ([ac47cc2](https://github.com/keycardai/keycard-python/commit/ac47cc20c48168e226a78d5402d7f8e745881bb8))
+
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([3a94db2](https://github.com/keycardai/keycard-python/commit/3a94db26d731d5d0a34957d0aec691b0346eb275))
+* ensure file data are only sent as 1 parameter ([bcc62f9](https://github.com/keycardai/keycard-python/commit/bcc62f9c4cd18748dc5a26eb4d84fee22573a237))
+* sanitize endpoint path params ([6993e56](https://github.com/keycardai/keycard-python/commit/6993e56d5e9a79713471a0b2b33920c1e2da77d9))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([2b5cca8](https://github.com/keycardai/keycard-python/commit/2b5cca867abc3dd0171c465ec056bfff88cd8f81))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([bc52e3f](https://github.com/keycardai/keycard-python/commit/bc52e3f59616d0754b7f0bc30374fac7f357f63b))
+* **internal:** update gitignore ([24f9a15](https://github.com/keycardai/keycard-python/commit/24f9a15a6031769c2a5912a3eda480fb82fc17b1))
+
 ## 0.3.0 (2026-03-16)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/keycardai/keycard-python/compare/v0.2.0...v0.3.0)
