@@ -39,6 +39,7 @@ class TestApplications:
             zone_id="zoneId",
             identifier="x",
             name="x",
+            consent="implicit",
             dependencies=[
                 {
                     "id": "id",
@@ -163,6 +164,7 @@ class TestApplications:
         application = client.zones.applications.update(
             id="id",
             zone_id="zoneId",
+            consent="implicit",
             description="description",
             identifier="x",
             metadata={"docs_url": "https://example.com"},
@@ -485,6 +487,7 @@ class TestAsyncApplications:
             zone_id="zoneId",
             identifier="x",
             name="x",
+            consent="implicit",
             dependencies=[
                 {
                     "id": "id",
@@ -609,6 +612,7 @@ class TestAsyncApplications:
         application = await async_client.zones.applications.update(
             id="id",
             zone_id="zoneId",
+            consent="implicit",
             description="description",
             identifier="x",
             metadata={"docs_url": "https://example.com"},

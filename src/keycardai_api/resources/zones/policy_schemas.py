@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, strip_not_given, async_maybe_transform
+from ..._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -26,7 +26,22 @@ __all__ = ["PolicySchemasResource", "AsyncPolicySchemasResource"]
 
 
 class PolicySchemasResource(SyncAPIResource):
-    """Zone-scoped Cedar schema management"""
+    """Zone-scoped Cedar schema management.
+
+    The Cedar schema defines the entity model used for authorization decisions.
+    Key entity types and their attributes:
+
+    - **Keycard::User** — `email` (String), `groups` (Set of String)
+    - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+    - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+    - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+    - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+    - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+    Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+    In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+    See the Credentials API spec for the full entity model reference.
+    """
 
     @cached_property
     def with_raw_response(self) -> PolicySchemasResourceWithRawResponse:
@@ -92,7 +107,7 @@ class PolicySchemasResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._get(
-            f"/zones/{zone_id}/policy-schemas/{version}",
+            path_template("/zones/{zone_id}/policy-schemas/{version}", zone_id=zone_id, version=version),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -169,7 +184,7 @@ class PolicySchemasResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._get(
-            f"/zones/{zone_id}/policy-schemas",
+            path_template("/zones/{zone_id}/policy-schemas", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -233,7 +248,7 @@ class PolicySchemasResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._patch(
-            f"/zones/{zone_id}/policy-schemas/{version}",
+            path_template("/zones/{zone_id}/policy-schemas/{version}", zone_id=zone_id, version=version),
             body=maybe_transform(body, policy_schema_set_default_params.PolicySchemaSetDefaultParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -243,7 +258,22 @@ class PolicySchemasResource(SyncAPIResource):
 
 
 class AsyncPolicySchemasResource(AsyncAPIResource):
-    """Zone-scoped Cedar schema management"""
+    """Zone-scoped Cedar schema management.
+
+    The Cedar schema defines the entity model used for authorization decisions.
+    Key entity types and their attributes:
+
+    - **Keycard::User** — `email` (String), `groups` (Set of String)
+    - **Keycard::Application** — `registration_method` (RegistrationMethod entity), `credential_type` (CredentialType entity)
+    - **Keycard::RegistrationMethod** — enum entity: `"managed"`, `"dcr"`
+    - **Keycard::CredentialType** — enum entity: `"token"`, `"password"`, `"public-key"`, `"url"`, `"public"`
+    - **Keycard::Resource** — `id` (String), `name` (String), `scopes` (Set of String)
+    - **Keycard::Claims** — `email` (String), `groups` (Set of String), plus arbitrary additional fields
+
+    Enum-like attributes use Cedar enum entity types (schema version `2026-03-16`+).
+    In policies, reference values as `RegistrationMethod::"managed"` or `CredentialType::"token"`.
+    See the Credentials API spec for the full entity model reference.
+    """
 
     @cached_property
     def with_raw_response(self) -> AsyncPolicySchemasResourceWithRawResponse:
@@ -309,7 +339,7 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._get(
-            f"/zones/{zone_id}/policy-schemas/{version}",
+            path_template("/zones/{zone_id}/policy-schemas/{version}", zone_id=zone_id, version=version),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -388,7 +418,7 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._get(
-            f"/zones/{zone_id}/policy-schemas",
+            path_template("/zones/{zone_id}/policy-schemas", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -452,7 +482,7 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._patch(
-            f"/zones/{zone_id}/policy-schemas/{version}",
+            path_template("/zones/{zone_id}/policy-schemas/{version}", zone_id=zone_id, version=version),
             body=await async_maybe_transform(body, policy_schema_set_default_params.PolicySchemaSetDefaultParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout

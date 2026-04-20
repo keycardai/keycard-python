@@ -23,6 +23,13 @@ class User(BaseModel):
     email_verified: bool
     """Whether the email address has been verified"""
 
+    identifier: str
+    """Zone-scoped user identifier.
+
+    Defaults to the user's Keycard ID. When the provider has user_identifier_claim
+    configured, the value is set from that claim at user creation time.
+    """
+
     organization_id: str
     """Organization that owns this user"""
 

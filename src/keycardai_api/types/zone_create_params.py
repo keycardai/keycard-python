@@ -12,13 +12,19 @@ __all__ = ["ZoneCreateParams", "Protocols", "ProtocolsOauth2"]
 
 class ZoneCreateParams(TypedDict, total=False):
     name: Required[str]
-    """Human-readable name"""
+    """Human-readable name.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     default_mcp_gateway_application: bool
     """Assign a default MCP Gateway application to the zone"""
 
     description: Optional[str]
-    """Human-readable description"""
+    """Human-readable description.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     encryption_key: EncryptionKeyAwsKmsConfigParam
     """AWS KMS configuration for zone encryption.

@@ -65,6 +65,12 @@ class ProtocolsOauth2(BaseModel):
 class ProtocolsOpenid(BaseModel):
     """OpenID Connect protocol configuration"""
 
+    user_identifier_claim: Optional[str] = None
+    """
+    Name of a top-level string claim in this provider's ID Token to use as the user
+    identifier on user creation. When not set, the user's Keycard ID is used.
+    """
+
     userinfo_endpoint: Optional[str] = None
 
 

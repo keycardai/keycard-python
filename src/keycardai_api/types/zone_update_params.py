@@ -15,8 +15,17 @@ class ZoneUpdateParams(TypedDict, total=False):
     to unset)
     """
 
+    default_resource_id: Optional[str]
+    """
+    Resource ID to configure as the default resource for the zone (set to null to
+    unset)
+    """
+
     description: Optional[str]
-    """Human-readable description"""
+    """Human-readable description.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     encryption_key: Optional[EncryptionKey]
     """
@@ -32,7 +41,10 @@ class ZoneUpdateParams(TypedDict, total=False):
     """
 
     name: str
-    """Human-readable name"""
+    """Human-readable name.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     protocols: Optional[Protocols]
     """Protocol configuration update for a zone (partial update)"""

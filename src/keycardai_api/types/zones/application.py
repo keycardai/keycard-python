@@ -35,6 +35,13 @@ class Application(BaseModel):
     id: str
     """Unique identifier of the application"""
 
+    consent: Literal["implicit", "required"]
+    """Consent mode for the application.
+
+    'implicit' means consent is automatically granted, 'required' means explicit
+    user consent is needed.
+    """
+
     created_at: datetime
     """Entity creation timestamp"""
 

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 from ..._types import SequenceNotStr
 from .metadata_param import MetadataParam
@@ -13,16 +13,28 @@ __all__ = ["ApplicationCreateParams", "Dependency", "Protocols", "ProtocolsOauth
 
 class ApplicationCreateParams(TypedDict, total=False):
     identifier: Required[str]
-    """User specified identifier, unique within the zone"""
+    """User specified identifier, unique within the zone.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     name: Required[str]
-    """Human-readable name"""
+    """Human-readable name.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
+
+    consent: Literal["implicit", "required"]
+    """Consent mode for the application. Defaults to 'required'."""
 
     dependencies: Iterable[Dependency]
     """Dependencies of the application"""
 
     description: Optional[str]
-    """Human-readable description"""
+    """Human-readable description.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     metadata: MetadataParam
     """Entity metadata"""

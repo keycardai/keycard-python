@@ -13,6 +13,13 @@ class PolicySetCreateParams(TypedDict, total=False):
     name: Required[str]
 
     scope_type: Literal["zone", "resource", "user", "session"]
+    """The scope at which this policy set applies:
+
+    - `"zone"` — applies to all requests in the zone.
+    - `"resource"` — scoped to a specific resource.
+    - `"user"` — scoped to a specific user.
+    - `"session"` — scoped to a specific session.
+    """
 
     x_api_version: Annotated[str, PropertyInfo(alias="X-API-Version")]
 

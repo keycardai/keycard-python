@@ -16,7 +16,7 @@ from .versions import (
     AsyncVersionsResourceWithStreamingResponse,
 )
 from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ...._utils import maybe_transform, strip_not_given, async_maybe_transform
+from ...._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -81,6 +81,14 @@ class PolicySetsResource(SyncAPIResource):
         version.
 
         Args:
+          scope_type:
+              The scope at which this policy set applies:
+
+              - `"zone"` — applies to all requests in the zone.
+              - `"resource"` — scoped to a specific resource.
+              - `"user"` — scoped to a specific user.
+              - `"session"` — scoped to a specific session.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -101,7 +109,7 @@ class PolicySetsResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._post(
-            f"/zones/{zone_id}/policy-sets",
+            path_template("/zones/{zone_id}/policy-sets", zone_id=zone_id),
             body=maybe_transform(
                 {
                     "name": name,
@@ -155,7 +163,7 @@ class PolicySetsResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._get(
-            f"/zones/{zone_id}/policy-sets/{policy_set_id}",
+            path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -207,7 +215,7 @@ class PolicySetsResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._patch(
-            f"/zones/{zone_id}/policy-sets/{policy_set_id}",
+            path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             body=maybe_transform({"name": name}, policy_set_update_params.PolicySetUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -272,7 +280,7 @@ class PolicySetsResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._get(
-            f"/zones/{zone_id}/policy-sets",
+            path_template("/zones/{zone_id}/policy-sets", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -335,7 +343,7 @@ class PolicySetsResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._delete(
-            f"/zones/{zone_id}/policy-sets/{policy_set_id}",
+            path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -391,6 +399,14 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         version.
 
         Args:
+          scope_type:
+              The scope at which this policy set applies:
+
+              - `"zone"` — applies to all requests in the zone.
+              - `"resource"` — scoped to a specific resource.
+              - `"user"` — scoped to a specific user.
+              - `"session"` — scoped to a specific session.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -411,7 +427,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._post(
-            f"/zones/{zone_id}/policy-sets",
+            path_template("/zones/{zone_id}/policy-sets", zone_id=zone_id),
             body=await async_maybe_transform(
                 {
                     "name": name,
@@ -465,7 +481,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._get(
-            f"/zones/{zone_id}/policy-sets/{policy_set_id}",
+            path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -517,7 +533,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._patch(
-            f"/zones/{zone_id}/policy-sets/{policy_set_id}",
+            path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             body=await async_maybe_transform({"name": name}, policy_set_update_params.PolicySetUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -582,7 +598,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._get(
-            f"/zones/{zone_id}/policy-sets",
+            path_template("/zones/{zone_id}/policy-sets", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -645,7 +661,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._delete(
-            f"/zones/{zone_id}/policy-sets/{policy_set_id}",
+            path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

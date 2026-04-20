@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
@@ -15,17 +15,33 @@ __all__ = ["ApplicationUpdateParams", "Protocols", "ProtocolsOauth2"]
 class ApplicationUpdateParams(TypedDict, total=False):
     zone_id: Required[Annotated[str, PropertyInfo(alias="zoneId")]]
 
+    consent: Literal["implicit", "required"]
+    """Consent mode for the application.
+
+    'implicit' means consent is automatically granted, 'required' means explicit
+    user consent is needed.
+    """
+
     description: Optional[str]
-    """Human-readable description"""
+    """Human-readable description.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     identifier: str
-    """User specified identifier, unique within the zone"""
+    """User specified identifier, unique within the zone.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     metadata: Optional[MetadataUpdateParam]
     """Entity metadata (set to null or {} to remove metadata)"""
 
     name: str
-    """Human-readable name"""
+    """Human-readable name.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     protocols: Optional[Protocols]
     """Protocol-specific configuration for application update"""

@@ -24,16 +24,25 @@ class ProviderUpdateParams(TypedDict, total=False):
     """
 
     description: Optional[str]
-    """Human-readable description"""
+    """Human-readable description.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     identifier: str
-    """User specified identifier, unique within the zone"""
+    """User specified identifier, unique within the zone.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     metadata: Optional[object]
     """Provider metadata. Set to null to remove all metadata."""
 
     name: str
-    """Human-readable name"""
+    """Human-readable name.
+
+    Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
+    """
 
     protocols: Optional[Protocols]
     """Protocol-specific configuration. Set to null to remove all protocols."""
@@ -97,6 +106,13 @@ class ProtocolsOauth2(TypedDict, total=False):
 
 class ProtocolsOpenid(TypedDict, total=False):
     """OpenID Connect protocol configuration. Set to null to remove all OpenID config."""
+
+    user_identifier_claim: Optional[str]
+    """
+    Name of a top-level string claim in this provider's ID Token to use as the user
+    identifier on user creation. Set to null to revert to default. Changing this
+    value does not affect existing users.
+    """
 
     userinfo_endpoint: Optional[str]
 

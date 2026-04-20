@@ -12,7 +12,6 @@ from keycardai_api import KeycardAPI, AsyncKeycardAPI
 from keycardai_api.types import (
     Zone,
     ZoneListResponse,
-    ZoneListSessionResourceAccessResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -142,6 +141,7 @@ class TestZones:
         zone = client.zones.update(
             zone_id="zoneId",
             default_mcp_gateway_application_id="default_mcp_gateway_application_id",
+            default_resource_id="default_resource_id",
             description="description",
             encryption_key={
                 "arn": "x",
@@ -277,64 +277,6 @@ class TestZones:
                 "",
             )
 
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_list_session_resource_access(self, client: KeycardAPI) -> None:
-        zone = client.zones.list_session_resource_access(
-            zone_id="zoneId",
-        )
-        assert_matches_type(ZoneListSessionResourceAccessResponse, zone, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_list_session_resource_access_with_all_params(self, client: KeycardAPI) -> None:
-        zone = client.zones.list_session_resource_access(
-            zone_id="zoneId",
-            after="x",
-            before="x",
-            expand="total_count",
-            limit=1,
-            resource_id="resource_id",
-            rollup_children=True,
-            session_id="session_id",
-            user_id="user_id",
-        )
-        assert_matches_type(ZoneListSessionResourceAccessResponse, zone, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_list_session_resource_access(self, client: KeycardAPI) -> None:
-        response = client.zones.with_raw_response.list_session_resource_access(
-            zone_id="zoneId",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        zone = response.parse()
-        assert_matches_type(ZoneListSessionResourceAccessResponse, zone, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_list_session_resource_access(self, client: KeycardAPI) -> None:
-        with client.zones.with_streaming_response.list_session_resource_access(
-            zone_id="zoneId",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            zone = response.parse()
-            assert_matches_type(ZoneListSessionResourceAccessResponse, zone, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_path_params_list_session_resource_access(self, client: KeycardAPI) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            client.zones.with_raw_response.list_session_resource_access(
-                zone_id="",
-            )
-
 
 class TestAsyncZones:
     parametrize = pytest.mark.parametrize(
@@ -462,6 +404,7 @@ class TestAsyncZones:
         zone = await async_client.zones.update(
             zone_id="zoneId",
             default_mcp_gateway_application_id="default_mcp_gateway_application_id",
+            default_resource_id="default_resource_id",
             description="description",
             encryption_key={
                 "arn": "x",
@@ -595,62 +538,4 @@ class TestAsyncZones:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
             await async_client.zones.with_raw_response.delete(
                 "",
-            )
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_list_session_resource_access(self, async_client: AsyncKeycardAPI) -> None:
-        zone = await async_client.zones.list_session_resource_access(
-            zone_id="zoneId",
-        )
-        assert_matches_type(ZoneListSessionResourceAccessResponse, zone, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_list_session_resource_access_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
-        zone = await async_client.zones.list_session_resource_access(
-            zone_id="zoneId",
-            after="x",
-            before="x",
-            expand="total_count",
-            limit=1,
-            resource_id="resource_id",
-            rollup_children=True,
-            session_id="session_id",
-            user_id="user_id",
-        )
-        assert_matches_type(ZoneListSessionResourceAccessResponse, zone, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_list_session_resource_access(self, async_client: AsyncKeycardAPI) -> None:
-        response = await async_client.zones.with_raw_response.list_session_resource_access(
-            zone_id="zoneId",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        zone = await response.parse()
-        assert_matches_type(ZoneListSessionResourceAccessResponse, zone, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_list_session_resource_access(self, async_client: AsyncKeycardAPI) -> None:
-        async with async_client.zones.with_streaming_response.list_session_resource_access(
-            zone_id="zoneId",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            zone = await response.parse()
-            assert_matches_type(ZoneListSessionResourceAccessResponse, zone, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_path_params_list_session_resource_access(self, async_client: AsyncKeycardAPI) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            await async_client.zones.with_raw_response.list_session_resource_access(
-                zone_id="",
             )

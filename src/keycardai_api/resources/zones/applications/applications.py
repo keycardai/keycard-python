@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ...._utils import maybe_transform, async_maybe_transform
+from ...._utils import path_template, maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -74,6 +74,7 @@ class ApplicationsResource(SyncAPIResource):
         *,
         identifier: str,
         name: str,
+        consent: Literal["implicit", "required"] | Omit = omit,
         dependencies: Iterable[application_create_params.Dependency] | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
@@ -90,13 +91,18 @@ class ApplicationsResource(SyncAPIResource):
         Resources
 
         Args:
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
+
+          consent: Consent mode for the application. Defaults to 'required'.
 
           dependencies: Dependencies of the application
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           metadata: Entity metadata
 
@@ -113,11 +119,12 @@ class ApplicationsResource(SyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return self._post(
-            f"/zones/{zone_id}/applications",
+            path_template("/zones/{zone_id}/applications", zone_id=zone_id),
             body=maybe_transform(
                 {
                     "identifier": identifier,
                     "name": name,
+                    "consent": consent,
                     "dependencies": dependencies,
                     "description": description,
                     "metadata": metadata,
@@ -160,7 +167,7 @@ class ApplicationsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/zones/{zone_id}/applications/{id}",
+            path_template("/zones/{zone_id}/applications/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -172,6 +179,7 @@ class ApplicationsResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        consent: Literal["implicit", "required"] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
         metadata: Optional[MetadataUpdateParam] | Omit = omit,
@@ -188,13 +196,19 @@ class ApplicationsResource(SyncAPIResource):
         Updates an Application's configuration and metadata
 
         Args:
-          description: Human-readable description
+          consent: Consent mode for the application. 'implicit' means consent is automatically
+              granted, 'required' means explicit user consent is needed.
 
-          identifier: User specified identifier, unique within the zone
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
+
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
           metadata: Entity metadata (set to null or {} to remove metadata)
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           protocols: Protocol-specific configuration for application update
 
@@ -211,9 +225,10 @@ class ApplicationsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._patch(
-            f"/zones/{zone_id}/applications/{id}",
+            path_template("/zones/{zone_id}/applications/{id}", zone_id=zone_id, id=id),
             body=maybe_transform(
                 {
+                    "consent": consent,
                     "description": description,
                     "identifier": identifier,
                     "metadata": metadata,
@@ -275,7 +290,7 @@ class ApplicationsResource(SyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return self._get(
-            f"/zones/{zone_id}/applications",
+            path_template("/zones/{zone_id}/applications", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -329,7 +344,7 @@ class ApplicationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/zones/{zone_id}/applications/{id}",
+            path_template("/zones/{zone_id}/applications/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -376,7 +391,7 @@ class ApplicationsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/zones/{zone_id}/applications/{id}/application-credentials",
+            path_template("/zones/{zone_id}/applications/{id}/application-credentials", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -436,7 +451,7 @@ class ApplicationsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/zones/{zone_id}/applications/{id}/resources",
+            path_template("/zones/{zone_id}/applications/{id}/resources", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -487,6 +502,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         *,
         identifier: str,
         name: str,
+        consent: Literal["implicit", "required"] | Omit = omit,
         dependencies: Iterable[application_create_params.Dependency] | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
@@ -503,13 +519,18 @@ class AsyncApplicationsResource(AsyncAPIResource):
         Resources
 
         Args:
-          identifier: User specified identifier, unique within the zone
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
+
+          consent: Consent mode for the application. Defaults to 'required'.
 
           dependencies: Dependencies of the application
 
-          description: Human-readable description
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
 
           metadata: Entity metadata
 
@@ -526,11 +547,12 @@ class AsyncApplicationsResource(AsyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return await self._post(
-            f"/zones/{zone_id}/applications",
+            path_template("/zones/{zone_id}/applications", zone_id=zone_id),
             body=await async_maybe_transform(
                 {
                     "identifier": identifier,
                     "name": name,
+                    "consent": consent,
                     "dependencies": dependencies,
                     "description": description,
                     "metadata": metadata,
@@ -573,7 +595,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/zones/{zone_id}/applications/{id}",
+            path_template("/zones/{zone_id}/applications/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -585,6 +607,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        consent: Literal["implicit", "required"] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
         metadata: Optional[MetadataUpdateParam] | Omit = omit,
@@ -601,13 +624,19 @@ class AsyncApplicationsResource(AsyncAPIResource):
         Updates an Application's configuration and metadata
 
         Args:
-          description: Human-readable description
+          consent: Consent mode for the application. 'implicit' means consent is automatically
+              granted, 'required' means explicit user consent is needed.
 
-          identifier: User specified identifier, unique within the zone
+          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
+              `<div>`) or control characters.
+
+          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
+              (e.g. `<script>`, `<div>`) or control characters.
 
           metadata: Entity metadata (set to null or {} to remove metadata)
 
-          name: Human-readable name
+          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
+              control characters.
 
           protocols: Protocol-specific configuration for application update
 
@@ -624,9 +653,10 @@ class AsyncApplicationsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._patch(
-            f"/zones/{zone_id}/applications/{id}",
+            path_template("/zones/{zone_id}/applications/{id}", zone_id=zone_id, id=id),
             body=await async_maybe_transform(
                 {
+                    "consent": consent,
                     "description": description,
                     "identifier": identifier,
                     "metadata": metadata,
@@ -688,7 +718,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return await self._get(
-            f"/zones/{zone_id}/applications",
+            path_template("/zones/{zone_id}/applications", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -742,7 +772,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/zones/{zone_id}/applications/{id}",
+            path_template("/zones/{zone_id}/applications/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -789,7 +819,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/zones/{zone_id}/applications/{id}/application-credentials",
+            path_template("/zones/{zone_id}/applications/{id}/application-credentials", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -849,7 +879,7 @@ class AsyncApplicationsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/zones/{zone_id}/applications/{id}/resources",
+            path_template("/zones/{zone_id}/applications/{id}/resources", zone_id=zone_id, id=id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

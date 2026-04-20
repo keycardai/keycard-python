@@ -28,9 +28,3 @@ from .organization_list_identities_params import OrganizationListIdentitiesParam
 from .organization_list_identities_response import (
     OrganizationListIdentitiesResponse as OrganizationListIdentitiesResponse,
 )
-from .zone_list_session_resource_access_params import (
-    ZoneListSessionResourceAccessParams as ZoneListSessionResourceAccessParams,
-)
-from .zone_list_session_resource_access_response import (
-    ZoneListSessionResourceAccessResponse as ZoneListSessionResourceAccessResponse,
-)

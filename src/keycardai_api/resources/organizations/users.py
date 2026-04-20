@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, strip_not_given, async_maybe_transform
+from ..._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -58,7 +58,7 @@ class UsersResource(SyncAPIResource):
         user_id: str,
         *,
         organization_id: str,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -75,8 +75,11 @@ class UsersResource(SyncAPIResource):
 
           user_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           extra_headers: Send extra headers
 
@@ -92,7 +95,9 @@ class UsersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -144,7 +149,9 @@ class UsersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._patch(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             body=maybe_transform(
                 {
                     "role": role,
@@ -164,7 +171,7 @@ class UsersResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         limit: int | Omit = omit,
         role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -185,8 +192,11 @@ class UsersResource(SyncAPIResource):
 
           before: Cursor for backward pagination
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           limit: Maximum number of users to return
 
@@ -204,7 +214,7 @@ class UsersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
-            f"/organizations/{organization_id}/users",
+            path_template("/organizations/{organization_id}/users", organization_id=organization_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -260,7 +270,9 @@ class UsersResource(SyncAPIResource):
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._delete(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -293,7 +305,7 @@ class AsyncUsersResource(AsyncAPIResource):
         user_id: str,
         *,
         organization_id: str,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -310,8 +322,11 @@ class AsyncUsersResource(AsyncAPIResource):
 
           user_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           extra_headers: Send extra headers
 
@@ -327,7 +342,9 @@ class AsyncUsersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -379,7 +396,9 @@ class AsyncUsersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._patch(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             body=await async_maybe_transform(
                 {
                     "role": role,
@@ -399,7 +418,7 @@ class AsyncUsersResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions"]] | Omit = omit,
+        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
         limit: int | Omit = omit,
         role: OrganizationRole | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -420,8 +439,11 @@ class AsyncUsersResource(AsyncAPIResource):
 
           before: Cursor for backward pagination
 
-          expand: Fields to expand in the response. Currently supports "permissions" to include
-              the permissions field with the caller's permissions for the resource.
+          expand: Fields to expand in the response. Supports "permissions" to include the
+              permissions field with the caller's permissions for the resource. For list
+              organization identities only, "total_count" populates pagination.total_count
+              with the number of identities matching the same filters as the list (excluding
+              cursor and limit). Other operations ignore expand values they do not use.
 
           limit: Maximum number of users to return
 
@@ -439,7 +461,7 @@ class AsyncUsersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
-            f"/organizations/{organization_id}/users",
+            path_template("/organizations/{organization_id}/users", organization_id=organization_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -495,7 +517,9 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._delete(
-            f"/organizations/{organization_id}/users/{user_id}",
+            path_template(
+                "/organizations/{organization_id}/users/{user_id}", organization_id=organization_id, user_id=user_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

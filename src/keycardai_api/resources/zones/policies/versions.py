@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ...._utils import maybe_transform, strip_not_given, async_maybe_transform
+from ...._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -68,6 +68,8 @@ class VersionsResource(SyncAPIResource):
         Create a new immutable policy version
 
         Args:
+          schema_version: Schema version to validate this policy against. Must not be archived.
+
           cedar_json: Cedar policy in JSON representation. Mutually exclusive with cedar_raw.
 
           cedar_raw: Cedar policy in human-readable Cedar syntax. Mutually exclusive with cedar_json.
@@ -94,7 +96,7 @@ class VersionsResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._post(
-            f"/zones/{zone_id}/policies/{policy_id}/versions",
+            path_template("/zones/{zone_id}/policies/{policy_id}/versions", zone_id=zone_id, policy_id=policy_id),
             body=maybe_transform(
                 {
                     "schema_version": schema_version,
@@ -157,7 +159,12 @@ class VersionsResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._get(
-            f"/zones/{zone_id}/policies/{policy_id}/versions/{version_id}",
+            path_template(
+                "/zones/{zone_id}/policies/{policy_id}/versions/{version_id}",
+                zone_id=zone_id,
+                policy_id=policy_id,
+                version_id=version_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -232,7 +239,7 @@ class VersionsResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._get(
-            f"/zones/{zone_id}/policies/{policy_id}/versions",
+            path_template("/zones/{zone_id}/policies/{policy_id}/versions", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -297,7 +304,12 @@ class VersionsResource(SyncAPIResource):
             **(extra_headers or {}),
         }
         return self._delete(
-            f"/zones/{zone_id}/policies/{policy_id}/versions/{version_id}",
+            path_template(
+                "/zones/{zone_id}/policies/{policy_id}/versions/{version_id}",
+                zone_id=zone_id,
+                policy_id=policy_id,
+                version_id=version_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -348,6 +360,8 @@ class AsyncVersionsResource(AsyncAPIResource):
         Create a new immutable policy version
 
         Args:
+          schema_version: Schema version to validate this policy against. Must not be archived.
+
           cedar_json: Cedar policy in JSON representation. Mutually exclusive with cedar_raw.
 
           cedar_raw: Cedar policy in human-readable Cedar syntax. Mutually exclusive with cedar_json.
@@ -374,7 +388,7 @@ class AsyncVersionsResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._post(
-            f"/zones/{zone_id}/policies/{policy_id}/versions",
+            path_template("/zones/{zone_id}/policies/{policy_id}/versions", zone_id=zone_id, policy_id=policy_id),
             body=await async_maybe_transform(
                 {
                     "schema_version": schema_version,
@@ -437,7 +451,12 @@ class AsyncVersionsResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._get(
-            f"/zones/{zone_id}/policies/{policy_id}/versions/{version_id}",
+            path_template(
+                "/zones/{zone_id}/policies/{policy_id}/versions/{version_id}",
+                zone_id=zone_id,
+                policy_id=policy_id,
+                version_id=version_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -512,7 +531,7 @@ class AsyncVersionsResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._get(
-            f"/zones/{zone_id}/policies/{policy_id}/versions",
+            path_template("/zones/{zone_id}/policies/{policy_id}/versions", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -577,7 +596,12 @@ class AsyncVersionsResource(AsyncAPIResource):
             **(extra_headers or {}),
         }
         return await self._delete(
-            f"/zones/{zone_id}/policies/{policy_id}/versions/{version_id}",
+            path_template(
+                "/zones/{zone_id}/policies/{policy_id}/versions/{version_id}",
+                zone_id=zone_id,
+                policy_id=policy_id,
+                version_id=version_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

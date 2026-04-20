@@ -19,8 +19,20 @@ class PolicySet(BaseModel):
     name: str
 
     owner_type: Literal["platform", "customer"]
+    """Who manages this policy set:
+
+    - `"platform"` — managed by the Keycard platform (system policies).
+    - `"customer"` — managed by the tenant (custom policies).
+    """
 
     scope_type: Literal["zone", "resource", "user", "session"]
+    """The scope at which this policy set applies:
+
+    - `"zone"` — applies to all requests in the zone.
+    - `"resource"` — scoped to a specific resource.
+    - `"user"` — scoped to a specific user.
+    - `"session"` — scoped to a specific session.
+    """
 
     updated_at: datetime
 
