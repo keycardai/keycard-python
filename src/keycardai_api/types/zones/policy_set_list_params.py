@@ -11,6 +11,13 @@ __all__ = ["PolicySetListParams"]
 
 
 class PolicySetListParams(TypedDict, total=False):
+    active: bool
+    """Filter by active binding status.
+
+    When `true`, returns only policy sets with an active binding. When `false`,
+    returns only policy sets without one. Omit to return all.
+    """
+
     after: str
     """Return items after this cursor (forward pagination).
 

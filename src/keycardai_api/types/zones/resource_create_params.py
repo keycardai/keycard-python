@@ -47,5 +47,12 @@ class ResourceCreateParams(TypedDict, total=False):
     metadata: MetadataParam
     """Entity metadata"""
 
+    prefix: bool
+    """
+    When true, the resource identifier is treated as a URI prefix and protects all
+    URLs that share the identifier as a prefix. Defaults to false: resources only
+    match by exact identifier unless explicitly enabled.
+    """
+
     scopes: SequenceNotStr[str]
     """Scopes supported by the resource"""
