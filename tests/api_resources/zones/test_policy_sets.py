@@ -219,6 +219,7 @@ class TestPolicySets:
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
         policy_set = client.zones.policy_sets.list(
             zone_id="zone_id",
+            active=True,
             after="after",
             before="before",
             expand=["total_count"],
@@ -533,6 +534,7 @@ class TestAsyncPolicySets:
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         policy_set = await async_client.zones.policy_sets.list(
             zone_id="zone_id",
+            active=True,
             after="after",
             before="before",
             expand=["total_count"],

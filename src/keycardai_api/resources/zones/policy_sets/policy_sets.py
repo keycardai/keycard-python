@@ -227,6 +227,7 @@ class PolicySetsResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
+        active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
@@ -242,10 +243,15 @@ class PolicySetsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetListResponse:
-        """
-        List policy sets in a zone
+        """List policy sets in a zone
 
         Args:
+          active: Filter by active binding status.
+
+        When `true`, returns only policy sets with an
+              active binding. When `false`, returns only policy sets without one. Omit to
+              return all.
+
           after: Return items after this cursor (forward pagination). Use after_cursor from a
               previous response. Mutually exclusive with before.
 
@@ -288,6 +294,7 @@ class PolicySetsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "active": active,
                         "after": after,
                         "before": before,
                         "expand": expand,
@@ -545,6 +552,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
+        active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
@@ -560,10 +568,15 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetListResponse:
-        """
-        List policy sets in a zone
+        """List policy sets in a zone
 
         Args:
+          active: Filter by active binding status.
+
+        When `true`, returns only policy sets with an
+              active binding. When `false`, returns only policy sets without one. Omit to
+              return all.
+
           after: Return items after this cursor (forward pagination). Use after_cursor from a
               previous response. Mutually exclusive with before.
 
@@ -606,6 +619,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "active": active,
                         "after": after,
                         "before": before,
                         "expand": expand,

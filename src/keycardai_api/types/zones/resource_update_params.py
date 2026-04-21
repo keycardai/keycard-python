@@ -53,5 +53,11 @@ class ResourceUpdateParams(TypedDict, total=False):
     Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
     """
 
+    prefix: bool
+    """
+    When true, the resource identifier is treated as a URI prefix, protecting all
+    URLs that share the identifier as a prefix.
+    """
+
     scopes: Optional[SequenceNotStr[str]]
     """Scopes supported by the resource (set to null to unset)"""

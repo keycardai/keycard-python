@@ -44,6 +44,14 @@ class Resource(BaseModel):
     owner_type: Literal["platform", "customer"]
     """Who owns this resource. Platform-owned resources cannot be modified via API."""
 
+    prefix: bool
+    """
+    When true, the resource identifier is treated as a URI prefix, protecting all
+    URLs that share the identifier as a prefix at path/query/fragment boundaries.
+    Protocol and hostname must match exactly. When multiple prefix resources satisfy
+    an identifier query, the resource with the longest prefix is matched.
+    """
+
     slug: str
     """URL-safe identifier, unique within the zone"""
 
