@@ -62,7 +62,7 @@ class Pagination(BaseModel):
     total_count: Optional[int] = None
     """Total number of items across all pages.
 
-    Only present when the request includes ?expand=total_count.
+    Only present when the request includes ?expand[]=total_count.
     """
 
 
