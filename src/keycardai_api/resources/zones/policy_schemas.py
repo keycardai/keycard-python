@@ -125,6 +125,7 @@ class PolicySchemasResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
+        filter_default: bool | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         is_default: bool | Omit = omit,
         limit: int | Omit = omit,
@@ -139,26 +140,40 @@ class PolicySchemasResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySchemaListResponse:
-        """
-        List policy schemas
+        """List policy schemas
 
         Args:
-          after: Return items after this cursor (forward pagination). Use after_cursor from a
-              previous response. Mutually exclusive with before.
+          after: Cursor for forward pagination.
 
-          before: Return items before this cursor (backward pagination). Use before_cursor from a
-              previous response. Mutually exclusive with after.
+        Returned in `Pagination.after_cursor`. Mutually
+              exclusive with `before`.
 
-          expand: Opt-in to additional response fields
+          before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
+              exclusive with `after`.
+
+          expand: **Deprecated.** Use `expand[]` instead.
+
+              Opt-in to additional response fields. Still honored for backward compatibility;
+              supplying both `expand` and `expand[]` with disagreeing values returns
+              `400 Bad Request`.
+
+          filter_default: Filter schemas by default status. When `true`, returns only the zone's default
+              schema. When `false`, returns only non-default schemas. Omit to return all
+              schemas.
 
           format: Schema representation format. `cedar` returns human-readable Cedar syntax in
               `cedar_schema`, `json` returns Cedar JSON schema object in `cedar_schema_json`.
 
-          is_default: Filter schemas by default status. When `true`, returns only the zone's default
+          is_default: **Deprecated.** Use `filter[default]` instead.
+
+              Filter schemas by default status. When `true`, returns only the zone's default
               schema. When `false`, returns only non-default schemas. Omit to return all
               schemas.
 
-          limit: Maximum number of items to return
+              Still honored for backward compatibility. Supplying both `is_default` and
+              `filter[default]` with conflicting values returns `400 Bad Request`.
+
+          limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
 
@@ -195,6 +210,7 @@ class PolicySchemasResource(SyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_default": filter_default,
                         "format": format,
                         "is_default": is_default,
                         "limit": limit,
@@ -359,6 +375,7 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
+        filter_default: bool | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         is_default: bool | Omit = omit,
         limit: int | Omit = omit,
@@ -373,26 +390,40 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySchemaListResponse:
-        """
-        List policy schemas
+        """List policy schemas
 
         Args:
-          after: Return items after this cursor (forward pagination). Use after_cursor from a
-              previous response. Mutually exclusive with before.
+          after: Cursor for forward pagination.
 
-          before: Return items before this cursor (backward pagination). Use before_cursor from a
-              previous response. Mutually exclusive with after.
+        Returned in `Pagination.after_cursor`. Mutually
+              exclusive with `before`.
 
-          expand: Opt-in to additional response fields
+          before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
+              exclusive with `after`.
+
+          expand: **Deprecated.** Use `expand[]` instead.
+
+              Opt-in to additional response fields. Still honored for backward compatibility;
+              supplying both `expand` and `expand[]` with disagreeing values returns
+              `400 Bad Request`.
+
+          filter_default: Filter schemas by default status. When `true`, returns only the zone's default
+              schema. When `false`, returns only non-default schemas. Omit to return all
+              schemas.
 
           format: Schema representation format. `cedar` returns human-readable Cedar syntax in
               `cedar_schema`, `json` returns Cedar JSON schema object in `cedar_schema_json`.
 
-          is_default: Filter schemas by default status. When `true`, returns only the zone's default
+          is_default: **Deprecated.** Use `filter[default]` instead.
+
+              Filter schemas by default status. When `true`, returns only the zone's default
               schema. When `false`, returns only non-default schemas. Omit to return all
               schemas.
 
-          limit: Maximum number of items to return
+              Still honored for backward compatibility. Supplying both `is_default` and
+              `filter[default]` with conflicting values returns `400 Bad Request`.
+
+          limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
 
@@ -429,6 +460,7 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_default": filter_default,
                         "format": format,
                         "is_default": is_default,
                         "limit": limit,

@@ -12,19 +12,31 @@ __all__ = ["PolicySchemaListParams"]
 
 class PolicySchemaListParams(TypedDict, total=False):
     after: str
-    """Return items after this cursor (forward pagination).
+    """Cursor for forward pagination.
 
-    Use after_cursor from a previous response. Mutually exclusive with before.
+    Returned in `Pagination.after_cursor`. Mutually exclusive with `before`.
     """
 
     before: str
-    """Return items before this cursor (backward pagination).
+    """Cursor for backward pagination.
 
-    Use before_cursor from a previous response. Mutually exclusive with after.
+    Returned in `Pagination.before_cursor`. Mutually exclusive with `after`.
     """
 
     expand: List[Literal["total_count"]]
-    """Opt-in to additional response fields"""
+    """**Deprecated.** Use `expand[]` instead.
+
+    Opt-in to additional response fields. Still honored for backward compatibility;
+    supplying both `expand` and `expand[]` with disagreeing values returns
+    `400 Bad Request`.
+    """
+
+    filter_default: Annotated[bool, PropertyInfo(alias="filter[default]")]
+    """Filter schemas by default status.
+
+    When `true`, returns only the zone's default schema. When `false`, returns only
+    non-default schemas. Omit to return all schemas.
+    """
 
     format: Literal["cedar", "json"]
     """Schema representation format.
@@ -34,14 +46,18 @@ class PolicySchemaListParams(TypedDict, total=False):
     """
 
     is_default: bool
-    """Filter schemas by default status.
+    """**Deprecated.** Use `filter[default]` instead.
 
-    When `true`, returns only the zone's default schema. When `false`, returns only
-    non-default schemas. Omit to return all schemas.
+    Filter schemas by default status. When `true`, returns only the zone's default
+    schema. When `false`, returns only non-default schemas. Omit to return all
+    schemas.
+
+    Still honored for backward compatibility. Supplying both `is_default` and
+    `filter[default]` with conflicting values returns `400 Bad Request`.
     """
 
     limit: int
-    """Maximum number of items to return"""
+    """Maximum number of items to return per page."""
 
     order: Literal["asc", "desc"]
     """Sort direction. Default is desc (newest first)."""

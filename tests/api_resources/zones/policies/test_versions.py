@@ -183,8 +183,8 @@ class TestVersions:
         version = client.zones.policies.versions.list(
             policy_id="policy_id",
             zone_id="zone_id",
-            after="after",
-            before="before",
+            after="x",
+            before="x",
             expand=["total_count"],
             format="cedar",
             limit=1,
@@ -483,8 +483,8 @@ class TestAsyncVersions:
         version = await async_client.zones.policies.versions.list(
             policy_id="policy_id",
             zone_id="zone_id",
-            after="after",
-            before="before",
+            after="x",
+            before="x",
             expand=["total_count"],
             format="cedar",
             limit=1,
