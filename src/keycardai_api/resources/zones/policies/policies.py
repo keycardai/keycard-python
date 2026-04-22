@@ -15,7 +15,7 @@ from .versions import (
     VersionsResourceWithStreamingResponse,
     AsyncVersionsResourceWithStreamingResponse,
 )
-from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ...._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -225,8 +225,12 @@ class PoliciesResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
+        filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
+        query: SequenceNotStr[str] | Omit = omit,
+        query_description: SequenceNotStr[str] | Omit = omit,
+        query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -237,21 +241,49 @@ class PoliciesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicyListResponse:
-        """
-        List policies in a zone
+        """List policies in a zone
 
         Args:
-          after: Return items after this cursor (forward pagination). Use after_cursor from a
-              previous response. Mutually exclusive with before.
+          after: Cursor for forward pagination.
 
-          before: Return items before this cursor (backward pagination). Use before_cursor from a
-              previous response. Mutually exclusive with after.
+        Returned in `Pagination.after_cursor`. Mutually
+              exclusive with `before`.
 
-          expand: Opt-in to additional response fields
+          before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
+              exclusive with `after`.
 
-          limit: Maximum number of items to return
+          expand: **Deprecated.** Use `expand[]` instead.
+
+              Opt-in to additional response fields. Still honored for backward compatibility;
+              supplying both `expand` and `expand[]` with disagreeing values returns
+              `400 Bad Request`.
+
+          filter_owner_type: Filter on `owner_type`. Repeatable; repeated instances OR across values (e.g.
+              `?filter[owner_type]=platform&filter[owner_type]=customer` matches either). See
+              `FilterValues` in the shared spec for the full wire convention.
+
+              Allowed values: `platform`, `customer`. Unknown values return 400 with the list
+              of allowed values. Comma-separated single values (e.g.
+              `?filter[owner_type]=platform,customer`) are rejected with a 400 pointing at the
+              repeated-parameter OR form.
+
+              Note: the allowed-value enum is enforced in the handler (not as an OpenAPI
+              `items.enum`) so the server can return a targeted error for the comma-AND form
+              instead of a generic "not in allowed values" response.
+
+          limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
+
+          query: Case-insensitive substring search across all searchable fields of the resource.
+              For policies that is `name` and `description`; for policy sets that is `name`.
+              Repeatable; if multiple terms are supplied they are OR-ed.
+
+          query_description: Case-insensitive substring search on `description` (policies only). Repeatable;
+              if multiple terms are supplied they are OR-ed.
+
+          query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
+              supplied they are OR-ed (any matching term returns the row).
 
           sort: Field to sort by.
 
@@ -286,8 +318,12 @@ class PoliciesResource(SyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_owner_type": filter_owner_type,
                         "limit": limit,
                         "order": order,
+                        "query": query,
+                        "query_description": query_description,
+                        "query_name": query_name,
                         "sort": sort,
                     },
                     policy_list_params.PolicyListParams,
@@ -536,8 +572,12 @@ class AsyncPoliciesResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
+        filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
+        query: SequenceNotStr[str] | Omit = omit,
+        query_description: SequenceNotStr[str] | Omit = omit,
+        query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -548,21 +588,49 @@ class AsyncPoliciesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicyListResponse:
-        """
-        List policies in a zone
+        """List policies in a zone
 
         Args:
-          after: Return items after this cursor (forward pagination). Use after_cursor from a
-              previous response. Mutually exclusive with before.
+          after: Cursor for forward pagination.
 
-          before: Return items before this cursor (backward pagination). Use before_cursor from a
-              previous response. Mutually exclusive with after.
+        Returned in `Pagination.after_cursor`. Mutually
+              exclusive with `before`.
 
-          expand: Opt-in to additional response fields
+          before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
+              exclusive with `after`.
 
-          limit: Maximum number of items to return
+          expand: **Deprecated.** Use `expand[]` instead.
+
+              Opt-in to additional response fields. Still honored for backward compatibility;
+              supplying both `expand` and `expand[]` with disagreeing values returns
+              `400 Bad Request`.
+
+          filter_owner_type: Filter on `owner_type`. Repeatable; repeated instances OR across values (e.g.
+              `?filter[owner_type]=platform&filter[owner_type]=customer` matches either). See
+              `FilterValues` in the shared spec for the full wire convention.
+
+              Allowed values: `platform`, `customer`. Unknown values return 400 with the list
+              of allowed values. Comma-separated single values (e.g.
+              `?filter[owner_type]=platform,customer`) are rejected with a 400 pointing at the
+              repeated-parameter OR form.
+
+              Note: the allowed-value enum is enforced in the handler (not as an OpenAPI
+              `items.enum`) so the server can return a targeted error for the comma-AND form
+              instead of a generic "not in allowed values" response.
+
+          limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
+
+          query: Case-insensitive substring search across all searchable fields of the resource.
+              For policies that is `name` and `description`; for policy sets that is `name`.
+              Repeatable; if multiple terms are supplied they are OR-ed.
+
+          query_description: Case-insensitive substring search on `description` (policies only). Repeatable;
+              if multiple terms are supplied they are OR-ed.
+
+          query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
+              supplied they are OR-ed (any matching term returns the row).
 
           sort: Field to sort by.
 
@@ -597,8 +665,12 @@ class AsyncPoliciesResource(AsyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_owner_type": filter_owner_type,
                         "limit": limit,
                         "order": order,
+                        "query": query,
+                        "query_description": query_description,
+                        "query_name": query_name,
                         "sort": sort,
                     },
                     policy_list_params.PolicyListParams,
