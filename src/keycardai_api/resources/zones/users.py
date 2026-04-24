@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -88,7 +88,12 @@ class UsersResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_email: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_email: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_subject: Union[str, SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -96,16 +101,30 @@ class UsersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserListResponse:
-        """Returns a list of users in the specified zone.
-
-        Can be filtered by email address.
+        """
+        Returns users in the specified zone with cursor-based pagination (after, before,
+        limit). Use expand[]=total_count to include the total number of matching users.
+        Exact match: filter[email] (repeatable for OR). Substring search
+        (case-insensitive, repeatable for OR within each parameter): query[email],
+        query[subject], query[identifier], query[] (across email, identifier, and
+        subject). Non-empty query parameters are combined with AND.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
 
+          filter_email: Filter by exact email address
+
           limit: Maximum number of items to return
+
+          query: Search across email, identifier, and federated subject (substring match)
+
+          query_email: Search by email (substring match)
+
+          query_identifier: Search by user identifier (substring match)
+
+          query_subject: Search by federated credential subject (substring match)
 
           extra_headers: Send extra headers
 
@@ -129,7 +148,12 @@ class UsersResource(SyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_email": filter_email,
                         "limit": limit,
+                        "query": query,
+                        "query_email": query_email,
+                        "query_identifier": query_identifier,
+                        "query_subject": query_subject,
                     },
                     user_list_params.UserListParams,
                 ),
@@ -201,7 +225,12 @@ class AsyncUsersResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_email: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_email: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_subject: Union[str, SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -209,16 +238,30 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserListResponse:
-        """Returns a list of users in the specified zone.
-
-        Can be filtered by email address.
+        """
+        Returns users in the specified zone with cursor-based pagination (after, before,
+        limit). Use expand[]=total_count to include the total number of matching users.
+        Exact match: filter[email] (repeatable for OR). Substring search
+        (case-insensitive, repeatable for OR within each parameter): query[email],
+        query[subject], query[identifier], query[] (across email, identifier, and
+        subject). Non-empty query parameters are combined with AND.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
 
+          filter_email: Filter by exact email address
+
           limit: Maximum number of items to return
+
+          query: Search across email, identifier, and federated subject (substring match)
+
+          query_email: Search by email (substring match)
+
+          query_identifier: Search by user identifier (substring match)
+
+          query_subject: Search by federated credential subject (substring match)
 
           extra_headers: Send extra headers
 
@@ -242,7 +285,12 @@ class AsyncUsersResource(AsyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_email": filter_email,
                         "limit": limit,
+                        "query": query,
+                        "query_email": query_email,
+                        "query_identifier": query_identifier,
+                        "query_subject": query_subject,
                     },
                     user_list_params.UserListParams,
                 ),
