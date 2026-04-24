@@ -85,7 +85,12 @@ class TestUsers:
             after="x",
             before="x",
             expand="total_count",
+            filter_email="dev@stainless.com",
             limit=1,
+            query="x",
+            query_email="x",
+            query_identifier="x",
+            query_subject="x",
         )
         assert_matches_type(UserListResponse, user, path=["response"])
 
@@ -197,7 +202,12 @@ class TestAsyncUsers:
             after="x",
             before="x",
             expand="total_count",
+            filter_email="dev@stainless.com",
             limit=1,
+            query="x",
+            query_email="x",
+            query_identifier="x",
+            query_subject="x",
         )
         assert_matches_type(UserListResponse, user, path=["response"])
 
