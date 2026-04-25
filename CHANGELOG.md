@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.5.0 (2026-04-24)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/keycardai/keycard-python/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* add filter/query to policy (set) queries (ACC-147) ([48e4c98](https://github.com/keycardai/keycard-python/commit/48e4c98c14f04e506f5d0698b0d4b9be213c34a3))
+* add standard pagination/filter/search definitions ([74568ba](https://github.com/keycardai/keycard-python/commit/74568baea477a4c8a327b7cc3b515cde725844ee))
+* Matte/revert in progress commits ([23d8ad1](https://github.com/keycardai/keycard-python/commit/23d8ad1831d6af7b58c270f71eba88dba8c04511))
+* **mgmt api:** add list Users pagination, querying, filtering ([0cfa763](https://github.com/keycardai/keycard-python/commit/0cfa7635cdf53f1f6260be874bb830dc55086082))
+* resource prefix flag ([74c685b](https://github.com/keycardai/keycard-python/commit/74c685b402d9c0f295705b53a99c4a04e88164d3))
+* store all evaluation requests for replay and impact (ACC-134) ([46dab9e](https://github.com/keycardai/keycard-python/commit/46dab9e464d05165f6ea5b8380d457b42cdb5feb))
+
+
+### Bug Fixes
+
+* **deps:** patch vulnerabilities socket found ([#5](https://github.com/keycardai/keycard-python/issues/5)) ([d72befc](https://github.com/keycardai/keycard-python/commit/d72befc3ea53f9b0eec052bb447b5f64d975fb8a))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([3fc374c](https://github.com/keycardai/keycard-python/commit/3fc374c40178b097786b0b2e6d0b6387fd5152f9))
+
 ## 0.4.0 (2026-04-17)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/keycardai/keycard-python/compare/v0.3.0...v0.4.0)

@@ -42,6 +42,7 @@ class TestResources:
             credential_provider_id="credential_provider_id",
             description="description",
             metadata={"docs_url": "https://example.com"},
+            prefix=True,
             scopes=["string"],
         )
         assert_matches_type(Resource, resource, path=["response"])
@@ -160,6 +161,7 @@ class TestResources:
             identifier="x",
             metadata={"docs_url": "https://example.com"},
             name="x",
+            prefix=True,
             scopes=["x"],
         )
         assert_matches_type(Resource, resource, path=["response"])
@@ -344,6 +346,7 @@ class TestAsyncResources:
             credential_provider_id="credential_provider_id",
             description="description",
             metadata={"docs_url": "https://example.com"},
+            prefix=True,
             scopes=["string"],
         )
         assert_matches_type(Resource, resource, path=["response"])
@@ -462,6 +465,7 @@ class TestAsyncResources:
             identifier="x",
             metadata={"docs_url": "https://example.com"},
             name="x",
+            prefix=True,
             scopes=["x"],
         )
         assert_matches_type(Resource, resource, path=["response"])

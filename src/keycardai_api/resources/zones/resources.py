@@ -62,6 +62,7 @@ class ResourcesResource(SyncAPIResource):
         credential_provider_id: str | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
+        prefix: bool | Omit = omit,
         scopes: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -94,6 +95,10 @@ class ResourcesResource(SyncAPIResource):
 
           metadata: Entity metadata
 
+          prefix: When true, the resource identifier is treated as a URI prefix and protects all
+              URLs that share the identifier as a prefix. Defaults to false: resources only
+              match by exact identifier unless explicitly enabled.
+
           scopes: Scopes supported by the resource
 
           extra_headers: Send extra headers
@@ -117,6 +122,7 @@ class ResourcesResource(SyncAPIResource):
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "metadata": metadata,
+                    "prefix": prefix,
                     "scopes": scopes,
                 },
                 resource_create_params.ResourceCreateParams,
@@ -175,6 +181,7 @@ class ResourcesResource(SyncAPIResource):
         identifier: str | Omit = omit,
         metadata: Optional[MetadataUpdateParam] | Omit = omit,
         name: str | Omit = omit,
+        prefix: bool | Omit = omit,
         scopes: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -207,6 +214,9 @@ class ResourcesResource(SyncAPIResource):
           name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
               control characters.
 
+          prefix: When true, the resource identifier is treated as a URI prefix, protecting all
+              URLs that share the identifier as a prefix.
+
           scopes: Scopes supported by the resource (set to null to unset)
 
           extra_headers: Send extra headers
@@ -232,6 +242,7 @@ class ResourcesResource(SyncAPIResource):
                     "identifier": identifier,
                     "metadata": metadata,
                     "name": name,
+                    "prefix": prefix,
                     "scopes": scopes,
                 },
                 resource_update_params.ResourceUpdateParams,
@@ -376,6 +387,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         credential_provider_id: str | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
+        prefix: bool | Omit = omit,
         scopes: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -408,6 +420,10 @@ class AsyncResourcesResource(AsyncAPIResource):
 
           metadata: Entity metadata
 
+          prefix: When true, the resource identifier is treated as a URI prefix and protects all
+              URLs that share the identifier as a prefix. Defaults to false: resources only
+              match by exact identifier unless explicitly enabled.
+
           scopes: Scopes supported by the resource
 
           extra_headers: Send extra headers
@@ -431,6 +447,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "metadata": metadata,
+                    "prefix": prefix,
                     "scopes": scopes,
                 },
                 resource_create_params.ResourceCreateParams,
@@ -489,6 +506,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         identifier: str | Omit = omit,
         metadata: Optional[MetadataUpdateParam] | Omit = omit,
         name: str | Omit = omit,
+        prefix: bool | Omit = omit,
         scopes: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -521,6 +539,9 @@ class AsyncResourcesResource(AsyncAPIResource):
           name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
               control characters.
 
+          prefix: When true, the resource identifier is treated as a URI prefix, protecting all
+              URLs that share the identifier as a prefix.
+
           scopes: Scopes supported by the resource (set to null to unset)
 
           extra_headers: Send extra headers
@@ -546,6 +567,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                     "identifier": identifier,
                     "metadata": metadata,
                     "name": name,
+                    "prefix": prefix,
                     "scopes": scopes,
                 },
                 resource_update_params.ResourceUpdateParams,

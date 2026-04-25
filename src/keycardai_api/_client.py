@@ -145,7 +145,7 @@ class KeycardAPI(SyncAPIClient):
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="brackets")
+        return Querystring(array_format="repeat")
 
     @override
     def _custom_auth(self, security: SecurityOptions) -> httpx.Auth | None:
@@ -366,7 +366,7 @@ class AsyncKeycardAPI(AsyncAPIClient):
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="brackets")
+        return Querystring(array_format="repeat")
 
     @override
     def _custom_auth(self, security: SecurityOptions) -> httpx.Auth | None:

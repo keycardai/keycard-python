@@ -97,9 +97,10 @@ class TestPolicySchemas:
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
         policy_schema = client.zones.policy_schemas.list(
             zone_id="zone_id",
-            after="after",
-            before="before",
+            after="x",
+            before="x",
             expand=["total_count"],
+            filter_default=True,
             format="cedar",
             is_default=True,
             limit=1,
@@ -291,9 +292,10 @@ class TestAsyncPolicySchemas:
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         policy_schema = await async_client.zones.policy_schemas.list(
             zone_id="zone_id",
-            after="after",
-            before="before",
+            after="x",
+            before="x",
             expand=["total_count"],
+            filter_default=True,
             format="cedar",
             is_default=True,
             limit=1,

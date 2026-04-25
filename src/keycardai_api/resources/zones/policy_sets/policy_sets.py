@@ -15,7 +15,7 @@ from .versions import (
     VersionsResourceWithStreamingResponse,
     AsyncVersionsResourceWithStreamingResponse,
 )
-from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ...._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -227,11 +227,17 @@ class PolicySetsResource(SyncAPIResource):
         self,
         zone_id: str,
         *,
+        active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
+        filter_active: bool | Omit = omit,
+        filter_owner_type: SequenceNotStr[str] | Omit = omit,
+        filter_scope_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
+        query: SequenceNotStr[str] | Omit = omit,
+        query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -246,17 +252,66 @@ class PolicySetsResource(SyncAPIResource):
         List policy sets in a zone
 
         Args:
-          after: Return items after this cursor (forward pagination). Use after_cursor from a
-              previous response. Mutually exclusive with before.
+          active: **Deprecated.** Use `filter[active]` instead.
 
-          before: Return items before this cursor (backward pagination). Use before_cursor from a
-              previous response. Mutually exclusive with after.
+              Filter by active binding status. When `true`, returns only policy sets with an
+              active binding. When `false`, returns only policy sets without one. Omit to
+              return all.
 
-          expand: Opt-in to additional response fields
+              Still honored for backward compatibility. Supplying both `active` and
+              `filter[active]` with conflicting values returns `400 Bad Request`.
 
-          limit: Maximum number of items to return
+          after: Cursor for forward pagination. Returned in `Pagination.after_cursor`. Mutually
+              exclusive with `before`.
+
+          before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
+              exclusive with `after`.
+
+          expand: **Deprecated.** Use `expand[]` instead.
+
+              Opt-in to additional response fields. Still honored for backward compatibility;
+              supplying both `expand` and `expand[]` with disagreeing values returns
+              `400 Bad Request`.
+
+          filter_active: Filter by active binding status. When `true`, returns only policy sets with an
+              active binding. When `false`, returns only policy sets without one. Omit to
+              return all.
+
+          filter_owner_type: Filter on `owner_type`. Repeatable; repeated instances OR across values (e.g.
+              `?filter[owner_type]=platform&filter[owner_type]=customer` matches either). See
+              `FilterValues` in the shared spec for the full wire convention.
+
+              Allowed values: `platform`, `customer`. Unknown values return 400 with the list
+              of allowed values. Comma-separated single values (e.g.
+              `?filter[owner_type]=platform,customer`) are rejected with a 400 pointing at the
+              repeated-parameter OR form.
+
+              Note: the allowed-value enum is enforced in the handler (not as an OpenAPI
+              `items.enum`) so the server can return a targeted error for the comma-AND form
+              instead of a generic "not in allowed values" response.
+
+          filter_scope_type: Filter on `scope_type` (policy sets only). Repeatable; repeated instances OR
+              across values. See `FilterValues` in the shared spec for the full wire
+              convention.
+
+              Allowed values: `zone`, `resource`, `user`, `session`. Unknown values return 400
+              with the list of allowed values. Comma-separated single values are rejected with
+              a 400 pointing at the repeated-parameter OR form.
+
+              Note: the allowed-value enum is enforced in the handler (not as an OpenAPI
+              `items.enum`) so the server can return a targeted error for the comma-AND form
+              instead of a generic "not in allowed values" response.
+
+          limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
+
+          query: Case-insensitive substring search across all searchable fields of the resource.
+              For policies that is `name` and `description`; for policy sets that is `name`.
+              Repeatable; if multiple terms are supplied they are OR-ed.
+
+          query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
+              supplied they are OR-ed (any matching term returns the row).
 
           sort: Field to sort by.
 
@@ -288,11 +343,17 @@ class PolicySetsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "active": active,
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_active": filter_active,
+                        "filter_owner_type": filter_owner_type,
+                        "filter_scope_type": filter_scope_type,
                         "limit": limit,
                         "order": order,
+                        "query": query,
+                        "query_name": query_name,
                         "sort": sort,
                     },
                     policy_set_list_params.PolicySetListParams,
@@ -545,11 +606,17 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         self,
         zone_id: str,
         *,
+        active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
+        filter_active: bool | Omit = omit,
+        filter_owner_type: SequenceNotStr[str] | Omit = omit,
+        filter_scope_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
+        query: SequenceNotStr[str] | Omit = omit,
+        query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -564,17 +631,66 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         List policy sets in a zone
 
         Args:
-          after: Return items after this cursor (forward pagination). Use after_cursor from a
-              previous response. Mutually exclusive with before.
+          active: **Deprecated.** Use `filter[active]` instead.
 
-          before: Return items before this cursor (backward pagination). Use before_cursor from a
-              previous response. Mutually exclusive with after.
+              Filter by active binding status. When `true`, returns only policy sets with an
+              active binding. When `false`, returns only policy sets without one. Omit to
+              return all.
 
-          expand: Opt-in to additional response fields
+              Still honored for backward compatibility. Supplying both `active` and
+              `filter[active]` with conflicting values returns `400 Bad Request`.
 
-          limit: Maximum number of items to return
+          after: Cursor for forward pagination. Returned in `Pagination.after_cursor`. Mutually
+              exclusive with `before`.
+
+          before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
+              exclusive with `after`.
+
+          expand: **Deprecated.** Use `expand[]` instead.
+
+              Opt-in to additional response fields. Still honored for backward compatibility;
+              supplying both `expand` and `expand[]` with disagreeing values returns
+              `400 Bad Request`.
+
+          filter_active: Filter by active binding status. When `true`, returns only policy sets with an
+              active binding. When `false`, returns only policy sets without one. Omit to
+              return all.
+
+          filter_owner_type: Filter on `owner_type`. Repeatable; repeated instances OR across values (e.g.
+              `?filter[owner_type]=platform&filter[owner_type]=customer` matches either). See
+              `FilterValues` in the shared spec for the full wire convention.
+
+              Allowed values: `platform`, `customer`. Unknown values return 400 with the list
+              of allowed values. Comma-separated single values (e.g.
+              `?filter[owner_type]=platform,customer`) are rejected with a 400 pointing at the
+              repeated-parameter OR form.
+
+              Note: the allowed-value enum is enforced in the handler (not as an OpenAPI
+              `items.enum`) so the server can return a targeted error for the comma-AND form
+              instead of a generic "not in allowed values" response.
+
+          filter_scope_type: Filter on `scope_type` (policy sets only). Repeatable; repeated instances OR
+              across values. See `FilterValues` in the shared spec for the full wire
+              convention.
+
+              Allowed values: `zone`, `resource`, `user`, `session`. Unknown values return 400
+              with the list of allowed values. Comma-separated single values are rejected with
+              a 400 pointing at the repeated-parameter OR form.
+
+              Note: the allowed-value enum is enforced in the handler (not as an OpenAPI
+              `items.enum`) so the server can return a targeted error for the comma-AND form
+              instead of a generic "not in allowed values" response.
+
+          limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
+
+          query: Case-insensitive substring search across all searchable fields of the resource.
+              For policies that is `name` and `description`; for policy sets that is `name`.
+              Repeatable; if multiple terms are supplied they are OR-ed.
+
+          query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
+              supplied they are OR-ed (any matching term returns the row).
 
           sort: Field to sort by.
 
@@ -606,11 +722,17 @@ class AsyncPolicySetsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "active": active,
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_active": filter_active,
+                        "filter_owner_type": filter_owner_type,
+                        "filter_scope_type": filter_scope_type,
                         "limit": limit,
                         "order": order,
+                        "query": query,
+                        "query_name": query_name,
                         "sort": sort,
                     },
                     policy_set_list_params.PolicySetListParams,

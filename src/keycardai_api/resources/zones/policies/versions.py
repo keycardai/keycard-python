@@ -196,22 +196,27 @@ class VersionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VersionListResponse:
-        """
-        List versions of a policy
+        """List versions of a policy
 
         Args:
-          after: Return items after this cursor (forward pagination). Use after_cursor from a
-              previous response. Mutually exclusive with before.
+          after: Cursor for forward pagination.
 
-          before: Return items before this cursor (backward pagination). Use before_cursor from a
-              previous response. Mutually exclusive with after.
+        Returned in `Pagination.after_cursor`. Mutually
+              exclusive with `before`.
 
-          expand: Opt-in to additional response fields
+          before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
+              exclusive with `after`.
+
+          expand: **Deprecated.** Use `expand[]` instead.
+
+              Opt-in to additional response fields. Still honored for backward compatibility;
+              supplying both `expand` and `expand[]` with disagreeing values returns
+              `400 Bad Request`.
 
           format: Policy representation format. `json` returns cedar_json, `cedar` returns
               cedar_raw.
 
-          limit: Maximum number of items to return
+          limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
 
@@ -488,22 +493,27 @@ class AsyncVersionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> VersionListResponse:
-        """
-        List versions of a policy
+        """List versions of a policy
 
         Args:
-          after: Return items after this cursor (forward pagination). Use after_cursor from a
-              previous response. Mutually exclusive with before.
+          after: Cursor for forward pagination.
 
-          before: Return items before this cursor (backward pagination). Use before_cursor from a
-              previous response. Mutually exclusive with after.
+        Returned in `Pagination.after_cursor`. Mutually
+              exclusive with `before`.
 
-          expand: Opt-in to additional response fields
+          before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
+              exclusive with `after`.
+
+          expand: **Deprecated.** Use `expand[]` instead.
+
+              Opt-in to additional response fields. Still honored for backward compatibility;
+              supplying both `expand` and `expand[]` with disagreeing values returns
+              `400 Bad Request`.
 
           format: Policy representation format. `json` returns cedar_json, `cedar` returns
               cedar_raw.
 
-          limit: Maximum number of items to return
+          limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
 
