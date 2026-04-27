@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2026-04-27)
+
+Full Changelog: [v0.5.1...v0.6.0](https://github.com/keycardai/keycard-python/compare/v0.5.1...v0.6.0)
+
+### Features
+
+* support setting headers via env ([326b60f](https://github.com/keycardai/keycard-python/commit/326b60ffdea016d200f4cac53df6459e9d4b60fe))
+
 ## 0.5.1 (2026-04-27)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/keycardai/keycard-python/compare/v0.5.0...v0.5.1)
