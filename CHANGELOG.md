@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.1 (2026-04-27)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/keycardai/keycard-python/compare/v0.5.0...v0.5.1)
+
+### Bug Fixes
+
+* use correct field name format for multipart file arrays ([046e324](https://github.com/keycardai/keycard-python/commit/046e3246746af81aa20f09687680b79112447386))
+
 ## 0.5.0 (2026-04-24)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/keycardai/keycard-python/compare/v0.4.0...v0.5.0)
