@@ -34,9 +34,11 @@ class VersionListParams(TypedDict, total=False):
     """
 
     format: Literal["cedar", "json"]
-    """Policy representation format.
+    """Narrows which Cedar representation the response includes.
 
-    `json` returns cedar_json, `cedar` returns cedar_raw.
+    When omitted, both `cedar_json` and `cedar_raw` are populated. Pass `json` to
+    receive only `cedar_json`, or `cedar` to receive only `cedar_raw`. Callers that
+    don't care about payload size can skip this parameter.
     """
 
     limit: int

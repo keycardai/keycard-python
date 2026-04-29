@@ -127,13 +127,14 @@ class VersionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicyVersion:
-        """Get a specific policy version
+        """
+        Get a specific policy version
 
         Args:
-          format: Policy representation format.
-
-        `json` returns cedar_json, `cedar` returns
-              cedar_raw.
+          format: Narrows which Cedar representation the response includes. When omitted, both
+              `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only
+              `cedar_json`, or `cedar` to receive only `cedar_raw`. Callers that don't care
+              about payload size can skip this parameter.
 
           extra_headers: Send extra headers
 
@@ -213,8 +214,10 @@ class VersionsResource(SyncAPIResource):
               supplying both `expand` and `expand[]` with disagreeing values returns
               `400 Bad Request`.
 
-          format: Policy representation format. `json` returns cedar_json, `cedar` returns
-              cedar_raw.
+          format: Narrows which Cedar representation the response includes. When omitted, both
+              `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only
+              `cedar_json`, or `cedar` to receive only `cedar_raw`. Callers that don't care
+              about payload size can skip this parameter.
 
           limit: Maximum number of items to return per page.
 
@@ -424,13 +427,14 @@ class AsyncVersionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicyVersion:
-        """Get a specific policy version
+        """
+        Get a specific policy version
 
         Args:
-          format: Policy representation format.
-
-        `json` returns cedar_json, `cedar` returns
-              cedar_raw.
+          format: Narrows which Cedar representation the response includes. When omitted, both
+              `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only
+              `cedar_json`, or `cedar` to receive only `cedar_raw`. Callers that don't care
+              about payload size can skip this parameter.
 
           extra_headers: Send extra headers
 
@@ -510,8 +514,10 @@ class AsyncVersionsResource(AsyncAPIResource):
               supplying both `expand` and `expand[]` with disagreeing values returns
               `400 Bad Request`.
 
-          format: Policy representation format. `json` returns cedar_json, `cedar` returns
-              cedar_raw.
+          format: Narrows which Cedar representation the response includes. When omitted, both
+              `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only
+              `cedar_json`, or `cedar` to receive only `cedar_raw`. Callers that don't care
+              about payload size can skip this parameter.
 
           limit: Maximum number of items to return per page.
 
