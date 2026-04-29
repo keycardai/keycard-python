@@ -33,6 +33,13 @@ class Policy(BaseModel):
 
     description: Optional[str] = None
 
+    latest_schema_version: Optional[str] = None
+    """Schema version the latest version was validated against (e.g., "2026-02-24").
+
+    Null when the policy has no published versions. Denormalized from
+    `PolicyVersion.schema_version` for the policy referenced by `latest_version_id`.
+    """
+
     latest_version: Optional[int] = None
     """Human-readable version number of the latest version (e.g., 1, 2, 3)"""
 
