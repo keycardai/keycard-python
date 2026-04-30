@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0 (2026-04-30)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/keycardai/keycard-python/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **ACC-225:** return both cedar_json and cedar_raw on policy version fetch ([771b574](https://github.com/keycardai/keycard-python/commit/771b574e0c53d01dfa0bd216fd88bbdf60b334ab))
+* **api:** add latest_schema_version to the Policy entity (ACC-251) ([d423839](https://github.com/keycardai/keycard-python/commit/d4238396da9877ca03f5c9fa486fd72cac72c02c))
+
 ## 0.6.0 (2026-04-27)
 
 Full Changelog: [v0.5.1...v0.6.0](https://github.com/keycardai/keycard-python/compare/v0.5.1...v0.6.0)
