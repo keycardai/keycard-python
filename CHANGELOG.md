@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.1 (2026-04-30)
+
+Full Changelog: [v0.7.0...v0.7.1](https://github.com/keycardai/keycard-python/compare/v0.7.0...v0.7.1)
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([3ff89f0](https://github.com/keycardai/keycard-python/commit/3ff89f0097cb8b89b683dd94439709887dcbd933))
+
 ## 0.7.0 (2026-04-30)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/keycardai/keycard-python/compare/v0.6.0...v0.7.0)
