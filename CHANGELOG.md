@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0 (2026-05-06)
+
+Full Changelog: [v0.7.1...v0.8.0](https://github.com/keycardai/keycard-python/compare/v0.7.1...v0.8.0)
+
+### Features
+
+* **mgmt api:** cursor pagination works with sort on listInvitations ([e7960e5](https://github.com/keycardai/keycard-python/commit/e7960e5a9b3fa4861ef1c9772ec55bf51f9aefa4))
+
 ## 0.7.1 (2026-04-30)
 
 Full Changelog: [v0.7.0...v0.7.1](https://github.com/keycardai/keycard-python/compare/v0.7.0...v0.7.1)
