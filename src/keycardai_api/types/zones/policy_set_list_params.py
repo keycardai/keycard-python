@@ -102,8 +102,14 @@ class PolicySetListParams(TypedDict, total=False):
     returns the row).
     """
 
-    sort: Literal["created_at"]
-    """Field to sort by."""
+    sort: Literal["created_at", "status"]
+    """Field to sort by.
+
+    `created_at` (default) sorts by creation date. `status` sorts active-first, then
+    by creation date within each group. When `sort=status`, only descending order
+    and forward pagination are supported; `order=asc` or `before` cursors
+    return 400.
+    """
 
     x_api_version: Annotated[str, PropertyInfo(alias="X-API-Version")]
 

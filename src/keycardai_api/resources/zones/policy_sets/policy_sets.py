@@ -238,7 +238,7 @@ class PolicySetsResource(SyncAPIResource):
         order: Literal["asc", "desc"] | Omit = omit,
         query: SequenceNotStr[str] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
-        sort: Literal["created_at"] | Omit = omit,
+        sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -313,7 +313,10 @@ class PolicySetsResource(SyncAPIResource):
           query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
               supplied they are OR-ed (any matching term returns the row).
 
-          sort: Field to sort by.
+          sort: Field to sort by. `created_at` (default) sorts by creation date. `status` sorts
+              active-first, then by creation date within each group. When `sort=status`, only
+              descending order and forward pagination are supported; `order=asc` or `before`
+              cursors return 400.
 
           extra_headers: Send extra headers
 
@@ -617,7 +620,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         order: Literal["asc", "desc"] | Omit = omit,
         query: SequenceNotStr[str] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
-        sort: Literal["created_at"] | Omit = omit,
+        sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -692,7 +695,10 @@ class AsyncPolicySetsResource(AsyncAPIResource):
           query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
               supplied they are OR-ed (any matching term returns the row).
 
-          sort: Field to sort by.
+          sort: Field to sort by. `created_at` (default) sorts by creation date. `status` sorts
+              active-first, then by creation date within each group. When `sort=status`, only
+              descending order and forward pagination are supported; `order=asc` or `before`
+              cursors return 400.
 
           extra_headers: Send extra headers
 
