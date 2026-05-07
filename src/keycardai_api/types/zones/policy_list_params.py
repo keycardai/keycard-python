@@ -32,6 +32,23 @@ class PolicyListParams(TypedDict, total=False):
     `400 Bad Request`.
     """
 
+    filter_id: Annotated[SequenceNotStr[str], PropertyInfo(alias="filter[id]")]
+    """Filter by policy ID.
+
+    Repeatable; multiple values are OR-ed (e.g. `?filter[id]=p1&filter[id]=p2`).
+    Capped at 100 IDs per request — over-cap returns 400.
+
+    Cannot be combined with cursor pagination (`after` or `before`). The server
+    returns 400 if both are present.
+
+    Composes with other filters (`filter[owner_type]`, `query[]`, etc.). When no
+    explicit `limit` is provided, it defaults to the number of requested IDs so all
+    results fit in a single page.
+
+    IDs that don't exist or fall outside the zone scope are silently omitted;
+    callers diff against the request set if they care about missing IDs.
+    """
+
     filter_owner_type: Annotated[SequenceNotStr[str], PropertyInfo(alias="filter[owner_type]")]
     """Filter on `owner_type`.
 
