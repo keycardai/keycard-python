@@ -225,6 +225,7 @@ class PoliciesResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
+        filter_id: SequenceNotStr[str] | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
@@ -241,12 +242,21 @@ class PoliciesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicyListResponse:
-        """List policies in a zone
+        """Returns a paginated list of policies in the zone.
+
+        Supports cursor-based
+        pagination, sorting, full-text search, and composable filters.
+
+        The `filter[id]` parameter restricts results to a known set of policy IDs (up to
+        100). It composes with other filters (`filter[owner_type]`, `query[]`, etc.) but
+        **cannot** be combined with cursor pagination (`after` / `before`) — the server
+        returns 400 if both are present. When `filter[id]` is used without an explicit
+        `limit`, the limit defaults to the number of requested IDs so all results fit in
+        a single page. IDs that don't exist or fall outside the zone are silently
+        omitted.
 
         Args:
-          after: Cursor for forward pagination.
-
-        Returned in `Pagination.after_cursor`. Mutually
+          after: Cursor for forward pagination. Returned in `Pagination.after_cursor`. Mutually
               exclusive with `before`.
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
@@ -257,6 +267,20 @@ class PoliciesResource(SyncAPIResource):
               Opt-in to additional response fields. Still honored for backward compatibility;
               supplying both `expand` and `expand[]` with disagreeing values returns
               `400 Bad Request`.
+
+          filter_id: Filter by policy ID. Repeatable; multiple values are OR-ed (e.g.
+              `?filter[id]=p1&filter[id]=p2`). Capped at 100 IDs per request — over-cap
+              returns 400.
+
+              Cannot be combined with cursor pagination (`after` or `before`). The server
+              returns 400 if both are present.
+
+              Composes with other filters (`filter[owner_type]`, `query[]`, etc.). When no
+              explicit `limit` is provided, it defaults to the number of requested IDs so all
+              results fit in a single page.
+
+              IDs that don't exist or fall outside the zone scope are silently omitted;
+              callers diff against the request set if they care about missing IDs.
 
           filter_owner_type: Filter on `owner_type`. Repeatable; repeated instances OR across values (e.g.
               `?filter[owner_type]=platform&filter[owner_type]=customer` matches either). See
@@ -318,6 +342,7 @@ class PoliciesResource(SyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_id": filter_id,
                         "filter_owner_type": filter_owner_type,
                         "limit": limit,
                         "order": order,
@@ -572,6 +597,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: List[Literal["total_count"]] | Omit = omit,
+        filter_id: SequenceNotStr[str] | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
@@ -588,12 +614,21 @@ class AsyncPoliciesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicyListResponse:
-        """List policies in a zone
+        """Returns a paginated list of policies in the zone.
+
+        Supports cursor-based
+        pagination, sorting, full-text search, and composable filters.
+
+        The `filter[id]` parameter restricts results to a known set of policy IDs (up to
+        100). It composes with other filters (`filter[owner_type]`, `query[]`, etc.) but
+        **cannot** be combined with cursor pagination (`after` / `before`) — the server
+        returns 400 if both are present. When `filter[id]` is used without an explicit
+        `limit`, the limit defaults to the number of requested IDs so all results fit in
+        a single page. IDs that don't exist or fall outside the zone are silently
+        omitted.
 
         Args:
-          after: Cursor for forward pagination.
-
-        Returned in `Pagination.after_cursor`. Mutually
+          after: Cursor for forward pagination. Returned in `Pagination.after_cursor`. Mutually
               exclusive with `before`.
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
@@ -604,6 +639,20 @@ class AsyncPoliciesResource(AsyncAPIResource):
               Opt-in to additional response fields. Still honored for backward compatibility;
               supplying both `expand` and `expand[]` with disagreeing values returns
               `400 Bad Request`.
+
+          filter_id: Filter by policy ID. Repeatable; multiple values are OR-ed (e.g.
+              `?filter[id]=p1&filter[id]=p2`). Capped at 100 IDs per request — over-cap
+              returns 400.
+
+              Cannot be combined with cursor pagination (`after` or `before`). The server
+              returns 400 if both are present.
+
+              Composes with other filters (`filter[owner_type]`, `query[]`, etc.). When no
+              explicit `limit` is provided, it defaults to the number of requested IDs so all
+              results fit in a single page.
+
+              IDs that don't exist or fall outside the zone scope are silently omitted;
+              callers diff against the request set if they care about missing IDs.
 
           filter_owner_type: Filter on `owner_type`. Repeatable; repeated instances OR across values (e.g.
               `?filter[owner_type]=platform&filter[owner_type]=customer` matches either). See
@@ -665,6 +714,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_id": filter_id,
                         "filter_owner_type": filter_owner_type,
                         "limit": limit,
                         "order": order,
