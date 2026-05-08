@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.1 (2026-05-08)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/keycardai/keycard-python/compare/v0.9.0...v0.9.1)
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([74bca73](https://github.com/keycardai/keycard-python/commit/74bca7339a86bcc9f44c609e7ae15d35ed1b1a25))
+
 ## 0.9.0 (2026-05-07)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/keycardai/keycard-python/compare/v0.8.0...v0.9.0)
