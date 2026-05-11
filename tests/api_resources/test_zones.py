@@ -208,6 +208,7 @@ class TestZones:
             before="x",
             cursor="cursor",
             expand="total_count",
+            filter_organization_id="filter[organization_id]",
             limit=1,
             slug="slug",
         )
@@ -471,6 +472,7 @@ class TestAsyncZones:
             before="x",
             cursor="cursor",
             expand="total_count",
+            filter_organization_id="filter[organization_id]",
             limit=1,
             slug="slug",
         )

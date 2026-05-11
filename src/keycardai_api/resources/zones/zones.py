@@ -422,6 +422,7 @@ class ZonesResource(SyncAPIResource):
         before: str | Omit = omit,
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
+        filter_organization_id: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -462,6 +463,7 @@ class ZonesResource(SyncAPIResource):
                         "before": before,
                         "cursor": cursor,
                         "expand": expand,
+                        "filter_organization_id": filter_organization_id,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -793,6 +795,7 @@ class AsyncZonesResource(AsyncAPIResource):
         before: str | Omit = omit,
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
+        filter_organization_id: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -833,6 +836,7 @@ class AsyncZonesResource(AsyncAPIResource):
                         "before": before,
                         "cursor": cursor,
                         "expand": expand,
+                        "filter_organization_id": filter_organization_id,
                         "limit": limit,
                         "slug": slug,
                     },
