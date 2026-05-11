@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.10.0 (2026-05-11)
+
+Full Changelog: [v0.9.1...v0.10.0](https://github.com/keycardai/keycard-python/compare/v0.9.1...v0.10.0)
+
+### Features
+
+* **ID-177:** make invitations.last_sent_at non-nullable ([46ec164](https://github.com/keycardai/keycard-python/commit/46ec164a1a5fac42abb7cc0f64ef5f1855002a64))
+* **internal/types:** support eagerly validating pydantic iterators ([4ccb8f5](https://github.com/keycardai/keycard-python/commit/4ccb8f5c0c4be16d9394dba8e62425ed1b89232c))
+
 ## 0.9.1 (2026-05-08)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/keycardai/keycard-python/compare/v0.9.0...v0.9.1)
