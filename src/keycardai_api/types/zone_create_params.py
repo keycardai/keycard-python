@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing_extensions import Required, TypedDict
 
+from .._types import SequenceNotStr
 from .encryption_key_aws_kms_config_param import EncryptionKeyAwsKmsConfigParam
 
-__all__ = ["ZoneCreateParams", "Protocols", "ProtocolsOauth2"]
+__all__ = ["ZoneCreateParams", "Protocols", "ProtocolsOauth2", "ProtocolsOauth2Cimd"]
 
 
 class ZoneCreateParams(TypedDict, total=False):
@@ -32,13 +33,6 @@ class ZoneCreateParams(TypedDict, total=False):
     When not specified, the default Keycard Cloud encryption key will be used.
     """
 
-    login_flow: Literal["default", "identifier_first"]
-    """Login flow style for the zone.
-
-    'default' uses standard authentication, 'identifier_first' uses identifier-based
-    provider routing.
-    """
-
     protocols: Protocols
     """Protocol configuration for zone creation"""
 
@@ -49,8 +43,27 @@ class ZoneCreateParams(TypedDict, total=False):
     """
 
 
+class ProtocolsOauth2Cimd(TypedDict, total=False):
+    """Client ID Metadata Document auto-provisioning configuration"""
+
+    allowed_client_ids: Required[SequenceNotStr[str]]
+    """Allowlist for CIMD client_id URLs.
+
+    Each entry is an exact URL, a wildcard origin with a single _ replacing one
+    subdomain label (e.g. https://_.example.com matches https://app.example.com but
+    not https://a.b.example.com), or the literal _ to allow any client. Only one _
+    is permitted per entry.
+    """
+
+    enabled: Required[bool]
+    """Whether CIMD auto-provisioning is enabled for unregistered URL-based clients"""
+
+
 class ProtocolsOauth2(TypedDict, total=False):
     """OAuth 2.0 protocol configuration for zone creation"""
+
+    cimd: ProtocolsOauth2Cimd
+    """Client ID Metadata Document auto-provisioning configuration"""
 
     dcr_enabled: bool
     """Whether Dynamic Client Registration is enabled"""
