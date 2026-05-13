@@ -35,6 +35,12 @@ class ResourceCreateParams(TypedDict, total=False):
     hostname.
     """
 
+    credential_lifetime_seconds: int
+    """Credential lifetime override in seconds.
+
+    When set, overrides the default credential lifetime for this resource.
+    """
+
     credential_provider_id: str
     """ID of the credential provider to associate with the resource"""
 
