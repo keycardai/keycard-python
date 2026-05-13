@@ -26,6 +26,12 @@ class ResourceUpdateParams(TypedDict, total=False):
     hostname.
     """
 
+    credential_lifetime_seconds: Optional[int]
+    """Credential lifetime override in seconds.
+
+    Set to null to clear the override and use the default.
+    """
+
     credential_provider_id: Optional[str]
     """
     ID of the credential provider to associate with the resource (set to null to
