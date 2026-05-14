@@ -232,6 +232,7 @@ class ZonesResource(SyncAPIResource):
         default_mcp_gateway_application: bool | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
+        login_flow: Literal["default", "identifier_first"] | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
         requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -258,6 +259,9 @@ class ZonesResource(SyncAPIResource):
           encryption_key: AWS KMS configuration for zone encryption. When not specified, the default
               Keycard Cloud encryption key will be used.
 
+          login_flow: Login flow style for the zone. 'default' uses standard authentication,
+              'identifier_first' uses identifier-based provider routing.
+
           protocols: Protocol configuration for zone creation
 
           requires_invitation: Whether the zone requires an invitation for email/password registration, only
@@ -279,6 +283,7 @@ class ZonesResource(SyncAPIResource):
                     "default_mcp_gateway_application": default_mcp_gateway_application,
                     "description": description,
                     "encryption_key": encryption_key,
+                    "login_flow": login_flow,
                     "protocols": protocols,
                     "requires_invitation": requires_invitation,
                 },
@@ -336,6 +341,7 @@ class ZonesResource(SyncAPIResource):
         default_resource_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
+        login_flow: Optional[Literal["default", "identifier_first"]] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
         requires_invitation: bool | Omit = omit,
@@ -362,6 +368,10 @@ class ZonesResource(SyncAPIResource):
 
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
+
+          login_flow: Login flow style for the zone. 'default' uses standard authentication,
+              'identifier_first' uses identifier-based provider routing. Set to null to reset
+              to 'default'.
 
           name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
               control characters.
@@ -391,6 +401,7 @@ class ZonesResource(SyncAPIResource):
                     "default_resource_id": default_resource_id,
                     "description": description,
                     "encryption_key": encryption_key,
+                    "login_flow": login_flow,
                     "name": name,
                     "protocols": protocols,
                     "requires_invitation": requires_invitation,
@@ -411,7 +422,6 @@ class ZonesResource(SyncAPIResource):
         before: str | Omit = omit,
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
-        filter_organization_id: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -452,7 +462,6 @@ class ZonesResource(SyncAPIResource):
                         "before": before,
                         "cursor": cursor,
                         "expand": expand,
-                        "filter_organization_id": filter_organization_id,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -594,6 +603,7 @@ class AsyncZonesResource(AsyncAPIResource):
         default_mcp_gateway_application: bool | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
+        login_flow: Literal["default", "identifier_first"] | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
         requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -620,6 +630,9 @@ class AsyncZonesResource(AsyncAPIResource):
           encryption_key: AWS KMS configuration for zone encryption. When not specified, the default
               Keycard Cloud encryption key will be used.
 
+          login_flow: Login flow style for the zone. 'default' uses standard authentication,
+              'identifier_first' uses identifier-based provider routing.
+
           protocols: Protocol configuration for zone creation
 
           requires_invitation: Whether the zone requires an invitation for email/password registration, only
@@ -641,6 +654,7 @@ class AsyncZonesResource(AsyncAPIResource):
                     "default_mcp_gateway_application": default_mcp_gateway_application,
                     "description": description,
                     "encryption_key": encryption_key,
+                    "login_flow": login_flow,
                     "protocols": protocols,
                     "requires_invitation": requires_invitation,
                 },
@@ -698,6 +712,7 @@ class AsyncZonesResource(AsyncAPIResource):
         default_resource_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
+        login_flow: Optional[Literal["default", "identifier_first"]] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
         requires_invitation: bool | Omit = omit,
@@ -724,6 +739,10 @@ class AsyncZonesResource(AsyncAPIResource):
 
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
+
+          login_flow: Login flow style for the zone. 'default' uses standard authentication,
+              'identifier_first' uses identifier-based provider routing. Set to null to reset
+              to 'default'.
 
           name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
               control characters.
@@ -753,6 +772,7 @@ class AsyncZonesResource(AsyncAPIResource):
                     "default_resource_id": default_resource_id,
                     "description": description,
                     "encryption_key": encryption_key,
+                    "login_flow": login_flow,
                     "name": name,
                     "protocols": protocols,
                     "requires_invitation": requires_invitation,
@@ -773,7 +793,6 @@ class AsyncZonesResource(AsyncAPIResource):
         before: str | Omit = omit,
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
-        filter_organization_id: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -814,7 +833,6 @@ class AsyncZonesResource(AsyncAPIResource):
                         "before": before,
                         "cursor": cursor,
                         "expand": expand,
-                        "filter_organization_id": filter_organization_id,
                         "limit": limit,
                         "slug": slug,
                     },
