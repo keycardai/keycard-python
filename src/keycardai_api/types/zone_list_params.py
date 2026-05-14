@@ -24,8 +24,6 @@ class ZoneListParams(TypedDict, total=False):
         PropertyInfo(alias="expand[]"),
     ]
 
-    filter_organization_id: Annotated[str, PropertyInfo(alias="filter[organization_id]")]
-
     limit: int
     """Maximum number of items to return"""
 

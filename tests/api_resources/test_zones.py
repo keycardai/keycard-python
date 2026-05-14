@@ -39,12 +39,9 @@ class TestZones:
                 "arn": "x",
                 "type": "aws",
             },
+            login_flow="default",
             protocols={
                 "oauth2": {
-                    "cimd": {
-                        "allowed_client_ids": ["string"],
-                        "enabled": True,
-                    },
                     "dcr_enabled": True,
                     "pkce_required": True,
                 }
@@ -150,13 +147,10 @@ class TestZones:
                 "arn": "x",
                 "type": "aws",
             },
+            login_flow="default",
             name="x",
             protocols={
                 "oauth2": {
-                    "cimd": {
-                        "allowed_client_ids": ["string"],
-                        "enabled": True,
-                    },
                     "dcr_enabled": True,
                     "pkce_required": True,
                 }
@@ -214,7 +208,6 @@ class TestZones:
             before="x",
             cursor="cursor",
             expand="total_count",
-            filter_organization_id="filter[organization_id]",
             limit=1,
             slug="slug",
         )
@@ -309,12 +302,9 @@ class TestAsyncZones:
                 "arn": "x",
                 "type": "aws",
             },
+            login_flow="default",
             protocols={
                 "oauth2": {
-                    "cimd": {
-                        "allowed_client_ids": ["string"],
-                        "enabled": True,
-                    },
                     "dcr_enabled": True,
                     "pkce_required": True,
                 }
@@ -420,13 +410,10 @@ class TestAsyncZones:
                 "arn": "x",
                 "type": "aws",
             },
+            login_flow="default",
             name="x",
             protocols={
                 "oauth2": {
-                    "cimd": {
-                        "allowed_client_ids": ["string"],
-                        "enabled": True,
-                    },
                     "dcr_enabled": True,
                     "pkce_required": True,
                 }
@@ -484,7 +471,6 @@ class TestAsyncZones:
             before="x",
             cursor="cursor",
             expand="total_count",
-            filter_organization_id="filter[organization_id]",
             limit=1,
             slug="slug",
         )

@@ -1,28 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from .._models import BaseModel
 from .encryption_key_aws_kms_config import EncryptionKeyAwsKmsConfig
 
-__all__ = ["Zone", "Protocols", "ProtocolsOauth2", "ProtocolsOauth2Cimd", "ProtocolsOpenid"]
-
-
-class ProtocolsOauth2Cimd(BaseModel):
-    """Client ID Metadata Document auto-provisioning configuration"""
-
-    allowed_client_ids: List[str]
-    """Allowlist for CIMD client_id URLs.
-
-    Each entry is an exact URL, a wildcard origin with a single _ replacing one
-    subdomain label (e.g. https://_.example.com matches https://app.example.com but
-    not https://a.b.example.com), or the literal _ to allow any client. Only one _
-    is permitted per entry.
-    """
-
-    enabled: bool
-    """Whether CIMD auto-provisioning is enabled for unregistered URL-based clients"""
+__all__ = ["Zone", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
 
 
 class ProtocolsOauth2(BaseModel):
@@ -36,9 +21,6 @@ class ProtocolsOauth2(BaseModel):
     OAuth 2.0 Authorization Server Metadata endpoint
     (.well-known/oauth-authorization-server)
     """
-
-    cimd: ProtocolsOauth2Cimd
-    """Client ID Metadata Document auto-provisioning configuration"""
 
     dcr_enabled: bool
     """Whether Dynamic Client Registration is enabled"""
@@ -122,6 +104,13 @@ class Zone(BaseModel):
     """AWS KMS configuration for zone encryption.
 
     When not specified, the default Keycard Cloud encryption key will be used.
+    """
+
+    login_flow: Optional[Literal["default", "identifier_first"]] = None
+    """Login flow style for the zone.
+
+    'default' uses standard authentication, 'identifier_first' uses identifier-based
+    provider routing.
     """
 
     permissions: Optional[Dict[str, Dict[str, bool]]] = None

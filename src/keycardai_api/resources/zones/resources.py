@@ -59,7 +59,6 @@ class ResourcesResource(SyncAPIResource):
         name: str,
         application_id: str | Omit = omit,
         application_type: Literal["native", "web"] | Omit = omit,
-        credential_lifetime_seconds: int | Omit = omit,
         credential_provider_id: str | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
@@ -88,9 +87,6 @@ class ResourcesResource(SyncAPIResource):
           application_type: The expected type of client for this credential. Native clients must use
               localhost URLs for redirect_uris or URIs with custom schemes. Web clients must
               use https URLs and must not use localhost as the hostname.
-
-          credential_lifetime_seconds: Credential lifetime override in seconds. When set, overrides the default
-              credential lifetime for this resource.
 
           credential_provider_id: ID of the credential provider to associate with the resource
 
@@ -123,7 +119,6 @@ class ResourcesResource(SyncAPIResource):
                     "name": name,
                     "application_id": application_id,
                     "application_type": application_type,
-                    "credential_lifetime_seconds": credential_lifetime_seconds,
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "metadata": metadata,
@@ -181,7 +176,6 @@ class ResourcesResource(SyncAPIResource):
         zone_id: str,
         application_id: Optional[str] | Omit = omit,
         application_type: Literal["native", "web"] | Omit = omit,
-        credential_lifetime_seconds: Optional[int] | Omit = omit,
         credential_provider_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
@@ -205,9 +199,6 @@ class ResourcesResource(SyncAPIResource):
           application_type: The expected type of client for this credential. Native clients must use
               localhost URLs for redirect_uris or URIs with custom schemes. Web clients must
               use https URLs and must not use localhost as the hostname.
-
-          credential_lifetime_seconds: Credential lifetime override in seconds. Set to null to clear the override and
-              use the default.
 
           credential_provider_id: ID of the credential provider to associate with the resource (set to null to
               unset)
@@ -246,7 +237,6 @@ class ResourcesResource(SyncAPIResource):
                 {
                     "application_id": application_id,
                     "application_type": application_type,
-                    "credential_lifetime_seconds": credential_lifetime_seconds,
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "identifier": identifier,
@@ -394,7 +384,6 @@ class AsyncResourcesResource(AsyncAPIResource):
         name: str,
         application_id: str | Omit = omit,
         application_type: Literal["native", "web"] | Omit = omit,
-        credential_lifetime_seconds: int | Omit = omit,
         credential_provider_id: str | Omit = omit,
         description: Optional[str] | Omit = omit,
         metadata: MetadataParam | Omit = omit,
@@ -423,9 +412,6 @@ class AsyncResourcesResource(AsyncAPIResource):
           application_type: The expected type of client for this credential. Native clients must use
               localhost URLs for redirect_uris or URIs with custom schemes. Web clients must
               use https URLs and must not use localhost as the hostname.
-
-          credential_lifetime_seconds: Credential lifetime override in seconds. When set, overrides the default
-              credential lifetime for this resource.
 
           credential_provider_id: ID of the credential provider to associate with the resource
 
@@ -458,7 +444,6 @@ class AsyncResourcesResource(AsyncAPIResource):
                     "name": name,
                     "application_id": application_id,
                     "application_type": application_type,
-                    "credential_lifetime_seconds": credential_lifetime_seconds,
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "metadata": metadata,
@@ -516,7 +501,6 @@ class AsyncResourcesResource(AsyncAPIResource):
         zone_id: str,
         application_id: Optional[str] | Omit = omit,
         application_type: Literal["native", "web"] | Omit = omit,
-        credential_lifetime_seconds: Optional[int] | Omit = omit,
         credential_provider_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
@@ -540,9 +524,6 @@ class AsyncResourcesResource(AsyncAPIResource):
           application_type: The expected type of client for this credential. Native clients must use
               localhost URLs for redirect_uris or URIs with custom schemes. Web clients must
               use https URLs and must not use localhost as the hostname.
-
-          credential_lifetime_seconds: Credential lifetime override in seconds. Set to null to clear the override and
-              use the default.
 
           credential_provider_id: ID of the credential provider to associate with the resource (set to null to
               unset)
@@ -581,7 +562,6 @@ class AsyncResourcesResource(AsyncAPIResource):
                 {
                     "application_id": application_id,
                     "application_type": application_type,
-                    "credential_lifetime_seconds": credential_lifetime_seconds,
                     "credential_provider_id": credential_provider_id,
                     "description": description,
                     "identifier": identifier,
