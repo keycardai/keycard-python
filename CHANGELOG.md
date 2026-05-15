@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.11.0 (2026-05-15)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/keycardai/keycard-python/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **ACC-277:** list policy versions pinned by a policy-set draft ([1098f3d](https://github.com/keycardai/keycard-python/commit/1098f3dc1da65c5ecc00c7e132bd8c7b8e8bc4fc))
+* accept ID Zone platform principals in management API ([1e3311e](https://github.com/keycardai/keycard-python/commit/1e3311ed7a826618f9fe8a34c438e9cea81d5636))
+* add jwt_lifetime_seconds to resources ([090a5cd](https://github.com/keycardai/keycard-python/commit/090a5cd8c0f02bc29b29a74b525924fff94320a7))
+
+
+### Bug Fixes
+
+* housekeeping ([744a2af](https://github.com/keycardai/keycard-python/commit/744a2afd2465cc5c67ee665636f89675d0913192))
+
 ## 0.10.0 (2026-05-11)
 
 Full Changelog: [v0.9.1...v0.10.0](https://github.com/keycardai/keycard-python/compare/v0.9.1...v0.10.0)
