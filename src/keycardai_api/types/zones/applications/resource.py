@@ -71,6 +71,13 @@ class Resource(BaseModel):
     application_id: Optional[str] = None
     """ID of the application that provides this resource"""
 
+    credential_lifetime_seconds: Optional[int] = None
+    """Credential lifetime override in seconds.
+
+    When set, overrides the default credential lifetime for this resource. When
+    absent, the default from the provider or zone is used.
+    """
+
     credential_provider: Optional[Provider] = None
     """
     A Provider is a system that supplies access to Resources and allows actors

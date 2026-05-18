@@ -39,9 +39,13 @@ class TestZones:
                 "arn": "x",
                 "type": "aws",
             },
-            login_flow="default",
+            organization_id="organization_id",
             protocols={
                 "oauth2": {
+                    "cimd": {
+                        "allowed_client_ids": ["string"],
+                        "enabled": True,
+                    },
                     "dcr_enabled": True,
                     "pkce_required": True,
                 }
@@ -147,10 +151,13 @@ class TestZones:
                 "arn": "x",
                 "type": "aws",
             },
-            login_flow="default",
             name="x",
             protocols={
                 "oauth2": {
+                    "cimd": {
+                        "allowed_client_ids": ["string"],
+                        "enabled": True,
+                    },
                     "dcr_enabled": True,
                     "pkce_required": True,
                 }
@@ -303,9 +310,13 @@ class TestAsyncZones:
                 "arn": "x",
                 "type": "aws",
             },
-            login_flow="default",
+            organization_id="organization_id",
             protocols={
                 "oauth2": {
+                    "cimd": {
+                        "allowed_client_ids": ["string"],
+                        "enabled": True,
+                    },
                     "dcr_enabled": True,
                     "pkce_required": True,
                 }
@@ -411,10 +422,13 @@ class TestAsyncZones:
                 "arn": "x",
                 "type": "aws",
             },
-            login_flow="default",
             name="x",
             protocols={
                 "oauth2": {
+                    "cimd": {
+                        "allowed_client_ids": ["string"],
+                        "enabled": True,
+                    },
                     "dcr_enabled": True,
                     "pkce_required": True,
                 }
