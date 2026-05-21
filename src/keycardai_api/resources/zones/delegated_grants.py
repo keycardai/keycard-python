@@ -129,6 +129,7 @@ class DelegatedGrantsResource(SyncAPIResource):
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         resource_id: str | Omit = omit,
+        sort: str | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
         user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -141,7 +142,9 @@ class DelegatedGrantsResource(SyncAPIResource):
         """Returns a list of delegated grants in the specified zone.
 
         Can be filtered by
-        user, resource, or status.
+        user, resource, or status. Use cursor pagination via `after`/`before`. Sort:
+        comma-separated field list; prefix with `-` for descending. Use
+        `expand[]=total_count` to include the matching row count.
 
         Args:
           after: Cursor for forward pagination
@@ -151,6 +154,8 @@ class DelegatedGrantsResource(SyncAPIResource):
           limit: Maximum number of items to return
 
           resource_id: Filter by resource ID
+
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at
 
           user_id: Filter by user ID
 
@@ -179,6 +184,7 @@ class DelegatedGrantsResource(SyncAPIResource):
                         "expand": expand,
                         "limit": limit,
                         "resource_id": resource_id,
+                        "sort": sort,
                         "status": status,
                         "user_id": user_id,
                     },
@@ -333,6 +339,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         resource_id: str | Omit = omit,
+        sort: str | Omit = omit,
         status: Literal["active", "expired", "revoked"] | Omit = omit,
         user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -345,7 +352,9 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         """Returns a list of delegated grants in the specified zone.
 
         Can be filtered by
-        user, resource, or status.
+        user, resource, or status. Use cursor pagination via `after`/`before`. Sort:
+        comma-separated field list; prefix with `-` for descending. Use
+        `expand[]=total_count` to include the matching row count.
 
         Args:
           after: Cursor for forward pagination
@@ -355,6 +364,8 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
           limit: Maximum number of items to return
 
           resource_id: Filter by resource ID
+
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at
 
           user_id: Filter by user ID
 
@@ -383,6 +394,7 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
                         "expand": expand,
                         "limit": limit,
                         "resource_id": resource_id,
+                        "sort": sort,
                         "status": status,
                         "user_id": user_id,
                     },

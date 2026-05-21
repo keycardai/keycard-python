@@ -65,6 +65,12 @@ class ProtocolsOauth2(BaseModel):
 class ProtocolsOpenid(BaseModel):
     """OpenID Connect protocol configuration"""
 
+    scopes: Optional[List[str]] = None
+    """Additional OIDC scopes to request from this provider during authentication (e.g.
+
+    "groups"). Merged with the default scopes (openid, profile, email).
+    """
+
     user_identifier_claim: Optional[str] = None
     """
     Name of a top-level string claim in this provider's ID Token to use as the user

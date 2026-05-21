@@ -42,6 +42,12 @@ class User(BaseModel):
     authenticated_at: Optional[str] = None
     """Date when the user was last authenticated"""
 
+    grant_count: Optional[int] = None
+    """Delegated-grant count for this user.
+
+    Populated only when `expand[]=grant_count` is set on the listing endpoint.
+    """
+
     issuer: Optional[str] = None
     """Issuer identifier of the identity provider"""
 
@@ -50,6 +56,12 @@ class User(BaseModel):
 
     This field is undefined when the source identity provider is deleted but the
     user is not deleted.
+    """
+
+    session_count: Optional[int] = None
+    """Session count for this user.
+
+    Populated only when `expand[]=session_count` is set on the listing endpoint.
     """
 
     subject: Optional[str] = None
