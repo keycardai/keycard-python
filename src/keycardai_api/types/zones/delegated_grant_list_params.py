@@ -27,6 +27,9 @@ class DelegatedGrantListParams(TypedDict, total=False):
     resource_id: str
     """Filter by resource ID"""
 
+    sort: str
+    """Comma-separated sort fields. Prefix with - for descending. Allowed: created_at"""
+
     status: Literal["active", "expired", "revoked"]
 
     user_id: str

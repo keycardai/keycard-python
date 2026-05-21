@@ -58,6 +58,7 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "scopes": ["string"],
                     "user_identifier_claim": "user_identifier_claim",
                     "userinfo_endpoint": "https://example.com",
                 },
@@ -195,6 +196,7 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "scopes": ["string"],
                     "user_identifier_claim": "user_identifier_claim",
                     "userinfo_endpoint": "https://example.com",
                 },
@@ -399,6 +401,7 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "scopes": ["string"],
                     "user_identifier_claim": "user_identifier_claim",
                     "userinfo_endpoint": "https://example.com",
                 },
@@ -536,6 +539,7 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "scopes": ["string"],
                     "user_identifier_claim": "user_identifier_claim",
                     "userinfo_endpoint": "https://example.com",
                 },

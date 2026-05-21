@@ -18,7 +18,13 @@ class UserListParams(TypedDict, total=False):
     before: str
     """Cursor for backward pagination"""
 
-    expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
+    expand: Annotated[
+        Union[
+            Literal["total_count", "session_count", "grant_count"],
+            List[Literal["total_count", "session_count", "grant_count"]],
+        ],
+        PropertyInfo(alias="expand[]"),
+    ]
 
     filter_email: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[email]")]
     """Filter by exact email address"""
