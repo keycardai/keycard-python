@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 (2026-05-21)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/keycardai/keycard-python/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* add scopes to provider openid protocol schemas (ACC-354) ([350683d](https://github.com/keycardai/keycard-python/commit/350683d62f6d36e181f69effb96cd4a6354853db))
+
 ## 0.11.0 (2026-05-15)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/keycardai/keycard-python/compare/v0.10.0...v0.11.0)
