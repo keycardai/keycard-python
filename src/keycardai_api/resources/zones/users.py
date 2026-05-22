@@ -87,7 +87,11 @@ class UsersResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        expand: Union[
+            Literal["total_count", "session_count", "grant_count"],
+            List[Literal["total_count", "session_count", "grant_count"]],
+        ]
+        | Omit = omit,
         filter_email: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
@@ -115,14 +119,15 @@ class UsersResource(SyncAPIResource):
 
         Use cursor pagination via `after`/`before`. Sort: comma-separated field list;
         prefix with `-` for descending. Use `expand[]=total_count` to include the
-        matching row count. Filter by exact email via `filter[email]`; search via
-        `query[email]` / `query[subject]` / `query[]` (substring match, OR'd across
-        repeated values). `query[]` matches against email and federation credential
-        subject. Pass `filter[id]` (repeatable, max 100) to restrict results to a known
-        set of users — mutually exclusive with `after`/`before` (returns 400 if
-        combined). When `filter[id]` is set, `limit` is ignored and the response
-        contains every requested user that exists in the zone, in a single page. IDs not
-        in the zone are silently omitted.
+        matching row count, `expand[]=session_count` to include per-user session counts,
+        and `expand[]=grant_count` to include per-user delegated-grant counts. Filter by
+        exact email via `filter[email]`; search via `query[email]` / `query[subject]` /
+        `query[]` (substring match, OR'd across repeated values). `query[]` matches
+        against email and federation credential subject. Pass `filter[id]` (repeatable,
+        max 100) to restrict results to a known set of users — mutually exclusive with
+        `after`/`before` (returns 400 if combined). When `filter[id]` is set, `limit` is
+        ignored and the response contains every requested user that exists in the zone,
+        in a single page. IDs not in the zone are silently omitted.
 
         Args:
           after: Cursor for forward pagination
@@ -244,7 +249,11 @@ class AsyncUsersResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        expand: Union[
+            Literal["total_count", "session_count", "grant_count"],
+            List[Literal["total_count", "session_count", "grant_count"]],
+        ]
+        | Omit = omit,
         filter_email: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
@@ -272,14 +281,15 @@ class AsyncUsersResource(AsyncAPIResource):
 
         Use cursor pagination via `after`/`before`. Sort: comma-separated field list;
         prefix with `-` for descending. Use `expand[]=total_count` to include the
-        matching row count. Filter by exact email via `filter[email]`; search via
-        `query[email]` / `query[subject]` / `query[]` (substring match, OR'd across
-        repeated values). `query[]` matches against email and federation credential
-        subject. Pass `filter[id]` (repeatable, max 100) to restrict results to a known
-        set of users — mutually exclusive with `after`/`before` (returns 400 if
-        combined). When `filter[id]` is set, `limit` is ignored and the response
-        contains every requested user that exists in the zone, in a single page. IDs not
-        in the zone are silently omitted.
+        matching row count, `expand[]=session_count` to include per-user session counts,
+        and `expand[]=grant_count` to include per-user delegated-grant counts. Filter by
+        exact email via `filter[email]`; search via `query[email]` / `query[subject]` /
+        `query[]` (substring match, OR'd across repeated values). `query[]` matches
+        against email and federation credential subject. Pass `filter[id]` (repeatable,
+        max 100) to restrict results to a known set of users — mutually exclusive with
+        `after`/`before` (returns 400 if combined). When `filter[id]` is set, `limit` is
+        ignored and the response contains every requested user that exists in the zone,
+        in a single page. IDs not in the zone are silently omitted.
 
         Args:
           after: Cursor for forward pagination

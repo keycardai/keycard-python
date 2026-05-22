@@ -107,6 +107,13 @@ class ProtocolsOauth2(TypedDict, total=False):
 class ProtocolsOpenid(TypedDict, total=False):
     """OpenID Connect protocol configuration. Set to null to remove all OpenID config."""
 
+    scopes: Optional[SequenceNotStr[str]]
+    """Additional OIDC scopes to request from this provider during authentication (e.g.
+
+    "groups"). Merged with the default scopes (openid, profile, email). Set to null
+    to clear.
+    """
+
     user_identifier_claim: Optional[str]
     """
     Name of a top-level string claim in this provider's ID Token to use as the user

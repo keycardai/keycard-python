@@ -102,6 +102,12 @@ class ProtocolsOauth2(TypedDict, total=False):
 class ProtocolsOpenid(TypedDict, total=False):
     """OpenID Connect protocol configuration for provider creation"""
 
+    scopes: SequenceNotStr[str]
+    """Additional OIDC scopes to request from this provider during authentication (e.g.
+
+    "groups"). Merged with the default scopes (openid, profile, email).
+    """
+
     user_identifier_claim: str
     """
     Name of a top-level string claim in this provider's ID Token to use as the user
