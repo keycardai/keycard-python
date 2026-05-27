@@ -236,11 +236,17 @@ class TestApplications:
             zone_id="zoneId",
             after="x",
             before="x",
-            cursor="cursor",
             expand="total_count",
+            filter_id="string",
+            filter_identifier="string",
+            filter_slug="string",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
             traits=["gateway"],
             traits_all=["gateway"],
         )
@@ -684,11 +690,17 @@ class TestAsyncApplications:
             zone_id="zoneId",
             after="x",
             before="x",
-            cursor="cursor",
             expand="total_count",
+            filter_id="string",
+            filter_identifier="string",
+            filter_slug="string",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
             traits=["gateway"],
             traits_all=["gateway"],
         )
