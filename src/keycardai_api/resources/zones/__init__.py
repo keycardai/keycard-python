@@ -32,6 +32,22 @@ from .secrets import (
     SecretsResourceWithStreamingResponse,
     AsyncSecretsResourceWithStreamingResponse,
 )
+from .installs import (
+    InstallsResource,
+    AsyncInstallsResource,
+    InstallsResourceWithRawResponse,
+    AsyncInstallsResourceWithRawResponse,
+    InstallsResourceWithStreamingResponse,
+    AsyncInstallsResourceWithStreamingResponse,
+)
+from .packages import (
+    PackagesResource,
+    AsyncPackagesResource,
+    PackagesResourceWithRawResponse,
+    AsyncPackagesResourceWithRawResponse,
+    PackagesResourceWithStreamingResponse,
+    AsyncPackagesResourceWithStreamingResponse,
+)
 from .policies import (
     PoliciesResource,
     AsyncPoliciesResource,
@@ -87,6 +103,14 @@ from .applications import (
     AsyncApplicationsResourceWithRawResponse,
     ApplicationsResourceWithStreamingResponse,
     AsyncApplicationsResourceWithStreamingResponse,
+)
+from .catalog_tasks import (
+    CatalogTasksResource,
+    AsyncCatalogTasksResource,
+    CatalogTasksResourceWithRawResponse,
+    AsyncCatalogTasksResourceWithRawResponse,
+    CatalogTasksResourceWithStreamingResponse,
+    AsyncCatalogTasksResourceWithStreamingResponse,
 )
 from .policy_schemas import (
     PolicySchemasResource,
@@ -186,6 +210,24 @@ __all__ = [
     "AsyncPoliciesResourceWithRawResponse",
     "PoliciesResourceWithStreamingResponse",
     "AsyncPoliciesResourceWithStreamingResponse",
+    "PackagesResource",
+    "AsyncPackagesResource",
+    "PackagesResourceWithRawResponse",
+    "AsyncPackagesResourceWithRawResponse",
+    "PackagesResourceWithStreamingResponse",
+    "AsyncPackagesResourceWithStreamingResponse",
+    "InstallsResource",
+    "AsyncInstallsResource",
+    "InstallsResourceWithRawResponse",
+    "AsyncInstallsResourceWithRawResponse",
+    "InstallsResourceWithStreamingResponse",
+    "AsyncInstallsResourceWithStreamingResponse",
+    "CatalogTasksResource",
+    "AsyncCatalogTasksResource",
+    "CatalogTasksResourceWithRawResponse",
+    "AsyncCatalogTasksResourceWithRawResponse",
+    "CatalogTasksResourceWithStreamingResponse",
+    "AsyncCatalogTasksResourceWithStreamingResponse",
     "PolicySetsResource",
     "AsyncPolicySetsResource",
     "PolicySetsResourceWithRawResponse",
