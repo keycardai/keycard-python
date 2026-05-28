@@ -32,8 +32,11 @@ __all__ = ["PackagesResource", "AsyncPackagesResource"]
 
 
 class PackagesResource(SyncAPIResource):
+    """Browse available packages and their versions."""
+
     @cached_property
     def versions(self) -> VersionsResource:
+        """Browse available packages and their versions."""
         return VersionsResource(self._client)
 
     @cached_property
@@ -211,8 +214,11 @@ class PackagesResource(SyncAPIResource):
 
 
 class AsyncPackagesResource(AsyncAPIResource):
+    """Browse available packages and their versions."""
+
     @cached_property
     def versions(self) -> AsyncVersionsResource:
+        """Browse available packages and their versions."""
         return AsyncVersionsResource(self._client)
 
     @cached_property
@@ -405,6 +411,7 @@ class PackagesResourceWithRawResponse:
 
     @cached_property
     def versions(self) -> VersionsResourceWithRawResponse:
+        """Browse available packages and their versions."""
         return VersionsResourceWithRawResponse(self._packages.versions)
 
 
@@ -424,6 +431,7 @@ class AsyncPackagesResourceWithRawResponse:
 
     @cached_property
     def versions(self) -> AsyncVersionsResourceWithRawResponse:
+        """Browse available packages and their versions."""
         return AsyncVersionsResourceWithRawResponse(self._packages.versions)
 
 
@@ -443,6 +451,7 @@ class PackagesResourceWithStreamingResponse:
 
     @cached_property
     def versions(self) -> VersionsResourceWithStreamingResponse:
+        """Browse available packages and their versions."""
         return VersionsResourceWithStreamingResponse(self._packages.versions)
 
 
@@ -462,4 +471,5 @@ class AsyncPackagesResourceWithStreamingResponse:
 
     @cached_property
     def versions(self) -> AsyncVersionsResourceWithStreamingResponse:
+        """Browse available packages and their versions."""
         return AsyncVersionsResourceWithStreamingResponse(self._packages.versions)

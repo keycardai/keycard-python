@@ -23,6 +23,8 @@ __all__ = ["VersionsResource", "AsyncVersionsResource"]
 
 
 class VersionsResource(SyncAPIResource):
+    """Browse available packages and their versions."""
+
     @cached_property
     def with_raw_response(self) -> VersionsResourceWithRawResponse:
         """
@@ -158,6 +160,8 @@ class VersionsResource(SyncAPIResource):
 
 
 class AsyncVersionsResource(AsyncAPIResource):
+    """Browse available packages and their versions."""
+
     @cached_property
     def with_raw_response(self) -> AsyncVersionsResourceWithRawResponse:
         """
