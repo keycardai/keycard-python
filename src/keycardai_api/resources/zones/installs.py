@@ -26,6 +26,8 @@ __all__ = ["InstallsResource", "AsyncInstallsResource"]
 
 
 class InstallsResource(SyncAPIResource):
+    """Install packages and manage package installations."""
+
     @cached_property
     def with_raw_response(self) -> InstallsResourceWithRawResponse:
         """
@@ -250,6 +252,8 @@ class InstallsResource(SyncAPIResource):
 
 
 class AsyncInstallsResource(AsyncAPIResource):
+    """Install packages and manage package installations."""
+
     @cached_property
     def with_raw_response(self) -> AsyncInstallsResourceWithRawResponse:
         """

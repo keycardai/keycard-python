@@ -227,14 +227,17 @@ class ZonesResource(SyncAPIResource):
 
     @cached_property
     def packages(self) -> PackagesResource:
+        """Browse available packages and their versions."""
         return PackagesResource(self._client)
 
     @cached_property
     def installs(self) -> InstallsResource:
+        """Install packages and manage package installations."""
         return InstallsResource(self._client)
 
     @cached_property
     def catalog_tasks(self) -> CatalogTasksResource:
+        """Track the progress of install and uninstall operations."""
         return CatalogTasksResource(self._client)
 
     @cached_property
@@ -607,14 +610,17 @@ class AsyncZonesResource(AsyncAPIResource):
 
     @cached_property
     def packages(self) -> AsyncPackagesResource:
+        """Browse available packages and their versions."""
         return AsyncPackagesResource(self._client)
 
     @cached_property
     def installs(self) -> AsyncInstallsResource:
+        """Install packages and manage package installations."""
         return AsyncInstallsResource(self._client)
 
     @cached_property
     def catalog_tasks(self) -> AsyncCatalogTasksResource:
+        """Track the progress of install and uninstall operations."""
         return AsyncCatalogTasksResource(self._client)
 
     @cached_property
@@ -1006,14 +1012,17 @@ class ZonesResourceWithRawResponse:
 
     @cached_property
     def packages(self) -> PackagesResourceWithRawResponse:
+        """Browse available packages and their versions."""
         return PackagesResourceWithRawResponse(self._zones.packages)
 
     @cached_property
     def installs(self) -> InstallsResourceWithRawResponse:
+        """Install packages and manage package installations."""
         return InstallsResourceWithRawResponse(self._zones.installs)
 
     @cached_property
     def catalog_tasks(self) -> CatalogTasksResourceWithRawResponse:
+        """Track the progress of install and uninstall operations."""
         return CatalogTasksResourceWithRawResponse(self._zones.catalog_tasks)
 
     @cached_property
@@ -1109,14 +1118,17 @@ class AsyncZonesResourceWithRawResponse:
 
     @cached_property
     def packages(self) -> AsyncPackagesResourceWithRawResponse:
+        """Browse available packages and their versions."""
         return AsyncPackagesResourceWithRawResponse(self._zones.packages)
 
     @cached_property
     def installs(self) -> AsyncInstallsResourceWithRawResponse:
+        """Install packages and manage package installations."""
         return AsyncInstallsResourceWithRawResponse(self._zones.installs)
 
     @cached_property
     def catalog_tasks(self) -> AsyncCatalogTasksResourceWithRawResponse:
+        """Track the progress of install and uninstall operations."""
         return AsyncCatalogTasksResourceWithRawResponse(self._zones.catalog_tasks)
 
     @cached_property
@@ -1212,14 +1224,17 @@ class ZonesResourceWithStreamingResponse:
 
     @cached_property
     def packages(self) -> PackagesResourceWithStreamingResponse:
+        """Browse available packages and their versions."""
         return PackagesResourceWithStreamingResponse(self._zones.packages)
 
     @cached_property
     def installs(self) -> InstallsResourceWithStreamingResponse:
+        """Install packages and manage package installations."""
         return InstallsResourceWithStreamingResponse(self._zones.installs)
 
     @cached_property
     def catalog_tasks(self) -> CatalogTasksResourceWithStreamingResponse:
+        """Track the progress of install and uninstall operations."""
         return CatalogTasksResourceWithStreamingResponse(self._zones.catalog_tasks)
 
     @cached_property
@@ -1315,14 +1330,17 @@ class AsyncZonesResourceWithStreamingResponse:
 
     @cached_property
     def packages(self) -> AsyncPackagesResourceWithStreamingResponse:
+        """Browse available packages and their versions."""
         return AsyncPackagesResourceWithStreamingResponse(self._zones.packages)
 
     @cached_property
     def installs(self) -> AsyncInstallsResourceWithStreamingResponse:
+        """Install packages and manage package installations."""
         return AsyncInstallsResourceWithStreamingResponse(self._zones.installs)
 
     @cached_property
     def catalog_tasks(self) -> AsyncCatalogTasksResourceWithStreamingResponse:
+        """Track the progress of install and uninstall operations."""
         return AsyncCatalogTasksResourceWithStreamingResponse(self._zones.catalog_tasks)
 
     @cached_property

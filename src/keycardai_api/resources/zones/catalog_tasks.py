@@ -21,6 +21,8 @@ __all__ = ["CatalogTasksResource", "AsyncCatalogTasksResource"]
 
 
 class CatalogTasksResource(SyncAPIResource):
+    """Track the progress of install and uninstall operations."""
+
     @cached_property
     def with_raw_response(self) -> CatalogTasksResourceWithRawResponse:
         """
@@ -87,6 +89,8 @@ class CatalogTasksResource(SyncAPIResource):
 
 
 class AsyncCatalogTasksResource(AsyncAPIResource):
+    """Track the progress of install and uninstall operations."""
+
     @cached_property
     def with_raw_response(self) -> AsyncCatalogTasksResourceWithRawResponse:
         """
