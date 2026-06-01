@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import List, Union
 from typing_extensions import Literal, Annotated, TypedDict
 
+from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
 from .application_trait import ApplicationTrait
 
@@ -18,16 +19,41 @@ class ApplicationListParams(TypedDict, total=False):
     before: str
     """Cursor for backward pagination"""
 
-    cursor: str
-
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
+
+    filter_id: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[id]")]
+    """Restrict results to applications with this publicId.
+
+    Repeatable, max 100. Mutually exclusive with after/before.
+    """
+
+    filter_identifier: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[identifier]")]
+    """Filter by exact application identifier"""
+
+    filter_slug: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[slug]")]
+    """Filter by exact application slug"""
 
     identifier: str
 
     limit: int
     """Maximum number of items to return"""
 
+    query: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[]")]
+    """Search across name and identifier (substring match)"""
+
+    query_identifier: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[identifier]")]
+    """Search by identifier (substring match)"""
+
+    query_name: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[name]")]
+    """Search by name (substring match)"""
+
     slug: str
+
+    sort: str
+    """Comma-separated sort fields.
+
+    Prefix with - for descending. Allowed: created_at, name, identifier
+    """
 
     traits: List[ApplicationTrait]
     """

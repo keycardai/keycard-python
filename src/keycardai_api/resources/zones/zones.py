@@ -39,6 +39,14 @@ from .secrets import (
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
+from .installs import (
+    InstallsResource,
+    AsyncInstallsResource,
+    InstallsResourceWithRawResponse,
+    AsyncInstallsResourceWithRawResponse,
+    InstallsResourceWithStreamingResponse,
+    AsyncInstallsResourceWithStreamingResponse,
+)
 from .sessions import (
     SessionsResource,
     AsyncSessionsResource,
@@ -80,6 +88,14 @@ from .user_agents import (
     AsyncUserAgentsResourceWithStreamingResponse,
 )
 from ...types.zone import Zone
+from .catalog_tasks import (
+    CatalogTasksResource,
+    AsyncCatalogTasksResource,
+    CatalogTasksResourceWithRawResponse,
+    AsyncCatalogTasksResourceWithRawResponse,
+    CatalogTasksResourceWithStreamingResponse,
+    AsyncCatalogTasksResourceWithStreamingResponse,
+)
 from ..._base_client import make_request_options
 from .policy_schemas import (
     PolicySchemasResource,
@@ -96,6 +112,14 @@ from .delegated_grants import (
     AsyncDelegatedGrantsResourceWithRawResponse,
     DelegatedGrantsResourceWithStreamingResponse,
     AsyncDelegatedGrantsResourceWithStreamingResponse,
+)
+from .packages.packages import (
+    PackagesResource,
+    AsyncPackagesResource,
+    PackagesResourceWithRawResponse,
+    AsyncPackagesResourceWithRawResponse,
+    PackagesResourceWithStreamingResponse,
+    AsyncPackagesResourceWithStreamingResponse,
 )
 from .policies.policies import (
     PoliciesResource,
@@ -200,6 +224,21 @@ class ZonesResource(SyncAPIResource):
     def policies(self) -> PoliciesResource:
         """Policy CRUD operations"""
         return PoliciesResource(self._client)
+
+    @cached_property
+    def packages(self) -> PackagesResource:
+        """Browse available packages and their versions."""
+        return PackagesResource(self._client)
+
+    @cached_property
+    def installs(self) -> InstallsResource:
+        """Install packages and manage package installations."""
+        return InstallsResource(self._client)
+
+    @cached_property
+    def catalog_tasks(self) -> CatalogTasksResource:
+        """Track the progress of install and uninstall operations."""
+        return CatalogTasksResource(self._client)
 
     @cached_property
     def policy_sets(self) -> PolicySetsResource:
@@ -568,6 +607,21 @@ class AsyncZonesResource(AsyncAPIResource):
     def policies(self) -> AsyncPoliciesResource:
         """Policy CRUD operations"""
         return AsyncPoliciesResource(self._client)
+
+    @cached_property
+    def packages(self) -> AsyncPackagesResource:
+        """Browse available packages and their versions."""
+        return AsyncPackagesResource(self._client)
+
+    @cached_property
+    def installs(self) -> AsyncInstallsResource:
+        """Install packages and manage package installations."""
+        return AsyncInstallsResource(self._client)
+
+    @cached_property
+    def catalog_tasks(self) -> AsyncCatalogTasksResource:
+        """Track the progress of install and uninstall operations."""
+        return AsyncCatalogTasksResource(self._client)
 
     @cached_property
     def policy_sets(self) -> AsyncPolicySetsResource:
@@ -957,6 +1011,21 @@ class ZonesResourceWithRawResponse:
         return PoliciesResourceWithRawResponse(self._zones.policies)
 
     @cached_property
+    def packages(self) -> PackagesResourceWithRawResponse:
+        """Browse available packages and their versions."""
+        return PackagesResourceWithRawResponse(self._zones.packages)
+
+    @cached_property
+    def installs(self) -> InstallsResourceWithRawResponse:
+        """Install packages and manage package installations."""
+        return InstallsResourceWithRawResponse(self._zones.installs)
+
+    @cached_property
+    def catalog_tasks(self) -> CatalogTasksResourceWithRawResponse:
+        """Track the progress of install and uninstall operations."""
+        return CatalogTasksResourceWithRawResponse(self._zones.catalog_tasks)
+
+    @cached_property
     def policy_sets(self) -> PolicySetsResourceWithRawResponse:
         """Policy set CRUD and binding management"""
         return PolicySetsResourceWithRawResponse(self._zones.policy_sets)
@@ -1046,6 +1115,21 @@ class AsyncZonesResourceWithRawResponse:
     def policies(self) -> AsyncPoliciesResourceWithRawResponse:
         """Policy CRUD operations"""
         return AsyncPoliciesResourceWithRawResponse(self._zones.policies)
+
+    @cached_property
+    def packages(self) -> AsyncPackagesResourceWithRawResponse:
+        """Browse available packages and their versions."""
+        return AsyncPackagesResourceWithRawResponse(self._zones.packages)
+
+    @cached_property
+    def installs(self) -> AsyncInstallsResourceWithRawResponse:
+        """Install packages and manage package installations."""
+        return AsyncInstallsResourceWithRawResponse(self._zones.installs)
+
+    @cached_property
+    def catalog_tasks(self) -> AsyncCatalogTasksResourceWithRawResponse:
+        """Track the progress of install and uninstall operations."""
+        return AsyncCatalogTasksResourceWithRawResponse(self._zones.catalog_tasks)
 
     @cached_property
     def policy_sets(self) -> AsyncPolicySetsResourceWithRawResponse:
@@ -1139,6 +1223,21 @@ class ZonesResourceWithStreamingResponse:
         return PoliciesResourceWithStreamingResponse(self._zones.policies)
 
     @cached_property
+    def packages(self) -> PackagesResourceWithStreamingResponse:
+        """Browse available packages and their versions."""
+        return PackagesResourceWithStreamingResponse(self._zones.packages)
+
+    @cached_property
+    def installs(self) -> InstallsResourceWithStreamingResponse:
+        """Install packages and manage package installations."""
+        return InstallsResourceWithStreamingResponse(self._zones.installs)
+
+    @cached_property
+    def catalog_tasks(self) -> CatalogTasksResourceWithStreamingResponse:
+        """Track the progress of install and uninstall operations."""
+        return CatalogTasksResourceWithStreamingResponse(self._zones.catalog_tasks)
+
+    @cached_property
     def policy_sets(self) -> PolicySetsResourceWithStreamingResponse:
         """Policy set CRUD and binding management"""
         return PolicySetsResourceWithStreamingResponse(self._zones.policy_sets)
@@ -1228,6 +1327,21 @@ class AsyncZonesResourceWithStreamingResponse:
     def policies(self) -> AsyncPoliciesResourceWithStreamingResponse:
         """Policy CRUD operations"""
         return AsyncPoliciesResourceWithStreamingResponse(self._zones.policies)
+
+    @cached_property
+    def packages(self) -> AsyncPackagesResourceWithStreamingResponse:
+        """Browse available packages and their versions."""
+        return AsyncPackagesResourceWithStreamingResponse(self._zones.packages)
+
+    @cached_property
+    def installs(self) -> AsyncInstallsResourceWithStreamingResponse:
+        """Install packages and manage package installations."""
+        return AsyncInstallsResourceWithStreamingResponse(self._zones.installs)
+
+    @cached_property
+    def catalog_tasks(self) -> AsyncCatalogTasksResourceWithStreamingResponse:
+        """Track the progress of install and uninstall operations."""
+        return AsyncCatalogTasksResourceWithStreamingResponse(self._zones.catalog_tasks)
 
     @cached_property
     def policy_sets(self) -> AsyncPolicySetsResourceWithStreamingResponse:

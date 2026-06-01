@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.13.0 (2026-05-28)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/keycardai/keycard-python/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* add openapi tags ([b454ce8](https://github.com/keycardai/keycard-python/commit/b454ce82a14b7e10cd7eb6e4192959a95bba6804))
+* add svc-catalog resources to Stainless SDK config ([a94205e](https://github.com/keycardai/keycard-python/commit/a94205e53a7655b33ff7094192c3cf4558cb3a7c))
+* **ID-229:** paginate listApplications behind application-pagination flag ([7720da4](https://github.com/keycardai/keycard-python/commit/7720da4f8faf0eca78049dc3d9647f0aa0af6651))
+
 ## 0.12.0 (2026-05-21)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/keycardai/keycard-python/compare/v0.11.0...v0.12.0)
