@@ -57,12 +57,6 @@ class Application(BaseModel):
     organization_id: str
     """Organization that owns this application"""
 
-    owner_type: Literal["platform", "customer"]
-    """Who owns this application.
-
-    Platform-owned applications cannot be modified via API.
-    """
-
     slug: str
     """URL-safe identifier, unique within the zone"""
 
