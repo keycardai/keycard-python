@@ -2,6 +2,7 @@
 
 from typing import Dict, List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from .._models import BaseModel
 from .encryption_key_aws_kms_config import EncryptionKeyAwsKmsConfig
@@ -99,6 +100,9 @@ class Zone(BaseModel):
 
     organization_id: str
     """Organization that owns this zone"""
+
+    owner_type: Literal["platform", "customer"]
+    """Who owns this zone. Platform-owned zones cannot be modified via API."""
 
     protocols: Protocols
     """Protocol configuration for a zone"""
