@@ -279,9 +279,7 @@ from keycardai_api.types.zones import (
 
 Methods:
 
-- <code title="get /zones/{zone_id}/packages/{package_id}">client.zones.packages.<a href="./src/keycardai_api/resources/zones/packages/packages.py">retrieve</a>(package_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/package.py">Package</a></code>
-- <code title="get /zones/{zone_id}/packages">client.zones.packages.<a href="./src/keycardai_api/resources/zones/packages/packages.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/package_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/package_list.py">PackageList</a></code>
-- <code title="get /zones/{zone_id}/packages/{package_id}/draft">client.zones.packages.<a href="./src/keycardai_api/resources/zones/packages/packages.py">retrieve_draft</a>(package_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/package_draft.py">PackageDraft</a></code>
+- <code title="get /zones/{zone_id}/packages/{package_id}">client.zones.packages.<a href="./src/keycardai_api/resources/zones/packages.py">retrieve</a>(package_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/package.py">Package</a></code>
 
 ### Versions
 
@@ -291,11 +289,6 @@ Types:
 from keycardai_api.types.zones.packages import PackageVersion, PackageVersionList
 ```
 
-Methods:
-
-- <code title="get /zones/{zone_id}/packages/{package_id}/versions/{version_id}">client.zones.packages.versions.<a href="./src/keycardai_api/resources/zones/packages/versions.py">retrieve</a>(version_id, \*, zone_id, package_id) -> <a href="./src/keycardai_api/types/zones/packages/package_version.py">PackageVersion</a></code>
-- <code title="get /zones/{zone_id}/packages/{package_id}/versions">client.zones.packages.versions.<a href="./src/keycardai_api/resources/zones/packages/versions.py">list</a>(package_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/packages/version_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/packages/package_version_list.py">PackageVersionList</a></code>
-
 ## Installs
 
 Types:
@@ -304,13 +297,6 @@ Types:
 from keycardai_api.types.zones import Install, InstallList, InstallStatus
 ```
 
-Methods:
-
-- <code title="post /zones/{zone_id}/installs">client.zones.installs.<a href="./src/keycardai_api/resources/zones/installs.py">create</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/install_create_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/task.py">Task</a></code>
-- <code title="get /zones/{zone_id}/installs/{install_id}">client.zones.installs.<a href="./src/keycardai_api/resources/zones/installs.py">retrieve</a>(install_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/install.py">Install</a></code>
-- <code title="get /zones/{zone_id}/installs">client.zones.installs.<a href="./src/keycardai_api/resources/zones/installs.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/install_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/install_list.py">InstallList</a></code>
-- <code title="delete /zones/{zone_id}/installs/{install_id}">client.zones.installs.<a href="./src/keycardai_api/resources/zones/installs.py">delete</a>(install_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/task.py">Task</a></code>
-
 ## CatalogTasks
 
 Types:
@@ -318,10 +304,6 @@ Types:
 ```python
 from keycardai_api.types.zones import Task, TaskOperation, TaskStatus
 ```
-
-Methods:
-
-- <code title="get /zones/{zone_id}/catalog_tasks/{task_id}">client.zones.catalog_tasks.<a href="./src/keycardai_api/resources/zones/catalog_tasks.py">retrieve</a>(task_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/task.py">Task</a></code>
 
 ## PolicySets
 
