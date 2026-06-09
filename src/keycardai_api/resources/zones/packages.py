@@ -15,36 +15,36 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.zones.task import Task
+from ...types.zones.package import Package
 
-__all__ = ["CatalogTasksResource", "AsyncCatalogTasksResource"]
+__all__ = ["PackagesResource", "AsyncPackagesResource"]
 
 
-class CatalogTasksResource(SyncAPIResource):
-    """Track the progress of install and uninstall operations."""
+class PackagesResource(SyncAPIResource):
+    """Browse available packages and their versions."""
 
     @cached_property
-    def with_raw_response(self) -> CatalogTasksResourceWithRawResponse:
+    def with_raw_response(self) -> PackagesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
-        return CatalogTasksResourceWithRawResponse(self)
+        return PackagesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> CatalogTasksResourceWithStreamingResponse:
+    def with_streaming_response(self) -> PackagesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
-        return CatalogTasksResourceWithStreamingResponse(self)
+        return PackagesResourceWithStreamingResponse(self)
 
     def retrieve(
         self,
-        task_id: str,
+        package_id: str,
         *,
         zone_id: str,
         x_client_request_id: str | Omit = omit,
@@ -54,11 +54,9 @@ class CatalogTasksResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Task:
-        """Returns 200 with task details when pending, running, or failed.
-
-        Returns 303
-        redirect to the install when completed.
+    ) -> Package:
+        """
+        Get a zone package
 
         Args:
           extra_headers: Send extra headers
@@ -71,12 +69,12 @@ class CatalogTasksResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not task_id:
-            raise ValueError(f"Expected a non-empty value for `task_id` but received {task_id!r}")
+        if not package_id:
+            raise ValueError(f"Expected a non-empty value for `package_id` but received {package_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return self._get(
             ("/" if not self._client._base_url_overridden else "")
-            + path_template("/zones/{zone_id}/catalog_tasks/{task_id}", zone_id=zone_id, task_id=task_id),
+            + path_template("/zones/{zone_id}/packages/{package_id}", zone_id=zone_id, package_id=package_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -84,35 +82,35 @@ class CatalogTasksResource(SyncAPIResource):
                 timeout=timeout,
                 security={},
             ),
-            cast_to=Task,
+            cast_to=Package,
         )
 
 
-class AsyncCatalogTasksResource(AsyncAPIResource):
-    """Track the progress of install and uninstall operations."""
+class AsyncPackagesResource(AsyncAPIResource):
+    """Browse available packages and their versions."""
 
     @cached_property
-    def with_raw_response(self) -> AsyncCatalogTasksResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncPackagesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncCatalogTasksResourceWithRawResponse(self)
+        return AsyncPackagesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncCatalogTasksResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncPackagesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
-        return AsyncCatalogTasksResourceWithStreamingResponse(self)
+        return AsyncPackagesResourceWithStreamingResponse(self)
 
     async def retrieve(
         self,
-        task_id: str,
+        package_id: str,
         *,
         zone_id: str,
         x_client_request_id: str | Omit = omit,
@@ -122,11 +120,9 @@ class AsyncCatalogTasksResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Task:
-        """Returns 200 with task details when pending, running, or failed.
-
-        Returns 303
-        redirect to the install when completed.
+    ) -> Package:
+        """
+        Get a zone package
 
         Args:
           extra_headers: Send extra headers
@@ -139,12 +135,12 @@ class AsyncCatalogTasksResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not task_id:
-            raise ValueError(f"Expected a non-empty value for `task_id` but received {task_id!r}")
+        if not package_id:
+            raise ValueError(f"Expected a non-empty value for `package_id` but received {package_id!r}")
         extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
         return await self._get(
             ("/" if not self._client._base_url_overridden else "")
-            + path_template("/zones/{zone_id}/catalog_tasks/{task_id}", zone_id=zone_id, task_id=task_id),
+            + path_template("/zones/{zone_id}/packages/{package_id}", zone_id=zone_id, package_id=package_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -152,41 +148,41 @@ class AsyncCatalogTasksResource(AsyncAPIResource):
                 timeout=timeout,
                 security={},
             ),
-            cast_to=Task,
+            cast_to=Package,
         )
 
 
-class CatalogTasksResourceWithRawResponse:
-    def __init__(self, catalog_tasks: CatalogTasksResource) -> None:
-        self._catalog_tasks = catalog_tasks
+class PackagesResourceWithRawResponse:
+    def __init__(self, packages: PackagesResource) -> None:
+        self._packages = packages
 
         self.retrieve = to_raw_response_wrapper(
-            catalog_tasks.retrieve,
+            packages.retrieve,
         )
 
 
-class AsyncCatalogTasksResourceWithRawResponse:
-    def __init__(self, catalog_tasks: AsyncCatalogTasksResource) -> None:
-        self._catalog_tasks = catalog_tasks
+class AsyncPackagesResourceWithRawResponse:
+    def __init__(self, packages: AsyncPackagesResource) -> None:
+        self._packages = packages
 
         self.retrieve = async_to_raw_response_wrapper(
-            catalog_tasks.retrieve,
+            packages.retrieve,
         )
 
 
-class CatalogTasksResourceWithStreamingResponse:
-    def __init__(self, catalog_tasks: CatalogTasksResource) -> None:
-        self._catalog_tasks = catalog_tasks
+class PackagesResourceWithStreamingResponse:
+    def __init__(self, packages: PackagesResource) -> None:
+        self._packages = packages
 
         self.retrieve = to_streamed_response_wrapper(
-            catalog_tasks.retrieve,
+            packages.retrieve,
         )
 
 
-class AsyncCatalogTasksResourceWithStreamingResponse:
-    def __init__(self, catalog_tasks: AsyncCatalogTasksResource) -> None:
-        self._catalog_tasks = catalog_tasks
+class AsyncPackagesResourceWithStreamingResponse:
+    def __init__(self, packages: AsyncPackagesResource) -> None:
+        self._packages = packages
 
         self.retrieve = async_to_streamed_response_wrapper(
-            catalog_tasks.retrieve,
+            packages.retrieve,
         )
