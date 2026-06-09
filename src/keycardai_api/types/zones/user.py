@@ -1,11 +1,42 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 
 from ..._models import BaseModel
 
-__all__ = ["User"]
+__all__ = ["User", "RoleAssignment", "RoleAssignmentScope"]
+
+
+class RoleAssignmentScope(BaseModel):
+    """
+    The resource this grant is scoped to, or null when the grant is unscoped (applies to the owning zone itself).
+    """
+
+    id: str
+    """The ID of the scoped resource."""
+
+    type: str
+    """The kind of resource this grant is scoped to (e.g. `zone`)."""
+
+
+class RoleAssignment(BaseModel):
+    """A role granted to a user within a zone."""
+
+    role_id: str
+    """ID of the assigned role"""
+
+    role_identifier: str
+    """Opaque role identifier.
+
+    Treated as an opaque identifier by the API and unique within a zone.
+    """
+
+    scope: Optional[RoleAssignmentScope] = None
+    """
+    The resource this grant is scoped to, or null when the grant is unscoped
+    (applies to the owning zone itself).
+    """
 
 
 class User(BaseModel):
@@ -56,6 +87,12 @@ class User(BaseModel):
 
     This field is undefined when the source identity provider is deleted but the
     user is not deleted.
+    """
+
+    role_assignments: Optional[List[RoleAssignment]] = None
+    """Role grants for this user within the zone.
+
+    Populated only when `expand[]=role-assignments` is set on the listing endpoint.
     """
 
     session_count: Optional[int] = None
