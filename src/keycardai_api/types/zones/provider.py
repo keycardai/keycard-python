@@ -110,6 +110,9 @@ class Provider(BaseModel):
     organization_id: str
     """Organization that owns this provider"""
 
+    owner_type: Literal["platform", "customer"]
+    """Who owns this provider. Platform-owned providers cannot be modified via API."""
+
     slug: str
     """URL-safe identifier, unique within the zone"""
 
