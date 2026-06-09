@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.14.0 (2026-06-09)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/keycardai/keycard-python/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* **ACC-441:** add roles and role assignments to the management api ([9f5a1e7](https://github.com/keycardai/keycard-python/commit/9f5a1e774de8e64d5017806edcfbfc20bfa210b5))
+* **iam:** ACC-441 add management api role and assignment routes ([35dbd25](https://github.com/keycardai/keycard-python/commit/35dbd25dacaa358307a45a6d0fb4ebda8d959c0d))
+* **ID-269:** Add owner_type: platform | customer to zones ([64d5739](https://github.com/keycardai/keycard-python/commit/64d5739bb4fbc830d6385bc5732c3487ffa8c9fd))
+* **ID-270:** gate owner_type and federation.keycard to platform-owned entities ([9e181ce](https://github.com/keycardai/keycard-python/commit/9e181ce9fe1882dd8c0575393ccda5cc02014ef3))
+
 ## 0.13.0 (2026-05-28)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/keycardai/keycard-python/compare/v0.12.0...v0.13.0)
