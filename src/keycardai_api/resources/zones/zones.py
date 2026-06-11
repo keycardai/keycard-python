@@ -39,14 +39,6 @@ from .secrets import (
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
-from .packages import (
-    PackagesResource,
-    AsyncPackagesResource,
-    PackagesResourceWithRawResponse,
-    AsyncPackagesResourceWithRawResponse,
-    PackagesResourceWithStreamingResponse,
-    AsyncPackagesResourceWithStreamingResponse,
-)
 from .sessions import (
     SessionsResource,
     AsyncSessionsResource,
@@ -208,11 +200,6 @@ class ZonesResource(SyncAPIResource):
     def policies(self) -> PoliciesResource:
         """Policy CRUD operations"""
         return PoliciesResource(self._client)
-
-    @cached_property
-    def packages(self) -> PackagesResource:
-        """Browse available packages and their versions."""
-        return PackagesResource(self._client)
 
     @cached_property
     def policy_sets(self) -> PolicySetsResource:
@@ -581,11 +568,6 @@ class AsyncZonesResource(AsyncAPIResource):
     def policies(self) -> AsyncPoliciesResource:
         """Policy CRUD operations"""
         return AsyncPoliciesResource(self._client)
-
-    @cached_property
-    def packages(self) -> AsyncPackagesResource:
-        """Browse available packages and their versions."""
-        return AsyncPackagesResource(self._client)
 
     @cached_property
     def policy_sets(self) -> AsyncPolicySetsResource:
@@ -975,11 +957,6 @@ class ZonesResourceWithRawResponse:
         return PoliciesResourceWithRawResponse(self._zones.policies)
 
     @cached_property
-    def packages(self) -> PackagesResourceWithRawResponse:
-        """Browse available packages and their versions."""
-        return PackagesResourceWithRawResponse(self._zones.packages)
-
-    @cached_property
     def policy_sets(self) -> PolicySetsResourceWithRawResponse:
         """Policy set CRUD and binding management"""
         return PolicySetsResourceWithRawResponse(self._zones.policy_sets)
@@ -1069,11 +1046,6 @@ class AsyncZonesResourceWithRawResponse:
     def policies(self) -> AsyncPoliciesResourceWithRawResponse:
         """Policy CRUD operations"""
         return AsyncPoliciesResourceWithRawResponse(self._zones.policies)
-
-    @cached_property
-    def packages(self) -> AsyncPackagesResourceWithRawResponse:
-        """Browse available packages and their versions."""
-        return AsyncPackagesResourceWithRawResponse(self._zones.packages)
 
     @cached_property
     def policy_sets(self) -> AsyncPolicySetsResourceWithRawResponse:
@@ -1167,11 +1139,6 @@ class ZonesResourceWithStreamingResponse:
         return PoliciesResourceWithStreamingResponse(self._zones.policies)
 
     @cached_property
-    def packages(self) -> PackagesResourceWithStreamingResponse:
-        """Browse available packages and their versions."""
-        return PackagesResourceWithStreamingResponse(self._zones.packages)
-
-    @cached_property
     def policy_sets(self) -> PolicySetsResourceWithStreamingResponse:
         """Policy set CRUD and binding management"""
         return PolicySetsResourceWithStreamingResponse(self._zones.policy_sets)
@@ -1261,11 +1228,6 @@ class AsyncZonesResourceWithStreamingResponse:
     def policies(self) -> AsyncPoliciesResourceWithStreamingResponse:
         """Policy CRUD operations"""
         return AsyncPoliciesResourceWithStreamingResponse(self._zones.policies)
-
-    @cached_property
-    def packages(self) -> AsyncPackagesResourceWithStreamingResponse:
-        """Browse available packages and their versions."""
-        return AsyncPackagesResourceWithStreamingResponse(self._zones.packages)
 
     @cached_property
     def policy_sets(self) -> AsyncPolicySetsResourceWithStreamingResponse:
