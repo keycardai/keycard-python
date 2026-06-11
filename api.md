@@ -277,10 +277,6 @@ from keycardai_api.types.zones import (
 )
 ```
 
-Methods:
-
-- <code title="get /zones/{zone_id}/packages/{package_id}">client.zones.packages.<a href="./src/keycardai_api/resources/zones/packages.py">retrieve</a>(package_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/package.py">Package</a></code>
-
 ### Versions
 
 Types:

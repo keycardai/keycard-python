@@ -32,14 +32,6 @@ from .secrets import (
     SecretsResourceWithStreamingResponse,
     AsyncSecretsResourceWithStreamingResponse,
 )
-from .packages import (
-    PackagesResource,
-    AsyncPackagesResource,
-    PackagesResourceWithRawResponse,
-    AsyncPackagesResourceWithRawResponse,
-    PackagesResourceWithStreamingResponse,
-    AsyncPackagesResourceWithStreamingResponse,
-)
 from .policies import (
     PoliciesResource,
     AsyncPoliciesResource,
@@ -194,12 +186,6 @@ __all__ = [
     "AsyncPoliciesResourceWithRawResponse",
     "PoliciesResourceWithStreamingResponse",
     "AsyncPoliciesResourceWithStreamingResponse",
-    "PackagesResource",
-    "AsyncPackagesResource",
-    "PackagesResourceWithRawResponse",
-    "AsyncPackagesResourceWithRawResponse",
-    "PackagesResourceWithStreamingResponse",
-    "AsyncPackagesResourceWithStreamingResponse",
     "PolicySetsResource",
     "AsyncPolicySetsResource",
     "PolicySetsResourceWithRawResponse",
