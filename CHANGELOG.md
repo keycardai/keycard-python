@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.15.0 (2026-06-12)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/keycardai/keycard-python/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **ID-185:** Disable Zone Users ([79035f1](https://github.com/keycardai/keycard-python/commit/79035f19f162c3a9823899506f3e2ef2f55be21e))
+
+
+### Bug Fixes
+
+* Hide non-GA Catalog endpoints from docs and SDKs ([f8023d4](https://github.com/keycardai/keycard-python/commit/f8023d48db9c6f8fc19da8a5ae980f1349436777))
+* mark package get x-internal ([bed75a5](https://github.com/keycardai/keycard-python/commit/bed75a5d5eacfeda46141aede9684df4591cda08))
+
 ## 0.14.0 (2026-06-09)
 
 Full Changelog: [v0.13.0...v0.14.0](https://github.com/keycardai/keycard-python/compare/v0.13.0...v0.14.0)
