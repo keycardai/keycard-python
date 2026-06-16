@@ -21,9 +21,21 @@ class PolicySetWithBinding(PolicySet):
     mode: Optional[Literal["active", "shadow"]] = None
 
     scope_target_id: Optional[str] = None
+    """**Deprecated.** Use `target_id` instead.
+
+    Carries the active binding's target; null when unbound.
+    """
 
     shadow_version: Optional[int] = None
     """Human-readable version number of the shadow version"""
 
     shadow_version_id: Optional[str] = None
     """Public ID of the shadow (observed) version, if any"""
+
+    target_id: Optional[str] = None
+    """Target entity ID.
+
+    Equals `zone_id` for zone-targeted sets; the principal identifier for
+    principal-scoped sets. Null only for legacy non-zone sets that predate target
+    tracking.
+    """

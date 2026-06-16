@@ -65,7 +65,8 @@ class PolicySetsResource(SyncAPIResource):
         zone_id: str,
         *,
         name: str,
-        scope_type: Literal["zone", "resource", "user", "session"] | Omit = omit,
+        scope_type: Literal["zone"] | Omit = omit,
+        target_type: Literal["zone", "user"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -81,13 +82,14 @@ class PolicySetsResource(SyncAPIResource):
         version.
 
         Args:
-          scope_type:
-              The scope at which this policy set applies:
+          scope_type: **Deprecated.** Use `target_type` instead. Only `zone` is accepted; use
+              `target_type` for `user` targets.
+
+          target_type:
+              What this policy set targets:
 
               - `"zone"` — applies to all requests in the zone.
-              - `"resource"` — scoped to a specific resource.
-              - `"user"` — scoped to a specific user.
-              - `"session"` — scoped to a specific session.
+              - `"user"` — can be bound to a specific user.
 
           extra_headers: Send extra headers
 
@@ -114,6 +116,7 @@ class PolicySetsResource(SyncAPIResource):
                 {
                     "name": name,
                     "scope_type": scope_type,
+                    "target_type": target_type,
                 },
                 policy_set_create_params.PolicySetCreateParams,
             ),
@@ -234,6 +237,7 @@ class PolicySetsResource(SyncAPIResource):
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
+        filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
         query: SequenceNotStr[str] | Omit = omit,
@@ -249,7 +253,12 @@ class PolicySetsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetListResponse:
         """
-        List policy sets in a zone
+        Returns a paginated list of policy sets in the zone.
+
+        `filter[target_type]` defaults to `zone`, hiding principal-scoped sets (e.g.
+        per-user bundle sets) unless explicitly widened. The deprecated
+        `filter[scope_type]` is honored as an equivalent and suppresses the default;
+        supplying both with different value sets returns 400.
 
         Args:
           active: **Deprecated.** Use `filter[active]` instead.
@@ -290,13 +299,33 @@ class PolicySetsResource(SyncAPIResource):
               `items.enum`) so the server can return a targeted error for the comma-AND form
               instead of a generic "not in allowed values" response.
 
-          filter_scope_type: Filter on `scope_type` (policy sets only). Repeatable; repeated instances OR
+          filter_scope_type: **Deprecated.** Use `filter[target_type]` instead.
+
+              Filter on `scope_type` (policy sets only). Repeatable; repeated instances OR
               across values. See `FilterValues` in the shared spec for the full wire
               convention.
 
-              Allowed values: `zone`, `resource`, `user`, `session`. Unknown values return 400
-              with the list of allowed values. Comma-separated single values are rejected with
-              a 400 pointing at the repeated-parameter OR form.
+              Allowed values: `zone` only. Use `filter[target_type]` to select `user` (or
+              future) targets. Unknown values return 400 with the list of allowed values.
+              Comma-separated single values are rejected with a 400 pointing at the
+              repeated-parameter OR form.
+
+              Still honored for backward compatibility and suppresses the
+              `filter[target_type]` zone default. Supplying both this and
+              `filter[target_type]` with different value sets returns `400 Bad Request`.
+
+          filter_target_type: Filter on `target_type`. Repeatable; repeated instances OR across values. See
+              `FilterValues` in the shared spec for the full wire convention.
+
+              Allowed values: `zone`, `user` (`resource` and `session` are reserved and not
+              yet accepted). Unknown values return 400 with the list of allowed values.
+              Comma-separated single values are rejected with a 400 pointing at the
+              repeated-parameter OR form.
+
+              **Defaults to `zone`** when omitted (and no deprecated equivalent parameter is
+              supplied), so listings exclude principal-scoped elements unless explicitly
+              widened. On `listPolicies` the default is skipped when `filter[id]` is present,
+              so by-ID fetches resolve regardless of target.
 
               Note: the allowed-value enum is enforced in the handler (not as an OpenAPI
               `items.enum`) so the server can return a targeted error for the comma-AND form
@@ -353,6 +382,7 @@ class PolicySetsResource(SyncAPIResource):
                         "filter_active": filter_active,
                         "filter_owner_type": filter_owner_type,
                         "filter_scope_type": filter_scope_type,
+                        "filter_target_type": filter_target_type,
                         "limit": limit,
                         "order": order,
                         "query": query,
@@ -447,7 +477,8 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         zone_id: str,
         *,
         name: str,
-        scope_type: Literal["zone", "resource", "user", "session"] | Omit = omit,
+        scope_type: Literal["zone"] | Omit = omit,
+        target_type: Literal["zone", "user"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -463,13 +494,14 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         version.
 
         Args:
-          scope_type:
-              The scope at which this policy set applies:
+          scope_type: **Deprecated.** Use `target_type` instead. Only `zone` is accepted; use
+              `target_type` for `user` targets.
+
+          target_type:
+              What this policy set targets:
 
               - `"zone"` — applies to all requests in the zone.
-              - `"resource"` — scoped to a specific resource.
-              - `"user"` — scoped to a specific user.
-              - `"session"` — scoped to a specific session.
+              - `"user"` — can be bound to a specific user.
 
           extra_headers: Send extra headers
 
@@ -496,6 +528,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
                 {
                     "name": name,
                     "scope_type": scope_type,
+                    "target_type": target_type,
                 },
                 policy_set_create_params.PolicySetCreateParams,
             ),
@@ -616,6 +649,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
+        filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
         query: SequenceNotStr[str] | Omit = omit,
@@ -631,7 +665,12 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetListResponse:
         """
-        List policy sets in a zone
+        Returns a paginated list of policy sets in the zone.
+
+        `filter[target_type]` defaults to `zone`, hiding principal-scoped sets (e.g.
+        per-user bundle sets) unless explicitly widened. The deprecated
+        `filter[scope_type]` is honored as an equivalent and suppresses the default;
+        supplying both with different value sets returns 400.
 
         Args:
           active: **Deprecated.** Use `filter[active]` instead.
@@ -672,13 +711,33 @@ class AsyncPolicySetsResource(AsyncAPIResource):
               `items.enum`) so the server can return a targeted error for the comma-AND form
               instead of a generic "not in allowed values" response.
 
-          filter_scope_type: Filter on `scope_type` (policy sets only). Repeatable; repeated instances OR
+          filter_scope_type: **Deprecated.** Use `filter[target_type]` instead.
+
+              Filter on `scope_type` (policy sets only). Repeatable; repeated instances OR
               across values. See `FilterValues` in the shared spec for the full wire
               convention.
 
-              Allowed values: `zone`, `resource`, `user`, `session`. Unknown values return 400
-              with the list of allowed values. Comma-separated single values are rejected with
-              a 400 pointing at the repeated-parameter OR form.
+              Allowed values: `zone` only. Use `filter[target_type]` to select `user` (or
+              future) targets. Unknown values return 400 with the list of allowed values.
+              Comma-separated single values are rejected with a 400 pointing at the
+              repeated-parameter OR form.
+
+              Still honored for backward compatibility and suppresses the
+              `filter[target_type]` zone default. Supplying both this and
+              `filter[target_type]` with different value sets returns `400 Bad Request`.
+
+          filter_target_type: Filter on `target_type`. Repeatable; repeated instances OR across values. See
+              `FilterValues` in the shared spec for the full wire convention.
+
+              Allowed values: `zone`, `user` (`resource` and `session` are reserved and not
+              yet accepted). Unknown values return 400 with the list of allowed values.
+              Comma-separated single values are rejected with a 400 pointing at the
+              repeated-parameter OR form.
+
+              **Defaults to `zone`** when omitted (and no deprecated equivalent parameter is
+              supplied), so listings exclude principal-scoped elements unless explicitly
+              widened. On `listPolicies` the default is skipped when `filter[id]` is present,
+              so by-ID fetches resolve regardless of target.
 
               Note: the allowed-value enum is enforced in the handler (not as an OpenAPI
               `items.enum`) so the server can return a targeted error for the comma-AND form
@@ -735,6 +794,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
                         "filter_active": filter_active,
                         "filter_owner_type": filter_owner_type,
                         "filter_scope_type": filter_scope_type,
+                        "filter_target_type": filter_target_type,
                         "limit": limit,
                         "order": order,
                         "query": query,

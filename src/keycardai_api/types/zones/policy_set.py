@@ -26,12 +26,16 @@ class PolicySet(BaseModel):
     """
 
     scope_type: Literal["zone", "resource", "user", "session"]
-    """The scope at which this policy set applies:
+    """**Deprecated.** Use `target_type` instead. Carries the same value."""
+
+    target_type: Literal["zone", "user"]
+    """What this policy set targets:
 
     - `"zone"` — applies to all requests in the zone.
-    - `"resource"` — scoped to a specific resource.
     - `"user"` — scoped to a specific user.
-    - `"session"` — scoped to a specific session.
+
+    `resource` and `session` are reserved; legacy sets with those scopes carry them
+    in the deprecated `scope_type` field.
     """
 
     updated_at: datetime
