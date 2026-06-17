@@ -2,6 +2,7 @@
 
 from typing import List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from ..._models import BaseModel
 
@@ -63,6 +64,9 @@ class User(BaseModel):
 
     organization_id: str
     """Organization that owns this user"""
+
+    status: Literal["active", "disabled"]
+    """Status of the user. Disabled users cannot authenticate."""
 
     updated_at: datetime
     """Entity update timestamp"""

@@ -36,6 +36,7 @@ class TestPolicySets:
             zone_id="zone_id",
             name="name",
             scope_type="zone",
+            target_type="zone",
             x_api_version="X-API-Version",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -226,6 +227,7 @@ class TestPolicySets:
             filter_active=True,
             filter_owner_type=["string"],
             filter_scope_type=["string"],
+            filter_target_type=["string"],
             limit=1,
             order="asc",
             query=["x"],
@@ -356,6 +358,7 @@ class TestAsyncPolicySets:
             zone_id="zone_id",
             name="name",
             scope_type="zone",
+            target_type="zone",
             x_api_version="X-API-Version",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -546,6 +549,7 @@ class TestAsyncPolicySets:
             filter_active=True,
             filter_owner_type=["string"],
             filter_scope_type=["string"],
+            filter_target_type=["string"],
             limit=1,
             order="asc",
             query=["x"],

@@ -68,14 +68,37 @@ class PolicySetListParams(TypedDict, total=False):
     """
 
     filter_scope_type: Annotated[SequenceNotStr[str], PropertyInfo(alias="filter[scope_type]")]
-    """Filter on `scope_type` (policy sets only).
+    """**Deprecated.** Use `filter[target_type]` instead.
+
+    Filter on `scope_type` (policy sets only). Repeatable; repeated instances OR
+    across values. See `FilterValues` in the shared spec for the full wire
+    convention.
+
+    Allowed values: `zone` only. Use `filter[target_type]` to select `user` (or
+    future) targets. Unknown values return 400 with the list of allowed values.
+    Comma-separated single values are rejected with a 400 pointing at the
+    repeated-parameter OR form.
+
+    Still honored for backward compatibility and suppresses the
+    `filter[target_type]` zone default. Supplying both this and
+    `filter[target_type]` with different value sets returns `400 Bad Request`.
+    """
+
+    filter_target_type: Annotated[SequenceNotStr[str], PropertyInfo(alias="filter[target_type]")]
+    """Filter on `target_type`.
 
     Repeatable; repeated instances OR across values. See `FilterValues` in the
     shared spec for the full wire convention.
 
-    Allowed values: `zone`, `resource`, `user`, `session`. Unknown values return 400
-    with the list of allowed values. Comma-separated single values are rejected with
-    a 400 pointing at the repeated-parameter OR form.
+    Allowed values: `zone`, `user` (`resource` and `session` are reserved and not
+    yet accepted). Unknown values return 400 with the list of allowed values.
+    Comma-separated single values are rejected with a 400 pointing at the
+    repeated-parameter OR form.
+
+    **Defaults to `zone`** when omitted (and no deprecated equivalent parameter is
+    supplied), so listings exclude principal-scoped elements unless explicitly
+    widened. On `listPolicies` the default is skipped when `filter[id]` is present,
+    so by-ID fetches resolve regardless of target.
 
     Note: the allowed-value enum is enforced in the handler (not as an OpenAPI
     `items.enum`) so the server can return a targeted error for the comma-AND form
