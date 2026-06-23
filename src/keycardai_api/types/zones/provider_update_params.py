@@ -114,6 +114,12 @@ class ProtocolsOpenid(TypedDict, total=False):
     to clear.
     """
 
+    single_logout_enabled: Optional[bool]
+    """
+    When true, logging out of the zone propagates the logout to this provider's
+    end_session_endpoint (RP-initiated logout). Defaults to false.
+    """
+
     user_identifier_claim: Optional[str]
     """
     Name of a top-level string claim in this provider's ID Token to use as the user

@@ -12,3 +12,6 @@ class Metadata(BaseModel):
 
     docs_url: Optional[str] = None
     """Documentation URL"""
+
+    icon_url: Optional[str] = None
+    """Icon URL"""

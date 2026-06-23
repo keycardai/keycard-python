@@ -108,6 +108,12 @@ class ProtocolsOpenid(TypedDict, total=False):
     "groups"). Merged with the default scopes (openid, profile, email).
     """
 
+    single_logout_enabled: bool
+    """
+    When true, logging out of the zone propagates the logout to this provider's
+    end_session_endpoint (RP-initiated logout). Defaults to false.
+    """
+
     user_identifier_claim: str
     """
     Name of a top-level string claim in this provider's ID Token to use as the user
