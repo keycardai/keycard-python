@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.16.0 (2026-06-30)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/keycardai/keycard-python/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **ID-328:** add single_logout_enabled provider config ([1f22fa5](https://github.com/keycardai/keycard-python/commit/1f22fa59bd49ec2b1368c8b1e58c6c7bd14e1bcc))
+
+
+### Bug Fixes
+
+* align create/update schema validations ([dae89df](https://github.com/keycardai/keycard-python/commit/dae89dfbb053ae43a3fdfb46ea7087b890b46c91))
+
 ## 0.15.0 (2026-06-16)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/keycardai/keycard-python/compare/v0.14.0...v0.15.0)
