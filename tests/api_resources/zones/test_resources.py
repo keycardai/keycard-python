@@ -47,7 +47,7 @@ class TestResources:
                 "icon_url": "https://example.com",
             },
             prefix=True,
-            scopes=["string"],
+            scopes=["x"],
         )
         assert_matches_type(Resource, resource, path=["response"])
 
@@ -359,7 +359,7 @@ class TestAsyncResources:
                 "icon_url": "https://example.com",
             },
             prefix=True,
-            scopes=["string"],
+            scopes=["x"],
         )
         assert_matches_type(Resource, resource, path=["response"])
 
