@@ -13,3 +13,6 @@ class MetadataUpdateParam(TypedDict, total=False):
 
     docs_url: Optional[str]
     """Documentation URL (set to null to unset)"""
+
+    icon_url: Optional[str]
+    """Icon URL (set to null to unset)"""

@@ -12,3 +12,6 @@ class MetadataParam(TypedDict, total=False):
 
     docs_url: str
     """Documentation URL"""
+
+    icon_url: str
+    """Icon URL"""

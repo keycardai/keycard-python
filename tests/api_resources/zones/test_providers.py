@@ -59,6 +59,7 @@ class TestProviders:
                 },
                 "openid": {
                     "scopes": ["string"],
+                    "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
                     "userinfo_endpoint": "https://example.com",
                 },
@@ -197,6 +198,7 @@ class TestProviders:
                 },
                 "openid": {
                     "scopes": ["string"],
+                    "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
                     "userinfo_endpoint": "https://example.com",
                 },
@@ -402,6 +404,7 @@ class TestAsyncProviders:
                 },
                 "openid": {
                     "scopes": ["string"],
+                    "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
                     "userinfo_endpoint": "https://example.com",
                 },
@@ -540,6 +543,7 @@ class TestAsyncProviders:
                 },
                 "openid": {
                     "scopes": ["string"],
+                    "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
                     "userinfo_endpoint": "https://example.com",
                 },

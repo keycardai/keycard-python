@@ -47,7 +47,10 @@ class TestApplications:
                 }
             ],
             description="description",
-            metadata={"docs_url": "https://example.com"},
+            metadata={
+                "docs_url": "https://example.com",
+                "icon_url": "https://example.com",
+            },
             protocols={
                 "oauth2": {
                     "post_logout_redirect_uris": ["https://example.com"],
@@ -167,7 +170,10 @@ class TestApplications:
             consent="implicit",
             description="description",
             identifier="x",
-            metadata={"docs_url": "https://example.com"},
+            metadata={
+                "docs_url": "https://example.com",
+                "icon_url": "https://example.com",
+            },
             name="x",
             protocols={
                 "oauth2": {
@@ -501,7 +507,10 @@ class TestAsyncApplications:
                 }
             ],
             description="description",
-            metadata={"docs_url": "https://example.com"},
+            metadata={
+                "docs_url": "https://example.com",
+                "icon_url": "https://example.com",
+            },
             protocols={
                 "oauth2": {
                     "post_logout_redirect_uris": ["https://example.com"],
@@ -621,7 +630,10 @@ class TestAsyncApplications:
             consent="implicit",
             description="description",
             identifier="x",
-            metadata={"docs_url": "https://example.com"},
+            metadata={
+                "docs_url": "https://example.com",
+                "icon_url": "https://example.com",
+            },
             name="x",
             protocols={
                 "oauth2": {

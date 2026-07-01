@@ -42,9 +42,12 @@ class TestResources:
             credential_lifetime_seconds=60,
             credential_provider_id="credential_provider_id",
             description="description",
-            metadata={"docs_url": "https://example.com"},
+            metadata={
+                "docs_url": "https://example.com",
+                "icon_url": "https://example.com",
+            },
             prefix=True,
-            scopes=["string"],
+            scopes=["x"],
         )
         assert_matches_type(Resource, resource, path=["response"])
 
@@ -161,7 +164,10 @@ class TestResources:
             credential_provider_id="credential_provider_id",
             description="description",
             identifier="x",
-            metadata={"docs_url": "https://example.com"},
+            metadata={
+                "docs_url": "https://example.com",
+                "icon_url": "https://example.com",
+            },
             name="x",
             prefix=True,
             scopes=["x"],
@@ -348,9 +354,12 @@ class TestAsyncResources:
             credential_lifetime_seconds=60,
             credential_provider_id="credential_provider_id",
             description="description",
-            metadata={"docs_url": "https://example.com"},
+            metadata={
+                "docs_url": "https://example.com",
+                "icon_url": "https://example.com",
+            },
             prefix=True,
-            scopes=["string"],
+            scopes=["x"],
         )
         assert_matches_type(Resource, resource, path=["response"])
 
@@ -467,7 +476,10 @@ class TestAsyncResources:
             credential_provider_id="credential_provider_id",
             description="description",
             identifier="x",
-            metadata={"docs_url": "https://example.com"},
+            metadata={
+                "docs_url": "https://example.com",
+                "icon_url": "https://example.com",
+            },
             name="x",
             prefix=True,
             scopes=["x"],
