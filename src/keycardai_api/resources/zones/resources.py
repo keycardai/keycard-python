@@ -271,6 +271,7 @@ class ResourcesResource(SyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -281,8 +282,12 @@ class ResourcesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ResourceListResponse:
-        """
-        Returns a list of resources in the specified zone
+        """Returns a list of resources in the specified zone.
+
+        Filter by exact identifier
+        via `filter[identifier]` (repeatable, OR'd). Matching is exact: identifiers are
+        unique per zone, so a filter returns at most one resource per value and never
+        performs URL prefix resolution.
 
         Args:
           after: Cursor for forward pagination
@@ -290,6 +295,8 @@ class ResourcesResource(SyncAPIResource):
           before: Cursor for backward pagination
 
           credential_provider_id: Filter resources by credential provider ID
+
+          filter_identifier: Filter by exact resource identifier
 
           identifier: Filter resources by identifier
 
@@ -318,6 +325,7 @@ class ResourcesResource(SyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_identifier": filter_identifier,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
@@ -606,6 +614,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -616,8 +625,12 @@ class AsyncResourcesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ResourceListResponse:
-        """
-        Returns a list of resources in the specified zone
+        """Returns a list of resources in the specified zone.
+
+        Filter by exact identifier
+        via `filter[identifier]` (repeatable, OR'd). Matching is exact: identifiers are
+        unique per zone, so a filter returns at most one resource per value and never
+        performs URL prefix resolution.
 
         Args:
           after: Cursor for forward pagination
@@ -625,6 +638,8 @@ class AsyncResourcesResource(AsyncAPIResource):
           before: Cursor for backward pagination
 
           credential_provider_id: Filter resources by credential provider ID
+
+          filter_identifier: Filter by exact resource identifier
 
           identifier: Filter resources by identifier
 
@@ -653,6 +668,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_identifier": filter_identifier,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
