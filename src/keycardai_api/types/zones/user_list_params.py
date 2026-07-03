@@ -35,6 +35,9 @@ class UserListParams(TypedDict, total=False):
     Repeatable, max 100. Mutually exclusive with after/before.
     """
 
+    filter_identifier: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[identifier]")]
+    """Filter by exact user identifier"""
+
     limit: int
     """Maximum number of items to return"""
 
