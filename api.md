@@ -261,46 +261,6 @@ Methods:
 - <code title="get /zones/{zone_id}/policies/{policy_id}/versions">client.zones.policies.versions.<a href="./src/keycardai_api/resources/zones/policies/versions.py">list</a>(policy_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policies/version_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policies/version_list_response.py">VersionListResponse</a></code>
 - <code title="delete /zones/{zone_id}/policies/{policy_id}/versions/{version_id}">client.zones.policies.versions.<a href="./src/keycardai_api/resources/zones/policies/versions.py">archive</a>(version_id, \*, zone_id, policy_id) -> <a href="./src/keycardai_api/types/zones/policies/policy_version.py">PolicyVersion</a></code>
 
-## Packages
-
-Types:
-
-```python
-from keycardai_api.types.zones import (
-    InputState,
-    Package,
-    PackageDraft,
-    PackageInputBinding,
-    PackageList,
-    PackageOutputBinding,
-    PackageSource,
-)
-```
-
-### Versions
-
-Types:
-
-```python
-from keycardai_api.types.zones.packages import PackageVersion, PackageVersionList
-```
-
-## Installs
-
-Types:
-
-```python
-from keycardai_api.types.zones import Install, InstallList, InstallStatus
-```
-
-## CatalogTasks
-
-Types:
-
-```python
-from keycardai_api.types.zones import Task, TaskOperation, TaskStatus
-```
-
 ## PolicySets
 
 Types:

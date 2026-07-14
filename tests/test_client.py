@@ -39,6 +39,7 @@ from .utils import update_env
 
 T = TypeVar("T")
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
+api_key = "My API Key"
 client_id = "My Client ID"
 client_secret = "My Client Secret"
 
@@ -137,6 +138,10 @@ class TestKeycardAPI:
         copied = client.copy()
         assert id(copied) != id(client)
 
+        copied = client.copy(api_key="another My API Key")
+        assert copied.api_key == "another My API Key"
+        assert client.api_key == "My API Key"
+
         copied = client.copy(client_id="another My Client ID")
         assert copied.client_id == "another My Client ID"
         assert client.client_id == "My Client ID"
@@ -164,6 +169,7 @@ class TestKeycardAPI:
     def test_copy_default_headers(self) -> None:
         client = KeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -203,6 +209,7 @@ class TestKeycardAPI:
     def test_copy_default_query(self) -> None:
         client = KeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -333,6 +340,7 @@ class TestKeycardAPI:
     def test_client_timeout_option(self) -> None:
         client = KeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -350,6 +358,7 @@ class TestKeycardAPI:
         with httpx.Client(timeout=None) as http_client:
             client = KeycardAPI(
                 base_url=base_url,
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -366,6 +375,7 @@ class TestKeycardAPI:
         with httpx.Client() as http_client:
             client = KeycardAPI(
                 base_url=base_url,
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -382,6 +392,7 @@ class TestKeycardAPI:
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
             client = KeycardAPI(
                 base_url=base_url,
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -399,6 +410,7 @@ class TestKeycardAPI:
             async with httpx.AsyncClient() as http_client:
                 KeycardAPI(
                     base_url=base_url,
+                    api_key=api_key,
                     client_id=client_id,
                     client_secret=client_secret,
                     _strict_response_validation=True,
@@ -408,6 +420,7 @@ class TestKeycardAPI:
     def test_default_headers_option(self) -> None:
         test_client = KeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -419,6 +432,7 @@ class TestKeycardAPI:
 
         test_client2 = KeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -437,6 +451,7 @@ class TestKeycardAPI:
     def test_default_query_option(self) -> None:
         client = KeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -636,6 +651,7 @@ class TestKeycardAPI:
 
         with KeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -733,6 +749,7 @@ class TestKeycardAPI:
     def test_base_url_setter(self) -> None:
         client = KeycardAPI(
             base_url="https://example.com/from_init",
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -747,7 +764,9 @@ class TestKeycardAPI:
 
     def test_base_url_env(self) -> None:
         with update_env(KEYCARD_API_BASE_URL="http://localhost:5000/from/env"):
-            client = KeycardAPI(client_id=client_id, client_secret=client_secret, _strict_response_validation=True)
+            client = KeycardAPI(
+                api_key=api_key, client_id=client_id, client_secret=client_secret, _strict_response_validation=True
+            )
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
@@ -755,12 +774,14 @@ class TestKeycardAPI:
         [
             KeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
             ),
             KeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -785,12 +806,14 @@ class TestKeycardAPI:
         [
             KeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
             ),
             KeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -815,12 +838,14 @@ class TestKeycardAPI:
         [
             KeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
             ),
             KeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -842,7 +867,11 @@ class TestKeycardAPI:
 
     def test_copied_client_does_not_close_http(self) -> None:
         test_client = KeycardAPI(
-            base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=True
+            base_url=base_url,
+            api_key=api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            _strict_response_validation=True,
         )
         assert not test_client.is_closed()
 
@@ -855,7 +884,11 @@ class TestKeycardAPI:
 
     def test_client_context_manager(self) -> None:
         test_client = KeycardAPI(
-            base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=True
+            base_url=base_url,
+            api_key=api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            _strict_response_validation=True,
         )
         with test_client as c2:
             assert c2 is test_client
@@ -879,6 +912,7 @@ class TestKeycardAPI:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
             KeycardAPI(
                 base_url=base_url,
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -893,14 +927,22 @@ class TestKeycardAPI:
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
         strict_client = KeycardAPI(
-            base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=True
+            base_url=base_url,
+            api_key=api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            _strict_response_validation=True,
         )
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
         non_strict_client = KeycardAPI(
-            base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=False
+            base_url=base_url,
+            api_key=api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            _strict_response_validation=False,
         )
 
         response = non_strict_client.get("/foo", cast_to=Model)
@@ -1116,6 +1158,10 @@ class TestAsyncKeycardAPI:
         copied = async_client.copy()
         assert id(copied) != id(async_client)
 
+        copied = async_client.copy(api_key="another My API Key")
+        assert copied.api_key == "another My API Key"
+        assert async_client.api_key == "My API Key"
+
         copied = async_client.copy(client_id="another My Client ID")
         assert copied.client_id == "another My Client ID"
         assert async_client.client_id == "My Client ID"
@@ -1143,6 +1189,7 @@ class TestAsyncKeycardAPI:
     async def test_copy_default_headers(self) -> None:
         client = AsyncKeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -1182,6 +1229,7 @@ class TestAsyncKeycardAPI:
     async def test_copy_default_query(self) -> None:
         client = AsyncKeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -1314,6 +1362,7 @@ class TestAsyncKeycardAPI:
     async def test_client_timeout_option(self) -> None:
         client = AsyncKeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -1331,6 +1380,7 @@ class TestAsyncKeycardAPI:
         async with httpx.AsyncClient(timeout=None) as http_client:
             client = AsyncKeycardAPI(
                 base_url=base_url,
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -1347,6 +1397,7 @@ class TestAsyncKeycardAPI:
         async with httpx.AsyncClient() as http_client:
             client = AsyncKeycardAPI(
                 base_url=base_url,
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -1363,6 +1414,7 @@ class TestAsyncKeycardAPI:
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
             client = AsyncKeycardAPI(
                 base_url=base_url,
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -1380,6 +1432,7 @@ class TestAsyncKeycardAPI:
             with httpx.Client() as http_client:
                 AsyncKeycardAPI(
                     base_url=base_url,
+                    api_key=api_key,
                     client_id=client_id,
                     client_secret=client_secret,
                     _strict_response_validation=True,
@@ -1389,6 +1442,7 @@ class TestAsyncKeycardAPI:
     async def test_default_headers_option(self) -> None:
         test_client = AsyncKeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -1400,6 +1454,7 @@ class TestAsyncKeycardAPI:
 
         test_client2 = AsyncKeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -1418,6 +1473,7 @@ class TestAsyncKeycardAPI:
     async def test_default_query_option(self) -> None:
         client = AsyncKeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -1617,6 +1673,7 @@ class TestAsyncKeycardAPI:
 
         async with AsyncKeycardAPI(
             base_url=base_url,
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -1718,6 +1775,7 @@ class TestAsyncKeycardAPI:
     async def test_base_url_setter(self) -> None:
         client = AsyncKeycardAPI(
             base_url="https://example.com/from_init",
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             _strict_response_validation=True,
@@ -1732,7 +1790,9 @@ class TestAsyncKeycardAPI:
 
     async def test_base_url_env(self) -> None:
         with update_env(KEYCARD_API_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncKeycardAPI(client_id=client_id, client_secret=client_secret, _strict_response_validation=True)
+            client = AsyncKeycardAPI(
+                api_key=api_key, client_id=client_id, client_secret=client_secret, _strict_response_validation=True
+            )
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
@@ -1740,12 +1800,14 @@ class TestAsyncKeycardAPI:
         [
             AsyncKeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
             ),
             AsyncKeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -1770,12 +1832,14 @@ class TestAsyncKeycardAPI:
         [
             AsyncKeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
             ),
             AsyncKeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -1800,12 +1864,14 @@ class TestAsyncKeycardAPI:
         [
             AsyncKeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
             ),
             AsyncKeycardAPI(
                 base_url="http://localhost:5000/custom/path/",
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -1827,7 +1893,11 @@ class TestAsyncKeycardAPI:
 
     async def test_copied_client_does_not_close_http(self) -> None:
         test_client = AsyncKeycardAPI(
-            base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=True
+            base_url=base_url,
+            api_key=api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            _strict_response_validation=True,
         )
         assert not test_client.is_closed()
 
@@ -1841,7 +1911,11 @@ class TestAsyncKeycardAPI:
 
     async def test_client_context_manager(self) -> None:
         test_client = AsyncKeycardAPI(
-            base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=True
+            base_url=base_url,
+            api_key=api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            _strict_response_validation=True,
         )
         async with test_client as c2:
             assert c2 is test_client
@@ -1867,6 +1941,7 @@ class TestAsyncKeycardAPI:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
             AsyncKeycardAPI(
                 base_url=base_url,
+                api_key=api_key,
                 client_id=client_id,
                 client_secret=client_secret,
                 _strict_response_validation=True,
@@ -1881,14 +1956,22 @@ class TestAsyncKeycardAPI:
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
         strict_client = AsyncKeycardAPI(
-            base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=True
+            base_url=base_url,
+            api_key=api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            _strict_response_validation=True,
         )
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
         non_strict_client = AsyncKeycardAPI(
-            base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=False
+            base_url=base_url,
+            api_key=api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            _strict_response_validation=False,
         )
 
         response = await non_strict_client.get("/foo", cast_to=Model)
