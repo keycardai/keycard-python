@@ -161,10 +161,25 @@ class KeycardAPI(SyncAPIClient):
         return Querystring(array_format="repeat")
 
     @override
+    def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
+        headers: dict[str, str] = {}
+        if security.get("bearer_auth", False):
+            for key, value in self._bearer_auth.items():
+                headers.setdefault(key, value)
+        return headers
+
+    @override
     def _custom_auth(self, security: SecurityOptions) -> httpx.Auth | None:
         if security.get("o_auth2", False) and self._o_auth2 is not None:
             return self._o_auth2
         return None
+
+    @property
+    def _bearer_auth(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
 
     @property
     def _o_auth2(self) -> httpx.Auth | None:
@@ -391,10 +406,25 @@ class AsyncKeycardAPI(AsyncAPIClient):
         return Querystring(array_format="repeat")
 
     @override
+    def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
+        headers: dict[str, str] = {}
+        if security.get("bearer_auth", False):
+            for key, value in self._bearer_auth.items():
+                headers.setdefault(key, value)
+        return headers
+
+    @override
     def _custom_auth(self, security: SecurityOptions) -> httpx.Auth | None:
         if security.get("o_auth2", False) and self._o_auth2 is not None:
             return self._o_auth2
         return None
+
+    @property
+    def _bearer_auth(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
 
     @property
     def _o_auth2(self) -> httpx.Auth | None:
