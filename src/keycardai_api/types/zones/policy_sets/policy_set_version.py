@@ -41,11 +41,23 @@ class PolicySetVersion(BaseModel):
     version: int
 
     active: Optional[bool] = None
-    """Whether this policy set version is currently bound with mode='active'"""
+    """Whether this policy set version is currently bound with mode='active'.
+
+    Always populated in responses; clients must treat absence as unknown rather than
+    inferring 'not bound'.
+    """
 
     archived_at: Optional[datetime] = None
+    """Timestamp when the version was archived.
+
+    Non-null only for archived versions; null or absent means not archived.
+    """
 
     archived_by: Optional[str] = None
+    """Identifier of the actor that archived the version.
+
+    Null or absent means not archived.
+    """
 
     attestation: Optional[AttestationStatement] = None
     """Decoded content of an Attestation JWS payload.
