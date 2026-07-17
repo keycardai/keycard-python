@@ -20,8 +20,19 @@ class UserListParams(TypedDict, total=False):
 
     expand: Annotated[
         Union[
-            Literal["total_count", "session_count", "grant_count", "role-assignments"],
-            List[Literal["total_count", "session_count", "grant_count", "role-assignments"]],
+            Literal[
+                "total_count", "session_count", "grant_count", "role-assignments", "credentials", "credentials.provider"
+            ],
+            List[
+                Literal[
+                    "total_count",
+                    "session_count",
+                    "grant_count",
+                    "role-assignments",
+                    "credentials",
+                    "credentials.provider",
+                ]
+            ],
         ],
         PropertyInfo(alias="expand[]"),
     ]
