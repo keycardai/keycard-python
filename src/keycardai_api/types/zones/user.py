@@ -84,9 +84,17 @@ class RoleAssignment(BaseModel):
     """ID of the assigned role"""
 
     role_identifier: str
-    """Opaque role identifier.
+    """
+    Role identifier: a lowercase slug (letters and digits separated by single
+    hyphens or underscores), unique per owner type within a zone. Role identifiers
+    surface in policy evaluation, so the slug restriction keeps them unambiguous in
+    policy text.
+    """
 
-    Treated as an opaque identifier by the API and unique within a zone.
+    role_owner_type: Literal["platform", "customer"]
+    """Owner type of the granted role.
+
+    Disambiguates roles that share an identifier across owner types.
     """
 
     scope: Optional[RoleAssignmentScope] = None
