@@ -430,3 +430,11 @@ Methods:
 
 - <code title="get /invitations/{token}">client.invitations.<a href="./src/keycardai_api/resources/invitations.py">retrieve</a>(token) -> <a href="./src/keycardai_api/types/invitation_retrieve_response.py">InvitationRetrieveResponse</a></code>
 - <code title="post /invitations/{token}/accept">client.invitations.<a href="./src/keycardai_api/resources/invitations.py">accept</a>(token) -> <a href="./src/keycardai_api/types/invitation_accept_response.py">InvitationAcceptResponse</a></code>
+
+# PolicyBundle
+
+Methods:
+
+- <code title="get /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">retrieve</a>() -> BinaryAPIResponse</code>
+- <code title="put /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">update</a>(\*\*<a href="src/keycardai_api/types/policy_bundle_update_params.py">params</a>) -> BinaryAPIResponse</code>
+- <code title="delete /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">reset</a>() -> None</code>
