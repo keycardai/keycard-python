@@ -436,5 +436,5 @@ Methods:
 Methods:
 
 - <code title="get /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">retrieve</a>() -> BinaryAPIResponse</code>
-- <code title="put /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">update</a>(\*\*<a href="src/keycardai_api/types/policy_bundle_update_params.py">params</a>) -> BinaryAPIResponse</code>
+- <code title="put /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">update</a>(body, \*\*<a href="src/keycardai_api/types/policy_bundle_update_params.py">params</a>) -> BinaryAPIResponse</code>
 - <code title="delete /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">reset</a>() -> None</code>
