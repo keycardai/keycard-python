@@ -2,11 +2,25 @@
 
 from __future__ import annotations
 
+import os
+
 import httpx
 
-from ..types import policy_bundle_update_params
-from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, omit, not_given
-from .._utils import maybe_transform, strip_not_given, async_maybe_transform
+from .._files import read_file_content, async_read_file_content
+from .._types import (
+    Body,
+    Omit,
+    Query,
+    Headers,
+    NoneType,
+    NotGiven,
+    BinaryTypes,
+    FileContent,
+    AsyncBinaryTypes,
+    omit,
+    not_given,
+)
+from .._utils import strip_not_given
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -106,7 +120,7 @@ class PolicyBundleResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "application/vnd.keycard.policy-bundle.v1+tar+gzip", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
         extra_headers = {
             **strip_not_given(
                 {
@@ -130,8 +144,8 @@ class PolicyBundleResource(SyncAPIResource):
 
     def update(
         self,
+        body: FileContent | BinaryTypes,
         *,
-        body: FileTypes,
         if_match: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -180,7 +194,7 @@ class PolicyBundleResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "application/vnd.keycard.policy-bundle.v1+tar+gzip", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
         extra_headers = {
             **strip_not_given(
                 {
@@ -190,9 +204,10 @@ class PolicyBundleResource(SyncAPIResource):
             ),
             **(extra_headers or {}),
         }
+        extra_headers = {"Content-Type": "application/octet-stream", **(extra_headers or {})}
         return self._put(
             "/policy/bundle",
-            body=maybe_transform(body, policy_bundle_update_params.PolicyBundleUpdateParams),
+            content=read_file_content(body) if isinstance(body, os.PathLike) else body,
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -321,7 +336,7 @@ class AsyncPolicyBundleResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "application/vnd.keycard.policy-bundle.v1+tar+gzip", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
         extra_headers = {
             **strip_not_given(
                 {
@@ -345,8 +360,8 @@ class AsyncPolicyBundleResource(AsyncAPIResource):
 
     async def update(
         self,
+        body: FileContent | AsyncBinaryTypes,
         *,
-        body: FileTypes,
         if_match: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -395,7 +410,7 @@ class AsyncPolicyBundleResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "application/vnd.keycard.policy-bundle.v1+tar+gzip", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
         extra_headers = {
             **strip_not_given(
                 {
@@ -405,9 +420,10 @@ class AsyncPolicyBundleResource(AsyncAPIResource):
             ),
             **(extra_headers or {}),
         }
+        extra_headers = {"Content-Type": "application/octet-stream", **(extra_headers or {})}
         return await self._put(
             "/policy/bundle",
-            body=await async_maybe_transform(body, policy_bundle_update_params.PolicyBundleUpdateParams),
+            content=await async_read_file_content(body) if isinstance(body, os.PathLike) else body,
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
