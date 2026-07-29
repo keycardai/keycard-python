@@ -33,3 +33,15 @@ class ResourceListParams(TypedDict, total=False):
     """Maximum number of items to return"""
 
     slug: str
+
+    traits: List[Literal["external", "proxy", "mcp-server"]]
+    """
+    Filter by traits (OR matching - returns resources with any of the specified
+    traits)
+    """
+
+    traits_all: Annotated[List[Literal["external", "proxy", "mcp-server"]], PropertyInfo(alias="traits[all]")]
+    """
+    Filter by traits (AND matching - returns resources with all of the specified
+    traits)
+    """
