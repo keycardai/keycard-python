@@ -275,6 +275,8 @@ class ResourcesResource(SyncAPIResource):
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
+        traits: List[Literal["external", "proxy", "mcp-server"]] | Omit = omit,
+        traits_all: List[Literal["external", "proxy", "mcp-server"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -287,7 +289,8 @@ class ResourcesResource(SyncAPIResource):
         Filter by exact identifier
         via `filter[identifier]` (repeatable, OR'd). Matching is exact: identifiers are
         unique per zone, so a filter returns at most one resource per value and never
-        performs URL prefix resolution.
+        performs URL prefix resolution. Filter by trait via `traits[all]` (AND — has all
+        listed traits) or `traits[]` (OR — has any), each repeatable.
 
         Args:
           after: Cursor for forward pagination
@@ -301,6 +304,12 @@ class ResourcesResource(SyncAPIResource):
           identifier: Filter resources by identifier
 
           limit: Maximum number of items to return
+
+          traits: Filter by traits (OR matching - returns resources with any of the specified
+              traits)
+
+          traits_all: Filter by traits (AND matching - returns resources with all of the specified
+              traits)
 
           extra_headers: Send extra headers
 
@@ -329,6 +338,8 @@ class ResourcesResource(SyncAPIResource):
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
+                        "traits": traits,
+                        "traits_all": traits_all,
                     },
                     resource_list_params.ResourceListParams,
                 ),
@@ -618,6 +629,8 @@ class AsyncResourcesResource(AsyncAPIResource):
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
+        traits: List[Literal["external", "proxy", "mcp-server"]] | Omit = omit,
+        traits_all: List[Literal["external", "proxy", "mcp-server"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -630,7 +643,8 @@ class AsyncResourcesResource(AsyncAPIResource):
         Filter by exact identifier
         via `filter[identifier]` (repeatable, OR'd). Matching is exact: identifiers are
         unique per zone, so a filter returns at most one resource per value and never
-        performs URL prefix resolution.
+        performs URL prefix resolution. Filter by trait via `traits[all]` (AND — has all
+        listed traits) or `traits[]` (OR — has any), each repeatable.
 
         Args:
           after: Cursor for forward pagination
@@ -644,6 +658,12 @@ class AsyncResourcesResource(AsyncAPIResource):
           identifier: Filter resources by identifier
 
           limit: Maximum number of items to return
+
+          traits: Filter by traits (OR matching - returns resources with any of the specified
+              traits)
+
+          traits_all: Filter by traits (AND matching - returns resources with all of the specified
+              traits)
 
           extra_headers: Send extra headers
 
@@ -672,6 +692,8 @@ class AsyncResourcesResource(AsyncAPIResource):
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
+                        "traits": traits,
+                        "traits_all": traits_all,
                     },
                     resource_list_params.ResourceListParams,
                 ),
