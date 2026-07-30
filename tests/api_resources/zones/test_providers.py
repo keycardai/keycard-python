@@ -40,7 +40,7 @@ class TestProviders:
             client_id="client_id",
             client_secret="client_secret",
             description="description",
-            metadata={},
+            metadata={"icon_url": "https://example.com"},
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
@@ -178,7 +178,7 @@ class TestProviders:
             client_secret="client_secret",
             description="description",
             identifier="x",
-            metadata={},
+            metadata={"icon_url": "https://example.com"},
             name="x",
             protocols={
                 "oauth2": {
@@ -385,7 +385,7 @@ class TestAsyncProviders:
             client_id="client_id",
             client_secret="client_secret",
             description="description",
-            metadata={},
+            metadata={"icon_url": "https://example.com"},
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
@@ -523,7 +523,7 @@ class TestAsyncProviders:
             client_secret="client_secret",
             description="description",
             identifier="x",
-            metadata={},
+            metadata={"icon_url": "https://example.com"},
             name="x",
             protocols={
                 "oauth2": {

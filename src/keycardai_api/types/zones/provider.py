@@ -6,7 +6,14 @@ from typing_extensions import Literal
 
 from ..._models import BaseModel
 
-__all__ = ["Provider", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
+__all__ = ["Provider", "Metadata", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
+
+
+class Metadata(BaseModel):
+    """Provider metadata"""
+
+    icon_url: Optional[str] = None
+    """Icon URL"""
 
 
 class ProtocolsOauth2(BaseModel):
@@ -137,7 +144,7 @@ class Provider(BaseModel):
     description: Optional[str] = None
     """Human-readable description"""
 
-    metadata: Optional[object] = None
+    metadata: Optional[Metadata] = None
     """Provider metadata"""
 
     protocols: Optional[Protocols] = None

@@ -54,7 +54,7 @@ class ProvidersResource(SyncAPIResource):
         client_id: str | Omit = omit,
         client_secret: str | Omit = omit,
         description: Optional[str] | Omit = omit,
-        metadata: object | Omit = omit,
+        metadata: provider_create_params.Metadata | Omit = omit,
         protocols: provider_create_params.Protocols | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -160,7 +160,7 @@ class ProvidersResource(SyncAPIResource):
         client_secret: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
-        metadata: Optional[object] | Omit = omit,
+        metadata: Optional[provider_update_params.Metadata] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[provider_update_params.Protocols] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -354,7 +354,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         client_id: str | Omit = omit,
         client_secret: str | Omit = omit,
         description: Optional[str] | Omit = omit,
-        metadata: object | Omit = omit,
+        metadata: provider_create_params.Metadata | Omit = omit,
         protocols: provider_create_params.Protocols | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -460,7 +460,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         client_secret: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         identifier: str | Omit = omit,
-        metadata: Optional[object] | Omit = omit,
+        metadata: Optional[provider_update_params.Metadata] | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[provider_update_params.Protocols] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
