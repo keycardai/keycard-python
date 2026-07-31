@@ -272,6 +272,7 @@ class ResourcesResource(SyncAPIResource):
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_owner_type: Literal["platform", "customer"] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -302,6 +303,8 @@ class ResourcesResource(SyncAPIResource):
           credential_provider_id: Filter resources by credential provider ID
 
           filter_identifier: Filter by exact resource identifier
+
+          filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
@@ -338,6 +341,7 @@ class ResourcesResource(SyncAPIResource):
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
                         "filter_identifier": filter_identifier,
+                        "filter_owner_type": filter_owner_type,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
@@ -629,6 +633,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_owner_type: Literal["platform", "customer"] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -659,6 +664,8 @@ class AsyncResourcesResource(AsyncAPIResource):
           credential_provider_id: Filter resources by credential provider ID
 
           filter_identifier: Filter by exact resource identifier
+
+          filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
@@ -695,6 +702,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
                         "filter_identifier": filter_identifier,
+                        "filter_owner_type": filter_owner_type,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
