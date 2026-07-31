@@ -26,6 +26,9 @@ class ResourceListParams(TypedDict, total=False):
     filter_identifier: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[identifier]")]
     """Filter by exact resource identifier"""
 
+    filter_owner_type: Annotated[Literal["platform", "customer"], PropertyInfo(alias="filter[owner_type]")]
+    """Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created)."""
+
     identifier: str
     """
     Backward-compatible alias for `filter[identifier]`: exact match on a single
