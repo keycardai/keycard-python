@@ -284,13 +284,15 @@ class ResourcesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ResourceListResponse:
-        """Returns a list of resources in the specified zone.
+        """Returns a paginated list of resources in the specified zone.
 
-        Filter by exact identifier
-        via `filter[identifier]` (repeatable, OR'd). Matching is exact: identifiers are
-        unique per zone, so a filter returns at most one resource per value and never
-        performs URL prefix resolution. Filter by trait via `traits[all]` (AND — has all
-        listed traits) or `traits[]` (OR — has any), each repeatable.
+        Use cursor
+        pagination via `after`/`before`, and `expand[]=total_count` to include the
+        matching row count. Filter by exact identifier via `filter[identifier]`. Filter
+        by trait via `traits[all]` (AND, all listed) or `traits[]` (OR, any), each
+        repeatable. The scalar `identifier` query parameter is a backward-compatible
+        alias for `filter[identifier]`: exact match on a single value, folded into the
+        same exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -301,11 +303,12 @@ class ResourcesResource(SyncAPIResource):
 
           filter_identifier: Filter by exact resource identifier
 
-          identifier: Filter resources by identifier
+          identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
+              resource identifier.
 
           limit: Maximum number of items to return
 
-          traits: Filter by traits (OR matching - returns resources with any of the specified
+          traits: Filter by traits (OR matching — returns resources with any of the specified
               traits)
 
           traits_all: Filter by traits (AND matching - returns resources with all of the specified
@@ -638,13 +641,15 @@ class AsyncResourcesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ResourceListResponse:
-        """Returns a list of resources in the specified zone.
+        """Returns a paginated list of resources in the specified zone.
 
-        Filter by exact identifier
-        via `filter[identifier]` (repeatable, OR'd). Matching is exact: identifiers are
-        unique per zone, so a filter returns at most one resource per value and never
-        performs URL prefix resolution. Filter by trait via `traits[all]` (AND — has all
-        listed traits) or `traits[]` (OR — has any), each repeatable.
+        Use cursor
+        pagination via `after`/`before`, and `expand[]=total_count` to include the
+        matching row count. Filter by exact identifier via `filter[identifier]`. Filter
+        by trait via `traits[all]` (AND, all listed) or `traits[]` (OR, any), each
+        repeatable. The scalar `identifier` query parameter is a backward-compatible
+        alias for `filter[identifier]`: exact match on a single value, folded into the
+        same exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -655,11 +660,12 @@ class AsyncResourcesResource(AsyncAPIResource):
 
           filter_identifier: Filter by exact resource identifier
 
-          identifier: Filter resources by identifier
+          identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
+              resource identifier.
 
           limit: Maximum number of items to return
 
-          traits: Filter by traits (OR matching - returns resources with any of the specified
+          traits: Filter by traits (OR matching — returns resources with any of the specified
               traits)
 
           traits_all: Filter by traits (AND matching - returns resources with all of the specified

@@ -27,7 +27,10 @@ class ResourceListParams(TypedDict, total=False):
     """Filter by exact resource identifier"""
 
     identifier: str
-    """Filter resources by identifier"""
+    """
+    Backward-compatible alias for `filter[identifier]`: exact match on a single
+    resource identifier.
+    """
 
     limit: int
     """Maximum number of items to return"""
@@ -36,7 +39,7 @@ class ResourceListParams(TypedDict, total=False):
 
     traits: List[Literal["external", "proxy", "mcp-server"]]
     """
-    Filter by traits (OR matching - returns resources with any of the specified
+    Filter by traits (OR matching — returns resources with any of the specified
     traits)
     """
 
