@@ -11,7 +11,6 @@ from tests.utils import assert_matches_type
 from keycardai_api import KeycardAPI, AsyncKeycardAPI
 from keycardai_api.types import (
     Organization,
-    TokenResponse,
     OrganizationListResponse,
     OrganizationListRolesResponse,
     OrganizationListIdentitiesResponse,
@@ -203,57 +202,6 @@ class TestOrganizations:
             assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_exchange_token(self, client: KeycardAPI) -> None:
-        organization = client.organizations.exchange_token(
-            organization_id="x",
-        )
-        assert_matches_type(TokenResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_exchange_token_with_all_params(self, client: KeycardAPI) -> None:
-        organization = client.organizations.exchange_token(
-            organization_id="x",
-            x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(TokenResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_exchange_token(self, client: KeycardAPI) -> None:
-        response = client.organizations.with_raw_response.exchange_token(
-            organization_id="x",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        organization = response.parse()
-        assert_matches_type(TokenResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_exchange_token(self, client: KeycardAPI) -> None:
-        with client.organizations.with_streaming_response.exchange_token(
-            organization_id="x",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            organization = response.parse()
-            assert_matches_type(TokenResponse, organization, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_path_params_exchange_token(self, client: KeycardAPI) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            client.organizations.with_raw_response.exchange_token(
-                organization_id="",
-            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -551,57 +499,6 @@ class TestAsyncOrganizations:
             assert_matches_type(OrganizationListResponse, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_exchange_token(self, async_client: AsyncKeycardAPI) -> None:
-        organization = await async_client.organizations.exchange_token(
-            organization_id="x",
-        )
-        assert_matches_type(TokenResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_exchange_token_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
-        organization = await async_client.organizations.exchange_token(
-            organization_id="x",
-            x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(TokenResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_exchange_token(self, async_client: AsyncKeycardAPI) -> None:
-        response = await async_client.organizations.with_raw_response.exchange_token(
-            organization_id="x",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        organization = await response.parse()
-        assert_matches_type(TokenResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_exchange_token(self, async_client: AsyncKeycardAPI) -> None:
-        async with async_client.organizations.with_streaming_response.exchange_token(
-            organization_id="x",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            organization = await response.parse()
-            assert_matches_type(TokenResponse, organization, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_path_params_exchange_token(self, async_client: AsyncKeycardAPI) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            await async_client.organizations.with_raw_response.exchange_token(
-                organization_id="",
-            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
