@@ -303,8 +303,8 @@ class ApplicationsResource(SyncAPIResource):
 
           query_name: Search by name (substring match)
 
-          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
-              name, identifier
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: name,
+              identifier
 
           traits: Filter by traits (OR matching - returns applications with any of the specified
               traits)
@@ -770,8 +770,8 @@ class AsyncApplicationsResource(AsyncAPIResource):
 
           query_name: Search by name (substring match)
 
-          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
-              name, identifier
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: name,
+              identifier
 
           traits: Filter by traits (OR matching - returns applications with any of the specified
               traits)

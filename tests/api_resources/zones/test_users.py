@@ -92,7 +92,7 @@ class TestUsers:
             query="x",
             query_email="x",
             query_subject="x",
-            sort="-authenticated_at,\t\r\r \tauthenticated_at,\n\t\ncreated_at",
+            sort="-authenticated_at,\t\r\r \tauthenticated_at,\n\t\nemail",
         )
         assert_matches_type(UserListResponse, user, path=["response"])
 
@@ -211,7 +211,7 @@ class TestAsyncUsers:
             query="x",
             query_email="x",
             query_subject="x",
-            sort="-authenticated_at,\t\r\r \tauthenticated_at,\n\t\ncreated_at",
+            sort="-authenticated_at,\t\r\r \tauthenticated_at,\n\t\nemail",
         )
         assert_matches_type(UserListResponse, user, path=["response"])
 
