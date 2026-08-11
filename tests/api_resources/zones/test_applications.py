@@ -252,7 +252,7 @@ class TestApplications:
             query_identifier="x",
             query_name="x",
             slug="slug",
-            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\nname",
             traits=["gateway"],
             traits_all=["gateway"],
         )
@@ -712,7 +712,7 @@ class TestAsyncApplications:
             query_identifier="x",
             query_name="x",
             slug="slug",
-            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\nname",
             traits=["gateway"],
             traits_all=["gateway"],
         )
