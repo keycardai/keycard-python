@@ -52,7 +52,7 @@ class ApplicationListParams(TypedDict, total=False):
     sort: str
     """Comma-separated sort fields.
 
-    Prefix with - for descending. Allowed: name, identifier
+    Prefix with - for descending. Allowed: created_at, name, identifier
     """
 
     traits: List[ApplicationTrait]

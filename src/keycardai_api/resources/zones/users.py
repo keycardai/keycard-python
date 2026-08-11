@@ -165,8 +165,8 @@ class UsersResource(SyncAPIResource):
 
           query_subject: Search by federated credential subject (substring match)
 
-          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: email,
-              authenticated_at
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
+              email, authenticated_at
 
           extra_headers: Send extra headers
 
@@ -346,8 +346,8 @@ class AsyncUsersResource(AsyncAPIResource):
 
           query_subject: Search by federated credential subject (substring match)
 
-          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: email,
-              authenticated_at
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
+              email, authenticated_at
 
           extra_headers: Send extra headers
 
