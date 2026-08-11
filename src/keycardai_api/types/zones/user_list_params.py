@@ -64,5 +64,5 @@ class UserListParams(TypedDict, total=False):
     sort: str
     """Comma-separated sort fields.
 
-    Prefix with - for descending. Allowed: email, authenticated_at
+    Prefix with - for descending. Allowed: created_at, email, authenticated_at
     """
