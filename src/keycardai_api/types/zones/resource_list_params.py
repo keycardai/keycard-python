@@ -29,6 +29,13 @@ class ResourceListParams(TypedDict, total=False):
     filter_owner_type: Annotated[Literal["platform", "customer"], PropertyInfo(alias="filter[owner_type]")]
     """Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created)."""
 
+    filter_traits: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[traits]")]
+    """Filter by trait.
+
+    Comma-separated values (`a,b`) are AND'd; repeated params are OR'd. Preferred
+    over `traits[]`/`traits[all]`.
+    """
+
     identifier: str
     """
     Backward-compatible alias for `filter[identifier]`: exact match on a single
