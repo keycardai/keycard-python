@@ -171,7 +171,7 @@ from keycardai_api.types.zones import User, UserListResponse
 
 Methods:
 
-- <code title="get /zones/{zoneId}/users/{id}">client.zones.users.<a href="./src/keycardai_api/resources/zones/users.py">retrieve</a>(id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/user.py">User</a></code>
+- <code title="get /zones/{zoneId}/users/{id}">client.zones.users.<a href="./src/keycardai_api/resources/zones/users.py">retrieve</a>(id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/user_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/user.py">User</a></code>
 - <code title="get /zones/{zoneId}/users">client.zones.users.<a href="./src/keycardai_api/resources/zones/users.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/user_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/user_list_response.py">UserListResponse</a></code>
 
 ## Members
