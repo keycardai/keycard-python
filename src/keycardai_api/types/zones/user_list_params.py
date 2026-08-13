@@ -21,7 +21,13 @@ class UserListParams(TypedDict, total=False):
     expand: Annotated[
         Union[
             Literal[
-                "total_count", "session_count", "grant_count", "role-assignments", "credentials", "credentials.provider"
+                "total_count",
+                "session_count",
+                "grant_count",
+                "role-assignments",
+                "groups",
+                "credentials",
+                "credentials.provider",
             ],
             List[
                 Literal[
@@ -29,6 +35,7 @@ class UserListParams(TypedDict, total=False):
                     "session_count",
                     "grant_count",
                     "role-assignments",
+                    "groups",
                     "credentials",
                     "credentials.provider",
                 ]
@@ -39,6 +46,12 @@ class UserListParams(TypedDict, total=False):
 
     filter_email: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[email]")]
     """Filter by exact email address"""
+
+    filter_groups: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[groups]")]
+    """Restrict to members of this group (by group ID).
+
+    Repeatable; OR'd across values.
+    """
 
     filter_id: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[id]")]
     """Restrict results to users with this publicId.
@@ -60,6 +73,13 @@ class UserListParams(TypedDict, total=False):
 
     query_subject: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[subject]")]
     """Search by federated credential subject (substring match)"""
+
+    role_source: Literal["user", "group", "all"]
+    """
+    Selects which grants `expand[]=role-assignments` returns, tagging each with
+    `source`: `user` (direct only, the default), `group` (group-inherited only), or
+    `all` (both direct and group-inherited). Requires `expand[]=role-assignments`.
+    """
 
     sort: str
     """Comma-separated sort fields.

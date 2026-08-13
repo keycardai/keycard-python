@@ -12,6 +12,7 @@ __all__ = [
     "Credential",
     "CredentialIamUserCredentialFederation",
     "CredentialIamUserCredentialPassword",
+    "Group",
     "RoleAssignment",
     "RoleAssignmentScope",
 ]
@@ -65,6 +66,19 @@ class CredentialIamUserCredentialPassword(BaseModel):
 Credential: TypeAlias = Union[CredentialIamUserCredentialFederation, CredentialIamUserCredentialPassword]
 
 
+class Group(BaseModel):
+    """A group a user belongs to within a zone."""
+
+    id: str
+    """Unique identifier of the group"""
+
+    identifier: str
+    """Zone-unique slug that policy rules match on."""
+
+    name: str
+    """Human-readable group name"""
+
+
 class RoleAssignmentScope(BaseModel):
     """
     The resource this grant is scoped to, or null when the grant is unscoped (applies to the owning zone itself).
@@ -101,6 +115,18 @@ class RoleAssignment(BaseModel):
     """
     The resource this grant is scoped to, or null when the grant is unscoped
     (applies to the owning zone itself).
+    """
+
+    source: Literal["user", "group"]
+    """
+    The principal that holds this grant: `user` when assigned directly to the user,
+    or `group` when inherited through group membership.
+    """
+
+    group_id: Optional[str] = None
+    """ID of the group this grant is inherited from.
+
+    Present only when `source` is `group`.
     """
 
 
@@ -152,6 +178,12 @@ class User(BaseModel):
     """Delegated-grant count for this user.
 
     Populated only when `expand[]=grant_count` is set on the listing endpoint.
+    """
+
+    groups: Optional[List[Group]] = None
+    """Groups this user belongs to within the zone.
+
+    Populated only when `expand[]=groups` is set on the listing endpoint.
     """
 
     issuer: Optional[str] = None

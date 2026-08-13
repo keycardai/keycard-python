@@ -43,6 +43,7 @@ from .resource_list_params import ResourceListParams as ResourceListParams
 from .secret_create_params import SecretCreateParams as SecretCreateParams
 from .secret_list_response import SecretListResponse as SecretListResponse
 from .secret_update_params import SecretUpdateParams as SecretUpdateParams
+from .user_retrieve_params import UserRetrieveParams as UserRetrieveParams
 from .attestation_statement import AttestationStatement as AttestationStatement
 from .metadata_update_param import MetadataUpdateParam as MetadataUpdateParam
 from .session_list_response import SessionListResponse as SessionListResponse
