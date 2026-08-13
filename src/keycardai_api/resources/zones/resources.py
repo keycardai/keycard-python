@@ -273,6 +273,7 @@ class ResourcesResource(SyncAPIResource):
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_owner_type: Literal["platform", "customer"] | Omit = omit,
+        filter_traits: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -305,6 +306,9 @@ class ResourcesResource(SyncAPIResource):
           filter_identifier: Filter by exact resource identifier
 
           filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
+
+          filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
+              OR'd. Preferred over `traits[]`/`traits[all]`.
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
@@ -342,6 +346,7 @@ class ResourcesResource(SyncAPIResource):
                         "expand": expand,
                         "filter_identifier": filter_identifier,
                         "filter_owner_type": filter_owner_type,
+                        "filter_traits": filter_traits,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
@@ -634,6 +639,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_owner_type: Literal["platform", "customer"] | Omit = omit,
+        filter_traits: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -666,6 +672,9 @@ class AsyncResourcesResource(AsyncAPIResource):
           filter_identifier: Filter by exact resource identifier
 
           filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
+
+          filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
+              OR'd. Preferred over `traits[]`/`traits[all]`.
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
@@ -703,6 +712,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                         "expand": expand,
                         "filter_identifier": filter_identifier,
                         "filter_owner_type": filter_owner_type,
+                        "filter_traits": filter_traits,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
