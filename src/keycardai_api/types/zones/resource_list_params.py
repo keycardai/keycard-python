@@ -32,8 +32,7 @@ class ResourceListParams(TypedDict, total=False):
     filter_traits: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[traits]")]
     """Filter by trait.
 
-    Comma-separated values (`a,b`) are AND'd; repeated params are OR'd. Preferred
-    over `traits[]`/`traits[all]`.
+    Comma-separated values (`a,b`) are AND'd; repeated params are OR'd.
     """
 
     identifier: str
@@ -46,15 +45,3 @@ class ResourceListParams(TypedDict, total=False):
     """Maximum number of items to return"""
 
     slug: str
-
-    traits: List[Literal["external", "proxy", "mcp-server"]]
-    """
-    Filter by traits (OR matching — returns resources with any of the specified
-    traits)
-    """
-
-    traits_all: Annotated[List[Literal["external", "proxy", "mcp-server"]], PropertyInfo(alias="traits[all]")]
-    """
-    Filter by traits (AND matching - returns resources with all of the specified
-    traits)
-    """

@@ -277,8 +277,6 @@ class ResourcesResource(SyncAPIResource):
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
-        traits: List[Literal["external", "proxy", "mcp-server"]] | Omit = omit,
-        traits_all: List[Literal["external", "proxy", "mcp-server"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -291,10 +289,10 @@ class ResourcesResource(SyncAPIResource):
         Use cursor
         pagination via `after`/`before`, and `expand[]=total_count` to include the
         matching row count. Filter by exact identifier via `filter[identifier]`. Filter
-        by trait via `traits[all]` (AND, all listed) or `traits[]` (OR, any), each
-        repeatable. The scalar `identifier` query parameter is a backward-compatible
-        alias for `filter[identifier]`: exact match on a single value, folded into the
-        same exact-match identifier filter.
+        by trait via `filter[traits]`: comma-separated values are AND'd, repeated params
+        are OR'd. The scalar `identifier` query parameter is a backward-compatible alias
+        for `filter[identifier]`: exact match on a single value, folded into the same
+        exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -308,18 +306,12 @@ class ResourcesResource(SyncAPIResource):
           filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
 
           filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
-              OR'd. Preferred over `traits[]`/`traits[all]`.
+              OR'd.
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
 
           limit: Maximum number of items to return
-
-          traits: Filter by traits (OR matching — returns resources with any of the specified
-              traits)
-
-          traits_all: Filter by traits (AND matching - returns resources with all of the specified
-              traits)
 
           extra_headers: Send extra headers
 
@@ -350,8 +342,6 @@ class ResourcesResource(SyncAPIResource):
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
-                        "traits": traits,
-                        "traits_all": traits_all,
                     },
                     resource_list_params.ResourceListParams,
                 ),
@@ -643,8 +633,6 @@ class AsyncResourcesResource(AsyncAPIResource):
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
-        traits: List[Literal["external", "proxy", "mcp-server"]] | Omit = omit,
-        traits_all: List[Literal["external", "proxy", "mcp-server"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -657,10 +645,10 @@ class AsyncResourcesResource(AsyncAPIResource):
         Use cursor
         pagination via `after`/`before`, and `expand[]=total_count` to include the
         matching row count. Filter by exact identifier via `filter[identifier]`. Filter
-        by trait via `traits[all]` (AND, all listed) or `traits[]` (OR, any), each
-        repeatable. The scalar `identifier` query parameter is a backward-compatible
-        alias for `filter[identifier]`: exact match on a single value, folded into the
-        same exact-match identifier filter.
+        by trait via `filter[traits]`: comma-separated values are AND'd, repeated params
+        are OR'd. The scalar `identifier` query parameter is a backward-compatible alias
+        for `filter[identifier]`: exact match on a single value, folded into the same
+        exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -674,18 +662,12 @@ class AsyncResourcesResource(AsyncAPIResource):
           filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
 
           filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
-              OR'd. Preferred over `traits[]`/`traits[all]`.
+              OR'd.
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
 
           limit: Maximum number of items to return
-
-          traits: Filter by traits (OR matching — returns resources with any of the specified
-              traits)
-
-          traits_all: Filter by traits (AND matching - returns resources with all of the specified
-              traits)
 
           extra_headers: Send extra headers
 
@@ -716,8 +698,6 @@ class AsyncResourcesResource(AsyncAPIResource):
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
-                        "traits": traits,
-                        "traits_all": traits_all,
                     },
                     resource_list_params.ResourceListParams,
                 ),

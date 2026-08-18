@@ -253,8 +253,6 @@ class TestApplications:
             query_name="x",
             slug="slug",
             sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
-            traits=["gateway"],
-            traits_all=["gateway"],
         )
         assert_matches_type(ApplicationListResponse, application, path=["response"])
 
@@ -713,8 +711,6 @@ class TestAsyncApplications:
             query_name="x",
             slug="slug",
             sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
-            traits=["gateway"],
-            traits_all=["gateway"],
         )
         assert_matches_type(ApplicationListResponse, application, path=["response"])
 

@@ -240,8 +240,6 @@ class TestResources:
             identifier="identifier",
             limit=1,
             slug="slug",
-            traits=["external"],
-            traits_all=["external"],
         )
         assert_matches_type(ResourceListResponse, resource, path=["response"])
 
@@ -557,8 +555,6 @@ class TestAsyncResources:
             identifier="identifier",
             limit=1,
             slug="slug",
-            traits=["external"],
-            traits_all=["external"],
         )
         assert_matches_type(ResourceListResponse, resource, path=["response"])
 
