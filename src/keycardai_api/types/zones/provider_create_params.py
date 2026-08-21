@@ -109,6 +109,13 @@ class ProtocolsOauth2(TypedDict, total=False):
 class ProtocolsOpenid(TypedDict, total=False):
     """OpenID Connect protocol configuration for provider creation"""
 
+    external_id_claim: str
+    """
+    Name of the OIDC claim carrying the stable external id used to correlate logins
+    with externally provisioned (SCIM) users. Defaults to "sub". Set to "oid" for
+    Entra, whose pairwise "sub" differs from the SCIM externalId.
+    """
+
     scopes: SequenceNotStr[str]
     """Additional OIDC scopes to request from this provider during authentication (e.g.
 

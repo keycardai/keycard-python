@@ -72,6 +72,13 @@ class ProtocolsOauth2(BaseModel):
 class ProtocolsOpenid(BaseModel):
     """OpenID Connect protocol configuration"""
 
+    external_id_claim: Optional[str] = None
+    """
+    Name of the OIDC claim carrying the stable external id used to correlate logins
+    with externally provisioned (SCIM) users. Defaults to "sub". Set to "oid" for
+    Entra, whose pairwise "sub" differs from the SCIM externalId.
+    """
+
     scopes: Optional[List[str]] = None
     """Additional OIDC scopes to request from this provider during authentication (e.g.
 

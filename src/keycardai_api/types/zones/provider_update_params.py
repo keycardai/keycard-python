@@ -114,6 +114,14 @@ class ProtocolsOauth2(TypedDict, total=False):
 class ProtocolsOpenid(TypedDict, total=False):
     """OpenID Connect protocol configuration. Set to null to remove all OpenID config."""
 
+    external_id_claim: Optional[str]
+    """
+    Name of the OIDC claim carrying the stable external id used to correlate logins
+    with externally provisioned (SCIM) users. Defaults to "sub". Set to "oid" for
+    Entra, whose pairwise "sub" differs from the SCIM externalId. Set to null to
+    revert to default.
+    """
+
     scopes: Optional[SequenceNotStr[str]]
     """Additional OIDC scopes to request from this provider during authentication (e.g.
 
