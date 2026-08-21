@@ -58,6 +58,7 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -197,6 +198,7 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -403,6 +405,7 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -542,6 +545,7 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
