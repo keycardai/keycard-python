@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -232,6 +232,7 @@ class ProvidersResource(SyncAPIResource):
         before: str | Omit = omit,
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -243,13 +244,18 @@ class ProvidersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProviderListResponse:
-        """
-        Returns a list of providers in the specified zone
+        """Returns a list of providers in the specified zone.
+
+        Pass `filter[id]`
+        (repeatable, max 100) to restrict results to a known set of provider IDs;
+        unknown or malformed IDs are silently omitted.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_id: Restrict results to providers with this ID. Repeatable, max 100.
 
           limit: Maximum number of items to return
 
@@ -276,6 +282,7 @@ class ProvidersResource(SyncAPIResource):
                         "before": before,
                         "cursor": cursor,
                         "expand": expand,
+                        "filter_id": filter_id,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
@@ -532,6 +539,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         before: str | Omit = omit,
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -543,13 +551,18 @@ class AsyncProvidersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProviderListResponse:
-        """
-        Returns a list of providers in the specified zone
+        """Returns a list of providers in the specified zone.
+
+        Pass `filter[id]`
+        (repeatable, max 100) to restrict results to a known set of provider IDs;
+        unknown or malformed IDs are silently omitted.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_id: Restrict results to providers with this ID. Repeatable, max 100.
 
           limit: Maximum number of items to return
 
@@ -576,6 +589,7 @@ class AsyncProvidersResource(AsyncAPIResource):
                         "before": before,
                         "cursor": cursor,
                         "expand": expand,
+                        "filter_id": filter_id,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
