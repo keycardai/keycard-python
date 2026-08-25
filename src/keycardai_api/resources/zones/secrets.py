@@ -75,9 +75,7 @@ class SecretsResource(SyncAPIResource):
 
           metadata: A JSON object containing arbitrary metadata. Metadata will not be encrypted.
 
-          body_zone_id: Optional zone ID. This field is provided for API compatibility but is ignored
-              during processing. The zone ID is derived from the path parameter
-              (/zones/{zone_id}/secrets) and takes precedence.
+          body_zone_id: A globally unique opaque identifier
 
           extra_headers: Send extra headers
 
@@ -345,9 +343,7 @@ class AsyncSecretsResource(AsyncAPIResource):
 
           metadata: A JSON object containing arbitrary metadata. Metadata will not be encrypted.
 
-          body_zone_id: Optional zone ID. This field is provided for API compatibility but is ignored
-              during processing. The zone ID is derived from the path parameter
-              (/zones/{zone_id}/secrets) and takes precedence.
+          body_zone_id: A globally unique opaque identifier
 
           extra_headers: Send extra headers
 
