@@ -28,12 +28,7 @@ class SecretCreateParams(TypedDict, total=False):
     """A JSON object containing arbitrary metadata. Metadata will not be encrypted."""
 
     body_zone_id: Annotated[str, PropertyInfo(alias="zone_id")]
-    """Optional zone ID.
-
-    This field is provided for API compatibility but is ignored during processing.
-    The zone ID is derived from the path parameter (/zones/{zone_id}/secrets) and
-    takes precedence.
-    """
+    """A globally unique opaque identifier"""
 
     x_client_request_id: Annotated[str, PropertyInfo(alias="X-Client-Request-ID")]
 
