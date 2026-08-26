@@ -28,8 +28,8 @@ class Pagination(BaseModel):
 class ApplicationListResourcesResponse(BaseModel):
     items: List[Resource]
 
-    page_info: PageInfoPagination
-    """Pagination information"""
-
     pagination: Pagination
     """Cursor-based pagination metadata"""
+
+    page_info: Optional[PageInfoPagination] = None
+    """Pagination information"""

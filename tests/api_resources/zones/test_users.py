@@ -28,6 +28,17 @@ class TestUsers:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_retrieve_with_all_params(self, client: KeycardAPI) -> None:
+        user = client.zones.users.retrieve(
+            id="id",
+            zone_id="zoneId",
+            expand="role-assignments",
+            role_source="user",
+        )
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_raw_response_retrieve(self, client: KeycardAPI) -> None:
         response = client.zones.users.with_raw_response.retrieve(
             id="id",
@@ -86,11 +97,14 @@ class TestUsers:
             before="x",
             expand="total_count",
             filter_email="dev@stainless.com",
+            filter_groups="string",
             filter_id="string",
+            filter_identifier="string",
             limit=1,
             query="x",
             query_email="x",
             query_subject="x",
+            role_source="user",
             sort="-authenticated_at,\t\r\r \tauthenticated_at,\n\t\ncreated_at",
         )
         assert_matches_type(UserListResponse, user, path=["response"])
@@ -141,6 +155,17 @@ class TestAsyncUsers:
         user = await async_client.zones.users.retrieve(
             id="id",
             zone_id="zoneId",
+        )
+        assert_matches_type(User, user, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
+        user = await async_client.zones.users.retrieve(
+            id="id",
+            zone_id="zoneId",
+            expand="role-assignments",
+            role_source="user",
         )
         assert_matches_type(User, user, path=["response"])
 
@@ -204,11 +229,14 @@ class TestAsyncUsers:
             before="x",
             expand="total_count",
             filter_email="dev@stainless.com",
+            filter_groups="string",
             filter_id="string",
+            filter_identifier="string",
             limit=1,
             query="x",
             query_email="x",
             query_subject="x",
+            role_source="user",
             sort="-authenticated_at,\t\r\r \tauthenticated_at,\n\t\ncreated_at",
         )
         assert_matches_type(UserListResponse, user, path=["response"])

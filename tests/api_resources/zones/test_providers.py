@@ -40,7 +40,7 @@ class TestProviders:
             client_id="client_id",
             client_secret="client_secret",
             description="description",
-            metadata={},
+            metadata={"icon_url": "https://example.com"},
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
@@ -58,6 +58,7 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -178,7 +179,7 @@ class TestProviders:
             client_secret="client_secret",
             description="description",
             identifier="x",
-            metadata={},
+            metadata={"icon_url": "https://example.com"},
             name="x",
             protocols={
                 "oauth2": {
@@ -197,6 +198,7 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -266,6 +268,7 @@ class TestProviders:
             before="x",
             cursor="cursor",
             expand="total_count",
+            filter_id="string",
             identifier="identifier",
             limit=1,
             slug="slug",
@@ -385,7 +388,7 @@ class TestAsyncProviders:
             client_id="client_id",
             client_secret="client_secret",
             description="description",
-            metadata={},
+            metadata={"icon_url": "https://example.com"},
             protocols={
                 "oauth2": {
                     "authorization_endpoint": "https://example.com",
@@ -403,6 +406,7 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -523,7 +527,7 @@ class TestAsyncProviders:
             client_secret="client_secret",
             description="description",
             identifier="x",
-            metadata={},
+            metadata={"icon_url": "https://example.com"},
             name="x",
             protocols={
                 "oauth2": {
@@ -542,6 +546,7 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
+                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -611,6 +616,7 @@ class TestAsyncProviders:
             before="x",
             cursor="cursor",
             expand="total_count",
+            filter_id="string",
             identifier="identifier",
             limit=1,
             slug="slug",

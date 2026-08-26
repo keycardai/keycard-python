@@ -104,7 +104,7 @@ class SSOConnectionResource(SyncAPIResource):
         client_id: str | Omit = omit,
         client_secret: str | Omit = omit,
         identifier: str | Omit = omit,
-        protocols: Optional[SSOConnectionProtocolParam] | Omit = omit,
+        protocols: Optional[sso_connection_update_params.Protocols] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -125,7 +125,8 @@ class SSOConnectionResource(SyncAPIResource):
 
           identifier: SSO provider identifier (e.g., issuer URL)
 
-          protocols: Protocol configuration for SSO connection
+          protocols: Protocol configuration for an SSO connection update. Omit a protocol to leave it
+              unchanged.
 
           extra_headers: Send extra headers
 
@@ -329,7 +330,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         client_id: str | Omit = omit,
         client_secret: str | Omit = omit,
         identifier: str | Omit = omit,
-        protocols: Optional[SSOConnectionProtocolParam] | Omit = omit,
+        protocols: Optional[sso_connection_update_params.Protocols] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -350,7 +351,8 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
 
           identifier: SSO provider identifier (e.g., issuer URL)
 
-          protocols: Protocol configuration for SSO connection
+          protocols: Protocol configuration for an SSO connection update. Omit a protocol to leave it
+              unchanged.
 
           extra_headers: Send extra headers
 
