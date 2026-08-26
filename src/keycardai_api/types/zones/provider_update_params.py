@@ -8,7 +8,7 @@ from typing_extensions import Required, Annotated, TypedDict
 from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
 
-__all__ = ["ProviderUpdateParams", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
+__all__ = ["ProviderUpdateParams", "Metadata", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
 
 
 class ProviderUpdateParams(TypedDict, total=False):
@@ -35,7 +35,7 @@ class ProviderUpdateParams(TypedDict, total=False):
     Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
     """
 
-    metadata: Optional[object]
+    metadata: Optional[Metadata]
     """Provider metadata. Set to null to remove all metadata."""
 
     name: str
@@ -46,6 +46,13 @@ class ProviderUpdateParams(TypedDict, total=False):
 
     protocols: Optional[Protocols]
     """Protocol-specific configuration. Set to null to remove all protocols."""
+
+
+class Metadata(TypedDict, total=False):
+    """Provider metadata. Set to null to remove all metadata."""
+
+    icon_url: Optional[str]
+    """Icon URL (set to null to unset)"""
 
 
 class ProtocolsOauth2(TypedDict, total=False):
@@ -106,6 +113,14 @@ class ProtocolsOauth2(TypedDict, total=False):
 
 class ProtocolsOpenid(TypedDict, total=False):
     """OpenID Connect protocol configuration. Set to null to remove all OpenID config."""
+
+    external_id_claim: Optional[str]
+    """
+    Name of the OIDC claim carrying the stable external id used to correlate logins
+    with externally provisioned (SCIM) users. Defaults to "sub". Set to "oid" for
+    Entra, whose pairwise "sub" differs from the SCIM externalId. Set to null to
+    revert to default.
+    """
 
     scopes: Optional[SequenceNotStr[str]]
     """Additional OIDC scopes to request from this provider during authentication (e.g.
