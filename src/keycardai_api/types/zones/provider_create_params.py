@@ -7,7 +7,7 @@ from typing_extensions import Required, TypedDict
 
 from ..._types import SequenceNotStr
 
-__all__ = ["ProviderCreateParams", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
+__all__ = ["ProviderCreateParams", "Metadata", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
 
 
 class ProviderCreateParams(TypedDict, total=False):
@@ -35,11 +35,18 @@ class ProviderCreateParams(TypedDict, total=False):
     Must not contain HTML tags (e.g. `<script>`, `<div>`) or control characters.
     """
 
-    metadata: object
+    metadata: Metadata
     """Provider metadata"""
 
     protocols: Protocols
     """Protocol-specific configuration for provider creation"""
+
+
+class Metadata(TypedDict, total=False):
+    """Provider metadata"""
+
+    icon_url: str
+    """Icon URL"""
 
 
 class ProtocolsOauth2(TypedDict, total=False):
@@ -101,6 +108,13 @@ class ProtocolsOauth2(TypedDict, total=False):
 
 class ProtocolsOpenid(TypedDict, total=False):
     """OpenID Connect protocol configuration for provider creation"""
+
+    external_id_claim: str
+    """
+    Name of the OIDC claim carrying the stable external id used to correlate logins
+    with externally provisioned (SCIM) users. Defaults to "sub". Set to "oid" for
+    Entra, whose pairwise "sub" differs from the SCIM externalId.
+    """
 
     scopes: SequenceNotStr[str]
     """Additional OIDC scopes to request from this provider during authentication (e.g.

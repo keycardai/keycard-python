@@ -35,7 +35,6 @@ from ....types.zones import (
 from ...._base_client import make_request_options
 from ....types.zones.application import Application
 from ....types.zones.metadata_param import MetadataParam
-from ....types.zones.application_trait import ApplicationTrait
 from ....types.zones.metadata_update_param import MetadataUpdateParam
 from ....types.zones.application_list_response import ApplicationListResponse
 from ....types.zones.application_list_resources_response import ApplicationListResourcesResponse
@@ -260,8 +259,6 @@ class ApplicationsResource(SyncAPIResource):
         query_name: Union[str, SequenceNotStr[str]] | Omit = omit,
         slug: str | Omit = omit,
         sort: str | Omit = omit,
-        traits: List[ApplicationTrait] | Omit = omit,
-        traits_all: List[ApplicationTrait] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -306,12 +303,6 @@ class ApplicationsResource(SyncAPIResource):
           sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
               name, identifier
 
-          traits: Filter by traits (OR matching - returns applications with any of the specified
-              traits)
-
-          traits_all: Filter by traits (AND matching - returns applications with all of the specified
-              traits)
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -344,8 +335,6 @@ class ApplicationsResource(SyncAPIResource):
                         "query_name": query_name,
                         "slug": slug,
                         "sort": sort,
-                        "traits": traits,
-                        "traits_all": traits_all,
                     },
                     application_list_params.ApplicationListParams,
                 ),
@@ -727,8 +716,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
         query_name: Union[str, SequenceNotStr[str]] | Omit = omit,
         slug: str | Omit = omit,
         sort: str | Omit = omit,
-        traits: List[ApplicationTrait] | Omit = omit,
-        traits_all: List[ApplicationTrait] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -773,12 +760,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
           sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
               name, identifier
 
-          traits: Filter by traits (OR matching - returns applications with any of the specified
-              traits)
-
-          traits_all: Filter by traits (AND matching - returns applications with all of the specified
-              traits)
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -811,8 +792,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
                         "query_name": query_name,
                         "slug": slug,
                         "sort": sort,
-                        "traits": traits,
-                        "traits_all": traits_all,
                     },
                     application_list_params.ApplicationListParams,
                 ),

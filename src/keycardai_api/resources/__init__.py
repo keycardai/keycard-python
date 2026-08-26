@@ -24,6 +24,14 @@ from .organizations import (
     OrganizationsResourceWithStreamingResponse,
     AsyncOrganizationsResourceWithStreamingResponse,
 )
+from .policy_bundle import (
+    PolicyBundleResource,
+    AsyncPolicyBundleResource,
+    PolicyBundleResourceWithRawResponse,
+    AsyncPolicyBundleResourceWithRawResponse,
+    PolicyBundleResourceWithStreamingResponse,
+    AsyncPolicyBundleResourceWithStreamingResponse,
+)
 
 __all__ = [
     "ZonesResource",
@@ -44,4 +52,10 @@ __all__ = [
     "AsyncInvitationsResourceWithRawResponse",
     "InvitationsResourceWithStreamingResponse",
     "AsyncInvitationsResourceWithStreamingResponse",
+    "PolicyBundleResource",
+    "AsyncPolicyBundleResource",
+    "PolicyBundleResourceWithRawResponse",
+    "AsyncPolicyBundleResourceWithRawResponse",
+    "PolicyBundleResourceWithStreamingResponse",
+    "AsyncPolicyBundleResourceWithStreamingResponse",
 ]

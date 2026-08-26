@@ -7,7 +7,6 @@ from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
-from .application_trait import ApplicationTrait
 
 __all__ = ["ApplicationListParams"]
 
@@ -53,16 +52,4 @@ class ApplicationListParams(TypedDict, total=False):
     """Comma-separated sort fields.
 
     Prefix with - for descending. Allowed: created_at, name, identifier
-    """
-
-    traits: List[ApplicationTrait]
-    """
-    Filter by traits (OR matching - returns applications with any of the specified
-    traits)
-    """
-
-    traits_all: Annotated[List[ApplicationTrait], PropertyInfo(alias="traits[all]")]
-    """
-    Filter by traits (AND matching - returns applications with all of the specified
-    traits)
     """

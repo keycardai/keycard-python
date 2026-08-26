@@ -20,12 +20,9 @@ from .public_key import PublicKey as PublicKey
 from .user_agent import UserAgent as UserAgent
 from .application import Application as Application
 from .base_fields import BaseFields as BaseFields
-from .task_status import TaskStatus as TaskStatus
 from .zone_member import ZoneMember as ZoneMember
-from .install_status import InstallStatus as InstallStatus
 from .metadata_param import MetadataParam as MetadataParam
 from .schema_version import SchemaVersion as SchemaVersion
-from .task_operation import TaskOperation as TaskOperation
 from .user_list_params import UserListParams as UserListParams
 from .application_trait import ApplicationTrait as ApplicationTrait
 from .member_add_params import MemberAddParams as MemberAddParams
@@ -46,6 +43,7 @@ from .resource_list_params import ResourceListParams as ResourceListParams
 from .secret_create_params import SecretCreateParams as SecretCreateParams
 from .secret_list_response import SecretListResponse as SecretListResponse
 from .secret_update_params import SecretUpdateParams as SecretUpdateParams
+from .user_retrieve_params import UserRetrieveParams as UserRetrieveParams
 from .attestation_statement import AttestationStatement as AttestationStatement
 from .metadata_update_param import MetadataUpdateParam as MetadataUpdateParam
 from .session_list_response import SessionListResponse as SessionListResponse

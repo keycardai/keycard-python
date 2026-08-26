@@ -271,6 +271,9 @@ class ResourcesResource(SyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_owner_type: Literal["platform", "customer"] | Omit = omit,
+        filter_traits: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -281,8 +284,15 @@ class ResourcesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ResourceListResponse:
-        """
-        Returns a list of resources in the specified zone
+        """Returns a paginated list of resources in the specified zone.
+
+        Use cursor
+        pagination via `after`/`before`, and `expand[]=total_count` to include the
+        matching row count. Filter by exact identifier via `filter[identifier]`. Filter
+        by trait via `filter[traits]`: comma-separated values are AND'd, repeated params
+        are OR'd. The scalar `identifier` query parameter is a backward-compatible alias
+        for `filter[identifier]`: exact match on a single value, folded into the same
+        exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -291,7 +301,15 @@ class ResourcesResource(SyncAPIResource):
 
           credential_provider_id: Filter resources by credential provider ID
 
-          identifier: Filter resources by identifier
+          filter_identifier: Filter by exact resource identifier
+
+          filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
+
+          filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
+              OR'd.
+
+          identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
+              resource identifier.
 
           limit: Maximum number of items to return
 
@@ -318,6 +336,9 @@ class ResourcesResource(SyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_identifier": filter_identifier,
+                        "filter_owner_type": filter_owner_type,
+                        "filter_traits": filter_traits,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,
@@ -606,6 +627,9 @@ class AsyncResourcesResource(AsyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_owner_type: Literal["platform", "customer"] | Omit = omit,
+        filter_traits: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -616,8 +640,15 @@ class AsyncResourcesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ResourceListResponse:
-        """
-        Returns a list of resources in the specified zone
+        """Returns a paginated list of resources in the specified zone.
+
+        Use cursor
+        pagination via `after`/`before`, and `expand[]=total_count` to include the
+        matching row count. Filter by exact identifier via `filter[identifier]`. Filter
+        by trait via `filter[traits]`: comma-separated values are AND'd, repeated params
+        are OR'd. The scalar `identifier` query parameter is a backward-compatible alias
+        for `filter[identifier]`: exact match on a single value, folded into the same
+        exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -626,7 +657,15 @@ class AsyncResourcesResource(AsyncAPIResource):
 
           credential_provider_id: Filter resources by credential provider ID
 
-          identifier: Filter resources by identifier
+          filter_identifier: Filter by exact resource identifier
+
+          filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
+
+          filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
+              OR'd.
+
+          identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
+              resource identifier.
 
           limit: Maximum number of items to return
 
@@ -653,6 +692,9 @@ class AsyncResourcesResource(AsyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_identifier": filter_identifier,
+                        "filter_owner_type": filter_owner_type,
+                        "filter_traits": filter_traits,
                         "identifier": identifier,
                         "limit": limit,
                         "slug": slug,

@@ -43,7 +43,9 @@ class PolicyVersion(BaseModel):
     """Cedar policy in JSON representation.
 
     Populated by default and when `format=json` is passed; null when `format=cedar`
-    narrows the response to the text representation only.
+    narrows the response to the text representation only. Serialized verbatim from
+    the stored Cedar so the order of `staticPolicies` matches the source policy
+    order (ACC-613).
     """
 
     cedar_raw: Optional[str] = None
