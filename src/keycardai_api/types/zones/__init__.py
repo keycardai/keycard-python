@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from .url import URL as URL
+from .role import Role as Role
 from .user import User as User
 from .grant import Grant as Grant
+from .group import Group as Group
 from .token import Token as Token
 from .policy import Policy as Policy
 from .public import Public as Public
@@ -23,13 +25,23 @@ from .base_fields import BaseFields as BaseFields
 from .zone_member import ZoneMember as ZoneMember
 from .metadata_param import MetadataParam as MetadataParam
 from .schema_version import SchemaVersion as SchemaVersion
+from .role_list_params import RoleListParams as RoleListParams
 from .user_list_params import UserListParams as UserListParams
 from .application_trait import ApplicationTrait as ApplicationTrait
+from .group_list_params import GroupListParams as GroupListParams
 from .member_add_params import MemberAddParams as MemberAddParams
+from .validation_result import ValidationResult as ValidationResult
 from .member_list_params import MemberListParams as MemberListParams
 from .policy_list_params import PolicyListParams as PolicyListParams
+from .role_create_params import RoleCreateParams as RoleCreateParams
+from .role_list_response import RoleListResponse as RoleListResponse
+from .role_update_params import RoleUpdateParams as RoleUpdateParams
 from .secret_list_params import SecretListParams as SecretListParams
 from .user_list_response import UserListResponse as UserListResponse
+from .user_update_params import UserUpdateParams as UserUpdateParams
+from .group_create_params import GroupCreateParams as GroupCreateParams
+from .group_list_response import GroupListResponse as GroupListResponse
+from .group_update_params import GroupUpdateParams as GroupUpdateParams
 from .policy_set_manifest import PolicySetManifest as PolicySetManifest
 from .secret_token_fields import SecretTokenFields as SecretTokenFields
 from .session_list_params import SessionListParams as SessionListParams
@@ -45,6 +57,7 @@ from .secret_list_response import SecretListResponse as SecretListResponse
 from .secret_update_params import SecretUpdateParams as SecretUpdateParams
 from .user_retrieve_params import UserRetrieveParams as UserRetrieveParams
 from .attestation_statement import AttestationStatement as AttestationStatement
+from .group_retrieve_params import GroupRetrieveParams as GroupRetrieveParams
 from .metadata_update_param import MetadataUpdateParam as MetadataUpdateParam
 from .session_list_response import SessionListResponse as SessionListResponse
 from .session_update_params import SessionUpdateParams as SessionUpdateParams

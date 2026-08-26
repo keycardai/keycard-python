@@ -7,25 +7,37 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import path_template, maybe_transform, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from .roles import (
+    RolesResource,
+    AsyncRolesResource,
+    RolesResourceWithRawResponse,
+    AsyncRolesResourceWithRawResponse,
+    RolesResourceWithStreamingResponse,
+    AsyncRolesResourceWithStreamingResponse,
+)
+from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
+from ...._utils import path_template, maybe_transform, async_maybe_transform
+from ...._compat import cached_property
+from ...._resource import SyncAPIResource, AsyncAPIResource
+from ...._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.zones import user_list_params, user_retrieve_params
-from ..._base_client import make_request_options
-from ...types.zones.user import User
-from ...types.zones.user_list_response import UserListResponse
+from ....types.zones import user_list_params, user_update_params, user_retrieve_params
+from ...._base_client import make_request_options
+from ....types.zones.user import User
+from ....types.zones.user_list_response import UserListResponse
 
 __all__ = ["UsersResource", "AsyncUsersResource"]
 
 
 class UsersResource(SyncAPIResource):
+    @cached_property
+    def roles(self) -> RolesResource:
+        return RolesResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> UsersResourceWithRawResponse:
         """
@@ -97,6 +109,56 @@ class UsersResource(SyncAPIResource):
                     },
                     user_retrieve_params.UserRetrieveParams,
                 ),
+            ),
+            cast_to=User,
+        )
+
+    def update(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        identifier: str | Omit = omit,
+        status: Literal["active", "disabled"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> User:
+        """
+        Update a user
+
+        Args:
+          identifier: Zone-scoped user identifier
+
+          status: Status of the user. Set to `disabled` to prevent the user from authenticating
+              and revoke their active sessions, or `active` to re-enable.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._patch(
+            path_template("/zones/{zone_id}/users/{id}", zone_id=zone_id, id=id),
+            body=maybe_transform(
+                {
+                    "identifier": identifier,
+                    "status": status,
+                },
+                user_update_params.UserUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=User,
         )
@@ -245,8 +307,49 @@ class UsersResource(SyncAPIResource):
             cast_to=UserListResponse,
         )
 
+    def delete(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """
+        Delete a user
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return self._delete(
+            path_template("/zones/{zone_id}/users/{id}", zone_id=zone_id, id=id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
 
 class AsyncUsersResource(AsyncAPIResource):
+    @cached_property
+    def roles(self) -> AsyncRolesResource:
+        return AsyncRolesResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> AsyncUsersResourceWithRawResponse:
         """
@@ -318,6 +421,56 @@ class AsyncUsersResource(AsyncAPIResource):
                     },
                     user_retrieve_params.UserRetrieveParams,
                 ),
+            ),
+            cast_to=User,
+        )
+
+    async def update(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        identifier: str | Omit = omit,
+        status: Literal["active", "disabled"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> User:
+        """
+        Update a user
+
+        Args:
+          identifier: Zone-scoped user identifier
+
+          status: Status of the user. Set to `disabled` to prevent the user from authenticating
+              and revoke their active sessions, or `active` to re-enable.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._patch(
+            path_template("/zones/{zone_id}/users/{id}", zone_id=zone_id, id=id),
+            body=await async_maybe_transform(
+                {
+                    "identifier": identifier,
+                    "status": status,
+                },
+                user_update_params.UserUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=User,
         )
@@ -466,6 +619,43 @@ class AsyncUsersResource(AsyncAPIResource):
             cast_to=UserListResponse,
         )
 
+    async def delete(
+        self,
+        id: str,
+        *,
+        zone_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """
+        Delete a user
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return await self._delete(
+            path_template("/zones/{zone_id}/users/{id}", zone_id=zone_id, id=id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
 
 class UsersResourceWithRawResponse:
     def __init__(self, users: UsersResource) -> None:
@@ -474,9 +664,19 @@ class UsersResourceWithRawResponse:
         self.retrieve = to_raw_response_wrapper(
             users.retrieve,
         )
+        self.update = to_raw_response_wrapper(
+            users.update,
+        )
         self.list = to_raw_response_wrapper(
             users.list,
         )
+        self.delete = to_raw_response_wrapper(
+            users.delete,
+        )
+
+    @cached_property
+    def roles(self) -> RolesResourceWithRawResponse:
+        return RolesResourceWithRawResponse(self._users.roles)
 
 
 class AsyncUsersResourceWithRawResponse:
@@ -486,9 +686,19 @@ class AsyncUsersResourceWithRawResponse:
         self.retrieve = async_to_raw_response_wrapper(
             users.retrieve,
         )
+        self.update = async_to_raw_response_wrapper(
+            users.update,
+        )
         self.list = async_to_raw_response_wrapper(
             users.list,
         )
+        self.delete = async_to_raw_response_wrapper(
+            users.delete,
+        )
+
+    @cached_property
+    def roles(self) -> AsyncRolesResourceWithRawResponse:
+        return AsyncRolesResourceWithRawResponse(self._users.roles)
 
 
 class UsersResourceWithStreamingResponse:
@@ -498,9 +708,19 @@ class UsersResourceWithStreamingResponse:
         self.retrieve = to_streamed_response_wrapper(
             users.retrieve,
         )
+        self.update = to_streamed_response_wrapper(
+            users.update,
+        )
         self.list = to_streamed_response_wrapper(
             users.list,
         )
+        self.delete = to_streamed_response_wrapper(
+            users.delete,
+        )
+
+    @cached_property
+    def roles(self) -> RolesResourceWithStreamingResponse:
+        return RolesResourceWithStreamingResponse(self._users.roles)
 
 
 class AsyncUsersResourceWithStreamingResponse:
@@ -510,6 +730,16 @@ class AsyncUsersResourceWithStreamingResponse:
         self.retrieve = async_to_streamed_response_wrapper(
             users.retrieve,
         )
+        self.update = async_to_streamed_response_wrapper(
+            users.update,
+        )
         self.list = async_to_streamed_response_wrapper(
             users.list,
         )
+        self.delete = async_to_streamed_response_wrapper(
+            users.delete,
+        )
+
+    @cached_property
+    def roles(self) -> AsyncRolesResourceWithStreamingResponse:
+        return AsyncRolesResourceWithStreamingResponse(self._users.roles)
