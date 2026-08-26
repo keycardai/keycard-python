@@ -46,6 +46,7 @@ def pytest_collection_modifyitems(items: list[pytest.Function]) -> None:
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
+api_key = "My API Key"
 client_id = "My Client ID"
 client_secret = "My Client Secret"
 
@@ -57,7 +58,11 @@ def client(request: FixtureRequest) -> Iterator[KeycardAPI]:
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
     with KeycardAPI(
-        base_url=base_url, client_id=client_id, client_secret=client_secret, _strict_response_validation=strict
+        base_url=base_url,
+        api_key=api_key,
+        client_id=client_id,
+        client_secret=client_secret,
+        _strict_response_validation=strict,
     ) as client:
         yield client
 
@@ -84,6 +89,7 @@ async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncKeycardAPI
 
     async with AsyncKeycardAPI(
         base_url=base_url,
+        api_key=api_key,
         client_id=client_id,
         client_secret=client_secret,
         _strict_response_validation=strict,
