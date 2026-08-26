@@ -9,59 +9,104 @@ import pytest
 
 from tests.utils import assert_matches_type
 from keycardai_api import KeycardAPI, AsyncKeycardAPI
-from keycardai_api.types.zones import User, UserListResponse
+from keycardai_api.types.zones import Role, RoleListResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestUsers:
+class TestRoles:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: KeycardAPI) -> None:
-        user = client.zones.users.retrieve(
-            id="id",
+    def test_method_create(self, client: KeycardAPI) -> None:
+        role = client.zones.roles.create(
             zone_id="zoneId",
+            identifier="identifier",
         )
-        assert_matches_type(User, user, path=["response"])
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_retrieve_with_all_params(self, client: KeycardAPI) -> None:
-        user = client.zones.users.retrieve(
-            id="id",
+    def test_method_create_with_all_params(self, client: KeycardAPI) -> None:
+        role = client.zones.roles.create(
             zone_id="zoneId",
-            expand="role-assignments",
-            role_source="user",
+            identifier="identifier",
+            description="description",
         )
-        assert_matches_type(User, user, path=["response"])
+        assert_matches_type(Role, role, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_create(self, client: KeycardAPI) -> None:
+        response = client.zones.roles.with_raw_response.create(
+            zone_id="zoneId",
+            identifier="identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        role = response.parse()
+        assert_matches_type(Role, role, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_create(self, client: KeycardAPI) -> None:
+        with client.zones.roles.with_streaming_response.create(
+            zone_id="zoneId",
+            identifier="identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            role = response.parse()
+            assert_matches_type(Role, role, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_create(self, client: KeycardAPI) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
+            client.zones.roles.with_raw_response.create(
+                zone_id="",
+                identifier="identifier",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve(self, client: KeycardAPI) -> None:
+        role = client.zones.roles.retrieve(
+            role_id="roleId",
+            zone_id="zoneId",
+        )
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: KeycardAPI) -> None:
-        response = client.zones.users.with_raw_response.retrieve(
-            id="id",
+        response = client.zones.roles.with_raw_response.retrieve(
+            role_id="roleId",
             zone_id="zoneId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert_matches_type(User, user, path=["response"])
+        role = response.parse()
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: KeycardAPI) -> None:
-        with client.zones.users.with_streaming_response.retrieve(
-            id="id",
+        with client.zones.roles.with_streaming_response.retrieve(
+            role_id="roleId",
             zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = response.parse()
-            assert_matches_type(User, user, path=["response"])
+            role = response.parse()
+            assert_matches_type(Role, role, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -69,62 +114,61 @@ class TestUsers:
     @parametrize
     def test_path_params_retrieve(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            client.zones.users.with_raw_response.retrieve(
-                id="id",
+            client.zones.roles.with_raw_response.retrieve(
+                role_id="roleId",
                 zone_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            client.zones.users.with_raw_response.retrieve(
-                id="",
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `role_id` but received ''"):
+            client.zones.roles.with_raw_response.retrieve(
+                role_id="",
                 zone_id="zoneId",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: KeycardAPI) -> None:
-        user = client.zones.users.update(
-            id="id",
+        role = client.zones.roles.update(
+            role_id="roleId",
             zone_id="zoneId",
         )
-        assert_matches_type(User, user, path=["response"])
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: KeycardAPI) -> None:
-        user = client.zones.users.update(
-            id="id",
+        role = client.zones.roles.update(
+            role_id="roleId",
             zone_id="zoneId",
-            identifier="x",
-            status="active",
+            description="description",
         )
-        assert_matches_type(User, user, path=["response"])
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: KeycardAPI) -> None:
-        response = client.zones.users.with_raw_response.update(
-            id="id",
+        response = client.zones.roles.with_raw_response.update(
+            role_id="roleId",
             zone_id="zoneId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert_matches_type(User, user, path=["response"])
+        role = response.parse()
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: KeycardAPI) -> None:
-        with client.zones.users.with_streaming_response.update(
-            id="id",
+        with client.zones.roles.with_streaming_response.update(
+            role_id="roleId",
             zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = response.parse()
-            assert_matches_type(User, user, path=["response"])
+            role = response.parse()
+            assert_matches_type(Role, role, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -132,69 +176,61 @@ class TestUsers:
     @parametrize
     def test_path_params_update(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            client.zones.users.with_raw_response.update(
-                id="id",
+            client.zones.roles.with_raw_response.update(
+                role_id="roleId",
                 zone_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            client.zones.users.with_raw_response.update(
-                id="",
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `role_id` but received ''"):
+            client.zones.roles.with_raw_response.update(
+                role_id="",
                 zone_id="zoneId",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: KeycardAPI) -> None:
-        user = client.zones.users.list(
+        role = client.zones.roles.list(
             zone_id="zoneId",
         )
-        assert_matches_type(UserListResponse, user, path=["response"])
+        assert_matches_type(RoleListResponse, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: KeycardAPI) -> None:
-        user = client.zones.users.list(
+        role = client.zones.roles.list(
             zone_id="zoneId",
             after="x",
             before="x",
             expand="total_count",
-            filter_email="dev@stainless.com",
-            filter_groups="string",
-            filter_id="string",
-            filter_identifier="string",
+            identifier="identifier",
             limit=1,
-            query="x",
-            query_email="x",
-            query_subject="x",
-            role_source="user",
-            sort="-authenticated_at,\t\r\r \tauthenticated_at,\n\t\ncreated_at",
         )
-        assert_matches_type(UserListResponse, user, path=["response"])
+        assert_matches_type(RoleListResponse, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: KeycardAPI) -> None:
-        response = client.zones.users.with_raw_response.list(
+        response = client.zones.roles.with_raw_response.list(
             zone_id="zoneId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert_matches_type(UserListResponse, user, path=["response"])
+        role = response.parse()
+        assert_matches_type(RoleListResponse, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: KeycardAPI) -> None:
-        with client.zones.users.with_streaming_response.list(
+        with client.zones.roles.with_streaming_response.list(
             zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = response.parse()
-            assert_matches_type(UserListResponse, user, path=["response"])
+            role = response.parse()
+            assert_matches_type(RoleListResponse, role, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -202,44 +238,44 @@ class TestUsers:
     @parametrize
     def test_path_params_list(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            client.zones.users.with_raw_response.list(
+            client.zones.roles.with_raw_response.list(
                 zone_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: KeycardAPI) -> None:
-        user = client.zones.users.delete(
-            id="id",
+        role = client.zones.roles.delete(
+            role_id="roleId",
             zone_id="zoneId",
         )
-        assert user is None
+        assert role is None
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: KeycardAPI) -> None:
-        response = client.zones.users.with_raw_response.delete(
-            id="id",
+        response = client.zones.roles.with_raw_response.delete(
+            role_id="roleId",
             zone_id="zoneId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert user is None
+        role = response.parse()
+        assert role is None
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: KeycardAPI) -> None:
-        with client.zones.users.with_streaming_response.delete(
-            id="id",
+        with client.zones.roles.with_streaming_response.delete(
+            role_id="roleId",
             zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = response.parse()
-            assert user is None
+            role = response.parse()
+            assert role is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -247,68 +283,113 @@ class TestUsers:
     @parametrize
     def test_path_params_delete(self, client: KeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            client.zones.users.with_raw_response.delete(
-                id="id",
+            client.zones.roles.with_raw_response.delete(
+                role_id="roleId",
                 zone_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            client.zones.users.with_raw_response.delete(
-                id="",
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `role_id` but received ''"):
+            client.zones.roles.with_raw_response.delete(
+                role_id="",
                 zone_id="zoneId",
             )
 
 
-class TestAsyncUsers:
+class TestAsyncRoles:
     parametrize = pytest.mark.parametrize(
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncKeycardAPI) -> None:
-        user = await async_client.zones.users.retrieve(
-            id="id",
+    async def test_method_create(self, async_client: AsyncKeycardAPI) -> None:
+        role = await async_client.zones.roles.create(
             zone_id="zoneId",
+            identifier="identifier",
         )
-        assert_matches_type(User, user, path=["response"])
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
-        user = await async_client.zones.users.retrieve(
-            id="id",
+    async def test_method_create_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
+        role = await async_client.zones.roles.create(
             zone_id="zoneId",
-            expand="role-assignments",
-            role_source="user",
+            identifier="identifier",
+            description="description",
         )
-        assert_matches_type(User, user, path=["response"])
+        assert_matches_type(Role, role, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_create(self, async_client: AsyncKeycardAPI) -> None:
+        response = await async_client.zones.roles.with_raw_response.create(
+            zone_id="zoneId",
+            identifier="identifier",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        role = await response.parse()
+        assert_matches_type(Role, role, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_create(self, async_client: AsyncKeycardAPI) -> None:
+        async with async_client.zones.roles.with_streaming_response.create(
+            zone_id="zoneId",
+            identifier="identifier",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            role = await response.parse()
+            assert_matches_type(Role, role, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_create(self, async_client: AsyncKeycardAPI) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
+            await async_client.zones.roles.with_raw_response.create(
+                zone_id="",
+                identifier="identifier",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve(self, async_client: AsyncKeycardAPI) -> None:
+        role = await async_client.zones.roles.retrieve(
+            role_id="roleId",
+            zone_id="zoneId",
+        )
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncKeycardAPI) -> None:
-        response = await async_client.zones.users.with_raw_response.retrieve(
-            id="id",
+        response = await async_client.zones.roles.with_raw_response.retrieve(
+            role_id="roleId",
             zone_id="zoneId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert_matches_type(User, user, path=["response"])
+        role = await response.parse()
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncKeycardAPI) -> None:
-        async with async_client.zones.users.with_streaming_response.retrieve(
-            id="id",
+        async with async_client.zones.roles.with_streaming_response.retrieve(
+            role_id="roleId",
             zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = await response.parse()
-            assert_matches_type(User, user, path=["response"])
+            role = await response.parse()
+            assert_matches_type(Role, role, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -316,62 +397,61 @@ class TestAsyncUsers:
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            await async_client.zones.users.with_raw_response.retrieve(
-                id="id",
+            await async_client.zones.roles.with_raw_response.retrieve(
+                role_id="roleId",
                 zone_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            await async_client.zones.users.with_raw_response.retrieve(
-                id="",
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `role_id` but received ''"):
+            await async_client.zones.roles.with_raw_response.retrieve(
+                role_id="",
                 zone_id="zoneId",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncKeycardAPI) -> None:
-        user = await async_client.zones.users.update(
-            id="id",
+        role = await async_client.zones.roles.update(
+            role_id="roleId",
             zone_id="zoneId",
         )
-        assert_matches_type(User, user, path=["response"])
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
-        user = await async_client.zones.users.update(
-            id="id",
+        role = await async_client.zones.roles.update(
+            role_id="roleId",
             zone_id="zoneId",
-            identifier="x",
-            status="active",
+            description="description",
         )
-        assert_matches_type(User, user, path=["response"])
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncKeycardAPI) -> None:
-        response = await async_client.zones.users.with_raw_response.update(
-            id="id",
+        response = await async_client.zones.roles.with_raw_response.update(
+            role_id="roleId",
             zone_id="zoneId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert_matches_type(User, user, path=["response"])
+        role = await response.parse()
+        assert_matches_type(Role, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncKeycardAPI) -> None:
-        async with async_client.zones.users.with_streaming_response.update(
-            id="id",
+        async with async_client.zones.roles.with_streaming_response.update(
+            role_id="roleId",
             zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = await response.parse()
-            assert_matches_type(User, user, path=["response"])
+            role = await response.parse()
+            assert_matches_type(Role, role, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -379,69 +459,61 @@ class TestAsyncUsers:
     @parametrize
     async def test_path_params_update(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            await async_client.zones.users.with_raw_response.update(
-                id="id",
+            await async_client.zones.roles.with_raw_response.update(
+                role_id="roleId",
                 zone_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            await async_client.zones.users.with_raw_response.update(
-                id="",
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `role_id` but received ''"):
+            await async_client.zones.roles.with_raw_response.update(
+                role_id="",
                 zone_id="zoneId",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncKeycardAPI) -> None:
-        user = await async_client.zones.users.list(
+        role = await async_client.zones.roles.list(
             zone_id="zoneId",
         )
-        assert_matches_type(UserListResponse, user, path=["response"])
+        assert_matches_type(RoleListResponse, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
-        user = await async_client.zones.users.list(
+        role = await async_client.zones.roles.list(
             zone_id="zoneId",
             after="x",
             before="x",
             expand="total_count",
-            filter_email="dev@stainless.com",
-            filter_groups="string",
-            filter_id="string",
-            filter_identifier="string",
+            identifier="identifier",
             limit=1,
-            query="x",
-            query_email="x",
-            query_subject="x",
-            role_source="user",
-            sort="-authenticated_at,\t\r\r \tauthenticated_at,\n\t\ncreated_at",
         )
-        assert_matches_type(UserListResponse, user, path=["response"])
+        assert_matches_type(RoleListResponse, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncKeycardAPI) -> None:
-        response = await async_client.zones.users.with_raw_response.list(
+        response = await async_client.zones.roles.with_raw_response.list(
             zone_id="zoneId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert_matches_type(UserListResponse, user, path=["response"])
+        role = await response.parse()
+        assert_matches_type(RoleListResponse, role, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncKeycardAPI) -> None:
-        async with async_client.zones.users.with_streaming_response.list(
+        async with async_client.zones.roles.with_streaming_response.list(
             zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = await response.parse()
-            assert_matches_type(UserListResponse, user, path=["response"])
+            role = await response.parse()
+            assert_matches_type(RoleListResponse, role, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -449,44 +521,44 @@ class TestAsyncUsers:
     @parametrize
     async def test_path_params_list(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            await async_client.zones.users.with_raw_response.list(
+            await async_client.zones.roles.with_raw_response.list(
                 zone_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncKeycardAPI) -> None:
-        user = await async_client.zones.users.delete(
-            id="id",
+        role = await async_client.zones.roles.delete(
+            role_id="roleId",
             zone_id="zoneId",
         )
-        assert user is None
+        assert role is None
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncKeycardAPI) -> None:
-        response = await async_client.zones.users.with_raw_response.delete(
-            id="id",
+        response = await async_client.zones.roles.with_raw_response.delete(
+            role_id="roleId",
             zone_id="zoneId",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert user is None
+        role = await response.parse()
+        assert role is None
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncKeycardAPI) -> None:
-        async with async_client.zones.users.with_streaming_response.delete(
-            id="id",
+        async with async_client.zones.roles.with_streaming_response.delete(
+            role_id="roleId",
             zone_id="zoneId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = await response.parse()
-            assert user is None
+            role = await response.parse()
+            assert role is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -494,13 +566,13 @@ class TestAsyncUsers:
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncKeycardAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
-            await async_client.zones.users.with_raw_response.delete(
-                id="id",
+            await async_client.zones.roles.with_raw_response.delete(
+                role_id="roleId",
                 zone_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            await async_client.zones.users.with_raw_response.delete(
-                id="",
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `role_id` but received ''"):
+            await async_client.zones.roles.with_raw_response.delete(
+                role_id="",
                 zone_id="zoneId",
             )

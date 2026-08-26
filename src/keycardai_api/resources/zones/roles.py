@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -17,74 +17,59 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.zones import provider_list_params, provider_create_params, provider_update_params
+from ...types.zones import role_list_params, role_create_params, role_update_params
 from ..._base_client import make_request_options
-from ...types.zones.provider import Provider
-from ...types.zones.validation_result import ValidationResult
-from ...types.zones.provider_list_response import ProviderListResponse
+from ...types.zones.role import Role
+from ...types.zones.role_list_response import RoleListResponse
 
-__all__ = ["ProvidersResource", "AsyncProvidersResource"]
+__all__ = ["RolesResource", "AsyncRolesResource"]
 
 
-class ProvidersResource(SyncAPIResource):
+class RolesResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ProvidersResourceWithRawResponse:
+    def with_raw_response(self) -> RolesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
-        return ProvidersResourceWithRawResponse(self)
+        return RolesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ProvidersResourceWithStreamingResponse:
+    def with_streaming_response(self) -> RolesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
-        return ProvidersResourceWithStreamingResponse(self)
+        return RolesResourceWithStreamingResponse(self)
 
     def create(
         self,
         zone_id: str,
         *,
         identifier: str,
-        name: str,
-        client_id: str | Omit = omit,
-        client_secret: str | Omit = omit,
-        description: Optional[str] | Omit = omit,
-        metadata: provider_create_params.Metadata | Omit = omit,
-        protocols: provider_create_params.Protocols | Omit = omit,
+        description: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Provider:
-        """
-        Creates a new Provider - a system that supplies access to Resources and allows
-        actors to authenticate
+    ) -> Role:
+        """Creates a new customer-owned role in the specified zone.
+
+        The owner_type is
+        always customer; platform roles are managed by Keycard.
 
         Args:
-          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
-              (e.g. `<script>`, `<div>`) or control characters.
+          identifier: Role identifier: a lowercase slug (letters and digits separated by single
+              hyphens or underscores), unique per owner type within a zone. Role identifiers
+              surface in policy evaluation, so the slug restriction keeps them unambiguous in
+              policy text.
 
-          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
-              control characters.
-
-          client_id: OAuth 2.0 client identifier
-
-          client_secret: OAuth 2.0 client secret (will be encrypted and stored securely)
-
-          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
-              `<div>`) or control characters.
-
-          metadata: Provider metadata
-
-          protocols: Protocol-specific configuration for provider creation
+          description: Human-readable description
 
           extra_headers: Send extra headers
 
@@ -97,28 +82,23 @@ class ProvidersResource(SyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return self._post(
-            path_template("/zones/{zone_id}/providers", zone_id=zone_id),
+            path_template("/zones/{zone_id}/roles", zone_id=zone_id),
             body=maybe_transform(
                 {
                     "identifier": identifier,
-                    "name": name,
-                    "client_id": client_id,
-                    "client_secret": client_secret,
                     "description": description,
-                    "metadata": metadata,
-                    "protocols": protocols,
                 },
-                provider_create_params.ProviderCreateParams,
+                role_create_params.RoleCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Provider,
+            cast_to=Role,
         )
 
     def retrieve(
         self,
-        id: str,
+        role_id: str,
         *,
         zone_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -127,9 +107,9 @@ class ProvidersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Provider:
+    ) -> Role:
         """
-        Returns details of a specific Provider by ID
+        Returns details of a specific role by ID
 
         Args:
           extra_headers: Send extra headers
@@ -142,56 +122,36 @@ class ProvidersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not role_id:
+            raise ValueError(f"Expected a non-empty value for `role_id` but received {role_id!r}")
         return self._get(
-            path_template("/zones/{zone_id}/providers/{id}", zone_id=zone_id, id=id),
+            path_template("/zones/{zone_id}/roles/{role_id}", zone_id=zone_id, role_id=role_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Provider,
+            cast_to=Role,
         )
 
     def update(
         self,
-        id: str,
+        role_id: str,
         *,
         zone_id: str,
-        client_id: Optional[str] | Omit = omit,
-        client_secret: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
-        identifier: str | Omit = omit,
-        metadata: Optional[provider_update_params.Metadata] | Omit = omit,
-        name: str | Omit = omit,
-        protocols: Optional[provider_update_params.Protocols] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Provider:
-        """
-        Updates a Provider's configuration and metadata
+    ) -> Role:
+        """Updates a customer-owned role's description.
+
+        The identifier is immutable, and
+        platform-owned roles cannot be modified.
 
         Args:
-          client_id: OAuth 2.0 client identifier. Set to null to remove.
-
-          client_secret: OAuth 2.0 client secret (will be encrypted and stored securely). Set to null to
-              remove.
-
-          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
-              `<div>`) or control characters.
-
-          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
-              (e.g. `<script>`, `<div>`) or control characters.
-
-          metadata: Provider metadata. Set to null to remove all metadata.
-
-          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
-              control characters.
-
-          protocols: Protocol-specific configuration. Set to null to remove all protocols.
+          description: Human-readable description (set to null to unset)
 
           extra_headers: Send extra headers
 
@@ -203,26 +163,15 @@ class ProvidersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not role_id:
+            raise ValueError(f"Expected a non-empty value for `role_id` but received {role_id!r}")
         return self._patch(
-            path_template("/zones/{zone_id}/providers/{id}", zone_id=zone_id, id=id),
-            body=maybe_transform(
-                {
-                    "client_id": client_id,
-                    "client_secret": client_secret,
-                    "description": description,
-                    "identifier": identifier,
-                    "metadata": metadata,
-                    "name": name,
-                    "protocols": protocols,
-                },
-                provider_update_params.ProviderUpdateParams,
-            ),
+            path_template("/zones/{zone_id}/roles/{role_id}", zone_id=zone_id, role_id=role_id),
+            body=maybe_transform({"description": description}, role_update_params.RoleUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Provider,
+            cast_to=Role,
         )
 
     def list(
@@ -231,32 +180,29 @@ class ProvidersResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
-        filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
-        slug: str | Omit = omit,
-        type: Literal["external", "keycard-vault", "keycard-sts"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProviderListResponse:
-        """Returns a list of providers in the specified zone.
+    ) -> RoleListResponse:
+        """Returns the roles defined in the specified zone.
 
-        Pass `filter[id]`
-        (repeatable, max 100) to restrict results to a known set of provider IDs;
-        unknown or malformed IDs are silently omitted.
+        The full result set is
+        currently returned in a single page; the `after`/`before`/`limit` cursor
+        parameters are reserved and not yet enforced, and `pagination` cursors are
+        always null.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
 
-          filter_id: Restrict results to providers with this ID. Repeatable, max 100.
+          identifier: Filter roles by identifier
 
           limit: Maximum number of items to return
 
@@ -271,7 +217,7 @@ class ProvidersResource(SyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return self._get(
-            path_template("/zones/{zone_id}/providers", zone_id=zone_id),
+            path_template("/zones/{zone_id}/roles", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -281,23 +227,19 @@ class ProvidersResource(SyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
-                        "filter_id": filter_id,
                         "identifier": identifier,
                         "limit": limit,
-                        "slug": slug,
-                        "type": type,
                     },
-                    provider_list_params.ProviderListParams,
+                    role_list_params.RoleListParams,
                 ),
             ),
-            cast_to=ProviderListResponse,
+            cast_to=RoleListResponse,
         )
 
     def delete(
         self,
-        id: str,
+        role_id: str,
         *,
         zone_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -307,8 +249,10 @@ class ProvidersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
-        """
-        Permanently deletes a provider
+        """Permanently deletes a customer-owned role.
+
+        Platform-owned roles cannot be
+        deleted, and a role with existing assignments returns 409.
 
         Args:
           extra_headers: Send extra headers
@@ -321,116 +265,63 @@ class ProvidersResource(SyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not role_id:
+            raise ValueError(f"Expected a non-empty value for `role_id` but received {role_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            path_template("/zones/{zone_id}/providers/{id}", zone_id=zone_id, id=id),
+            path_template("/zones/{zone_id}/roles/{role_id}", zone_id=zone_id, role_id=role_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
 
-    def validate(
-        self,
-        id: str,
-        *,
-        zone_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ValidationResult:
-        """
-        Runs on-demand OIDC connection checks (issuer reachability, metadata retrieval,
-        endpoint consistency, authorization endpoint reachability, and a demonstration
-        client_credentials exchange) against the provider and returns a per-check
-        result. Results are not persisted.
 
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not zone_id:
-            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._post(
-            path_template("/zones/{zone_id}/providers/{id}/validate", zone_id=zone_id, id=id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ValidationResult,
-        )
-
-
-class AsyncProvidersResource(AsyncAPIResource):
+class AsyncRolesResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncProvidersResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncRolesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/keycardai/keycard-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncProvidersResourceWithRawResponse(self)
+        return AsyncRolesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncProvidersResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncRolesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/keycardai/keycard-python#with_streaming_response
         """
-        return AsyncProvidersResourceWithStreamingResponse(self)
+        return AsyncRolesResourceWithStreamingResponse(self)
 
     async def create(
         self,
         zone_id: str,
         *,
         identifier: str,
-        name: str,
-        client_id: str | Omit = omit,
-        client_secret: str | Omit = omit,
-        description: Optional[str] | Omit = omit,
-        metadata: provider_create_params.Metadata | Omit = omit,
-        protocols: provider_create_params.Protocols | Omit = omit,
+        description: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Provider:
-        """
-        Creates a new Provider - a system that supplies access to Resources and allows
-        actors to authenticate
+    ) -> Role:
+        """Creates a new customer-owned role in the specified zone.
+
+        The owner_type is
+        always customer; platform roles are managed by Keycard.
 
         Args:
-          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
-              (e.g. `<script>`, `<div>`) or control characters.
+          identifier: Role identifier: a lowercase slug (letters and digits separated by single
+              hyphens or underscores), unique per owner type within a zone. Role identifiers
+              surface in policy evaluation, so the slug restriction keeps them unambiguous in
+              policy text.
 
-          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
-              control characters.
-
-          client_id: OAuth 2.0 client identifier
-
-          client_secret: OAuth 2.0 client secret (will be encrypted and stored securely)
-
-          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
-              `<div>`) or control characters.
-
-          metadata: Provider metadata
-
-          protocols: Protocol-specific configuration for provider creation
+          description: Human-readable description
 
           extra_headers: Send extra headers
 
@@ -443,28 +334,23 @@ class AsyncProvidersResource(AsyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return await self._post(
-            path_template("/zones/{zone_id}/providers", zone_id=zone_id),
+            path_template("/zones/{zone_id}/roles", zone_id=zone_id),
             body=await async_maybe_transform(
                 {
                     "identifier": identifier,
-                    "name": name,
-                    "client_id": client_id,
-                    "client_secret": client_secret,
                     "description": description,
-                    "metadata": metadata,
-                    "protocols": protocols,
                 },
-                provider_create_params.ProviderCreateParams,
+                role_create_params.RoleCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Provider,
+            cast_to=Role,
         )
 
     async def retrieve(
         self,
-        id: str,
+        role_id: str,
         *,
         zone_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -473,9 +359,9 @@ class AsyncProvidersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Provider:
+    ) -> Role:
         """
-        Returns details of a specific Provider by ID
+        Returns details of a specific role by ID
 
         Args:
           extra_headers: Send extra headers
@@ -488,56 +374,36 @@ class AsyncProvidersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not role_id:
+            raise ValueError(f"Expected a non-empty value for `role_id` but received {role_id!r}")
         return await self._get(
-            path_template("/zones/{zone_id}/providers/{id}", zone_id=zone_id, id=id),
+            path_template("/zones/{zone_id}/roles/{role_id}", zone_id=zone_id, role_id=role_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Provider,
+            cast_to=Role,
         )
 
     async def update(
         self,
-        id: str,
+        role_id: str,
         *,
         zone_id: str,
-        client_id: Optional[str] | Omit = omit,
-        client_secret: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
-        identifier: str | Omit = omit,
-        metadata: Optional[provider_update_params.Metadata] | Omit = omit,
-        name: str | Omit = omit,
-        protocols: Optional[provider_update_params.Protocols] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Provider:
-        """
-        Updates a Provider's configuration and metadata
+    ) -> Role:
+        """Updates a customer-owned role's description.
+
+        The identifier is immutable, and
+        platform-owned roles cannot be modified.
 
         Args:
-          client_id: OAuth 2.0 client identifier. Set to null to remove.
-
-          client_secret: OAuth 2.0 client secret (will be encrypted and stored securely). Set to null to
-              remove.
-
-          description: Human-readable description. Must not contain HTML tags (e.g. `<script>`,
-              `<div>`) or control characters.
-
-          identifier: User specified identifier, unique within the zone. Must not contain HTML tags
-              (e.g. `<script>`, `<div>`) or control characters.
-
-          metadata: Provider metadata. Set to null to remove all metadata.
-
-          name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
-              control characters.
-
-          protocols: Protocol-specific configuration. Set to null to remove all protocols.
+          description: Human-readable description (set to null to unset)
 
           extra_headers: Send extra headers
 
@@ -549,26 +415,15 @@ class AsyncProvidersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not role_id:
+            raise ValueError(f"Expected a non-empty value for `role_id` but received {role_id!r}")
         return await self._patch(
-            path_template("/zones/{zone_id}/providers/{id}", zone_id=zone_id, id=id),
-            body=await async_maybe_transform(
-                {
-                    "client_id": client_id,
-                    "client_secret": client_secret,
-                    "description": description,
-                    "identifier": identifier,
-                    "metadata": metadata,
-                    "name": name,
-                    "protocols": protocols,
-                },
-                provider_update_params.ProviderUpdateParams,
-            ),
+            path_template("/zones/{zone_id}/roles/{role_id}", zone_id=zone_id, role_id=role_id),
+            body=await async_maybe_transform({"description": description}, role_update_params.RoleUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Provider,
+            cast_to=Role,
         )
 
     async def list(
@@ -577,32 +432,29 @@ class AsyncProvidersResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
-        filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
-        slug: str | Omit = omit,
-        type: Literal["external", "keycard-vault", "keycard-sts"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProviderListResponse:
-        """Returns a list of providers in the specified zone.
+    ) -> RoleListResponse:
+        """Returns the roles defined in the specified zone.
 
-        Pass `filter[id]`
-        (repeatable, max 100) to restrict results to a known set of provider IDs;
-        unknown or malformed IDs are silently omitted.
+        The full result set is
+        currently returned in a single page; the `after`/`before`/`limit` cursor
+        parameters are reserved and not yet enforced, and `pagination` cursors are
+        always null.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
 
-          filter_id: Restrict results to providers with this ID. Repeatable, max 100.
+          identifier: Filter roles by identifier
 
           limit: Maximum number of items to return
 
@@ -617,7 +469,7 @@ class AsyncProvidersResource(AsyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return await self._get(
-            path_template("/zones/{zone_id}/providers", zone_id=zone_id),
+            path_template("/zones/{zone_id}/roles", zone_id=zone_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -627,23 +479,19 @@ class AsyncProvidersResource(AsyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
-                        "filter_id": filter_id,
                         "identifier": identifier,
                         "limit": limit,
-                        "slug": slug,
-                        "type": type,
                     },
-                    provider_list_params.ProviderListParams,
+                    role_list_params.RoleListParams,
                 ),
             ),
-            cast_to=ProviderListResponse,
+            cast_to=RoleListResponse,
         )
 
     async def delete(
         self,
-        id: str,
+        role_id: str,
         *,
         zone_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -653,8 +501,10 @@ class AsyncProvidersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
-        """
-        Permanently deletes a provider
+        """Permanently deletes a customer-owned role.
+
+        Platform-owned roles cannot be
+        deleted, and a role with existing assignments returns 409.
 
         Args:
           extra_headers: Send extra headers
@@ -667,148 +517,97 @@ class AsyncProvidersResource(AsyncAPIResource):
         """
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not role_id:
+            raise ValueError(f"Expected a non-empty value for `role_id` but received {role_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            path_template("/zones/{zone_id}/providers/{id}", zone_id=zone_id, id=id),
+            path_template("/zones/{zone_id}/roles/{role_id}", zone_id=zone_id, role_id=role_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
 
-    async def validate(
-        self,
-        id: str,
-        *,
-        zone_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ValidationResult:
-        """
-        Runs on-demand OIDC connection checks (issuer reachability, metadata retrieval,
-        endpoint consistency, authorization endpoint reachability, and a demonstration
-        client_credentials exchange) against the provider and returns a per-check
-        result. Results are not persisted.
 
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not zone_id:
-            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._post(
-            path_template("/zones/{zone_id}/providers/{id}/validate", zone_id=zone_id, id=id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ValidationResult,
-        )
-
-
-class ProvidersResourceWithRawResponse:
-    def __init__(self, providers: ProvidersResource) -> None:
-        self._providers = providers
+class RolesResourceWithRawResponse:
+    def __init__(self, roles: RolesResource) -> None:
+        self._roles = roles
 
         self.create = to_raw_response_wrapper(
-            providers.create,
+            roles.create,
         )
         self.retrieve = to_raw_response_wrapper(
-            providers.retrieve,
+            roles.retrieve,
         )
         self.update = to_raw_response_wrapper(
-            providers.update,
+            roles.update,
         )
         self.list = to_raw_response_wrapper(
-            providers.list,
+            roles.list,
         )
         self.delete = to_raw_response_wrapper(
-            providers.delete,
-        )
-        self.validate = to_raw_response_wrapper(
-            providers.validate,
+            roles.delete,
         )
 
 
-class AsyncProvidersResourceWithRawResponse:
-    def __init__(self, providers: AsyncProvidersResource) -> None:
-        self._providers = providers
+class AsyncRolesResourceWithRawResponse:
+    def __init__(self, roles: AsyncRolesResource) -> None:
+        self._roles = roles
 
         self.create = async_to_raw_response_wrapper(
-            providers.create,
+            roles.create,
         )
         self.retrieve = async_to_raw_response_wrapper(
-            providers.retrieve,
+            roles.retrieve,
         )
         self.update = async_to_raw_response_wrapper(
-            providers.update,
+            roles.update,
         )
         self.list = async_to_raw_response_wrapper(
-            providers.list,
+            roles.list,
         )
         self.delete = async_to_raw_response_wrapper(
-            providers.delete,
-        )
-        self.validate = async_to_raw_response_wrapper(
-            providers.validate,
+            roles.delete,
         )
 
 
-class ProvidersResourceWithStreamingResponse:
-    def __init__(self, providers: ProvidersResource) -> None:
-        self._providers = providers
+class RolesResourceWithStreamingResponse:
+    def __init__(self, roles: RolesResource) -> None:
+        self._roles = roles
 
         self.create = to_streamed_response_wrapper(
-            providers.create,
+            roles.create,
         )
         self.retrieve = to_streamed_response_wrapper(
-            providers.retrieve,
+            roles.retrieve,
         )
         self.update = to_streamed_response_wrapper(
-            providers.update,
+            roles.update,
         )
         self.list = to_streamed_response_wrapper(
-            providers.list,
+            roles.list,
         )
         self.delete = to_streamed_response_wrapper(
-            providers.delete,
-        )
-        self.validate = to_streamed_response_wrapper(
-            providers.validate,
+            roles.delete,
         )
 
 
-class AsyncProvidersResourceWithStreamingResponse:
-    def __init__(self, providers: AsyncProvidersResource) -> None:
-        self._providers = providers
+class AsyncRolesResourceWithStreamingResponse:
+    def __init__(self, roles: AsyncRolesResource) -> None:
+        self._roles = roles
 
         self.create = async_to_streamed_response_wrapper(
-            providers.create,
+            roles.create,
         )
         self.retrieve = async_to_streamed_response_wrapper(
-            providers.retrieve,
+            roles.retrieve,
         )
         self.update = async_to_streamed_response_wrapper(
-            providers.update,
+            roles.update,
         )
         self.list = async_to_streamed_response_wrapper(
-            providers.list,
+            roles.list,
         )
         self.delete = async_to_streamed_response_wrapper(
-            providers.delete,
-        )
-        self.validate = async_to_streamed_response_wrapper(
-            providers.validate,
+            roles.delete,
         )
