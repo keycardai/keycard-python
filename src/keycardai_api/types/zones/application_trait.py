@@ -4,4 +4,4 @@ from typing_extensions import Literal, TypeAlias
 
 __all__ = ["ApplicationTrait"]
 
-ApplicationTrait: TypeAlias = Literal["gateway", "mcp-provider"]
+ApplicationTrait: TypeAlias = Literal["gateway", "mcp-provider", "unified-gateway", "mcp-server"]

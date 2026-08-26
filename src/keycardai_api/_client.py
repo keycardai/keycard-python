@@ -37,9 +37,10 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import zones, invitations, organizations
+    from .resources import zones, invitations, organizations, policy_bundle
     from .resources.invitations import InvitationsResource, AsyncInvitationsResource
     from .resources.zones.zones import ZonesResource, AsyncZonesResource
+    from .resources.policy_bundle import PolicyBundleResource, AsyncPolicyBundleResource
     from .resources.organizations.organizations import OrganizationsResource, AsyncOrganizationsResource
 
 __all__ = [
@@ -148,6 +149,35 @@ class KeycardAPI(SyncAPIClient):
         return InvitationsResource(self)
 
     @cached_property
+    def policy_bundle(self) -> PolicyBundleResource:
+        """Per-user Policy Bundle resource.
+
+        Allows clients (typically the Keycard CLI)
+        to GET, PUT, and DELETE the effective Policy Set for the calling user
+        on a zone. The bundle is encoded with a content-negotiated codec (currently
+        only `application/vnd.keycard.policy-bundle.v1+tar+gzip`).
+
+        ## Archive layout
+
+        The bundle is a gzip-compressed tar archive with this logical layout:
+
+        | Entry | Required on PUT | Notes |
+        |-------|-----------------|-------|
+        | `manifest.json` | **Yes** | See `PolicyBundleManifest`. The only source of the authoritative `schema.version`. |
+        | `schema.cedarschema` | No | Convenience snapshot of the Cedar schema. **Ignored on PUT** — the server validates policies against its own attested schema for `manifest.schema.version`. **Always present on GET.** |
+        | `policies/<public_id>.cedar` | — | One Cedar policy per file; the filename stem is the policy's public ID. |
+
+        Decode rules: duplicate entries and unrecognized/nested entries are
+        rejected (`bundle_invalid`). On PUT the manifest's `sha` fields and
+        `policies[]` list are advisory — the server recomputes every digest from
+        the archived bytes and derives the policy set from the `policies/` files.
+        On GET every digest is authoritative.
+        """
+        from .resources.policy_bundle import PolicyBundleResource
+
+        return PolicyBundleResource(self)
+
+    @cached_property
     def with_raw_response(self) -> KeycardAPIWithRawResponse:
         return KeycardAPIWithRawResponse(self)
 
@@ -161,10 +191,25 @@ class KeycardAPI(SyncAPIClient):
         return Querystring(array_format="repeat")
 
     @override
+    def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
+        headers: dict[str, str] = {}
+        if security.get("bearer_auth", False):
+            for key, value in self._bearer_auth.items():
+                headers.setdefault(key, value)
+        return headers
+
+    @override
     def _custom_auth(self, security: SecurityOptions) -> httpx.Auth | None:
         if security.get("o_auth2", False) and self._o_auth2 is not None:
             return self._o_auth2
         return None
+
+    @property
+    def _bearer_auth(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
 
     @property
     def _o_auth2(self) -> httpx.Auth | None:
@@ -378,6 +423,35 @@ class AsyncKeycardAPI(AsyncAPIClient):
         return AsyncInvitationsResource(self)
 
     @cached_property
+    def policy_bundle(self) -> AsyncPolicyBundleResource:
+        """Per-user Policy Bundle resource.
+
+        Allows clients (typically the Keycard CLI)
+        to GET, PUT, and DELETE the effective Policy Set for the calling user
+        on a zone. The bundle is encoded with a content-negotiated codec (currently
+        only `application/vnd.keycard.policy-bundle.v1+tar+gzip`).
+
+        ## Archive layout
+
+        The bundle is a gzip-compressed tar archive with this logical layout:
+
+        | Entry | Required on PUT | Notes |
+        |-------|-----------------|-------|
+        | `manifest.json` | **Yes** | See `PolicyBundleManifest`. The only source of the authoritative `schema.version`. |
+        | `schema.cedarschema` | No | Convenience snapshot of the Cedar schema. **Ignored on PUT** — the server validates policies against its own attested schema for `manifest.schema.version`. **Always present on GET.** |
+        | `policies/<public_id>.cedar` | — | One Cedar policy per file; the filename stem is the policy's public ID. |
+
+        Decode rules: duplicate entries and unrecognized/nested entries are
+        rejected (`bundle_invalid`). On PUT the manifest's `sha` fields and
+        `policies[]` list are advisory — the server recomputes every digest from
+        the archived bytes and derives the policy set from the `policies/` files.
+        On GET every digest is authoritative.
+        """
+        from .resources.policy_bundle import AsyncPolicyBundleResource
+
+        return AsyncPolicyBundleResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncKeycardAPIWithRawResponse:
         return AsyncKeycardAPIWithRawResponse(self)
 
@@ -391,10 +465,25 @@ class AsyncKeycardAPI(AsyncAPIClient):
         return Querystring(array_format="repeat")
 
     @override
+    def _auth_headers(self, security: SecurityOptions) -> dict[str, str]:
+        headers: dict[str, str] = {}
+        if security.get("bearer_auth", False):
+            for key, value in self._bearer_auth.items():
+                headers.setdefault(key, value)
+        return headers
+
+    @override
     def _custom_auth(self, security: SecurityOptions) -> httpx.Auth | None:
         if security.get("o_auth2", False) and self._o_auth2 is not None:
             return self._o_auth2
         return None
+
+    @property
+    def _bearer_auth(self) -> dict[str, str]:
+        api_key = self.api_key
+        if api_key is None:
+            return {}
+        return {"Authorization": f"Bearer {api_key}"}
 
     @property
     def _o_auth2(self) -> httpx.Auth | None:
@@ -538,6 +627,35 @@ class KeycardAPIWithRawResponse:
 
         return InvitationsResourceWithRawResponse(self._client.invitations)
 
+    @cached_property
+    def policy_bundle(self) -> policy_bundle.PolicyBundleResourceWithRawResponse:
+        """Per-user Policy Bundle resource.
+
+        Allows clients (typically the Keycard CLI)
+        to GET, PUT, and DELETE the effective Policy Set for the calling user
+        on a zone. The bundle is encoded with a content-negotiated codec (currently
+        only `application/vnd.keycard.policy-bundle.v1+tar+gzip`).
+
+        ## Archive layout
+
+        The bundle is a gzip-compressed tar archive with this logical layout:
+
+        | Entry | Required on PUT | Notes |
+        |-------|-----------------|-------|
+        | `manifest.json` | **Yes** | See `PolicyBundleManifest`. The only source of the authoritative `schema.version`. |
+        | `schema.cedarschema` | No | Convenience snapshot of the Cedar schema. **Ignored on PUT** — the server validates policies against its own attested schema for `manifest.schema.version`. **Always present on GET.** |
+        | `policies/<public_id>.cedar` | — | One Cedar policy per file; the filename stem is the policy's public ID. |
+
+        Decode rules: duplicate entries and unrecognized/nested entries are
+        rejected (`bundle_invalid`). On PUT the manifest's `sha` fields and
+        `policies[]` list are advisory — the server recomputes every digest from
+        the archived bytes and derives the policy set from the `policies/` files.
+        On GET every digest is authoritative.
+        """
+        from .resources.policy_bundle import PolicyBundleResourceWithRawResponse
+
+        return PolicyBundleResourceWithRawResponse(self._client.policy_bundle)
+
 
 class AsyncKeycardAPIWithRawResponse:
     _client: AsyncKeycardAPI
@@ -562,6 +680,35 @@ class AsyncKeycardAPIWithRawResponse:
         from .resources.invitations import AsyncInvitationsResourceWithRawResponse
 
         return AsyncInvitationsResourceWithRawResponse(self._client.invitations)
+
+    @cached_property
+    def policy_bundle(self) -> policy_bundle.AsyncPolicyBundleResourceWithRawResponse:
+        """Per-user Policy Bundle resource.
+
+        Allows clients (typically the Keycard CLI)
+        to GET, PUT, and DELETE the effective Policy Set for the calling user
+        on a zone. The bundle is encoded with a content-negotiated codec (currently
+        only `application/vnd.keycard.policy-bundle.v1+tar+gzip`).
+
+        ## Archive layout
+
+        The bundle is a gzip-compressed tar archive with this logical layout:
+
+        | Entry | Required on PUT | Notes |
+        |-------|-----------------|-------|
+        | `manifest.json` | **Yes** | See `PolicyBundleManifest`. The only source of the authoritative `schema.version`. |
+        | `schema.cedarschema` | No | Convenience snapshot of the Cedar schema. **Ignored on PUT** — the server validates policies against its own attested schema for `manifest.schema.version`. **Always present on GET.** |
+        | `policies/<public_id>.cedar` | — | One Cedar policy per file; the filename stem is the policy's public ID. |
+
+        Decode rules: duplicate entries and unrecognized/nested entries are
+        rejected (`bundle_invalid`). On PUT the manifest's `sha` fields and
+        `policies[]` list are advisory — the server recomputes every digest from
+        the archived bytes and derives the policy set from the `policies/` files.
+        On GET every digest is authoritative.
+        """
+        from .resources.policy_bundle import AsyncPolicyBundleResourceWithRawResponse
+
+        return AsyncPolicyBundleResourceWithRawResponse(self._client.policy_bundle)
 
 
 class KeycardAPIWithStreamedResponse:
@@ -588,6 +735,35 @@ class KeycardAPIWithStreamedResponse:
 
         return InvitationsResourceWithStreamingResponse(self._client.invitations)
 
+    @cached_property
+    def policy_bundle(self) -> policy_bundle.PolicyBundleResourceWithStreamingResponse:
+        """Per-user Policy Bundle resource.
+
+        Allows clients (typically the Keycard CLI)
+        to GET, PUT, and DELETE the effective Policy Set for the calling user
+        on a zone. The bundle is encoded with a content-negotiated codec (currently
+        only `application/vnd.keycard.policy-bundle.v1+tar+gzip`).
+
+        ## Archive layout
+
+        The bundle is a gzip-compressed tar archive with this logical layout:
+
+        | Entry | Required on PUT | Notes |
+        |-------|-----------------|-------|
+        | `manifest.json` | **Yes** | See `PolicyBundleManifest`. The only source of the authoritative `schema.version`. |
+        | `schema.cedarschema` | No | Convenience snapshot of the Cedar schema. **Ignored on PUT** — the server validates policies against its own attested schema for `manifest.schema.version`. **Always present on GET.** |
+        | `policies/<public_id>.cedar` | — | One Cedar policy per file; the filename stem is the policy's public ID. |
+
+        Decode rules: duplicate entries and unrecognized/nested entries are
+        rejected (`bundle_invalid`). On PUT the manifest's `sha` fields and
+        `policies[]` list are advisory — the server recomputes every digest from
+        the archived bytes and derives the policy set from the `policies/` files.
+        On GET every digest is authoritative.
+        """
+        from .resources.policy_bundle import PolicyBundleResourceWithStreamingResponse
+
+        return PolicyBundleResourceWithStreamingResponse(self._client.policy_bundle)
+
 
 class AsyncKeycardAPIWithStreamedResponse:
     _client: AsyncKeycardAPI
@@ -612,6 +788,35 @@ class AsyncKeycardAPIWithStreamedResponse:
         from .resources.invitations import AsyncInvitationsResourceWithStreamingResponse
 
         return AsyncInvitationsResourceWithStreamingResponse(self._client.invitations)
+
+    @cached_property
+    def policy_bundle(self) -> policy_bundle.AsyncPolicyBundleResourceWithStreamingResponse:
+        """Per-user Policy Bundle resource.
+
+        Allows clients (typically the Keycard CLI)
+        to GET, PUT, and DELETE the effective Policy Set for the calling user
+        on a zone. The bundle is encoded with a content-negotiated codec (currently
+        only `application/vnd.keycard.policy-bundle.v1+tar+gzip`).
+
+        ## Archive layout
+
+        The bundle is a gzip-compressed tar archive with this logical layout:
+
+        | Entry | Required on PUT | Notes |
+        |-------|-----------------|-------|
+        | `manifest.json` | **Yes** | See `PolicyBundleManifest`. The only source of the authoritative `schema.version`. |
+        | `schema.cedarschema` | No | Convenience snapshot of the Cedar schema. **Ignored on PUT** — the server validates policies against its own attested schema for `manifest.schema.version`. **Always present on GET.** |
+        | `policies/<public_id>.cedar` | — | One Cedar policy per file; the filename stem is the policy's public ID. |
+
+        Decode rules: duplicate entries and unrecognized/nested entries are
+        rejected (`bundle_invalid`). On PUT the manifest's `sha` fields and
+        `policies[]` list are advisory — the server recomputes every digest from
+        the archived bytes and derives the policy set from the `policies/` files.
+        On GET every digest is authoritative.
+        """
+        from .resources.policy_bundle import AsyncPolicyBundleResourceWithStreamingResponse
+
+        return AsyncPolicyBundleResourceWithStreamingResponse(self._client.policy_bundle)
 
 
 Client = KeycardAPI

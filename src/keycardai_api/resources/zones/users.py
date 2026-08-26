@@ -17,7 +17,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.zones import user_list_params
+from ...types.zones import user_list_params, user_retrieve_params
 from ..._base_client import make_request_options
 from ...types.zones.user import User
 from ...types.zones.user_list_response import UserListResponse
@@ -50,6 +50,8 @@ class UsersResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        expand: Union[Literal["role-assignments", "groups"], List[Literal["role-assignments", "groups"]]] | Omit = omit,
+        role_source: Literal["user", "group", "all"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -57,10 +59,18 @@ class UsersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> User:
-        """
-        Returns details of a specific user by user ID
+        """Returns details of a specific user by user ID.
+
+        Use `expand[]=role-assignments`
+        for the user's structured role grants and `expand[]=groups` for the user's group
+        memberships. Role grants are direct only by default, each tagged with `source`;
+        use `role_source=all` to also include group-inherited.
 
         Args:
+          role_source: Selects which grants `expand[]=role-assignments` returns, tagging each with
+              `source`: `user` (direct only, the default), `group` (group-inherited only), or
+              `all` (both direct and group-inherited). Requires `expand[]=role-assignments`.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -76,7 +86,17 @@ class UsersResource(SyncAPIResource):
         return self._get(
             path_template("/zones/{zone_id}/users/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "expand": expand,
+                        "role_source": role_source,
+                    },
+                    user_retrieve_params.UserRetrieveParams,
+                ),
             ),
             cast_to=User,
         )
@@ -88,16 +108,37 @@ class UsersResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[
-            Literal["total_count", "session_count", "grant_count", "role-assignments"],
-            List[Literal["total_count", "session_count", "grant_count", "role-assignments"]],
+            Literal[
+                "total_count",
+                "session_count",
+                "grant_count",
+                "role-assignments",
+                "groups",
+                "credentials",
+                "credentials.provider",
+            ],
+            List[
+                Literal[
+                    "total_count",
+                    "session_count",
+                    "grant_count",
+                    "role-assignments",
+                    "groups",
+                    "credentials",
+                    "credentials.provider",
+                ]
+            ],
         ]
         | Omit = omit,
         filter_email: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_groups: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_email: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_subject: Union[str, SequenceNotStr[str]] | Omit = omit,
+        role_source: Literal["user", "group", "all"] | Omit = omit,
         sort: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -109,27 +150,32 @@ class UsersResource(SyncAPIResource):
         """
         Returns a list of users in the specified zone.
 
-        **Rollout note:** the paginated/searchable/sortable behavior described below is
-        gated behind the `user-pagination` feature flag and is currently disabled for
-        most zones. While the flag is off, the response returns every user in the zone
-        (capped at 100) in `items` and a fixed pagination envelope where `after_cursor`
-        and `before_cursor` are `null` and `total_count` is `0`. The query parameters
-        below are accepted but ignored. The flag is rolled out per-zone in Datadog and
-        will become the default once Console adopts the paginated contract.
+        Note: cursor pagination, search, and sort are not yet enabled for all zones.
+        Where they are not enabled, the response returns all users in the zone (capped
+        at 100) in `items`, with `after_cursor` and `before_cursor` set to `null` and
+        `total_count` of `0`; `filter[email]` and `filter[identifier]` are still
+        applied, while the pagination, search, and sort parameters below are accepted
+        but ignored.
 
         Use cursor pagination via `after`/`before`. Sort: comma-separated field list;
         prefix with `-` for descending. Use `expand[]=total_count` to include the
         matching row count, `expand[]=session_count` to include per-user session counts,
-        `expand[]=grant_count` to include per-user delegated-grant counts, and
-        `expand[]=role-assignments` to include each user's structured role grants.
-        Filter by exact email via `filter[email]`; search via `query[email]` /
-        `query[subject]` / `query[]` (substring match, OR'd across repeated values).
-        `query[]` matches against email and federation credential subject. Pass
-        `filter[id]` (repeatable, max 100) to restrict results to a known set of users —
-        mutually exclusive with `after`/`before` (returns 400 if combined). When
-        `filter[id]` is set, `limit` is ignored and the response contains every
-        requested user that exists in the zone, in a single page. IDs not in the zone
-        are silently omitted.
+        `expand[]=grant_count` to include per-user delegated-grant counts,
+        `expand[]=role-assignments` to include each user's structured role grants
+        (direct grants only by default, each tagged with `source`; use `role_source=all`
+        to also include group-inherited), `expand[]=groups` to include each user's group
+        memberships, `expand[]=credentials` to include each user's authentication
+        credentials (each with its `provider_id`), and `expand[]=credentials.provider`
+        to additionally inline the full identity provider on each federation credential.
+        Filter by exact email via `filter[email]` and by exact identifier via
+        `filter[identifier]`; restrict to members of a group via `filter[groups]`
+        (repeatable, OR'd across values); search via `query[email]` / `query[subject]` /
+        `query[]` (substring match, OR'd across repeated values). `query[]` matches
+        against email and federation credential subject. Pass `filter[id]` (repeatable,
+        max 100) to restrict results to a known set of users — mutually exclusive with
+        `after`/`before` (returns 400 if combined). When `filter[id]` is set, `limit` is
+        ignored and the response contains every requested user that exists in the zone,
+        in a single page. IDs not in the zone are silently omitted.
 
         Args:
           after: Cursor for forward pagination
@@ -138,8 +184,12 @@ class UsersResource(SyncAPIResource):
 
           filter_email: Filter by exact email address
 
+          filter_groups: Restrict to members of this group (by group ID). Repeatable; OR'd across values.
+
           filter_id: Restrict results to users with this publicId. Repeatable, max 100. Mutually
               exclusive with after/before.
+
+          filter_identifier: Filter by exact user identifier
 
           limit: Maximum number of items to return
 
@@ -148,6 +198,10 @@ class UsersResource(SyncAPIResource):
           query_email: Search by email (substring match)
 
           query_subject: Search by federated credential subject (substring match)
+
+          role_source: Selects which grants `expand[]=role-assignments` returns, tagging each with
+              `source`: `user` (direct only, the default), `group` (group-inherited only), or
+              `all` (both direct and group-inherited). Requires `expand[]=role-assignments`.
 
           sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
               email, authenticated_at
@@ -175,11 +229,14 @@ class UsersResource(SyncAPIResource):
                         "before": before,
                         "expand": expand,
                         "filter_email": filter_email,
+                        "filter_groups": filter_groups,
                         "filter_id": filter_id,
+                        "filter_identifier": filter_identifier,
                         "limit": limit,
                         "query": query,
                         "query_email": query_email,
                         "query_subject": query_subject,
+                        "role_source": role_source,
                         "sort": sort,
                     },
                     user_list_params.UserListParams,
@@ -214,6 +271,8 @@ class AsyncUsersResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        expand: Union[Literal["role-assignments", "groups"], List[Literal["role-assignments", "groups"]]] | Omit = omit,
+        role_source: Literal["user", "group", "all"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -221,10 +280,18 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> User:
-        """
-        Returns details of a specific user by user ID
+        """Returns details of a specific user by user ID.
+
+        Use `expand[]=role-assignments`
+        for the user's structured role grants and `expand[]=groups` for the user's group
+        memberships. Role grants are direct only by default, each tagged with `source`;
+        use `role_source=all` to also include group-inherited.
 
         Args:
+          role_source: Selects which grants `expand[]=role-assignments` returns, tagging each with
+              `source`: `user` (direct only, the default), `group` (group-inherited only), or
+              `all` (both direct and group-inherited). Requires `expand[]=role-assignments`.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -240,7 +307,17 @@ class AsyncUsersResource(AsyncAPIResource):
         return await self._get(
             path_template("/zones/{zone_id}/users/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "expand": expand,
+                        "role_source": role_source,
+                    },
+                    user_retrieve_params.UserRetrieveParams,
+                ),
             ),
             cast_to=User,
         )
@@ -252,16 +329,37 @@ class AsyncUsersResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[
-            Literal["total_count", "session_count", "grant_count", "role-assignments"],
-            List[Literal["total_count", "session_count", "grant_count", "role-assignments"]],
+            Literal[
+                "total_count",
+                "session_count",
+                "grant_count",
+                "role-assignments",
+                "groups",
+                "credentials",
+                "credentials.provider",
+            ],
+            List[
+                Literal[
+                    "total_count",
+                    "session_count",
+                    "grant_count",
+                    "role-assignments",
+                    "groups",
+                    "credentials",
+                    "credentials.provider",
+                ]
+            ],
         ]
         | Omit = omit,
         filter_email: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_groups: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_email: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_subject: Union[str, SequenceNotStr[str]] | Omit = omit,
+        role_source: Literal["user", "group", "all"] | Omit = omit,
         sort: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -273,27 +371,32 @@ class AsyncUsersResource(AsyncAPIResource):
         """
         Returns a list of users in the specified zone.
 
-        **Rollout note:** the paginated/searchable/sortable behavior described below is
-        gated behind the `user-pagination` feature flag and is currently disabled for
-        most zones. While the flag is off, the response returns every user in the zone
-        (capped at 100) in `items` and a fixed pagination envelope where `after_cursor`
-        and `before_cursor` are `null` and `total_count` is `0`. The query parameters
-        below are accepted but ignored. The flag is rolled out per-zone in Datadog and
-        will become the default once Console adopts the paginated contract.
+        Note: cursor pagination, search, and sort are not yet enabled for all zones.
+        Where they are not enabled, the response returns all users in the zone (capped
+        at 100) in `items`, with `after_cursor` and `before_cursor` set to `null` and
+        `total_count` of `0`; `filter[email]` and `filter[identifier]` are still
+        applied, while the pagination, search, and sort parameters below are accepted
+        but ignored.
 
         Use cursor pagination via `after`/`before`. Sort: comma-separated field list;
         prefix with `-` for descending. Use `expand[]=total_count` to include the
         matching row count, `expand[]=session_count` to include per-user session counts,
-        `expand[]=grant_count` to include per-user delegated-grant counts, and
-        `expand[]=role-assignments` to include each user's structured role grants.
-        Filter by exact email via `filter[email]`; search via `query[email]` /
-        `query[subject]` / `query[]` (substring match, OR'd across repeated values).
-        `query[]` matches against email and federation credential subject. Pass
-        `filter[id]` (repeatable, max 100) to restrict results to a known set of users —
-        mutually exclusive with `after`/`before` (returns 400 if combined). When
-        `filter[id]` is set, `limit` is ignored and the response contains every
-        requested user that exists in the zone, in a single page. IDs not in the zone
-        are silently omitted.
+        `expand[]=grant_count` to include per-user delegated-grant counts,
+        `expand[]=role-assignments` to include each user's structured role grants
+        (direct grants only by default, each tagged with `source`; use `role_source=all`
+        to also include group-inherited), `expand[]=groups` to include each user's group
+        memberships, `expand[]=credentials` to include each user's authentication
+        credentials (each with its `provider_id`), and `expand[]=credentials.provider`
+        to additionally inline the full identity provider on each federation credential.
+        Filter by exact email via `filter[email]` and by exact identifier via
+        `filter[identifier]`; restrict to members of a group via `filter[groups]`
+        (repeatable, OR'd across values); search via `query[email]` / `query[subject]` /
+        `query[]` (substring match, OR'd across repeated values). `query[]` matches
+        against email and federation credential subject. Pass `filter[id]` (repeatable,
+        max 100) to restrict results to a known set of users — mutually exclusive with
+        `after`/`before` (returns 400 if combined). When `filter[id]` is set, `limit` is
+        ignored and the response contains every requested user that exists in the zone,
+        in a single page. IDs not in the zone are silently omitted.
 
         Args:
           after: Cursor for forward pagination
@@ -302,8 +405,12 @@ class AsyncUsersResource(AsyncAPIResource):
 
           filter_email: Filter by exact email address
 
+          filter_groups: Restrict to members of this group (by group ID). Repeatable; OR'd across values.
+
           filter_id: Restrict results to users with this publicId. Repeatable, max 100. Mutually
               exclusive with after/before.
+
+          filter_identifier: Filter by exact user identifier
 
           limit: Maximum number of items to return
 
@@ -312,6 +419,10 @@ class AsyncUsersResource(AsyncAPIResource):
           query_email: Search by email (substring match)
 
           query_subject: Search by federated credential subject (substring match)
+
+          role_source: Selects which grants `expand[]=role-assignments` returns, tagging each with
+              `source`: `user` (direct only, the default), `group` (group-inherited only), or
+              `all` (both direct and group-inherited). Requires `expand[]=role-assignments`.
 
           sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
               email, authenticated_at
@@ -339,11 +450,14 @@ class AsyncUsersResource(AsyncAPIResource):
                         "before": before,
                         "expand": expand,
                         "filter_email": filter_email,
+                        "filter_groups": filter_groups,
                         "filter_id": filter_id,
+                        "filter_identifier": filter_identifier,
                         "limit": limit,
                         "query": query,
                         "query_email": query_email,
                         "query_subject": query_subject,
+                        "role_source": role_source,
                         "sort": sort,
                     },
                     user_list_params.UserListParams,

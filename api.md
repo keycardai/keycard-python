@@ -171,7 +171,7 @@ from keycardai_api.types.zones import User, UserListResponse
 
 Methods:
 
-- <code title="get /zones/{zoneId}/users/{id}">client.zones.users.<a href="./src/keycardai_api/resources/zones/users.py">retrieve</a>(id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/user.py">User</a></code>
+- <code title="get /zones/{zoneId}/users/{id}">client.zones.users.<a href="./src/keycardai_api/resources/zones/users.py">retrieve</a>(id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/user_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/user.py">User</a></code>
 - <code title="get /zones/{zoneId}/users">client.zones.users.<a href="./src/keycardai_api/resources/zones/users.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/user_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/user_list_response.py">UserListResponse</a></code>
 
 ## Members
@@ -261,46 +261,6 @@ Methods:
 - <code title="get /zones/{zone_id}/policies/{policy_id}/versions">client.zones.policies.versions.<a href="./src/keycardai_api/resources/zones/policies/versions.py">list</a>(policy_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policies/version_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policies/version_list_response.py">VersionListResponse</a></code>
 - <code title="delete /zones/{zone_id}/policies/{policy_id}/versions/{version_id}">client.zones.policies.versions.<a href="./src/keycardai_api/resources/zones/policies/versions.py">archive</a>(version_id, \*, zone_id, policy_id) -> <a href="./src/keycardai_api/types/zones/policies/policy_version.py">PolicyVersion</a></code>
 
-## Packages
-
-Types:
-
-```python
-from keycardai_api.types.zones import (
-    InputState,
-    Package,
-    PackageDraft,
-    PackageInputBinding,
-    PackageList,
-    PackageOutputBinding,
-    PackageSource,
-)
-```
-
-### Versions
-
-Types:
-
-```python
-from keycardai_api.types.zones.packages import PackageVersion, PackageVersionList
-```
-
-## Installs
-
-Types:
-
-```python
-from keycardai_api.types.zones import Install, InstallList, InstallStatus
-```
-
-## CatalogTasks
-
-Types:
-
-```python
-from keycardai_api.types.zones import Task, TaskOperation, TaskStatus
-```
-
 ## PolicySets
 
 Types:
@@ -369,7 +329,6 @@ Methods:
 - <code title="get /organizations/{organization_id}">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">retrieve</a>(organization_id, \*\*<a href="src/keycardai_api/types/organization_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization.py">Organization</a></code>
 - <code title="patch /organizations/{organization_id}">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">update</a>(organization_id, \*\*<a href="src/keycardai_api/types/organization_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization.py">Organization</a></code>
 - <code title="get /organizations">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">list</a>(\*\*<a href="src/keycardai_api/types/organization_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization_list_response.py">OrganizationListResponse</a></code>
-- <code title="post /organizations/{organization_id}/token">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">exchange_token</a>(organization_id) -> <a href="./src/keycardai_api/types/token_response.py">TokenResponse</a></code>
 - <code title="get /organizations/{organization_id}/identities">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">list_identities</a>(organization_id, \*\*<a href="src/keycardai_api/types/organization_list_identities_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization_list_identities_response.py">OrganizationListIdentitiesResponse</a></code>
 - <code title="get /organizations/{organization_id}/roles">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">list_roles</a>(organization_id, \*\*<a href="src/keycardai_api/types/organization_list_roles_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization_list_roles_response.py">OrganizationListRolesResponse</a></code>
 
@@ -470,3 +429,11 @@ Methods:
 
 - <code title="get /invitations/{token}">client.invitations.<a href="./src/keycardai_api/resources/invitations.py">retrieve</a>(token) -> <a href="./src/keycardai_api/types/invitation_retrieve_response.py">InvitationRetrieveResponse</a></code>
 - <code title="post /invitations/{token}/accept">client.invitations.<a href="./src/keycardai_api/resources/invitations.py">accept</a>(token) -> <a href="./src/keycardai_api/types/invitation_accept_response.py">InvitationAcceptResponse</a></code>
+
+# PolicyBundle
+
+Methods:
+
+- <code title="get /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">retrieve</a>() -> BinaryAPIResponse</code>
+- <code title="put /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">update</a>(body, \*\*<a href="src/keycardai_api/types/policy_bundle_update_params.py">params</a>) -> BinaryAPIResponse</code>
+- <code title="delete /policy/bundle">client.policy_bundle.<a href="./src/keycardai_api/resources/policy_bundle.py">reset</a>() -> None</code>

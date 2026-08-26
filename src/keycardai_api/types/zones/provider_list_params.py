@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import List, Union
 from typing_extensions import Literal, Annotated, TypedDict
 
+from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
 
 __all__ = ["ProviderListParams"]
@@ -20,6 +21,9 @@ class ProviderListParams(TypedDict, total=False):
     cursor: str
 
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
+
+    filter_id: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[id]")]
+    """Restrict results to providers with this ID. Repeatable, max 100."""
 
     identifier: str
 
