@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .roles import (
-    RolesResource,
-    AsyncRolesResource,
-    RolesResourceWithRawResponse,
-    AsyncRolesResourceWithRawResponse,
-    RolesResourceWithStreamingResponse,
-    AsyncRolesResourceWithStreamingResponse,
-)
 from .applications import (
     ApplicationsResource,
     AsyncApplicationsResource,
@@ -32,12 +24,6 @@ __all__ = [
     "AsyncDependenciesResourceWithRawResponse",
     "DependenciesResourceWithStreamingResponse",
     "AsyncDependenciesResourceWithStreamingResponse",
-    "RolesResource",
-    "AsyncRolesResource",
-    "RolesResourceWithRawResponse",
-    "AsyncRolesResourceWithRawResponse",
-    "RolesResourceWithStreamingResponse",
-    "AsyncRolesResourceWithStreamingResponse",
     "ApplicationsResource",
     "AsyncApplicationsResource",
     "ApplicationsResourceWithRawResponse",

@@ -24,7 +24,7 @@ from ...types import (
     organization_list_roles_params,
     organization_list_identities_params,
 )
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -287,44 +287,6 @@ class OrganizationsResource(SyncAPIResource):
                 ),
             ),
             cast_to=OrganizationListResponse,
-        )
-
-    def delete(
-        self,
-        organization_id: str,
-        *,
-        x_client_request_id: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Deletes the organization and all zones.
-
-        Args:
-          organization_id: Organization ID or label identifier
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        return self._delete(
-            path_template("/organizations/{organization_id}", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
         )
 
     def list_identities(
@@ -688,44 +650,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             cast_to=OrganizationListResponse,
         )
 
-    async def delete(
-        self,
-        organization_id: str,
-        *,
-        x_client_request_id: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Deletes the organization and all zones.
-
-        Args:
-          organization_id: Organization ID or label identifier
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        return await self._delete(
-            path_template("/organizations/{organization_id}", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
     async def list_identities(
         self,
         organization_id: str,
@@ -882,9 +806,6 @@ class OrganizationsResourceWithRawResponse:
         self.list = to_raw_response_wrapper(
             organizations.list,
         )
-        self.delete = to_raw_response_wrapper(
-            organizations.delete,
-        )
         self.list_identities = to_raw_response_wrapper(
             organizations.list_identities,
         )
@@ -924,9 +845,6 @@ class AsyncOrganizationsResourceWithRawResponse:
         )
         self.list = async_to_raw_response_wrapper(
             organizations.list,
-        )
-        self.delete = async_to_raw_response_wrapper(
-            organizations.delete,
         )
         self.list_identities = async_to_raw_response_wrapper(
             organizations.list_identities,
@@ -968,9 +886,6 @@ class OrganizationsResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             organizations.list,
         )
-        self.delete = to_streamed_response_wrapper(
-            organizations.delete,
-        )
         self.list_identities = to_streamed_response_wrapper(
             organizations.list_identities,
         )
@@ -1010,9 +925,6 @@ class AsyncOrganizationsResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             organizations.list,
-        )
-        self.delete = async_to_streamed_response_wrapper(
-            organizations.delete,
         )
         self.list_identities = async_to_streamed_response_wrapper(
             organizations.list_identities,

@@ -20,7 +20,6 @@ from ..._response import (
 from ...types.zones import provider_list_params, provider_create_params, provider_update_params
 from ..._base_client import make_request_options
 from ...types.zones.provider import Provider
-from ...types.zones.validation_result import ValidationResult
 from ...types.zones.provider_list_response import ProviderListResponse
 
 __all__ = ["ProvidersResource", "AsyncProvidersResource"]
@@ -332,45 +331,6 @@ class ProvidersResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
-    def validate(
-        self,
-        id: str,
-        *,
-        zone_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ValidationResult:
-        """
-        Runs on-demand OIDC connection checks (issuer reachability, metadata retrieval,
-        endpoint consistency, authorization endpoint reachability, and a demonstration
-        client_credentials exchange) against the provider and returns a per-check
-        result. Results are not persisted.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not zone_id:
-            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._post(
-            path_template("/zones/{zone_id}/providers/{id}/validate", zone_id=zone_id, id=id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ValidationResult,
-        )
-
 
 class AsyncProvidersResource(AsyncAPIResource):
     @cached_property
@@ -678,45 +638,6 @@ class AsyncProvidersResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def validate(
-        self,
-        id: str,
-        *,
-        zone_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ValidationResult:
-        """
-        Runs on-demand OIDC connection checks (issuer reachability, metadata retrieval,
-        endpoint consistency, authorization endpoint reachability, and a demonstration
-        client_credentials exchange) against the provider and returns a per-check
-        result. Results are not persisted.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not zone_id:
-            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._post(
-            path_template("/zones/{zone_id}/providers/{id}/validate", zone_id=zone_id, id=id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ValidationResult,
-        )
-
 
 class ProvidersResourceWithRawResponse:
     def __init__(self, providers: ProvidersResource) -> None:
@@ -736,9 +657,6 @@ class ProvidersResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             providers.delete,
-        )
-        self.validate = to_raw_response_wrapper(
-            providers.validate,
         )
 
 
@@ -761,9 +679,6 @@ class AsyncProvidersResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             providers.delete,
         )
-        self.validate = async_to_raw_response_wrapper(
-            providers.validate,
-        )
 
 
 class ProvidersResourceWithStreamingResponse:
@@ -785,9 +700,6 @@ class ProvidersResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             providers.delete,
         )
-        self.validate = to_streamed_response_wrapper(
-            providers.validate,
-        )
 
 
 class AsyncProvidersResourceWithStreamingResponse:
@@ -808,7 +720,4 @@ class AsyncProvidersResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             providers.delete,
-        )
-        self.validate = async_to_streamed_response_wrapper(
-            providers.validate,
         )

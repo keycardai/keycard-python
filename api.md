@@ -60,20 +60,6 @@ Methods:
 - <code title="put /zones/{zoneId}/applications/{id}/dependencies/{dependencyId}">client.zones.applications.dependencies.<a href="./src/keycardai_api/resources/zones/applications/dependencies.py">add</a>(dependency_id, \*, zone_id, id, \*\*<a href="src/keycardai_api/types/zones/applications/dependency_add_params.py">params</a>) -> None</code>
 - <code title="delete /zones/{zoneId}/applications/{id}/dependencies/{dependencyId}">client.zones.applications.dependencies.<a href="./src/keycardai_api/resources/zones/applications/dependencies.py">remove</a>(dependency_id, \*, zone_id, id) -> None</code>
 
-### Roles
-
-Types:
-
-```python
-from keycardai_api.types.zones.applications import RoleListResponse
-```
-
-Methods:
-
-- <code title="get /zones/{zoneId}/applications/{applicationId}/roles">client.zones.applications.roles.<a href="./src/keycardai_api/resources/zones/applications/roles.py">list</a>(application_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/applications/role_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/applications/role_list_response.py">RoleListResponse</a></code>
-- <code title="post /zones/{zoneId}/applications/{applicationId}/roles">client.zones.applications.roles.<a href="./src/keycardai_api/resources/zones/applications/roles.py">assign</a>(application_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/applications/role_assign_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/users/role_assignment.py">RoleAssignment</a></code>
-- <code title="delete /zones/{zoneId}/applications/{applicationId}/roles/{roleId}">client.zones.applications.roles.<a href="./src/keycardai_api/resources/zones/applications/roles.py">revoke</a>(role_id, \*, zone_id, application_id, \*\*<a href="src/keycardai_api/types/zones/applications/role_revoke_params.py">params</a>) -> None</code>
-
 ## ApplicationCredentials
 
 Types:
@@ -120,7 +106,7 @@ Methods:
 Types:
 
 ```python
-from keycardai_api.types.zones import Provider, ValidationResult, ProviderListResponse
+from keycardai_api.types.zones import Provider, ProviderListResponse
 ```
 
 Methods:
@@ -130,7 +116,6 @@ Methods:
 - <code title="patch /zones/{zoneId}/providers/{id}">client.zones.providers.<a href="./src/keycardai_api/resources/zones/providers.py">update</a>(id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/provider_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/provider.py">Provider</a></code>
 - <code title="get /zones/{zoneId}/providers">client.zones.providers.<a href="./src/keycardai_api/resources/zones/providers.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/provider_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/provider_list_response.py">ProviderListResponse</a></code>
 - <code title="delete /zones/{zoneId}/providers/{id}">client.zones.providers.<a href="./src/keycardai_api/resources/zones/providers.py">delete</a>(id, \*, zone_id) -> None</code>
-- <code title="post /zones/{zoneId}/providers/{id}/validate">client.zones.providers.<a href="./src/keycardai_api/resources/zones/providers.py">validate</a>(id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/validation_result.py">ValidationResult</a></code>
 
 ## Resources
 
@@ -186,24 +171,8 @@ from keycardai_api.types.zones import User, UserListResponse
 
 Methods:
 
-- <code title="get /zones/{zoneId}/users/{id}">client.zones.users.<a href="./src/keycardai_api/resources/zones/users/users.py">retrieve</a>(id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/user_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/user.py">User</a></code>
-- <code title="patch /zones/{zoneId}/users/{id}">client.zones.users.<a href="./src/keycardai_api/resources/zones/users/users.py">update</a>(id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/user_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/user.py">User</a></code>
-- <code title="get /zones/{zoneId}/users">client.zones.users.<a href="./src/keycardai_api/resources/zones/users/users.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/user_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/user_list_response.py">UserListResponse</a></code>
-- <code title="delete /zones/{zoneId}/users/{id}">client.zones.users.<a href="./src/keycardai_api/resources/zones/users/users.py">delete</a>(id, \*, zone_id) -> None</code>
-
-### Roles
-
-Types:
-
-```python
-from keycardai_api.types.zones.users import RoleAssignment, RoleAssignmentCreate, RoleListResponse
-```
-
-Methods:
-
-- <code title="get /zones/{zoneId}/users/{userId}/roles">client.zones.users.roles.<a href="./src/keycardai_api/resources/zones/users/roles.py">list</a>(user_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/users/role_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/users/role_list_response.py">RoleListResponse</a></code>
-- <code title="post /zones/{zoneId}/users/{userId}/roles">client.zones.users.roles.<a href="./src/keycardai_api/resources/zones/users/roles.py">assign</a>(user_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/users/role_assign_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/users/role_assignment.py">RoleAssignment</a></code>
-- <code title="delete /zones/{zoneId}/users/{userId}/roles/{roleId}">client.zones.users.roles.<a href="./src/keycardai_api/resources/zones/users/roles.py">revoke</a>(role_id, \*, zone_id, user_id, \*\*<a href="src/keycardai_api/types/zones/users/role_revoke_params.py">params</a>) -> None</code>
+- <code title="get /zones/{zoneId}/users/{id}">client.zones.users.<a href="./src/keycardai_api/resources/zones/users.py">retrieve</a>(id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/user_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/user.py">User</a></code>
+- <code title="get /zones/{zoneId}/users">client.zones.users.<a href="./src/keycardai_api/resources/zones/users.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/user_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/user_list_response.py">UserListResponse</a></code>
 
 ## Members
 
@@ -220,66 +189,6 @@ Methods:
 - <code title="get /zones/{zoneId}/members">client.zones.members.<a href="./src/keycardai_api/resources/zones/members.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/member_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/member_list_response.py">MemberListResponse</a></code>
 - <code title="delete /zones/{zoneId}/members/{organizationUserId}">client.zones.members.<a href="./src/keycardai_api/resources/zones/members.py">delete</a>(organization_user_id, \*, zone_id) -> None</code>
 - <code title="post /zones/{zoneId}/members">client.zones.members.<a href="./src/keycardai_api/resources/zones/members.py">add</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/member_add_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/zone_member.py">ZoneMember</a></code>
-
-## Roles
-
-Types:
-
-```python
-from keycardai_api.types.zones import Role, RoleCreate, RoleUpdate, RoleListResponse
-```
-
-Methods:
-
-- <code title="post /zones/{zoneId}/roles">client.zones.roles.<a href="./src/keycardai_api/resources/zones/roles.py">create</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/role_create_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/role.py">Role</a></code>
-- <code title="get /zones/{zoneId}/roles/{roleId}">client.zones.roles.<a href="./src/keycardai_api/resources/zones/roles.py">retrieve</a>(role_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/role.py">Role</a></code>
-- <code title="patch /zones/{zoneId}/roles/{roleId}">client.zones.roles.<a href="./src/keycardai_api/resources/zones/roles.py">update</a>(role_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/role_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/role.py">Role</a></code>
-- <code title="get /zones/{zoneId}/roles">client.zones.roles.<a href="./src/keycardai_api/resources/zones/roles.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/role_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/role_list_response.py">RoleListResponse</a></code>
-- <code title="delete /zones/{zoneId}/roles/{roleId}">client.zones.roles.<a href="./src/keycardai_api/resources/zones/roles.py">delete</a>(role_id, \*, zone_id) -> None</code>
-
-## Groups
-
-Types:
-
-```python
-from keycardai_api.types.zones import Group, GroupCreate, GroupUpdate, GroupListResponse
-```
-
-Methods:
-
-- <code title="post /zones/{zoneId}/groups">client.zones.groups.<a href="./src/keycardai_api/resources/zones/groups/groups.py">create</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/group_create_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/group.py">Group</a></code>
-- <code title="get /zones/{zoneId}/groups/{groupId}">client.zones.groups.<a href="./src/keycardai_api/resources/zones/groups/groups.py">retrieve</a>(group_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/group_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/group.py">Group</a></code>
-- <code title="patch /zones/{zoneId}/groups/{groupId}">client.zones.groups.<a href="./src/keycardai_api/resources/zones/groups/groups.py">update</a>(group_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/group_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/group.py">Group</a></code>
-- <code title="get /zones/{zoneId}/groups">client.zones.groups.<a href="./src/keycardai_api/resources/zones/groups/groups.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/group_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/group_list_response.py">GroupListResponse</a></code>
-- <code title="delete /zones/{zoneId}/groups/{groupId}">client.zones.groups.<a href="./src/keycardai_api/resources/zones/groups/groups.py">delete</a>(group_id, \*, zone_id) -> None</code>
-
-### Members
-
-Types:
-
-```python
-from keycardai_api.types.zones.groups import GroupMember, GroupMemberCreate, MemberListResponse
-```
-
-Methods:
-
-- <code title="get /zones/{zoneId}/groups/{groupId}/members">client.zones.groups.members.<a href="./src/keycardai_api/resources/zones/groups/members.py">list</a>(group_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/groups/member_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/groups/member_list_response.py">MemberListResponse</a></code>
-- <code title="post /zones/{zoneId}/groups/{groupId}/members">client.zones.groups.members.<a href="./src/keycardai_api/resources/zones/groups/members.py">add</a>(group_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/groups/member_add_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/groups/group_member.py">GroupMember</a></code>
-- <code title="delete /zones/{zoneId}/groups/{groupId}/members/{userId}">client.zones.groups.members.<a href="./src/keycardai_api/resources/zones/groups/members.py">remove</a>(user_id, \*, zone_id, group_id) -> None</code>
-
-### Roles
-
-Types:
-
-```python
-from keycardai_api.types.zones.groups import RoleListResponse
-```
-
-Methods:
-
-- <code title="get /zones/{zoneId}/groups/{groupId}/roles">client.zones.groups.roles.<a href="./src/keycardai_api/resources/zones/groups/roles.py">list</a>(group_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/groups/role_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/groups/role_list_response.py">RoleListResponse</a></code>
-- <code title="post /zones/{zoneId}/groups/{groupId}/roles">client.zones.groups.roles.<a href="./src/keycardai_api/resources/zones/groups/roles.py">add</a>(group_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/groups/role_add_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/users/role_assignment.py">RoleAssignment</a></code>
-- <code title="delete /zones/{zoneId}/groups/{groupId}/roles/{roleId}">client.zones.groups.roles.<a href="./src/keycardai_api/resources/zones/groups/roles.py">remove</a>(role_id, \*, zone_id, group_id, \*\*<a href="src/keycardai_api/types/zones/groups/role_remove_params.py">params</a>) -> None</code>
 
 ## Secrets
 
@@ -420,7 +329,6 @@ Methods:
 - <code title="get /organizations/{organization_id}">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">retrieve</a>(organization_id, \*\*<a href="src/keycardai_api/types/organization_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization.py">Organization</a></code>
 - <code title="patch /organizations/{organization_id}">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">update</a>(organization_id, \*\*<a href="src/keycardai_api/types/organization_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization.py">Organization</a></code>
 - <code title="get /organizations">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">list</a>(\*\*<a href="src/keycardai_api/types/organization_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization_list_response.py">OrganizationListResponse</a></code>
-- <code title="delete /organizations/{organization_id}">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">delete</a>(organization_id) -> None</code>
 - <code title="get /organizations/{organization_id}/identities">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">list_identities</a>(organization_id, \*\*<a href="src/keycardai_api/types/organization_list_identities_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization_list_identities_response.py">OrganizationListIdentitiesResponse</a></code>
 - <code title="get /organizations/{organization_id}/roles">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">list_roles</a>(organization_id, \*\*<a href="src/keycardai_api/types/organization_list_roles_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization_list_roles_response.py">OrganizationListRolesResponse</a></code>
 
