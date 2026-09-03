@@ -1,5 +1,53 @@
 # Changelog
 
+## 0.17.0 (2026-09-03)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/keycardai/keycard-python/compare/v0.16.0...v0.17.0)
+
+### ⚠ BREAKING CHANGES
+
+* retire POST /organizations/{id}/token
+
+### Features
+
+* **ACC-709:** application assignees + expose role assignments ([6a76dbf](https://github.com/keycardai/keycard-python/commit/6a76dbf04cbd9d16c1054a262a7a42a01668f035))
+* add external_id_claim to provider openid protocol ([9ea5e49](https://github.com/keycardai/keycard-python/commit/9ea5e498695a9f88991515aa306f3b045711d0e4))
+* **applications:** allow unified-gateway and mcp-server traits (ECO-128) ([414ac68](https://github.com/keycardai/keycard-python/commit/414ac68a77bb5c54837b7d4146c2e8b8735f6370))
+* **CX-782:** paginate + search application dependencies ([02e6bde](https://github.com/keycardai/keycard-python/commit/02e6bdef7ec3aa0c3313b12f1dc814510c83c773))
+* **CX-860:** paginate application provided-resources endpoint ([aac9e86](https://github.com/keycardai/keycard-python/commit/aac9e86b2a4801ae35fc773b4cc1fd0748becf06))
+* **CX-862:** remove legacy traits[]/traits[all] aliases ([23984b7](https://github.com/keycardai/keycard-python/commit/23984b713fb45653d6a09e8eb2b88a679ef8a7ae))
+* filter users by identifier in management list ([147af02](https://github.com/keycardai/keycard-python/commit/147af020e8e8c31678928137fb85386b54dd4ec6))
+* **ID-365:** support additional SSO provider configuration options ([526b229](https://github.com/keycardai/keycard-python/commit/526b22958acc91a11569ba3f8453a004eb03f6f5))
+* **ID-456:** groups API create + get ([976fbbd](https://github.com/keycardai/keycard-python/commit/976fbbd318ab99629796bc28ddf2dc0dcfad562e))
+* **ID-478:** zones.external_sync_enabled column and update API ([fd4134c](https://github.com/keycardai/keycard-python/commit/fd4134c71676e377b1acc47dbb197a6b437a9697))
+* **ID-480:** external_sync_tokens table and management APIs ([0e04c06](https://github.com/keycardai/keycard-python/commit/0e04c066c57f96bef597416d4a4a1f77ec6c43fc))
+* **providers:** add filter[id] to list endpoint (ID-547) ([20da67a](https://github.com/keycardai/keycard-python/commit/20da67a5559d2188a4b127f6d30ce3ae43e20751))
+* **providers:** store brand icon_url in provider metadata ([f298c38](https://github.com/keycardai/keycard-python/commit/f298c382bdbe7e68b8a1556f36fe466b6155a5a8))
+* **resources:** add filter[owner_type] to the resource list (ECO-225) ([ede883a](https://github.com/keycardai/keycard-python/commit/ede883a754b07dfd8beff31afd57860d8d65814b))
+* **resources:** add search, sort, and filter[id] to the paginated resource list ([ca1681d](https://github.com/keycardai/keycard-python/commit/ca1681d46b70bd5e2913a4a8906793bc55c34ca7))
+* **resources:** filter the resource list by trait ([6cab4f0](https://github.com/keycardai/keycard-python/commit/6cab4f0985ac778837b272353cf1f729b88bd9d9))
+* retire POST /organizations/{id}/token ([8a65582](https://github.com/keycardai/keycard-python/commit/8a65582d81e48738200067e7e8ca7ec02590563c))
+* **sdk:** expose zone roles, groups, and role assignments in Stainless config ([45970b1](https://github.com/keycardai/keycard-python/commit/45970b10df4451e04810706fba32366153487896))
+* **sdk:** generate a client for the existing /policy/bundle endpoint ([518c473](https://github.com/keycardai/keycard-python/commit/518c473dcb23f0d68e849838a070187addf422a9))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([1c22f7e](https://github.com/keycardai/keycard-python/commit/1c22f7ea4ae904c4864a794dc4aaa46afa7d7e0e))
+
+
+### Bug Fixes
+
+* **ACC-613:** preserve source order of policies in draft/convert cedar_json ([6d27d21](https://github.com/keycardai/keycard-python/commit/6d27d213ac66fb9f1890409a380924c3edb44b99))
+* **ci:** resolve Stainless error diagnostics and enforce fail_on: error ([8a01934](https://github.com/keycardai/keycard-python/commit/8a01934b6ceb8636db998f0498d86ccb810cf639))
+* **deps:** close critical Dependabot alerts ([fe31508](https://github.com/keycardai/keycard-python/commit/fe315084c22655d49d199b33a0cb16c17e4bbbb1))
+* exact-match identifier filter on resources management list ([846f24e](https://github.com/keycardai/keycard-python/commit/846f24efdb2492e4ea0741167ebc7153af5d0d1e))
+* **ID-448:** keyset cursor drops same-millisecond rows (precision mismatch) ([dad9ddb](https://github.com/keycardai/keycard-python/commit/dad9ddb0165f422ef1d05d851d4fdf912ee1d43b))
+* **internal:** resolve build failures ([15cb317](https://github.com/keycardai/keycard-python/commit/15cb317c1d1ea8462b30bff1411e52a554df0fb0))
+* **sdk:** generate /policy/bundle body as raw binary, not multipart ([d516a7f](https://github.com/keycardai/keycard-python/commit/d516a7f7b207aa4eed33d1a401721b9aa1ecd5d9))
+
+
+### Chores
+
+* de-dup and align types across API specs ([bf16103](https://github.com/keycardai/keycard-python/commit/bf161039858f079eabd6abf9102fa439633b9bc9))
+* Fixes found during Terraform work ([8389f30](https://github.com/keycardai/keycard-python/commit/8389f304ffae7c4bbe512de541a6896469be273f))
+
 ## 0.16.0 (2026-06-30)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/keycardai/keycard-python/compare/v0.15.0...v0.16.0)
