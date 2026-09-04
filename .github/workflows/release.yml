@@ -1,0 +1,22 @@
+# Create the "release PR" when codegen pushes new changes to the `next` branch.
+name: Release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - next
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          target-branch: next
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
