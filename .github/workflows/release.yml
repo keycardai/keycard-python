@@ -41,6 +41,8 @@ jobs:
             keycard-python
 
       - name: delete existing release PR
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           PRS=$(gh pr list --state open --label "release: candidate" --json number --jq '.[].number')
           # There shouldn't ever be more than one `release: candidate` pull
