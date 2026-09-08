@@ -30,7 +30,7 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
-      - name: release app token
+      - name: mint release app token
         id: app-token
         uses: actions/create-github-app-token@v2
         with:
@@ -40,10 +40,20 @@ jobs:
           repositories: |
             keycard-python
 
+      - name: configure git user
+        run: |
+          APP_ID="${{ vars.SDK_RELEASE_APP_ID }}"
+          APP_NAME="keycard-sdk-release[bot]"
+          git config --global user.name "$APP_NAME"
+          git config --global user.email "$APP_ID+$APP_NAME@users.noreply.github.com"
+
       - name: checkout
         uses: actions/checkout@v4
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        with:
+          ref: main
+          fetch-depth: 0
 
       - name: delete existing release PR
         env:
@@ -59,7 +69,6 @@ jobs:
 
       - name: create and push `release` branch
         run: |
-          git checkout main
           git branch -D release &>/dev/null
           git checkout -b release
           git cherry-pick -X theirs origin/generated
