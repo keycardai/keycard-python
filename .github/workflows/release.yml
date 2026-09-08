@@ -89,7 +89,8 @@ jobs:
           gh pr merge "${{ steps.release-please.outputs.pr }}" --squash --auto --delete-branch=false
 
       - name: open release PR for `main`
+        if: ${{ steps.release-please.outputs.pr }}
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
-          gh pr create --base main --head release --label "release: candidate"
+          gh pr create --base main --head release --fill --label "release: candidate"
