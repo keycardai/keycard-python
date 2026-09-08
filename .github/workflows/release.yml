@@ -1,0 +1,83 @@
+# Creates "Release PRs"
+#
+# This workflow takes raw changes, generated via `stlc` when openapi specs
+# change, and builds a PR with those changes, version bump, and CHANGELOG
+# updates.
+#
+# When code is pushed to the `generated` branch, the following happens:
+#
+#   1. If a release PR is currently open, delete it
+#   2. `release` branch is (re)created from `main`
+#   3. Raw changes are cherry-picked from `generated` into `release`
+#   4. release-please is run on the `release` branch, creating a PR with
+#      the version bump, CHANGELOG update, etc.
+#   5. The PR is merged into `release` once its green
+#   6. A PR is opened for `release` → `main`
+#
+name: Release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - generated
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: release app token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.SDK_RELEASE_APP_ID }}
+          private-key: ${{ secrets.SDK_RELEASE_PRIVATE_KEY }}
+          owner: keycardai
+          repositories: |
+            keycard-python
+
+      - name: delete existing release PR
+        run: |
+          PRS=$(gh pr list --state open --label "release: candidate" --json number --jq '.[].number')
+          # There shouldn't ever be more than one `release: candidate` pull
+          # request open, but in case there is (for some unknown reason),
+          # delete them all.
+          for PR in $PRS; do
+            gh pr close "$PR" --comment "Release workflow cleanup. See '.github/workflows/release.yml'."
+          done
+
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: create and push `release` branch
+        run: |
+          git checkout main
+          git branch -D release &>/dev/null
+          git checkout -b release
+          git cherry-pick -X theirs origin/generated
+          git push origin release --force
+
+      - name: generate version bump & changelog commit
+        uses: googleapis/release-please-action@v4
+        id: release-please
+        with:
+          target-branch: release
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - name: merge version bump & changelog into `release`
+        if: ${{ steps.release-please.outputs.pr }}
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh pr merge "${{ steps.release-please.outputs.pr }}" --squash --auto --delete-branch=false
+
+      - name: open release PR for `main`
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh pr create --base main --head release --label "release: candidate"
