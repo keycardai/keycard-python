@@ -40,6 +40,11 @@ jobs:
           repositories: |
             keycard-python
 
+      - name: checkout
+        uses: actions/checkout@v4
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+
       - name: delete existing release PR
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
@@ -51,9 +56,6 @@ jobs:
           for PR in $PRS; do
             gh pr close "$PR" --comment "Release workflow cleanup. See '.github/workflows/release.yml'."
           done
-
-      - name: checkout
-        uses: actions/checkout@v4
 
       - name: create and push `release` branch
         run: |
