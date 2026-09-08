@@ -39,6 +39,10 @@ jobs:
           owner: keycardai
           repositories: |
             keycard-python
+          permissions: |
+            contents: write
+            pull-requests: write
+            workflows: write
 
       - name: configure git user
         run: |
