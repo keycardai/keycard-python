@@ -72,6 +72,8 @@ jobs:
           done
 
       - name: create and push `release` branch
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           git checkout -b release
           git cherry-pick -X theirs origin/generated
