@@ -53,9 +53,8 @@ jobs:
 
       - name: checkout
         uses: actions/checkout@v4
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
+          token: ${{ steps.app-token.outputs.token }}
           ref: main
           fetch-depth: 0
 
@@ -72,8 +71,6 @@ jobs:
           done
 
       - name: create and push `release` branch
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           git checkout -b release
           git cherry-pick -X theirs origin/generated
