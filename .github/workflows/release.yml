@@ -69,7 +69,6 @@ jobs:
 
       - name: create and push `release` branch
         run: |
-          git branch -D release &>/dev/null
           git checkout -b release
           git cherry-pick -X theirs origin/generated
           git push origin release --force
