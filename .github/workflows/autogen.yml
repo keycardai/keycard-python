@@ -1,0 +1,15 @@
+name: Autogen
+on:
+  push:
+    branches:
+      - autogen
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+jobs:
+  autogen:
+    name: build and merge autogen PR
+    uses: keycardai/keycard-api/.github/workflows/autogen.yml@main
