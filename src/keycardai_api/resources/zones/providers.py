@@ -233,9 +233,20 @@ class ProvidersResource(SyncAPIResource):
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_slug: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_type: Union[
+            Literal["external", "keycard-vault", "keycard-sts"],
+            List[Literal["external", "keycard-vault", "keycard-sts"]],
+        ]
+        | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_name: Union[str, SequenceNotStr[str]] | Omit = omit,
         slug: str | Omit = omit,
+        sort: str | Omit = omit,
         type: Literal["external", "keycard-vault", "keycard-sts"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -244,20 +255,45 @@ class ProvidersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProviderListResponse:
-        """Returns a list of providers in the specified zone.
+        """Returns a paginated list of providers in the specified zone.
 
-        Pass `filter[id]`
-        (repeatable, max 100) to restrict results to a known set of provider IDs;
-        unknown or malformed IDs are silently omitted.
+        Use cursor
+        pagination via `after`/`before`. Sort: comma-separated field list; prefix with
+        `-` for descending. Use `expand[]=total_count` to include the matching row
+        count. Filter by exact slug via `filter[slug]`, exact identifier via
+        `filter[identifier]` and provider type via `filter[type]`. Search via
+        `query[name]` / `query[identifier]` / `query[]` (substring match, OR'd across
+        repeated values). `query[]` matches against name and identifier. Pass
+        `filter[id]` (repeatable, max 100) to restrict results to a known set of
+        provider IDs — mutually exclusive with `after`/`before` (returns 400 if
+        combined). When `filter[id]` is set, `limit` is ignored and the response
+        contains every requested provider that exists in the zone, in a single page.
+        Unknown or malformed IDs are silently omitted.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
 
-          filter_id: Restrict results to providers with this ID. Repeatable, max 100.
+          filter_id: Restrict results to providers with this ID. Repeatable, max 100. Mutually
+              exclusive with after/before.
+
+          filter_identifier: Filter by exact provider identifier
+
+          filter_slug: Filter by exact provider slug
+
+          filter_type: Filter by provider type
 
           limit: Maximum number of items to return
+
+          query: Search across name and identifier (substring match)
+
+          query_identifier: Search by identifier (substring match)
+
+          query_name: Search by name (substring match)
+
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
+              name, identifier
 
           extra_headers: Send extra headers
 
@@ -283,9 +319,16 @@ class ProvidersResource(SyncAPIResource):
                         "cursor": cursor,
                         "expand": expand,
                         "filter_id": filter_id,
+                        "filter_identifier": filter_identifier,
+                        "filter_slug": filter_slug,
+                        "filter_type": filter_type,
                         "identifier": identifier,
                         "limit": limit,
+                        "query": query,
+                        "query_identifier": query_identifier,
+                        "query_name": query_name,
                         "slug": slug,
+                        "sort": sort,
                         "type": type,
                     },
                     provider_list_params.ProviderListParams,
@@ -540,9 +583,20 @@ class AsyncProvidersResource(AsyncAPIResource):
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_slug: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_type: Union[
+            Literal["external", "keycard-vault", "keycard-sts"],
+            List[Literal["external", "keycard-vault", "keycard-sts"]],
+        ]
+        | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_name: Union[str, SequenceNotStr[str]] | Omit = omit,
         slug: str | Omit = omit,
+        sort: str | Omit = omit,
         type: Literal["external", "keycard-vault", "keycard-sts"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -551,20 +605,45 @@ class AsyncProvidersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProviderListResponse:
-        """Returns a list of providers in the specified zone.
+        """Returns a paginated list of providers in the specified zone.
 
-        Pass `filter[id]`
-        (repeatable, max 100) to restrict results to a known set of provider IDs;
-        unknown or malformed IDs are silently omitted.
+        Use cursor
+        pagination via `after`/`before`. Sort: comma-separated field list; prefix with
+        `-` for descending. Use `expand[]=total_count` to include the matching row
+        count. Filter by exact slug via `filter[slug]`, exact identifier via
+        `filter[identifier]` and provider type via `filter[type]`. Search via
+        `query[name]` / `query[identifier]` / `query[]` (substring match, OR'd across
+        repeated values). `query[]` matches against name and identifier. Pass
+        `filter[id]` (repeatable, max 100) to restrict results to a known set of
+        provider IDs — mutually exclusive with `after`/`before` (returns 400 if
+        combined). When `filter[id]` is set, `limit` is ignored and the response
+        contains every requested provider that exists in the zone, in a single page.
+        Unknown or malformed IDs are silently omitted.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
 
-          filter_id: Restrict results to providers with this ID. Repeatable, max 100.
+          filter_id: Restrict results to providers with this ID. Repeatable, max 100. Mutually
+              exclusive with after/before.
+
+          filter_identifier: Filter by exact provider identifier
+
+          filter_slug: Filter by exact provider slug
+
+          filter_type: Filter by provider type
 
           limit: Maximum number of items to return
+
+          query: Search across name and identifier (substring match)
+
+          query_identifier: Search by identifier (substring match)
+
+          query_name: Search by name (substring match)
+
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
+              name, identifier
 
           extra_headers: Send extra headers
 
@@ -590,9 +669,16 @@ class AsyncProvidersResource(AsyncAPIResource):
                         "cursor": cursor,
                         "expand": expand,
                         "filter_id": filter_id,
+                        "filter_identifier": filter_identifier,
+                        "filter_slug": filter_slug,
+                        "filter_type": filter_type,
                         "identifier": identifier,
                         "limit": limit,
+                        "query": query,
+                        "query_identifier": query_identifier,
+                        "query_name": query_name,
                         "slug": slug,
+                        "sort": sort,
                         "type": type,
                     },
                     provider_list_params.ProviderListParams,

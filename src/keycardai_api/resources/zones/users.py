@@ -131,9 +131,13 @@ class UsersResource(SyncAPIResource):
         ]
         | Omit = omit,
         filter_email: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_external: bool | Omit = omit,
         filter_groups: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_issuer: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_role: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_subject: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_email: Union[str, SequenceNotStr[str]] | Omit = omit,
@@ -148,14 +152,7 @@ class UsersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserListResponse:
         """
-        Returns a list of users in the specified zone.
-
-        Note: cursor pagination, search, and sort are not yet enabled for all zones.
-        Where they are not enabled, the response returns all users in the zone (capped
-        at 100) in `items`, with `after_cursor` and `before_cursor` set to `null` and
-        `total_count` of `0`; `filter[email]` and `filter[identifier]` are still
-        applied, while the pagination, search, and sort parameters below are accepted
-        but ignored.
+        Returns a paginated list of users in the specified zone.
 
         Use cursor pagination via `after`/`before`. Sort: comma-separated field list;
         prefix with `-` for descending. Use `expand[]=total_count` to include the
@@ -169,13 +166,20 @@ class UsersResource(SyncAPIResource):
         to additionally inline the full identity provider on each federation credential.
         Filter by exact email via `filter[email]` and by exact identifier via
         `filter[identifier]`; restrict to members of a group via `filter[groups]`
-        (repeatable, OR'd across values); search via `query[email]` / `query[subject]` /
-        `query[]` (substring match, OR'd across repeated values). `query[]` matches
-        against email and federation credential subject. Pass `filter[id]` (repeatable,
-        max 100) to restrict results to a known set of users — mutually exclusive with
-        `after`/`before` (returns 400 if combined). When `filter[id]` is set, `limit` is
-        ignored and the response contains every requested user that exists in the zone,
-        in a single page. IDs not in the zone are silently omitted.
+        (repeatable, OR'd across values); restrict to users directly granted a role via
+        `filter[role]` (role identifier, repeatable up to 100, OR'd across values;
+        group-inherited grants do not match); pass `filter[external]=false` for only
+        users managed in Keycard or `filter[external]=true` for only users provisioned
+        by an external directory (omit to list both); match exactly on the user's
+        `subject` and `issuer` via `filter[subject]` and `filter[issuer]` (each
+        repeatable and OR'd across values; AND'd with each other); search via
+        `query[email]` / `query[subject]` / `query[]` (substring match, OR'd across
+        repeated values). `query[]` matches against email and the user's `subject`. Pass
+        `filter[id]` (repeatable, max 100) to restrict results to a known set of users —
+        mutually exclusive with `after`/`before` (returns 400 if combined). When
+        `filter[id]` is set, `limit` is ignored and the response contains every
+        requested user that exists in the zone, in a single page. IDs not in the zone
+        are silently omitted.
 
         Args:
           after: Cursor for forward pagination
@@ -184,6 +188,9 @@ class UsersResource(SyncAPIResource):
 
           filter_email: Filter by exact email address
 
+          filter_external: Filter by source: `false` for users managed in Keycard, `true` for users
+              provisioned by an external directory. Omit to list both.
+
           filter_groups: Restrict to members of this group (by group ID). Repeatable; OR'd across values.
 
           filter_id: Restrict results to users with this publicId. Repeatable, max 100. Mutually
@@ -191,13 +198,20 @@ class UsersResource(SyncAPIResource):
 
           filter_identifier: Filter by exact user identifier
 
+          filter_issuer: Filter by exact `issuer`. Repeatable; OR'd across values.
+
+          filter_role: Restrict to users directly granted this role (by role identifier). Repeatable,
+              max 100; OR'd across values. Group-inherited grants do not match.
+
+          filter_subject: Filter by exact `subject`. Repeatable; OR'd across values.
+
           limit: Maximum number of items to return
 
-          query: Search across email and credential subject (substring match)
+          query: Search across email and the user's `subject` (substring match)
 
           query_email: Search by email (substring match)
 
-          query_subject: Search by federated credential subject (substring match)
+          query_subject: Search by the user's `subject` (substring match)
 
           role_source: Selects which grants `expand[]=role-assignments` returns, tagging each with
               `source`: `user` (direct only, the default), `group` (group-inherited only), or
@@ -229,9 +243,13 @@ class UsersResource(SyncAPIResource):
                         "before": before,
                         "expand": expand,
                         "filter_email": filter_email,
+                        "filter_external": filter_external,
                         "filter_groups": filter_groups,
                         "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
+                        "filter_issuer": filter_issuer,
+                        "filter_role": filter_role,
+                        "filter_subject": filter_subject,
                         "limit": limit,
                         "query": query,
                         "query_email": query_email,
@@ -352,9 +370,13 @@ class AsyncUsersResource(AsyncAPIResource):
         ]
         | Omit = omit,
         filter_email: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_external: bool | Omit = omit,
         filter_groups: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_issuer: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_role: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_subject: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_email: Union[str, SequenceNotStr[str]] | Omit = omit,
@@ -369,14 +391,7 @@ class AsyncUsersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserListResponse:
         """
-        Returns a list of users in the specified zone.
-
-        Note: cursor pagination, search, and sort are not yet enabled for all zones.
-        Where they are not enabled, the response returns all users in the zone (capped
-        at 100) in `items`, with `after_cursor` and `before_cursor` set to `null` and
-        `total_count` of `0`; `filter[email]` and `filter[identifier]` are still
-        applied, while the pagination, search, and sort parameters below are accepted
-        but ignored.
+        Returns a paginated list of users in the specified zone.
 
         Use cursor pagination via `after`/`before`. Sort: comma-separated field list;
         prefix with `-` for descending. Use `expand[]=total_count` to include the
@@ -390,13 +405,20 @@ class AsyncUsersResource(AsyncAPIResource):
         to additionally inline the full identity provider on each federation credential.
         Filter by exact email via `filter[email]` and by exact identifier via
         `filter[identifier]`; restrict to members of a group via `filter[groups]`
-        (repeatable, OR'd across values); search via `query[email]` / `query[subject]` /
-        `query[]` (substring match, OR'd across repeated values). `query[]` matches
-        against email and federation credential subject. Pass `filter[id]` (repeatable,
-        max 100) to restrict results to a known set of users — mutually exclusive with
-        `after`/`before` (returns 400 if combined). When `filter[id]` is set, `limit` is
-        ignored and the response contains every requested user that exists in the zone,
-        in a single page. IDs not in the zone are silently omitted.
+        (repeatable, OR'd across values); restrict to users directly granted a role via
+        `filter[role]` (role identifier, repeatable up to 100, OR'd across values;
+        group-inherited grants do not match); pass `filter[external]=false` for only
+        users managed in Keycard or `filter[external]=true` for only users provisioned
+        by an external directory (omit to list both); match exactly on the user's
+        `subject` and `issuer` via `filter[subject]` and `filter[issuer]` (each
+        repeatable and OR'd across values; AND'd with each other); search via
+        `query[email]` / `query[subject]` / `query[]` (substring match, OR'd across
+        repeated values). `query[]` matches against email and the user's `subject`. Pass
+        `filter[id]` (repeatable, max 100) to restrict results to a known set of users —
+        mutually exclusive with `after`/`before` (returns 400 if combined). When
+        `filter[id]` is set, `limit` is ignored and the response contains every
+        requested user that exists in the zone, in a single page. IDs not in the zone
+        are silently omitted.
 
         Args:
           after: Cursor for forward pagination
@@ -405,6 +427,9 @@ class AsyncUsersResource(AsyncAPIResource):
 
           filter_email: Filter by exact email address
 
+          filter_external: Filter by source: `false` for users managed in Keycard, `true` for users
+              provisioned by an external directory. Omit to list both.
+
           filter_groups: Restrict to members of this group (by group ID). Repeatable; OR'd across values.
 
           filter_id: Restrict results to users with this publicId. Repeatable, max 100. Mutually
@@ -412,13 +437,20 @@ class AsyncUsersResource(AsyncAPIResource):
 
           filter_identifier: Filter by exact user identifier
 
+          filter_issuer: Filter by exact `issuer`. Repeatable; OR'd across values.
+
+          filter_role: Restrict to users directly granted this role (by role identifier). Repeatable,
+              max 100; OR'd across values. Group-inherited grants do not match.
+
+          filter_subject: Filter by exact `subject`. Repeatable; OR'd across values.
+
           limit: Maximum number of items to return
 
-          query: Search across email and credential subject (substring match)
+          query: Search across email and the user's `subject` (substring match)
 
           query_email: Search by email (substring match)
 
-          query_subject: Search by federated credential subject (substring match)
+          query_subject: Search by the user's `subject` (substring match)
 
           role_source: Selects which grants `expand[]=role-assignments` returns, tagging each with
               `source`: `user` (direct only, the default), `group` (group-inherited only), or
@@ -450,9 +482,13 @@ class AsyncUsersResource(AsyncAPIResource):
                         "before": before,
                         "expand": expand,
                         "filter_email": filter_email,
+                        "filter_external": filter_external,
                         "filter_groups": filter_groups,
                         "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
+                        "filter_issuer": filter_issuer,
+                        "filter_role": filter_role,
+                        "filter_subject": filter_subject,
                         "limit": limit,
                         "query": query,
                         "query_email": query_email,
