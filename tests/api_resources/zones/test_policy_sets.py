@@ -35,6 +35,18 @@ class TestPolicySets:
         policy_set = client.zones.policy_sets.create(
             zone_id="zone_id",
             name="name",
+            manifest={
+                "entries": [
+                    {
+                        "policy_id": "policy_id",
+                        "cedar_json": {},
+                        "cedar_raw": "cedar_raw",
+                        "policy_version_id": "policy_version_id",
+                    }
+                ],
+                "activate": True,
+                "schema_version": "schema_version",
+            },
             scope_type="zone",
             target_type="zone",
             x_api_version="X-API-Version",
@@ -358,6 +370,18 @@ class TestAsyncPolicySets:
         policy_set = await async_client.zones.policy_sets.create(
             zone_id="zone_id",
             name="name",
+            manifest={
+                "entries": [
+                    {
+                        "policy_id": "policy_id",
+                        "cedar_json": {},
+                        "cedar_raw": "cedar_raw",
+                        "policy_version_id": "policy_version_id",
+                    }
+                ],
+                "activate": True,
+                "schema_version": "schema_version",
+            },
             scope_type="zone",
             target_type="zone",
             x_api_version="X-API-Version",
