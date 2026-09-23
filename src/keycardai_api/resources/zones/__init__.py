@@ -16,14 +16,6 @@ from .zones import (
     ZonesResourceWithStreamingResponse,
     AsyncZonesResourceWithStreamingResponse,
 )
-from .members import (
-    MembersResource,
-    AsyncMembersResource,
-    MembersResourceWithRawResponse,
-    AsyncMembersResourceWithRawResponse,
-    MembersResourceWithStreamingResponse,
-    AsyncMembersResourceWithStreamingResponse,
-)
 from .secrets import (
     SecretsResource,
     AsyncSecretsResource,
@@ -162,12 +154,6 @@ __all__ = [
     "AsyncUsersResourceWithRawResponse",
     "UsersResourceWithStreamingResponse",
     "AsyncUsersResourceWithStreamingResponse",
-    "MembersResource",
-    "AsyncMembersResource",
-    "MembersResourceWithRawResponse",
-    "AsyncMembersResourceWithRawResponse",
-    "MembersResourceWithStreamingResponse",
-    "AsyncMembersResourceWithStreamingResponse",
     "SecretsResource",
     "AsyncSecretsResource",
     "SecretsResourceWithRawResponse",
