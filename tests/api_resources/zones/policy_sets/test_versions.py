@@ -156,6 +156,7 @@ class TestVersions:
             version_id="version_id",
             zone_id="zone_id",
             policy_set_id="policy_set_id",
+            expand=["user"],
             x_api_version="X-API-Version",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -667,6 +668,7 @@ class TestAsyncVersions:
             version_id="version_id",
             zone_id="zone_id",
             policy_set_id="policy_set_id",
+            expand=["user"],
             x_api_version="X-API-Version",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
