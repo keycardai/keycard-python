@@ -58,7 +58,6 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
-                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -198,7 +197,6 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
-                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -269,9 +267,16 @@ class TestProviders:
             cursor="cursor",
             expand="total_count",
             filter_id="string",
+            filter_identifier="string",
+            filter_slug="string",
+            filter_type="external",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
             type="external",
         )
         assert_matches_type(ProviderListResponse, provider, path=["response"])
@@ -406,7 +411,6 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
-                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -546,7 +550,6 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
-                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -617,9 +620,16 @@ class TestAsyncProviders:
             cursor="cursor",
             expand="total_count",
             filter_id="string",
+            filter_identifier="string",
+            filter_slug="string",
+            filter_type="external",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
             type="external",
         )
         assert_matches_type(ProviderListResponse, provider, path=["response"])
