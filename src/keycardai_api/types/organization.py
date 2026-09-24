@@ -27,6 +27,12 @@ class Organization(BaseModel):
     updated_at: datetime
     """The time the entity was mostly recently updated in utc"""
 
+    zone_id: str
+    """
+    Identifier of the zone containing this organization's users and their
+    permissions and roles in the organization.
+    """
+
     permissions: Optional[Dict[str, Dict[str, bool]]] = None
     """
     Permissions granted to the authenticated principal for this resource. Only
