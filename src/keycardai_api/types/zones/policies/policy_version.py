@@ -6,7 +6,47 @@ from typing_extensions import Literal
 
 from ...._models import BaseModel
 
-__all__ = ["PolicyVersion"]
+__all__ = ["PolicyVersion", "ArchivedByUser", "CreatedByUser"]
+
+
+class ArchivedByUser(BaseModel):
+    """The organization user behind a `created_by`, `updated_by` or `archived_by` value.
+
+    Returned only when `expand[]=user` is requested.
+    """
+
+    id: str
+    """Public ID of the user in the organization's platform zone.
+
+    This is not the same value as the `*_by` field it expands; use it to link to
+    `/zones/{zone_id}/users/{id}`.
+    """
+
+    email: Optional[str] = None
+    """The user's email address, or null when not known."""
+
+    zone_id: str
+    """Public ID of the organization's platform zone the user belongs to."""
+
+
+class CreatedByUser(BaseModel):
+    """The organization user behind a `created_by`, `updated_by` or `archived_by` value.
+
+    Returned only when `expand[]=user` is requested.
+    """
+
+    id: str
+    """Public ID of the user in the organization's platform zone.
+
+    This is not the same value as the `*_by` field it expands; use it to link to
+    `/zones/{zone_id}/users/{id}`.
+    """
+
+    email: Optional[str] = None
+    """The user's email address, or null when not known."""
+
+    zone_id: str
+    """Public ID of the organization's platform zone the user belongs to."""
 
 
 class PolicyVersion(BaseModel):
@@ -39,6 +79,13 @@ class PolicyVersion(BaseModel):
 
     archived_by: Optional[str] = None
 
+    archived_by_user: Optional[ArchivedByUser] = None
+    """The organization user behind a `created_by`, `updated_by` or `archived_by`
+    value.
+
+    Returned only when `expand[]=user` is requested.
+    """
+
     cedar_json: Optional[object] = None
     """Cedar policy in JSON representation.
 
@@ -53,4 +100,11 @@ class PolicyVersion(BaseModel):
 
     Populated by default and when `format=cedar` is passed; null when `format=json`
     narrows the response to the JSON representation only.
+    """
+
+    created_by_user: Optional[CreatedByUser] = None
+    """The organization user behind a `created_by`, `updated_by` or `archived_by`
+    value.
+
+    Returned only when `expand[]=user` is requested.
     """
