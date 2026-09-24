@@ -35,6 +35,12 @@ class ZoneUpdateParams(TypedDict, total=False):
     customer-managed key and revert to default)
     """
 
+    external_sync_enabled: bool
+    """Turns external directory sync (SCIM) on or off for this zone.
+
+    Required to create external sync tokens.
+    """
+
     name: str
     """Human-readable name.
 

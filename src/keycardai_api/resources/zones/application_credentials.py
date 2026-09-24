@@ -514,7 +514,6 @@ class ApplicationCredentialsResource(SyncAPIResource):
         after: str | Omit = omit,
         application_id: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -525,8 +524,12 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ApplicationCredentialListResponse:
-        """
-        Returns a list of application credentials in the specified zone
+        """Returns a paginated list of application credentials in the specified zone.
+
+        Use
+        cursor pagination via `after`/`before`. Use `expand[]=total_count` to include
+        the matching row count. Search by identifier via `query[identifier]` (substring
+        match, OR'd across repeated values).
 
         Args:
           after: Cursor for forward pagination
@@ -557,7 +560,6 @@ class ApplicationCredentialsResource(SyncAPIResource):
                         "after": after,
                         "application_id": application_id,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
                         "limit": limit,
                         "slug": slug,
@@ -1090,7 +1092,6 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         after: str | Omit = omit,
         application_id: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
@@ -1101,8 +1102,12 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ApplicationCredentialListResponse:
-        """
-        Returns a list of application credentials in the specified zone
+        """Returns a paginated list of application credentials in the specified zone.
+
+        Use
+        cursor pagination via `after`/`before`. Use `expand[]=total_count` to include
+        the matching row count. Search by identifier via `query[identifier]` (substring
+        match, OR'd across repeated values).
 
         Args:
           after: Cursor for forward pagination
@@ -1133,7 +1138,6 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                         "after": after,
                         "application_id": application_id,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
                         "limit": limit,
                         "slug": slug,
