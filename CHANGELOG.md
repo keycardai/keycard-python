@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/keycardai/keycard-python/compare/v0.17.0...v0.18.0) (2026-09-22)
+
+
+### Features
+
+* Sync current openapi state of all repos ([#33](https://github.com/keycardai/keycard-python/issues/33)) ([192d25d](https://github.com/keycardai/keycard-python/commit/192d25d3099f9fc0b2bb5a3e99417c0e9cb9b3d4))
+
 ## 0.17.0 (2026-09-08)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/keycardai/keycard-python/compare/v0.16.0...v0.17.0)
