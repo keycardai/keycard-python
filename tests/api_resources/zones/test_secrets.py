@@ -250,6 +250,7 @@ class TestSecrets:
         secret = client.zones.secrets.list(
             zone_id="x",
             entity_id="entity_id",
+            owner_type="platform",
             type="token",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -586,6 +587,7 @@ class TestAsyncSecrets:
         secret = await async_client.zones.secrets.list(
             zone_id="x",
             entity_id="entity_id",
+            owner_type="platform",
             type="token",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )

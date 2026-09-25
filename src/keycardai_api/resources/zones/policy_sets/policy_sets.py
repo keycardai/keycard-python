@@ -25,7 +25,12 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.zones import policy_set_list_params, policy_set_create_params, policy_set_update_params
+from ....types.zones import (
+    policy_set_list_params,
+    policy_set_create_params,
+    policy_set_update_params,
+    policy_set_retrieve_params,
+)
 from ...._base_client import make_request_options
 from ....types.zones.policy_set_with_binding import PolicySetWithBinding
 from ....types.zones.policy_set_list_response import PolicySetListResponse
@@ -78,8 +83,8 @@ class PolicySetsResource(SyncAPIResource):
     ) -> PolicySetWithBinding:
         """Creates an unbound policy set.
 
-        Use updatePolicySet to bind after creating a
-        version.
+        Bind it by activating a policy set version or via
+        setPolicyBinding.
 
         Args:
           scope_type: **Deprecated.** Use `target_type` instead. Only `zone` is accepted; use
@@ -131,6 +136,7 @@ class PolicySetsResource(SyncAPIResource):
         policy_set_id: str,
         *,
         zone_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -144,6 +150,8 @@ class PolicySetsResource(SyncAPIResource):
         Returns the policy set with current binding information.
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -168,7 +176,11 @@ class PolicySetsResource(SyncAPIResource):
         return self._get(
             path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"expand": expand}, policy_set_retrieve_params.PolicySetRetrieveParams),
             ),
             cast_to=PolicySetWithBinding,
         )
@@ -189,10 +201,10 @@ class PolicySetsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Update metadata or manage binding.
+        """Update policy set metadata (name).
 
-        Set active=true to bind, active=false to
-        unbind.
+        Binding is managed by activating a policy set
+        version or via the policy-bindings API.
 
         Args:
           extra_headers: Send extra headers
@@ -233,7 +245,7 @@ class PolicySetsResource(SyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
@@ -490,8 +502,8 @@ class AsyncPolicySetsResource(AsyncAPIResource):
     ) -> PolicySetWithBinding:
         """Creates an unbound policy set.
 
-        Use updatePolicySet to bind after creating a
-        version.
+        Bind it by activating a policy set version or via
+        setPolicyBinding.
 
         Args:
           scope_type: **Deprecated.** Use `target_type` instead. Only `zone` is accepted; use
@@ -543,6 +555,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         policy_set_id: str,
         *,
         zone_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -556,6 +569,8 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         Returns the policy set with current binding information.
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -580,7 +595,13 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         return await self._get(
             path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"expand": expand}, policy_set_retrieve_params.PolicySetRetrieveParams
+                ),
             ),
             cast_to=PolicySetWithBinding,
         )
@@ -601,10 +622,10 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Update metadata or manage binding.
+        """Update policy set metadata (name).
 
-        Set active=true to bind, active=false to
-        unbind.
+        Binding is managed by activating a policy set
+        version or via the policy-bindings API.
 
         Args:
           extra_headers: Send extra headers
@@ -645,7 +666,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
