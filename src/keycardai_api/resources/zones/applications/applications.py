@@ -251,6 +251,8 @@ class ApplicationsResource(SyncAPIResource):
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_owner_type: Literal["platform", "customer"] | Omit = omit,
+        filter_owner_type_ne: Literal["platform", "customer"] | Omit = omit,
         filter_slug: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
@@ -290,6 +292,11 @@ class ApplicationsResource(SyncAPIResource):
 
           filter_identifier: Filter by exact application identifier
 
+          filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
+
+          filter_owner_type_ne: Exclude applications with this owner type, e.g.
+              `filter[owner_type][ne]=platform` returns only org-created applications.
+
           filter_slug: Filter by exact application slug
 
           limit: Maximum number of items to return
@@ -327,6 +334,8 @@ class ApplicationsResource(SyncAPIResource):
                         "expand": expand,
                         "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
+                        "filter_owner_type": filter_owner_type,
+                        "filter_owner_type_ne": filter_owner_type_ne,
                         "filter_slug": filter_slug,
                         "identifier": identifier,
                         "limit": limit,
@@ -708,6 +717,8 @@ class AsyncApplicationsResource(AsyncAPIResource):
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_owner_type: Literal["platform", "customer"] | Omit = omit,
+        filter_owner_type_ne: Literal["platform", "customer"] | Omit = omit,
         filter_slug: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
@@ -747,6 +758,11 @@ class AsyncApplicationsResource(AsyncAPIResource):
 
           filter_identifier: Filter by exact application identifier
 
+          filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
+
+          filter_owner_type_ne: Exclude applications with this owner type, e.g.
+              `filter[owner_type][ne]=platform` returns only org-created applications.
+
           filter_slug: Filter by exact application slug
 
           limit: Maximum number of items to return
@@ -784,6 +800,8 @@ class AsyncApplicationsResource(AsyncAPIResource):
                         "expand": expand,
                         "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
+                        "filter_owner_type": filter_owner_type,
+                        "filter_owner_type_ne": filter_owner_type_ne,
                         "filter_slug": filter_slug,
                         "identifier": identifier,
                         "limit": limit,
