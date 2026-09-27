@@ -117,6 +117,7 @@ class VersionsResource(SyncAPIResource):
         *,
         zone_id: str,
         policy_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -131,6 +132,8 @@ class VersionsResource(SyncAPIResource):
         Get a specific policy version
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           format: Narrows which Cedar representation the response includes. When omitted, both
               `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only
               `cedar_json`, or `cedar` to receive only `cedar_raw`. Callers that don't care
@@ -171,7 +174,13 @@ class VersionsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"format": format}, version_retrieve_params.VersionRetrieveParams),
+                query=maybe_transform(
+                    {
+                        "expand": expand,
+                        "format": format,
+                    },
+                    version_retrieve_params.VersionRetrieveParams,
+                ),
             ),
             cast_to=PolicyVersion,
         )
@@ -183,7 +192,7 @@ class VersionsResource(SyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
@@ -417,6 +426,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         *,
         zone_id: str,
         policy_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -431,6 +441,8 @@ class AsyncVersionsResource(AsyncAPIResource):
         Get a specific policy version
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           format: Narrows which Cedar representation the response includes. When omitted, both
               `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only
               `cedar_json`, or `cedar` to receive only `cedar_raw`. Callers that don't care
@@ -471,7 +483,13 @@ class AsyncVersionsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform({"format": format}, version_retrieve_params.VersionRetrieveParams),
+                query=await async_maybe_transform(
+                    {
+                        "expand": expand,
+                        "format": format,
+                    },
+                    version_retrieve_params.VersionRetrieveParams,
+                ),
             ),
             cast_to=PolicyVersion,
         )
@@ -483,7 +501,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
