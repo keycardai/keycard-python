@@ -7,22 +7,11 @@ from typing_extensions import Literal
 
 import httpx
 
-from .users import (
-    UsersResource,
-    AsyncUsersResource,
-    UsersResourceWithRawResponse,
-    AsyncUsersResourceWithRawResponse,
-    UsersResourceWithStreamingResponse,
-    AsyncUsersResourceWithStreamingResponse,
-)
 from ...types import (
-    RoleScope,
     organization_list_params,
     organization_create_params,
     organization_update_params,
     organization_retrieve_params,
-    organization_list_roles_params,
-    organization_list_identities_params,
 )
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
@@ -51,9 +40,7 @@ from .sso_connection import (
     SSOConnectionResourceWithStreamingResponse,
     AsyncSSOConnectionResourceWithStreamingResponse,
 )
-from ...types.role_scope import RoleScope
 from ...types.organization import Organization
-from ...types.organizations import OrganizationRole
 from .service_accounts.service_accounts import (
     ServiceAccountsResource,
     AsyncServiceAccountsResource,
@@ -63,18 +50,11 @@ from .service_accounts.service_accounts import (
     AsyncServiceAccountsResourceWithStreamingResponse,
 )
 from ...types.organization_list_response import OrganizationListResponse
-from ...types.organizations.organization_role import OrganizationRole
-from ...types.organization_list_roles_response import OrganizationListRolesResponse
-from ...types.organization_list_identities_response import OrganizationListIdentitiesResponse
 
 __all__ = ["OrganizationsResource", "AsyncOrganizationsResource"]
 
 
 class OrganizationsResource(SyncAPIResource):
-    @cached_property
-    def users(self) -> UsersResource:
-        return UsersResource(self._client)
-
     @cached_property
     def invitations(self) -> InvitationsResource:
         return InvitationsResource(self._client)
@@ -289,151 +269,8 @@ class OrganizationsResource(SyncAPIResource):
             cast_to=OrganizationListResponse,
         )
 
-    def list_identities(
-        self,
-        organization_id: str,
-        *,
-        after: str | Omit = omit,
-        before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
-        limit: int | Omit = omit,
-        query_email: str | Omit = omit,
-        role: OrganizationRole | Omit = omit,
-        x_client_request_id: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationListIdentitiesResponse:
-        """
-        List unified view of users and invitations in an organization
-
-        Args:
-          organization_id: Organization ID or label identifier
-
-          after: Cursor for forward pagination
-
-          before: Cursor for backward pagination
-
-          expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
-
-          limit: Maximum number of identities to return
-
-          query_email: Search identities by email substring (case-insensitive)
-
-          role: Filter identities by role
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        return self._get(
-            path_template("/organizations/{organization_id}/identities", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "after": after,
-                        "before": before,
-                        "expand": expand,
-                        "limit": limit,
-                        "query_email": query_email,
-                        "role": role,
-                    },
-                    organization_list_identities_params.OrganizationListIdentitiesParams,
-                ),
-            ),
-            cast_to=OrganizationListIdentitiesResponse,
-        )
-
-    def list_roles(
-        self,
-        organization_id: str,
-        *,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
-        scope: RoleScope | Omit = omit,
-        x_client_request_id: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationListRolesResponse:
-        """Returns the list of available roles in the system for the organization.
-
-        This
-        includes both organization-level roles (e.g., org_admin, org_member) and
-        zone-level roles (e.g., zone_manager, zone_viewer).
-
-        Each role includes:
-
-        - `name`: Internal identifier (e.g., org_admin, zone_manager)
-        - `label`: Human-readable display name (e.g., Organization Administrator)
-        - `scope`: Whether the role applies at organization or zone level
-
-        Args:
-          organization_id: Organization ID or label identifier
-
-          expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
-
-          scope: Filter roles by scope (organization or zone level)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        return self._get(
-            path_template("/organizations/{organization_id}/roles", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "expand": expand,
-                        "scope": scope,
-                    },
-                    organization_list_roles_params.OrganizationListRolesParams,
-                ),
-            ),
-            cast_to=OrganizationListRolesResponse,
-        )
-
 
 class AsyncOrganizationsResource(AsyncAPIResource):
-    @cached_property
-    def users(self) -> AsyncUsersResource:
-        return AsyncUsersResource(self._client)
-
     @cached_property
     def invitations(self) -> AsyncInvitationsResource:
         return AsyncInvitationsResource(self._client)
@@ -650,145 +487,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             cast_to=OrganizationListResponse,
         )
 
-    async def list_identities(
-        self,
-        organization_id: str,
-        *,
-        after: str | Omit = omit,
-        before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
-        limit: int | Omit = omit,
-        query_email: str | Omit = omit,
-        role: OrganizationRole | Omit = omit,
-        x_client_request_id: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationListIdentitiesResponse:
-        """
-        List unified view of users and invitations in an organization
-
-        Args:
-          organization_id: Organization ID or label identifier
-
-          after: Cursor for forward pagination
-
-          before: Cursor for backward pagination
-
-          expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
-
-          limit: Maximum number of identities to return
-
-          query_email: Search identities by email substring (case-insensitive)
-
-          role: Filter identities by role
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        return await self._get(
-            path_template("/organizations/{organization_id}/identities", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "after": after,
-                        "before": before,
-                        "expand": expand,
-                        "limit": limit,
-                        "query_email": query_email,
-                        "role": role,
-                    },
-                    organization_list_identities_params.OrganizationListIdentitiesParams,
-                ),
-            ),
-            cast_to=OrganizationListIdentitiesResponse,
-        )
-
-    async def list_roles(
-        self,
-        organization_id: str,
-        *,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
-        scope: RoleScope | Omit = omit,
-        x_client_request_id: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationListRolesResponse:
-        """Returns the list of available roles in the system for the organization.
-
-        This
-        includes both organization-level roles (e.g., org_admin, org_member) and
-        zone-level roles (e.g., zone_manager, zone_viewer).
-
-        Each role includes:
-
-        - `name`: Internal identifier (e.g., org_admin, zone_manager)
-        - `label`: Human-readable display name (e.g., Organization Administrator)
-        - `scope`: Whether the role applies at organization or zone level
-
-        Args:
-          organization_id: Organization ID or label identifier
-
-          expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
-
-          scope: Filter roles by scope (organization or zone level)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
-        return await self._get(
-            path_template("/organizations/{organization_id}/roles", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "expand": expand,
-                        "scope": scope,
-                    },
-                    organization_list_roles_params.OrganizationListRolesParams,
-                ),
-            ),
-            cast_to=OrganizationListRolesResponse,
-        )
-
 
 class OrganizationsResourceWithRawResponse:
     def __init__(self, organizations: OrganizationsResource) -> None:
@@ -806,16 +504,6 @@ class OrganizationsResourceWithRawResponse:
         self.list = to_raw_response_wrapper(
             organizations.list,
         )
-        self.list_identities = to_raw_response_wrapper(
-            organizations.list_identities,
-        )
-        self.list_roles = to_raw_response_wrapper(
-            organizations.list_roles,
-        )
-
-    @cached_property
-    def users(self) -> UsersResourceWithRawResponse:
-        return UsersResourceWithRawResponse(self._organizations.users)
 
     @cached_property
     def invitations(self) -> InvitationsResourceWithRawResponse:
@@ -846,16 +534,6 @@ class AsyncOrganizationsResourceWithRawResponse:
         self.list = async_to_raw_response_wrapper(
             organizations.list,
         )
-        self.list_identities = async_to_raw_response_wrapper(
-            organizations.list_identities,
-        )
-        self.list_roles = async_to_raw_response_wrapper(
-            organizations.list_roles,
-        )
-
-    @cached_property
-    def users(self) -> AsyncUsersResourceWithRawResponse:
-        return AsyncUsersResourceWithRawResponse(self._organizations.users)
 
     @cached_property
     def invitations(self) -> AsyncInvitationsResourceWithRawResponse:
@@ -886,16 +564,6 @@ class OrganizationsResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             organizations.list,
         )
-        self.list_identities = to_streamed_response_wrapper(
-            organizations.list_identities,
-        )
-        self.list_roles = to_streamed_response_wrapper(
-            organizations.list_roles,
-        )
-
-    @cached_property
-    def users(self) -> UsersResourceWithStreamingResponse:
-        return UsersResourceWithStreamingResponse(self._organizations.users)
 
     @cached_property
     def invitations(self) -> InvitationsResourceWithStreamingResponse:
@@ -926,16 +594,6 @@ class AsyncOrganizationsResourceWithStreamingResponse:
         self.list = async_to_streamed_response_wrapper(
             organizations.list,
         )
-        self.list_identities = async_to_streamed_response_wrapper(
-            organizations.list_identities,
-        )
-        self.list_roles = async_to_streamed_response_wrapper(
-            organizations.list_roles,
-        )
-
-    @cached_property
-    def users(self) -> AsyncUsersResourceWithStreamingResponse:
-        return AsyncUsersResourceWithStreamingResponse(self._organizations.users)
 
     @cached_property
     def invitations(self) -> AsyncInvitationsResourceWithStreamingResponse:
