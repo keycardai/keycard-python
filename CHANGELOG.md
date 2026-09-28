@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.1](https://github.com/keycardai/keycard-python/compare/v0.18.0...v0.18.1) (2026-09-28)
+
+
+### Chores
+
+* **stainless:** refresh openapi.yml from api/openapi.yaml ([#36](https://github.com/keycardai/keycard-python/issues/36)) ([369f21d](https://github.com/keycardai/keycard-python/commit/369f21d94e3348594731cd4b94fa77466abbd477))
+
 ## [0.18.0](https://github.com/keycardai/keycard-python/compare/v0.17.0...v0.18.0) (2026-09-22)
 
 
