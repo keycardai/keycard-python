@@ -19,8 +19,6 @@ class ApplicationCredentialListParams(TypedDict, total=False):
     before: str
     """Cursor for backward pagination"""
 
-    cursor: str
-
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
 
     limit: int
