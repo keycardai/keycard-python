@@ -395,7 +395,6 @@ class ApplicationsResource(SyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -438,7 +437,6 @@ class ApplicationsResource(SyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
                         "limit": limit,
                     },
@@ -861,7 +859,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -904,7 +901,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
                         "limit": limit,
                     },

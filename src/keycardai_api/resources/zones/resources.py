@@ -271,6 +271,7 @@ class ResourcesResource(SyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_dependency_of_application_id_ne: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_owner_type: Literal["platform", "customer"] | Omit = omit,
@@ -306,6 +307,9 @@ class ResourcesResource(SyncAPIResource):
           before: Cursor for backward pagination
 
           credential_provider_id: Filter resources by credential provider ID
+
+          filter_dependency_of_application_id_ne: Resources that are not a dependency of this application. Repeatable (none of),
+              max 100.
 
           filter_id: Restrict results to resources with this publicId. Repeatable, max 100. Mutually
               exclusive with after/before.
@@ -356,6 +360,7 @@ class ResourcesResource(SyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_dependency_of_application_id_ne": filter_dependency_of_application_id_ne,
                         "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
                         "filter_owner_type": filter_owner_type,
@@ -653,6 +658,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_dependency_of_application_id_ne: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_owner_type: Literal["platform", "customer"] | Omit = omit,
@@ -688,6 +694,9 @@ class AsyncResourcesResource(AsyncAPIResource):
           before: Cursor for backward pagination
 
           credential_provider_id: Filter resources by credential provider ID
+
+          filter_dependency_of_application_id_ne: Resources that are not a dependency of this application. Repeatable (none of),
+              max 100.
 
           filter_id: Restrict results to resources with this publicId. Repeatable, max 100. Mutually
               exclusive with after/before.
@@ -738,6 +747,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_dependency_of_application_id_ne": filter_dependency_of_application_id_ne,
                         "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
                         "filter_owner_type": filter_owner_type,

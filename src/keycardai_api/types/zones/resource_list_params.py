@@ -23,6 +23,14 @@ class ResourceListParams(TypedDict, total=False):
 
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
 
+    filter_dependency_of_application_id_ne: Annotated[
+        Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[dependency_of_application_id][ne]")
+    ]
+    """Resources that are not a dependency of this application.
+
+    Repeatable (none of), max 100.
+    """
+
     filter_id: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[id]")]
     """Restrict results to resources with this publicId.
 
