@@ -21,14 +21,6 @@ from ...types import (
     zone_update_params,
     zone_retrieve_params,
 )
-from .members import (
-    MembersResource,
-    AsyncMembersResource,
-    MembersResourceWithRawResponse,
-    AsyncMembersResourceWithRawResponse,
-    MembersResourceWithStreamingResponse,
-    AsyncMembersResourceWithStreamingResponse,
-)
 from .secrets import (
     SecretsResource,
     AsyncSecretsResource,
@@ -167,10 +159,6 @@ class ZonesResource(SyncAPIResource):
     @cached_property
     def users(self) -> UsersResource:
         return UsersResource(self._client)
-
-    @cached_property
-    def members(self) -> MembersResource:
-        return MembersResource(self._client)
 
     @cached_property
     def secrets(self) -> SecretsResource:
@@ -342,6 +330,7 @@ class ZonesResource(SyncAPIResource):
         default_resource_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
+        external_sync_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
         requires_invitation: bool | Omit = omit,
@@ -368,6 +357,9 @@ class ZonesResource(SyncAPIResource):
 
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
+
+          external_sync_enabled: Turns external directory sync (SCIM) on or off for this zone. Required to create
+              external sync tokens.
 
           name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
               control characters.
@@ -397,6 +389,7 @@ class ZonesResource(SyncAPIResource):
                     "default_resource_id": default_resource_id,
                     "description": description,
                     "encryption_key": encryption_key,
+                    "external_sync_enabled": external_sync_enabled,
                     "name": name,
                     "protocols": protocols,
                     "requires_invitation": requires_invitation,
@@ -427,8 +420,12 @@ class ZonesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ZoneListResponse:
-        """
-        Returns a list of zones for the authenticated organization
+        """Returns a list of zones for the authenticated organization.
+
+        Cursor pagination
+        via `after`/`before` and `limit`, plus `expand[]=total_count`, name substring
+        search, and `sort`, are honored only when the `zone-pagination` flag is enabled;
+        the default response is the unbounded legacy shape.
 
         Args:
           after: Cursor for forward pagination
@@ -535,10 +532,6 @@ class AsyncZonesResource(AsyncAPIResource):
     @cached_property
     def users(self) -> AsyncUsersResource:
         return AsyncUsersResource(self._client)
-
-    @cached_property
-    def members(self) -> AsyncMembersResource:
-        return AsyncMembersResource(self._client)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResource:
@@ -710,6 +703,7 @@ class AsyncZonesResource(AsyncAPIResource):
         default_resource_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
+        external_sync_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
         requires_invitation: bool | Omit = omit,
@@ -736,6 +730,9 @@ class AsyncZonesResource(AsyncAPIResource):
 
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
+
+          external_sync_enabled: Turns external directory sync (SCIM) on or off for this zone. Required to create
+              external sync tokens.
 
           name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
               control characters.
@@ -765,6 +762,7 @@ class AsyncZonesResource(AsyncAPIResource):
                     "default_resource_id": default_resource_id,
                     "description": description,
                     "encryption_key": encryption_key,
+                    "external_sync_enabled": external_sync_enabled,
                     "name": name,
                     "protocols": protocols,
                     "requires_invitation": requires_invitation,
@@ -795,8 +793,12 @@ class AsyncZonesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ZoneListResponse:
-        """
-        Returns a list of zones for the authenticated organization
+        """Returns a list of zones for the authenticated organization.
+
+        Cursor pagination
+        via `after`/`before` and `limit`, plus `expand[]=total_count`, name substring
+        search, and `sort`, are honored only when the `zone-pagination` flag is enabled;
+        the default response is the unbounded legacy shape.
 
         Args:
           after: Cursor for forward pagination
@@ -924,10 +926,6 @@ class ZonesResourceWithRawResponse:
         return UsersResourceWithRawResponse(self._zones.users)
 
     @cached_property
-    def members(self) -> MembersResourceWithRawResponse:
-        return MembersResourceWithRawResponse(self._zones.members)
-
-    @cached_property
     def secrets(self) -> SecretsResourceWithRawResponse:
         return SecretsResourceWithRawResponse(self._zones.secrets)
 
@@ -1013,10 +1011,6 @@ class AsyncZonesResourceWithRawResponse:
     @cached_property
     def users(self) -> AsyncUsersResourceWithRawResponse:
         return AsyncUsersResourceWithRawResponse(self._zones.users)
-
-    @cached_property
-    def members(self) -> AsyncMembersResourceWithRawResponse:
-        return AsyncMembersResourceWithRawResponse(self._zones.members)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithRawResponse:
@@ -1106,10 +1100,6 @@ class ZonesResourceWithStreamingResponse:
         return UsersResourceWithStreamingResponse(self._zones.users)
 
     @cached_property
-    def members(self) -> MembersResourceWithStreamingResponse:
-        return MembersResourceWithStreamingResponse(self._zones.members)
-
-    @cached_property
     def secrets(self) -> SecretsResourceWithStreamingResponse:
         return SecretsResourceWithStreamingResponse(self._zones.secrets)
 
@@ -1195,10 +1185,6 @@ class AsyncZonesResourceWithStreamingResponse:
     @cached_property
     def users(self) -> AsyncUsersResourceWithStreamingResponse:
         return AsyncUsersResourceWithStreamingResponse(self._zones.users)
-
-    @cached_property
-    def members(self) -> AsyncMembersResourceWithStreamingResponse:
-        return AsyncMembersResourceWithStreamingResponse(self._zones.members)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithStreamingResponse:
