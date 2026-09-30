@@ -49,7 +49,8 @@ class ResourceListParams(TypedDict, total=False):
     filter_traits: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[traits]")]
     """Filter by trait.
 
-    Comma-separated values (`a,b`) are AND'd; repeated params are OR'd.
+    Repeated params are OR'd; each value is a single literal trait (a comma is a
+    literal character). Use `filter[traits][all]` for contains-all.
     """
 
     identifier: str

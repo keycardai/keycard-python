@@ -296,10 +296,10 @@ class ResourcesResource(SyncAPIResource):
         Use cursor
         pagination via `after`/`before`, and `expand[]=total_count` to include the
         matching row count. Filter by exact identifier via `filter[identifier]`. Filter
-        by trait via `filter[traits]`: comma-separated values are AND'd, repeated params
-        are OR'd. The scalar `identifier` query parameter is a backward-compatible alias
-        for `filter[identifier]`: exact match on a single value, folded into the same
-        exact-match identifier filter.
+        by trait via `filter[traits]` (repeated params are OR'd) or
+        `filter[traits][all]` (contains-all). The scalar `identifier` query parameter is
+        a backward-compatible alias for `filter[identifier]`: exact match on a single
+        value, folded into the same exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -320,8 +320,8 @@ class ResourcesResource(SyncAPIResource):
 
           filter_slug: Filter by exact resource slug
 
-          filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
-              OR'd.
+          filter_traits: Filter by trait. Repeated params are OR'd; each value is a single literal trait
+              (a comma is a literal character). Use `filter[traits][all]` for contains-all.
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
@@ -683,10 +683,10 @@ class AsyncResourcesResource(AsyncAPIResource):
         Use cursor
         pagination via `after`/`before`, and `expand[]=total_count` to include the
         matching row count. Filter by exact identifier via `filter[identifier]`. Filter
-        by trait via `filter[traits]`: comma-separated values are AND'd, repeated params
-        are OR'd. The scalar `identifier` query parameter is a backward-compatible alias
-        for `filter[identifier]`: exact match on a single value, folded into the same
-        exact-match identifier filter.
+        by trait via `filter[traits]` (repeated params are OR'd) or
+        `filter[traits][all]` (contains-all). The scalar `identifier` query parameter is
+        a backward-compatible alias for `filter[identifier]`: exact match on a single
+        value, folded into the same exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -707,8 +707,8 @@ class AsyncResourcesResource(AsyncAPIResource):
 
           filter_slug: Filter by exact resource slug
 
-          filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
-              OR'd.
+          filter_traits: Filter by trait. Repeated params are OR'd; each value is a single literal trait
+              (a comma is a literal character). Use `filter[traits][all]` for contains-all.
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
