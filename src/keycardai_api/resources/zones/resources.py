@@ -271,12 +271,18 @@ class ResourcesResource(SyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_owner_type: Literal["platform", "customer"] | Omit = omit,
+        filter_slug: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_traits: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_name: Union[str, SequenceNotStr[str]] | Omit = omit,
         slug: str | Omit = omit,
+        sort: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -301,9 +307,14 @@ class ResourcesResource(SyncAPIResource):
 
           credential_provider_id: Filter resources by credential provider ID
 
+          filter_id: Restrict results to resources with this publicId. Repeatable, max 100. Mutually
+              exclusive with after/before.
+
           filter_identifier: Filter by exact resource identifier
 
           filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
+
+          filter_slug: Filter by exact resource slug
 
           filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
               OR'd.
@@ -312,6 +323,15 @@ class ResourcesResource(SyncAPIResource):
               resource identifier.
 
           limit: Maximum number of items to return
+
+          query: Search across name and identifier (substring match)
+
+          query_identifier: Search by identifier (substring match)
+
+          query_name: Search by name (substring match)
+
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
+              name, identifier
 
           extra_headers: Send extra headers
 
@@ -336,12 +356,18 @@ class ResourcesResource(SyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
                         "filter_owner_type": filter_owner_type,
+                        "filter_slug": filter_slug,
                         "filter_traits": filter_traits,
                         "identifier": identifier,
                         "limit": limit,
+                        "query": query,
+                        "query_identifier": query_identifier,
+                        "query_name": query_name,
                         "slug": slug,
+                        "sort": sort,
                     },
                     resource_list_params.ResourceListParams,
                 ),
@@ -627,12 +653,18 @@ class AsyncResourcesResource(AsyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_owner_type: Literal["platform", "customer"] | Omit = omit,
+        filter_slug: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_traits: Union[str, SequenceNotStr[str]] | Omit = omit,
         identifier: str | Omit = omit,
         limit: int | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_name: Union[str, SequenceNotStr[str]] | Omit = omit,
         slug: str | Omit = omit,
+        sort: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -657,9 +689,14 @@ class AsyncResourcesResource(AsyncAPIResource):
 
           credential_provider_id: Filter resources by credential provider ID
 
+          filter_id: Restrict results to resources with this publicId. Repeatable, max 100. Mutually
+              exclusive with after/before.
+
           filter_identifier: Filter by exact resource identifier
 
           filter_owner_type: Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created).
+
+          filter_slug: Filter by exact resource slug
 
           filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
               OR'd.
@@ -668,6 +705,15 @@ class AsyncResourcesResource(AsyncAPIResource):
               resource identifier.
 
           limit: Maximum number of items to return
+
+          query: Search across name and identifier (substring match)
+
+          query_identifier: Search by identifier (substring match)
+
+          query_name: Search by name (substring match)
+
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
+              name, identifier
 
           extra_headers: Send extra headers
 
@@ -692,12 +738,18 @@ class AsyncResourcesResource(AsyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
                         "filter_owner_type": filter_owner_type,
+                        "filter_slug": filter_slug,
                         "filter_traits": filter_traits,
                         "identifier": identifier,
                         "limit": limit,
+                        "query": query,
+                        "query_identifier": query_identifier,
+                        "query_name": query_name,
                         "slug": slug,
+                        "sort": sort,
                     },
                     resource_list_params.ResourceListParams,
                 ),
