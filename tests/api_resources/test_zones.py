@@ -151,6 +151,7 @@ class TestZones:
                 "arn": "x",
                 "type": "aws",
             },
+            external_sync_enabled=True,
             name="x",
             protocols={
                 "oauth2": {
@@ -422,6 +423,7 @@ class TestAsyncZones:
                 "arn": "x",
                 "type": "aws",
             },
+            external_sync_enabled=True,
             name="x",
             protocols={
                 "oauth2": {
