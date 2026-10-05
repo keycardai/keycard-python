@@ -96,7 +96,7 @@ class TestInvitations:
             organization_id="x",
             after="x",
             before="x",
-            expand=["permissions"],
+            expand="permissions",
             limit=1,
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -280,7 +280,7 @@ class TestAsyncInvitations:
             organization_id="x",
             after="x",
             before="x",
-            expand=["permissions"],
+            expand="permissions",
             limit=1,
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
