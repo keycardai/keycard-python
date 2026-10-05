@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -124,7 +124,7 @@ class OrganizationsResource(SyncAPIResource):
         self,
         organization_id: str,
         *,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -140,10 +140,11 @@ class OrganizationsResource(SyncAPIResource):
           organization_id: Organization ID or label identifier
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           extra_headers: Send extra headers
 
@@ -214,7 +215,7 @@ class OrganizationsResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -233,10 +234,11 @@ class OrganizationsResource(SyncAPIResource):
           before: Cursor for backward pagination
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           limit: Maximum number of organizations to return
 
@@ -340,7 +342,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         self,
         organization_id: str,
         *,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -356,10 +358,11 @@ class AsyncOrganizationsResource(AsyncAPIResource):
           organization_id: Organization ID or label identifier
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           extra_headers: Send extra headers
 
@@ -432,7 +435,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -451,10 +454,11 @@ class AsyncOrganizationsResource(AsyncAPIResource):
           before: Cursor for backward pagination
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           limit: Maximum number of organizations to return
 

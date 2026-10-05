@@ -70,7 +70,7 @@ class TestOrganizations:
     def test_method_retrieve_with_all_params(self, client: KeycardAPI) -> None:
         organization = client.organizations.retrieve(
             organization_id="x",
-            expand=["permissions"],
+            expand="permissions",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(Organization, organization, path=["response"])
@@ -173,7 +173,7 @@ class TestOrganizations:
         organization = client.organizations.list(
             after="x",
             before="x",
-            expand=["permissions"],
+            expand="permissions",
             limit=1,
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -257,7 +257,7 @@ class TestAsyncOrganizations:
     async def test_method_retrieve_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         organization = await async_client.organizations.retrieve(
             organization_id="x",
-            expand=["permissions"],
+            expand="permissions",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(Organization, organization, path=["response"])
@@ -360,7 +360,7 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.list(
             after="x",
             before="x",
-            expand=["permissions"],
+            expand="permissions",
             limit=1,
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
