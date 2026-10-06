@@ -107,7 +107,7 @@ class TestCredentials:
             credential_id="ab3def8hij2klm9opq5rst7uvw",
             organization_id="x",
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
-            expand=["permissions"],
+            expand="permissions",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ServiceAccountCredential, credential, path=["response"])
@@ -260,8 +260,9 @@ class TestCredentials:
             organization_id="x",
             after="x",
             before="x",
-            expand=["permissions"],
+            expand="permissions",
             limit=1,
+            query=["x"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CredentialListResponse, credential, path=["response"])
@@ -476,7 +477,7 @@ class TestAsyncCredentials:
             credential_id="ab3def8hij2klm9opq5rst7uvw",
             organization_id="x",
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
-            expand=["permissions"],
+            expand="permissions",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ServiceAccountCredential, credential, path=["response"])
@@ -629,8 +630,9 @@ class TestAsyncCredentials:
             organization_id="x",
             after="x",
             before="x",
-            expand=["permissions"],
+            expand="permissions",
             limit=1,
+            query=["x"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CredentialListResponse, credential, path=["response"])
