@@ -8,7 +8,47 @@ from ...._models import BaseModel
 from ..policy_set_manifest import PolicySetManifest
 from ..attestation_statement import AttestationStatement
 
-__all__ = ["PolicySetVersion"]
+__all__ = ["PolicySetVersion", "ArchivedByUser", "CreatedByUser"]
+
+
+class ArchivedByUser(BaseModel):
+    """The organization user behind a `created_by`, `updated_by` or `archived_by` value.
+
+    Returned only when `expand[]=user` is requested.
+    """
+
+    id: str
+    """Public ID of the user in the organization's platform zone.
+
+    This is not the same value as the `*_by` field it expands; use it to link to
+    `/zones/{zone_id}/users/{id}`.
+    """
+
+    email: Optional[str] = None
+    """The user's email address, or null when not known."""
+
+    zone_id: str
+    """Public ID of the organization's platform zone the user belongs to."""
+
+
+class CreatedByUser(BaseModel):
+    """The organization user behind a `created_by`, `updated_by` or `archived_by` value.
+
+    Returned only when `expand[]=user` is requested.
+    """
+
+    id: str
+    """Public ID of the user in the organization's platform zone.
+
+    This is not the same value as the `*_by` field it expands; use it to link to
+    `/zones/{zone_id}/users/{id}`.
+    """
+
+    email: Optional[str] = None
+    """The user's email address, or null when not known."""
+
+    zone_id: str
+    """Public ID of the organization's platform zone the user belongs to."""
 
 
 class PolicySetVersion(BaseModel):
@@ -59,10 +99,24 @@ class PolicySetVersion(BaseModel):
     Null or absent means not archived.
     """
 
+    archived_by_user: Optional[ArchivedByUser] = None
+    """The organization user behind a `created_by`, `updated_by` or `archived_by`
+    value.
+
+    Returned only when `expand[]=user` is requested.
+    """
+
     attestation: Optional[AttestationStatement] = None
     """Decoded content of an Attestation JWS payload.
 
     Describes the exact policy set version composition at attestation time. This
     schema defines what consumers see after base64url-decoding the
     Attestation.payload field.
+    """
+
+    created_by_user: Optional[CreatedByUser] = None
+    """The organization user behind a `created_by`, `updated_by` or `archived_by`
+    value.
+
+    Returned only when `expand[]=user` is requested.
     """
