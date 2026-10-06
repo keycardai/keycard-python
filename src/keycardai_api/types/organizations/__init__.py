@@ -5,14 +5,9 @@ from __future__ import annotations
 from .invitation import Invitation as Invitation
 from .sso_connection import SSOConnection as SSOConnection
 from .service_account import ServiceAccount as ServiceAccount
-from .user_list_params import UserListParams as UserListParams
 from .invitation_status import InvitationStatus as InvitationStatus
 from .organization_role import OrganizationRole as OrganizationRole
-from .organization_user import OrganizationUser as OrganizationUser
-from .user_list_response import UserListResponse as UserListResponse
-from .user_update_params import UserUpdateParams as UserUpdateParams
 from .organization_status import OrganizationStatus as OrganizationStatus
-from .user_retrieve_params import UserRetrieveParams as UserRetrieveParams
 from .invitation_list_params import InvitationListParams as InvitationListParams
 from .sso_connection_protocol import SSOConnectionProtocol as SSOConnectionProtocol
 from .invitation_create_params import InvitationCreateParams as InvitationCreateParams
