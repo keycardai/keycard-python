@@ -23,6 +23,14 @@ class ResourceListParams(TypedDict, total=False):
 
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
 
+    filter_dependency_of_application_id_ne: Annotated[
+        Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[dependency_of_application_id][ne]")
+    ]
+    """Resources that are not a dependency of this application.
+
+    Repeatable (none of), max 100.
+    """
+
     filter_id: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[id]")]
     """Restrict results to resources with this publicId.
 
@@ -41,7 +49,8 @@ class ResourceListParams(TypedDict, total=False):
     filter_traits: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[traits]")]
     """Filter by trait.
 
-    Comma-separated values (`a,b`) are AND'd; repeated params are OR'd.
+    Repeated params are OR'd; each value is a single literal trait (a comma is a
+    literal character). Use `filter[traits][all]` for contains-all.
     """
 
     identifier: str
