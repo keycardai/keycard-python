@@ -23,13 +23,46 @@ class ProviderListParams(TypedDict, total=False):
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
 
     filter_id: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[id]")]
-    """Restrict results to providers with this ID. Repeatable, max 100."""
+    """Restrict results to providers with this ID.
+
+    Repeatable, max 100. Mutually exclusive with after/before.
+    """
+
+    filter_identifier: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[identifier]")]
+    """Filter by exact provider identifier"""
+
+    filter_slug: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[slug]")]
+    """Filter by exact provider slug"""
+
+    filter_type: Annotated[
+        Union[
+            Literal["external", "keycard-vault", "keycard-sts"],
+            List[Literal["external", "keycard-vault", "keycard-sts"]],
+        ],
+        PropertyInfo(alias="filter[type]"),
+    ]
+    """Filter by provider type"""
 
     identifier: str
 
     limit: int
     """Maximum number of items to return"""
 
+    query: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[]")]
+    """Search across name and identifier (substring match)"""
+
+    query_identifier: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[identifier]")]
+    """Search by identifier (substring match)"""
+
+    query_name: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[name]")]
+    """Search by name (substring match)"""
+
     slug: str
+
+    sort: str
+    """Comma-separated sort fields.
+
+    Prefix with - for descending. Allowed: created_at, name, identifier
+    """
 
     type: Literal["external", "keycard-vault", "keycard-sts"]
