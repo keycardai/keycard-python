@@ -7,6 +7,14 @@ from typing_extensions import Literal
 
 import httpx
 
+from .roles import (
+    RolesResource,
+    AsyncRolesResource,
+    RolesResourceWithRawResponse,
+    AsyncRolesResourceWithRawResponse,
+    RolesResourceWithStreamingResponse,
+    AsyncRolesResourceWithStreamingResponse,
+)
 from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ...._utils import path_template, maybe_transform, async_maybe_transform
 from ...._compat import cached_property
@@ -47,6 +55,10 @@ class ApplicationsResource(SyncAPIResource):
     @cached_property
     def dependencies(self) -> DependenciesResource:
         return DependenciesResource(self._client)
+
+    @cached_property
+    def roles(self) -> RolesResource:
+        return RolesResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> ApplicationsResourceWithRawResponse:
@@ -395,7 +407,6 @@ class ApplicationsResource(SyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -438,7 +449,6 @@ class ApplicationsResource(SyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
                         "limit": limit,
                     },
@@ -513,6 +523,10 @@ class AsyncApplicationsResource(AsyncAPIResource):
     @cached_property
     def dependencies(self) -> AsyncDependenciesResource:
         return AsyncDependenciesResource(self._client)
+
+    @cached_property
+    def roles(self) -> AsyncRolesResource:
+        return AsyncRolesResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncApplicationsResourceWithRawResponse:
@@ -861,7 +875,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -904,7 +917,6 @@ class AsyncApplicationsResource(AsyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
                         "limit": limit,
                     },
@@ -1005,6 +1017,10 @@ class ApplicationsResourceWithRawResponse:
     def dependencies(self) -> DependenciesResourceWithRawResponse:
         return DependenciesResourceWithRawResponse(self._applications.dependencies)
 
+    @cached_property
+    def roles(self) -> RolesResourceWithRawResponse:
+        return RolesResourceWithRawResponse(self._applications.roles)
+
 
 class AsyncApplicationsResourceWithRawResponse:
     def __init__(self, applications: AsyncApplicationsResource) -> None:
@@ -1035,6 +1051,10 @@ class AsyncApplicationsResourceWithRawResponse:
     @cached_property
     def dependencies(self) -> AsyncDependenciesResourceWithRawResponse:
         return AsyncDependenciesResourceWithRawResponse(self._applications.dependencies)
+
+    @cached_property
+    def roles(self) -> AsyncRolesResourceWithRawResponse:
+        return AsyncRolesResourceWithRawResponse(self._applications.roles)
 
 
 class ApplicationsResourceWithStreamingResponse:
@@ -1067,6 +1087,10 @@ class ApplicationsResourceWithStreamingResponse:
     def dependencies(self) -> DependenciesResourceWithStreamingResponse:
         return DependenciesResourceWithStreamingResponse(self._applications.dependencies)
 
+    @cached_property
+    def roles(self) -> RolesResourceWithStreamingResponse:
+        return RolesResourceWithStreamingResponse(self._applications.roles)
+
 
 class AsyncApplicationsResourceWithStreamingResponse:
     def __init__(self, applications: AsyncApplicationsResource) -> None:
@@ -1097,3 +1121,7 @@ class AsyncApplicationsResourceWithStreamingResponse:
     @cached_property
     def dependencies(self) -> AsyncDependenciesResourceWithStreamingResponse:
         return AsyncDependenciesResourceWithStreamingResponse(self._applications.dependencies)
+
+    @cached_property
+    def roles(self) -> AsyncRolesResourceWithStreamingResponse:
+        return AsyncRolesResourceWithStreamingResponse(self._applications.roles)

@@ -7,13 +7,13 @@ from typing_extensions import Literal
 
 import httpx
 
-from .users import (
-    UsersResource,
-    AsyncUsersResource,
-    UsersResourceWithRawResponse,
-    AsyncUsersResourceWithRawResponse,
-    UsersResourceWithStreamingResponse,
-    AsyncUsersResourceWithStreamingResponse,
+from .roles import (
+    RolesResource,
+    AsyncRolesResource,
+    RolesResourceWithRawResponse,
+    AsyncRolesResourceWithRawResponse,
+    RolesResourceWithStreamingResponse,
+    AsyncRolesResourceWithStreamingResponse,
 )
 from ...types import (
     zone_list_params,
@@ -71,7 +71,23 @@ from .user_agents import (
     UserAgentsResourceWithStreamingResponse,
     AsyncUserAgentsResourceWithStreamingResponse,
 )
+from .users.users import (
+    UsersResource,
+    AsyncUsersResource,
+    UsersResourceWithRawResponse,
+    AsyncUsersResourceWithRawResponse,
+    UsersResourceWithStreamingResponse,
+    AsyncUsersResourceWithStreamingResponse,
+)
 from ...types.zone import Zone
+from .groups.groups import (
+    GroupsResource,
+    AsyncGroupsResource,
+    GroupsResourceWithRawResponse,
+    AsyncGroupsResourceWithRawResponse,
+    GroupsResourceWithStreamingResponse,
+    AsyncGroupsResourceWithStreamingResponse,
+)
 from ..._base_client import make_request_options
 from .policy_schemas import (
     PolicySchemasResource,
@@ -159,6 +175,14 @@ class ZonesResource(SyncAPIResource):
     @cached_property
     def users(self) -> UsersResource:
         return UsersResource(self._client)
+
+    @cached_property
+    def roles(self) -> RolesResource:
+        return RolesResource(self._client)
+
+    @cached_property
+    def groups(self) -> GroupsResource:
+        return GroupsResource(self._client)
 
     @cached_property
     def secrets(self) -> SecretsResource:
@@ -532,6 +556,14 @@ class AsyncZonesResource(AsyncAPIResource):
     @cached_property
     def users(self) -> AsyncUsersResource:
         return AsyncUsersResource(self._client)
+
+    @cached_property
+    def roles(self) -> AsyncRolesResource:
+        return AsyncRolesResource(self._client)
+
+    @cached_property
+    def groups(self) -> AsyncGroupsResource:
+        return AsyncGroupsResource(self._client)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResource:
@@ -926,6 +958,14 @@ class ZonesResourceWithRawResponse:
         return UsersResourceWithRawResponse(self._zones.users)
 
     @cached_property
+    def roles(self) -> RolesResourceWithRawResponse:
+        return RolesResourceWithRawResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> GroupsResourceWithRawResponse:
+        return GroupsResourceWithRawResponse(self._zones.groups)
+
+    @cached_property
     def secrets(self) -> SecretsResourceWithRawResponse:
         return SecretsResourceWithRawResponse(self._zones.secrets)
 
@@ -1011,6 +1051,14 @@ class AsyncZonesResourceWithRawResponse:
     @cached_property
     def users(self) -> AsyncUsersResourceWithRawResponse:
         return AsyncUsersResourceWithRawResponse(self._zones.users)
+
+    @cached_property
+    def roles(self) -> AsyncRolesResourceWithRawResponse:
+        return AsyncRolesResourceWithRawResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> AsyncGroupsResourceWithRawResponse:
+        return AsyncGroupsResourceWithRawResponse(self._zones.groups)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithRawResponse:
@@ -1100,6 +1148,14 @@ class ZonesResourceWithStreamingResponse:
         return UsersResourceWithStreamingResponse(self._zones.users)
 
     @cached_property
+    def roles(self) -> RolesResourceWithStreamingResponse:
+        return RolesResourceWithStreamingResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> GroupsResourceWithStreamingResponse:
+        return GroupsResourceWithStreamingResponse(self._zones.groups)
+
+    @cached_property
     def secrets(self) -> SecretsResourceWithStreamingResponse:
         return SecretsResourceWithStreamingResponse(self._zones.secrets)
 
@@ -1185,6 +1241,14 @@ class AsyncZonesResourceWithStreamingResponse:
     @cached_property
     def users(self) -> AsyncUsersResourceWithStreamingResponse:
         return AsyncUsersResourceWithStreamingResponse(self._zones.users)
+
+    @cached_property
+    def roles(self) -> AsyncRolesResourceWithStreamingResponse:
+        return AsyncRolesResourceWithStreamingResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> AsyncGroupsResourceWithStreamingResponse:
+        return AsyncGroupsResourceWithStreamingResponse(self._zones.groups)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithStreamingResponse:

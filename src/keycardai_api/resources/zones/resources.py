@@ -271,6 +271,7 @@ class ResourcesResource(SyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_dependency_of_application_id_ne: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_owner_type: Literal["platform", "customer"] | Omit = omit,
@@ -295,10 +296,10 @@ class ResourcesResource(SyncAPIResource):
         Use cursor
         pagination via `after`/`before`, and `expand[]=total_count` to include the
         matching row count. Filter by exact identifier via `filter[identifier]`. Filter
-        by trait via `filter[traits]`: comma-separated values are AND'd, repeated params
-        are OR'd. The scalar `identifier` query parameter is a backward-compatible alias
-        for `filter[identifier]`: exact match on a single value, folded into the same
-        exact-match identifier filter.
+        by trait via `filter[traits]` (repeated params are OR'd) or
+        `filter[traits][all]` (contains-all). The scalar `identifier` query parameter is
+        a backward-compatible alias for `filter[identifier]`: exact match on a single
+        value, folded into the same exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -306,6 +307,9 @@ class ResourcesResource(SyncAPIResource):
           before: Cursor for backward pagination
 
           credential_provider_id: Filter resources by credential provider ID
+
+          filter_dependency_of_application_id_ne: Resources that are not a dependency of this application. Repeatable (none of),
+              max 100.
 
           filter_id: Restrict results to resources with this publicId. Repeatable, max 100. Mutually
               exclusive with after/before.
@@ -316,8 +320,8 @@ class ResourcesResource(SyncAPIResource):
 
           filter_slug: Filter by exact resource slug
 
-          filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
-              OR'd.
+          filter_traits: Filter by trait. Repeated params are OR'd; each value is a single literal trait
+              (a comma is a literal character). Use `filter[traits][all]` for contains-all.
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
@@ -356,6 +360,7 @@ class ResourcesResource(SyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_dependency_of_application_id_ne": filter_dependency_of_application_id_ne,
                         "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
                         "filter_owner_type": filter_owner_type,
@@ -653,6 +658,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_dependency_of_application_id_ne: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_owner_type: Literal["platform", "customer"] | Omit = omit,
@@ -677,10 +683,10 @@ class AsyncResourcesResource(AsyncAPIResource):
         Use cursor
         pagination via `after`/`before`, and `expand[]=total_count` to include the
         matching row count. Filter by exact identifier via `filter[identifier]`. Filter
-        by trait via `filter[traits]`: comma-separated values are AND'd, repeated params
-        are OR'd. The scalar `identifier` query parameter is a backward-compatible alias
-        for `filter[identifier]`: exact match on a single value, folded into the same
-        exact-match identifier filter.
+        by trait via `filter[traits]` (repeated params are OR'd) or
+        `filter[traits][all]` (contains-all). The scalar `identifier` query parameter is
+        a backward-compatible alias for `filter[identifier]`: exact match on a single
+        value, folded into the same exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -688,6 +694,9 @@ class AsyncResourcesResource(AsyncAPIResource):
           before: Cursor for backward pagination
 
           credential_provider_id: Filter resources by credential provider ID
+
+          filter_dependency_of_application_id_ne: Resources that are not a dependency of this application. Repeatable (none of),
+              max 100.
 
           filter_id: Restrict results to resources with this publicId. Repeatable, max 100. Mutually
               exclusive with after/before.
@@ -698,8 +707,8 @@ class AsyncResourcesResource(AsyncAPIResource):
 
           filter_slug: Filter by exact resource slug
 
-          filter_traits: Filter by trait. Comma-separated values (`a,b`) are AND'd; repeated params are
-              OR'd.
+          filter_traits: Filter by trait. Repeated params are OR'd; each value is a single literal trait
+              (a comma is a literal character). Use `filter[traits][all]` for contains-all.
 
           identifier: Backward-compatible alias for `filter[identifier]`: exact match on a single
               resource identifier.
@@ -738,6 +747,7 @@ class AsyncResourcesResource(AsyncAPIResource):
                         "before": before,
                         "credential_provider_id": credential_provider_id,
                         "expand": expand,
+                        "filter_dependency_of_application_id_ne": filter_dependency_of_application_id_ne,
                         "filter_id": filter_id,
                         "filter_identifier": filter_identifier,
                         "filter_owner_type": filter_owner_type,
