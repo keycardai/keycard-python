@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.19.0](https://github.com/keycardai/keycard-python/compare/v0.18.0...v0.19.0) (2026-10-07)
+
+
+### Features
+
+* **ID-604:** filter[dependency_of_application_id][ne] on list resources ([#38](https://github.com/keycardai/keycard-python/issues/38)) ([2f5513d](https://github.com/keycardai/keycard-python/commit/2f5513db7c3fc23ab6ea78928e66235ba22b5b3d))
+
+
+### Chores
+
+* **stainless:** refresh openapi.yml from api/openapi.yaml ([#36](https://github.com/keycardai/keycard-python/issues/36)) ([369f21d](https://github.com/keycardai/keycard-python/commit/369f21d94e3348594731cd4b94fa77466abbd477))
+
 ## [0.18.0](https://github.com/keycardai/keycard-python/compare/v0.17.0...v0.18.0) (2026-09-22)
 
 
