@@ -3,7 +3,6 @@
 from typing import List, Optional
 
 from ..._models import BaseModel
-from ..page_info_pagination import PageInfoPagination
 from .applications.resource import Resource
 
 __all__ = ["ApplicationListResourcesResponse", "Pagination"]
@@ -30,6 +29,3 @@ class ApplicationListResourcesResponse(BaseModel):
 
     pagination: Pagination
     """Cursor-based pagination metadata"""
-
-    page_info: Optional[PageInfoPagination] = None
-    """Pagination information"""
