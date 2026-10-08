@@ -97,6 +97,7 @@ class TestInvitations:
             after="x",
             before="x",
             expand="permissions",
+            filter_status=["pending"],
             limit=1,
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -281,6 +282,7 @@ class TestAsyncInvitations:
             after="x",
             before="x",
             expand="permissions",
+            filter_status=["pending"],
             limit=1,
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )

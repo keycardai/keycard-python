@@ -7,13 +7,13 @@ from typing_extensions import Literal
 
 import httpx
 
-from .users import (
-    UsersResource,
-    AsyncUsersResource,
-    UsersResourceWithRawResponse,
-    AsyncUsersResourceWithRawResponse,
-    UsersResourceWithStreamingResponse,
-    AsyncUsersResourceWithStreamingResponse,
+from .roles import (
+    RolesResource,
+    AsyncRolesResource,
+    RolesResourceWithRawResponse,
+    AsyncRolesResourceWithRawResponse,
+    RolesResourceWithStreamingResponse,
+    AsyncRolesResourceWithStreamingResponse,
 )
 from ...types import (
     zone_list_params,
@@ -29,7 +29,7 @@ from .secrets import (
     SecretsResourceWithStreamingResponse,
     AsyncSecretsResourceWithStreamingResponse,
 )
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from .sessions import (
     SessionsResource,
@@ -71,7 +71,23 @@ from .user_agents import (
     UserAgentsResourceWithStreamingResponse,
     AsyncUserAgentsResourceWithStreamingResponse,
 )
+from .users.users import (
+    UsersResource,
+    AsyncUsersResource,
+    UsersResourceWithRawResponse,
+    AsyncUsersResourceWithRawResponse,
+    UsersResourceWithStreamingResponse,
+    AsyncUsersResourceWithStreamingResponse,
+)
 from ...types.zone import Zone
+from .groups.groups import (
+    GroupsResource,
+    AsyncGroupsResource,
+    GroupsResourceWithRawResponse,
+    AsyncGroupsResourceWithRawResponse,
+    GroupsResourceWithStreamingResponse,
+    AsyncGroupsResourceWithStreamingResponse,
+)
 from ..._base_client import make_request_options
 from .policy_schemas import (
     PolicySchemasResource,
@@ -159,6 +175,14 @@ class ZonesResource(SyncAPIResource):
     @cached_property
     def users(self) -> UsersResource:
         return UsersResource(self._client)
+
+    @cached_property
+    def roles(self) -> RolesResource:
+        return RolesResource(self._client)
+
+    @cached_property
+    def groups(self) -> GroupsResource:
+        return GroupsResource(self._client)
 
     @cached_property
     def secrets(self) -> SecretsResource:
@@ -411,6 +435,7 @@ class ZonesResource(SyncAPIResource):
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
         filter_organization_id: str | Omit = omit,
+        filter_permission_in: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -424,13 +449,21 @@ class ZonesResource(SyncAPIResource):
 
         Cursor pagination
         via `after`/`before` and `limit`, plus `expand[]=total_count`, name substring
-        search, and `sort`, are honored only when the `zone-pagination` flag is enabled;
-        the default response is the unbounded legacy shape.
+        search, and `sort`, are supported on every request. `filter[permission][in]`
+        narrows the list to zones where the caller holds at least one of the given
+        permissions.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_permission_in: Only return zones where the caller is allowed ANY of these permissions
+              (`<resource_type>:<action>`, e.g. `applications:list`). Repeatable (one
+              permission per occurrence); values are unioned, max 20 (a stricter cap than the
+              authorization service's 50). The accessible zone set is resolved by the
+              authorization service and composes with cursor pagination, search, sort and
+              `expand[]=total_count`. Malformed values are a 400.
 
           limit: Maximum number of items to return
 
@@ -456,6 +489,7 @@ class ZonesResource(SyncAPIResource):
                         "cursor": cursor,
                         "expand": expand,
                         "filter_organization_id": filter_organization_id,
+                        "filter_permission_in": filter_permission_in,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -532,6 +566,14 @@ class AsyncZonesResource(AsyncAPIResource):
     @cached_property
     def users(self) -> AsyncUsersResource:
         return AsyncUsersResource(self._client)
+
+    @cached_property
+    def roles(self) -> AsyncRolesResource:
+        return AsyncRolesResource(self._client)
+
+    @cached_property
+    def groups(self) -> AsyncGroupsResource:
+        return AsyncGroupsResource(self._client)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResource:
@@ -784,6 +826,7 @@ class AsyncZonesResource(AsyncAPIResource):
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
         filter_organization_id: str | Omit = omit,
+        filter_permission_in: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -797,13 +840,21 @@ class AsyncZonesResource(AsyncAPIResource):
 
         Cursor pagination
         via `after`/`before` and `limit`, plus `expand[]=total_count`, name substring
-        search, and `sort`, are honored only when the `zone-pagination` flag is enabled;
-        the default response is the unbounded legacy shape.
+        search, and `sort`, are supported on every request. `filter[permission][in]`
+        narrows the list to zones where the caller holds at least one of the given
+        permissions.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_permission_in: Only return zones where the caller is allowed ANY of these permissions
+              (`<resource_type>:<action>`, e.g. `applications:list`). Repeatable (one
+              permission per occurrence); values are unioned, max 20 (a stricter cap than the
+              authorization service's 50). The accessible zone set is resolved by the
+              authorization service and composes with cursor pagination, search, sort and
+              `expand[]=total_count`. Malformed values are a 400.
 
           limit: Maximum number of items to return
 
@@ -829,6 +880,7 @@ class AsyncZonesResource(AsyncAPIResource):
                         "cursor": cursor,
                         "expand": expand,
                         "filter_organization_id": filter_organization_id,
+                        "filter_permission_in": filter_permission_in,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -926,6 +978,14 @@ class ZonesResourceWithRawResponse:
         return UsersResourceWithRawResponse(self._zones.users)
 
     @cached_property
+    def roles(self) -> RolesResourceWithRawResponse:
+        return RolesResourceWithRawResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> GroupsResourceWithRawResponse:
+        return GroupsResourceWithRawResponse(self._zones.groups)
+
+    @cached_property
     def secrets(self) -> SecretsResourceWithRawResponse:
         return SecretsResourceWithRawResponse(self._zones.secrets)
 
@@ -1011,6 +1071,14 @@ class AsyncZonesResourceWithRawResponse:
     @cached_property
     def users(self) -> AsyncUsersResourceWithRawResponse:
         return AsyncUsersResourceWithRawResponse(self._zones.users)
+
+    @cached_property
+    def roles(self) -> AsyncRolesResourceWithRawResponse:
+        return AsyncRolesResourceWithRawResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> AsyncGroupsResourceWithRawResponse:
+        return AsyncGroupsResourceWithRawResponse(self._zones.groups)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithRawResponse:
@@ -1100,6 +1168,14 @@ class ZonesResourceWithStreamingResponse:
         return UsersResourceWithStreamingResponse(self._zones.users)
 
     @cached_property
+    def roles(self) -> RolesResourceWithStreamingResponse:
+        return RolesResourceWithStreamingResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> GroupsResourceWithStreamingResponse:
+        return GroupsResourceWithStreamingResponse(self._zones.groups)
+
+    @cached_property
     def secrets(self) -> SecretsResourceWithStreamingResponse:
         return SecretsResourceWithStreamingResponse(self._zones.secrets)
 
@@ -1185,6 +1261,14 @@ class AsyncZonesResourceWithStreamingResponse:
     @cached_property
     def users(self) -> AsyncUsersResourceWithStreamingResponse:
         return AsyncUsersResourceWithStreamingResponse(self._zones.users)
+
+    @cached_property
+    def roles(self) -> AsyncRolesResourceWithStreamingResponse:
+        return AsyncRolesResourceWithStreamingResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> AsyncGroupsResourceWithStreamingResponse:
+        return AsyncGroupsResourceWithStreamingResponse(self._zones.groups)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithStreamingResponse:
