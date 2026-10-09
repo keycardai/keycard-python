@@ -76,5 +76,5 @@ class ResourceListParams(TypedDict, total=False):
     sort: str
     """Comma-separated sort fields.
 
-    Prefix with - for descending. Allowed: created_at, name, identifier
+    Prefix with - for descending. Allowed: created_at, updated_at, name, identifier
     """

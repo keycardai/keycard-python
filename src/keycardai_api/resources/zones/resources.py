@@ -335,7 +335,7 @@ class ResourcesResource(SyncAPIResource):
           query_name: Search by name (substring match)
 
           sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
-              name, identifier
+              updated_at, name, identifier
 
           extra_headers: Send extra headers
 
@@ -722,7 +722,7 @@ class AsyncResourcesResource(AsyncAPIResource):
           query_name: Search by name (substring match)
 
           sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
-              name, identifier
+              updated_at, name, identifier
 
           extra_headers: Send extra headers
 
