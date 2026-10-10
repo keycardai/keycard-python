@@ -6,7 +6,23 @@ from ..._models import BaseModel
 from .service_account import ServiceAccount
 from ..page_info_cursor import PageInfoCursor
 
-__all__ = ["ServiceAccountListResponse"]
+__all__ = ["ServiceAccountListResponse", "Pagination"]
+
+
+class Pagination(BaseModel):
+    """Cursor-based pagination metadata returned alongside a list of results"""
+
+    after_cursor: Optional[str] = None
+    """An opaque cursor used for paginating through a list of results"""
+
+    before_cursor: Optional[str] = None
+    """An opaque cursor used for paginating through a list of results"""
+
+    total_count: Optional[int] = None
+    """Total number of items across all pages.
+
+    Only present when the request includes ?expand[]=total_count.
+    """
 
 
 class ServiceAccountListResponse(BaseModel):
@@ -14,6 +30,9 @@ class ServiceAccountListResponse(BaseModel):
 
     page_info: PageInfoCursor
     """Pagination information using cursor-based pagination"""
+
+    pagination: Pagination
+    """Cursor-based pagination metadata returned alongside a list of results"""
 
     permissions: Optional[Dict[str, Dict[str, bool]]] = None
     """

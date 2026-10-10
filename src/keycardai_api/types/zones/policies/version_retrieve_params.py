@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import List
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from ...._utils import PropertyInfo
@@ -13,6 +14,9 @@ class VersionRetrieveParams(TypedDict, total=False):
     zone_id: Required[str]
 
     policy_id: Required[str]
+
+    expand: List[Literal["user"]]
+    """Opt-in to additional response fields on a single resource (`user`). Repeatable."""
 
     format: Literal["cedar", "json"]
     """Narrows which Cedar representation the response includes.
