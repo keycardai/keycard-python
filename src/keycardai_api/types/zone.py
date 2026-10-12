@@ -95,6 +95,12 @@ class Zone(BaseModel):
     created_at: datetime
     """Entity creation timestamp"""
 
+    external_sync_enabled: bool
+    """Whether external directory sync (SCIM) is enabled for this zone.
+
+    Required to create external sync tokens.
+    """
+
     name: str
     """Human-readable name"""
 

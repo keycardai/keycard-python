@@ -85,6 +85,8 @@ class TestUserAgents:
             after="x",
             before="x",
             expand="total_count",
+            filter_id="string",
+            filter_identifier="string",
             limit=1,
         )
         assert_matches_type(UserAgentListResponse, user_agent, path=["response"])
@@ -197,6 +199,8 @@ class TestAsyncUserAgents:
             after="x",
             before="x",
             expand="total_count",
+            filter_id="string",
+            filter_identifier="string",
             limit=1,
         )
         assert_matches_type(UserAgentListResponse, user_agent, path=["response"])
