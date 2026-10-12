@@ -190,12 +190,10 @@ class RolesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> RoleListResponse:
-        """Returns the roles defined in the specified zone.
+        """Returns the roles defined in the specified zone, cursor-paginated.
 
-        The full result set is
-        currently returned in a single page; the `after`/`before`/`limit` cursor
-        parameters are reserved and not yet enforced, and `pagination` cursors are
-        always null.
+        Ordered by
+        identifier.
 
         Args:
           after: Cursor for forward pagination
@@ -442,12 +440,10 @@ class AsyncRolesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> RoleListResponse:
-        """Returns the roles defined in the specified zone.
+        """Returns the roles defined in the specified zone, cursor-paginated.
 
-        The full result set is
-        currently returned in a single page; the `after`/`before`/`limit` cursor
-        parameters are reserved and not yet enforced, and `pagination` cursors are
-        always null.
+        Ordered by
+        identifier.
 
         Args:
           after: Cursor for forward pagination
