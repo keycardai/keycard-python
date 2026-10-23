@@ -35,7 +35,7 @@ class PolicySetListParams(TypedDict, total=False):
     Returned in `Pagination.before_cursor`. Mutually exclusive with `after`.
     """
 
-    expand: List[Literal["total_count"]]
+    expand: List[Literal["total_count", "user"]]
     """**Deprecated.** Use `expand[]` instead.
 
     Opt-in to additional response fields. Still honored for backward compatibility;
