@@ -22,6 +22,7 @@ from ....types.zones.policy_sets import (
     version_list_params,
     version_create_params,
     version_update_params,
+    version_retrieve_params,
     version_list_policies_params,
 )
 from ....types.zones.policy_set_manifest_param import PolicySetManifestParam
@@ -120,6 +121,7 @@ class VersionsResource(SyncAPIResource):
         *,
         zone_id: str,
         policy_set_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -133,6 +135,8 @@ class VersionsResource(SyncAPIResource):
         Get a specific policy set version
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -164,7 +168,11 @@ class VersionsResource(SyncAPIResource):
                 version_id=version_id,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"expand": expand}, version_retrieve_params.VersionRetrieveParams),
             ),
             cast_to=PolicySetVersion,
         )
@@ -235,7 +243,7 @@ class VersionsResource(SyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -379,7 +387,7 @@ class VersionsResource(SyncAPIResource):
         policy_set_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
@@ -561,6 +569,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         *,
         zone_id: str,
         policy_set_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -574,6 +583,8 @@ class AsyncVersionsResource(AsyncAPIResource):
         Get a specific policy set version
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -605,7 +616,11 @@ class AsyncVersionsResource(AsyncAPIResource):
                 version_id=version_id,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"expand": expand}, version_retrieve_params.VersionRetrieveParams),
             ),
             cast_to=PolicySetVersion,
         )
@@ -676,7 +691,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -820,7 +835,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         policy_set_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
