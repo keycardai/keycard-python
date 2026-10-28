@@ -246,7 +246,6 @@ class ZonesResource(SyncAPIResource):
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
         organization_id: str | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -277,9 +276,6 @@ class ZonesResource(SyncAPIResource):
 
           protocols: Protocol configuration for zone creation
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set. Defaults to true.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -298,7 +294,6 @@ class ZonesResource(SyncAPIResource):
                     "encryption_key": encryption_key,
                     "organization_id": organization_id,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                 },
                 zone_create_params.ZoneCreateParams,
             ),
@@ -357,7 +352,6 @@ class ZonesResource(SyncAPIResource):
         external_sync_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         user_identity_provider_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -390,9 +384,6 @@ class ZonesResource(SyncAPIResource):
 
           protocols: Protocol configuration update for a zone (partial update)
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set
-
           user_identity_provider_id: Provider ID to configure for user login (set to null to unset)
 
           extra_headers: Send extra headers
@@ -416,7 +407,6 @@ class ZonesResource(SyncAPIResource):
                     "external_sync_enabled": external_sync_enabled,
                     "name": name,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                     "user_identity_provider_id": user_identity_provider_id,
                 },
                 zone_update_params.ZoneUpdateParams,
@@ -637,7 +627,6 @@ class AsyncZonesResource(AsyncAPIResource):
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
         organization_id: str | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -668,9 +657,6 @@ class AsyncZonesResource(AsyncAPIResource):
 
           protocols: Protocol configuration for zone creation
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set. Defaults to true.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -689,7 +675,6 @@ class AsyncZonesResource(AsyncAPIResource):
                     "encryption_key": encryption_key,
                     "organization_id": organization_id,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                 },
                 zone_create_params.ZoneCreateParams,
             ),
@@ -748,7 +733,6 @@ class AsyncZonesResource(AsyncAPIResource):
         external_sync_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         user_identity_provider_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -781,9 +765,6 @@ class AsyncZonesResource(AsyncAPIResource):
 
           protocols: Protocol configuration update for a zone (partial update)
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set
-
           user_identity_provider_id: Provider ID to configure for user login (set to null to unset)
 
           extra_headers: Send extra headers
@@ -807,7 +788,6 @@ class AsyncZonesResource(AsyncAPIResource):
                     "external_sync_enabled": external_sync_enabled,
                     "name": name,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                     "user_identity_provider_id": user_identity_provider_id,
                 },
                 zone_update_params.ZoneUpdateParams,

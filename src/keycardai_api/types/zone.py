@@ -141,11 +141,5 @@ class Zone(BaseModel):
     resource types, values are objects mapping action names to boolean values.
     """
 
-    requires_invitation: Optional[bool] = None
-    """
-    Whether the zone requires an invitation for email/password registration, only
-    applies when user_identity_provider_id is not set
-    """
-
     user_identity_provider_id: Optional[str] = None
     """Provider ID configured for user login"""

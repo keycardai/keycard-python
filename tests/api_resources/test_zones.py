@@ -50,7 +50,6 @@ class TestZones:
                     "pkce_required": True,
                 }
             },
-            requires_invitation=True,
         )
         assert_matches_type(Zone, zone, path=["response"])
 
@@ -163,7 +162,6 @@ class TestZones:
                     "pkce_required": True,
                 }
             },
-            requires_invitation=True,
             user_identity_provider_id="user_identity_provider_id",
         )
         assert_matches_type(Zone, zone, path=["response"])
@@ -323,7 +321,6 @@ class TestAsyncZones:
                     "pkce_required": True,
                 }
             },
-            requires_invitation=True,
         )
         assert_matches_type(Zone, zone, path=["response"])
 
@@ -436,7 +433,6 @@ class TestAsyncZones:
                     "pkce_required": True,
                 }
             },
-            requires_invitation=True,
             user_identity_provider_id="user_identity_provider_id",
         )
         assert_matches_type(Zone, zone, path=["response"])
