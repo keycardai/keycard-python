@@ -4,7 +4,6 @@ from typing import List, Optional
 
 from .resource import Resource
 from ...._models import BaseModel
-from ...page_info_pagination import PageInfoPagination
 
 __all__ = ["DependencyListResponse", "Pagination"]
 
@@ -30,6 +29,3 @@ class DependencyListResponse(BaseModel):
 
     pagination: Pagination
     """Cursor-based pagination metadata"""
-
-    page_info: Optional[PageInfoPagination] = None
-    """Pagination information"""
