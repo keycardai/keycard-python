@@ -25,7 +25,7 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.zones import policy_list_params, policy_create_params, policy_update_params
+from ....types.zones import policy_list_params, policy_create_params, policy_update_params, policy_retrieve_params
 from ...._base_client import make_request_options
 from ....types.zones.policy import Policy
 from ....types.zones.policy_list_response import PolicyListResponse
@@ -118,6 +118,7 @@ class PoliciesResource(SyncAPIResource):
         policy_id: str,
         *,
         zone_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -131,6 +132,8 @@ class PoliciesResource(SyncAPIResource):
         Get a policy by ID
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -155,7 +158,11 @@ class PoliciesResource(SyncAPIResource):
         return self._get(
             path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"expand": expand}, policy_retrieve_params.PolicyRetrieveParams),
             ),
             cast_to=Policy,
         )
@@ -224,7 +231,7 @@ class PoliciesResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         filter_id: SequenceNotStr[str] | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
@@ -490,6 +497,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
         policy_id: str,
         *,
         zone_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -503,6 +511,8 @@ class AsyncPoliciesResource(AsyncAPIResource):
         Get a policy by ID
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -527,7 +537,11 @@ class AsyncPoliciesResource(AsyncAPIResource):
         return await self._get(
             path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"expand": expand}, policy_retrieve_params.PolicyRetrieveParams),
             ),
             cast_to=Policy,
         )
@@ -596,7 +610,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: List[Literal["total_count", "user"]] | Omit = omit,
         filter_id: SequenceNotStr[str] | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
