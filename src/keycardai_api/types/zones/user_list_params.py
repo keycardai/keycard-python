@@ -47,6 +47,12 @@ class UserListParams(TypedDict, total=False):
     filter_email: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[email]")]
     """Filter by exact email address"""
 
+    filter_external: Annotated[bool, PropertyInfo(alias="filter[external]")]
+    """
+    Filter by source: `false` for users managed in Keycard, `true` for users
+    provisioned by an external directory. Omit to list both.
+    """
+
     filter_groups: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[groups]")]
     """Restrict to members of this group (by group ID).
 
@@ -62,17 +68,29 @@ class UserListParams(TypedDict, total=False):
     filter_identifier: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[identifier]")]
     """Filter by exact user identifier"""
 
+    filter_issuer: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[issuer]")]
+    """Filter by exact `issuer`. Repeatable; OR'd across values."""
+
+    filter_role: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[role]")]
+    """Restrict to users directly granted this role (by role identifier).
+
+    Repeatable, max 100; OR'd across values. Group-inherited grants do not match.
+    """
+
+    filter_subject: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[subject]")]
+    """Filter by exact `subject`. Repeatable; OR'd across values."""
+
     limit: int
     """Maximum number of items to return"""
 
     query: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[]")]
-    """Search across email and credential subject (substring match)"""
+    """Search across email and the user's `subject` (substring match)"""
 
     query_email: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[email]")]
     """Search by email (substring match)"""
 
     query_subject: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[subject]")]
-    """Search by federated credential subject (substring match)"""
+    """Search by the user's `subject` (substring match)"""
 
     role_source: Literal["user", "group", "all"]
     """
