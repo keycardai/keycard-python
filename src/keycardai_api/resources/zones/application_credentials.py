@@ -328,8 +328,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           subject: Subject identifier for the token. Set to null to unset, which allows any token
@@ -359,8 +361,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           extra_headers: Send extra headers
@@ -379,6 +383,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        jwks_uri: str | Omit = omit,
         type: Literal["public-key"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -387,10 +392,14 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
+          jwks_uri: JWKS URI to retrieve public keys from
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -416,8 +425,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           identifier: URL of the credential (must be a valid URL)
@@ -447,8 +458,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           identifier: Identifier for public credential, also used as OAuth 2.0 client ID
@@ -476,6 +489,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
         | Literal["url"]
         | Literal["public"]
         | Omit = omit,
+        jwks_uri: str | Omit = omit,
         identifier: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -496,6 +510,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     {
                         "subject": subject,
                         "type": type,
+                        "jwks_uri": jwks_uri,
                         "identifier": identifier,
                     },
                     application_credential_update_params.ApplicationCredentialUpdateParams,
@@ -948,8 +963,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           subject: Subject identifier for the token. Set to null to unset, which allows any token
@@ -979,8 +996,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           extra_headers: Send extra headers
@@ -999,6 +1018,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        jwks_uri: str | Omit = omit,
         type: Literal["public-key"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1007,10 +1027,14 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
+          jwks_uri: JWKS URI to retrieve public keys from
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1036,8 +1060,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           identifier: URL of the credential (must be a valid URL)
@@ -1067,8 +1093,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           identifier: Identifier for public credential, also used as OAuth 2.0 client ID
@@ -1096,6 +1124,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         | Literal["url"]
         | Literal["public"]
         | Omit = omit,
+        jwks_uri: str | Omit = omit,
         identifier: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1116,6 +1145,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     {
                         "subject": subject,
                         "type": type,
+                        "jwks_uri": jwks_uri,
                         "identifier": identifier,
                     },
                     application_credential_update_params.ApplicationCredentialUpdateParams,

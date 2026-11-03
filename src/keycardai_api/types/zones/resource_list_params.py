@@ -21,7 +21,10 @@ class ResourceListParams(TypedDict, total=False):
     credential_provider_id: Annotated[str, PropertyInfo(alias="credentialProviderId")]
     """Filter resources by credential provider ID"""
 
-    expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
+    expand: Annotated[
+        Union[Literal["total_count", "credential_provider"], List[Literal["total_count", "credential_provider"]]],
+        PropertyInfo(alias="expand[]"),
+    ]
 
     filter_dependency_of_application_id_ne: Annotated[
         Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[dependency_of_application_id][ne]")
