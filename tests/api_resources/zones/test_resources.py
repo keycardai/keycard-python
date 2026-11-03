@@ -234,12 +234,19 @@ class TestResources:
             before="x",
             credential_provider_id="credentialProviderId",
             expand="total_count",
+            filter_dependency_of_application_id_ne="string",
+            filter_id="string",
             filter_identifier="string",
             filter_owner_type="platform",
+            filter_slug="string",
             filter_traits="string",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
         )
         assert_matches_type(ResourceListResponse, resource, path=["response"])
 
@@ -549,12 +556,19 @@ class TestAsyncResources:
             before="x",
             credential_provider_id="credentialProviderId",
             expand="total_count",
+            filter_dependency_of_application_id_ne="string",
+            filter_id="string",
             filter_identifier="string",
             filter_owner_type="platform",
+            filter_slug="string",
             filter_traits="string",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
         )
         assert_matches_type(ResourceListResponse, resource, path=["response"])
 
