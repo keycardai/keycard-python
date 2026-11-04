@@ -6,6 +6,8 @@ from .invitation import Invitation as Invitation
 from .sso_connection import SSOConnection as SSOConnection
 from .service_account import ServiceAccount as ServiceAccount
 from .invitation_status import InvitationStatus as InvitationStatus
+from .organization_role import OrganizationRole as OrganizationRole
+from .organization_status import OrganizationStatus as OrganizationStatus
 from .invitation_list_params import InvitationListParams as InvitationListParams
 from .sso_connection_protocol import SSOConnectionProtocol as SSOConnectionProtocol
 from .invitation_create_params import InvitationCreateParams as InvitationCreateParams

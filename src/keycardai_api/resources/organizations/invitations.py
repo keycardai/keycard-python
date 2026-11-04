@@ -7,7 +7,6 @@ from typing_extensions import Literal
 
 import httpx
 
-from ...types import OrganizationRole
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from ..._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
@@ -19,10 +18,10 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.organizations import invitation_list_params, invitation_create_params
-from ...types.organization_role import OrganizationRole
+from ...types.organizations import OrganizationRole, invitation_list_params, invitation_create_params
 from ...types.organizations.invitation import Invitation
 from ...types.organizations.invitation_status import InvitationStatus
+from ...types.organizations.organization_role import OrganizationRole
 from ...types.organizations.invitation_list_response import InvitationListResponse
 
 __all__ = ["InvitationsResource", "AsyncInvitationsResource"]

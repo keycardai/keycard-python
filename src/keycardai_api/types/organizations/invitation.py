@@ -5,7 +5,7 @@ from datetime import datetime
 
 from ..._models import BaseModel
 from .invitation_status import InvitationStatus
-from ..organization_role import OrganizationRole
+from .organization_role import OrganizationRole
 
 __all__ = ["Invitation"]
 

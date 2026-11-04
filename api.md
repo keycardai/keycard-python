@@ -389,7 +389,6 @@ Types:
 ```python
 from keycardai_api.types import (
     Organization,
-    OrganizationRole,
     PageInfoCursor,
     TokenResponse,
     OrganizationListResponse,
@@ -403,6 +402,14 @@ Methods:
 - <code title="patch /organizations/{organization_id}">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">update</a>(organization_id, \*\*<a href="src/keycardai_api/types/organization_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization.py">Organization</a></code>
 - <code title="get /organizations">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">list</a>(\*\*<a href="src/keycardai_api/types/organization_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/organization_list_response.py">OrganizationListResponse</a></code>
 - <code title="delete /organizations/{organization_id}">client.organizations.<a href="./src/keycardai_api/resources/organizations/organizations.py">delete</a>(organization_id) -> None</code>
+
+## Users
+
+Types:
+
+```python
+from keycardai_api.types.organizations import OrganizationRole, OrganizationStatus, OrganizationUser
+```
 
 ## Invitations
 

@@ -3,8 +3,8 @@
 from datetime import datetime
 
 from .._models import BaseModel
-from .organization_role import OrganizationRole
 from .organizations.invitation_status import InvitationStatus
+from .organizations.organization_role import OrganizationRole
 
 __all__ = ["InvitationRetrieveResponse"]
 
