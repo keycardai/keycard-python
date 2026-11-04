@@ -70,6 +70,7 @@ from .policy_set_with_binding import PolicySetWithBinding as PolicySetWithBindin
 from .policy_set_create_params import PolicySetCreateParams as PolicySetCreateParams
 from .policy_set_list_response import PolicySetListResponse as PolicySetListResponse
 from .policy_set_update_params import PolicySetUpdateParams as PolicySetUpdateParams
+from .resource_retrieve_params import ResourceRetrieveParams as ResourceRetrieveParams
 from .secret_retrieve_response import SecretRetrieveResponse as SecretRetrieveResponse
 from .user_agent_list_response import UserAgentListResponse as UserAgentListResponse
 from .application_create_params import ApplicationCreateParams as ApplicationCreateParams

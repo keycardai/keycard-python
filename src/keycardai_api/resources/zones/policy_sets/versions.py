@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -121,7 +121,7 @@ class VersionsResource(SyncAPIResource):
         *,
         zone_id: str,
         policy_set_id: str,
-        expand: List[Literal["user"]] | Omit = omit,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -243,7 +243,7 @@ class VersionsResource(SyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -267,11 +267,8 @@ class VersionsResource(SyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           limit: Maximum number of items to return per page.
 
@@ -387,7 +384,7 @@ class VersionsResource(SyncAPIResource):
         policy_set_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
@@ -412,11 +409,8 @@ class VersionsResource(SyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           format: Narrows which Cedar representation the response includes. When omitted, both
               `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only
@@ -569,7 +563,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         *,
         zone_id: str,
         policy_set_id: str,
-        expand: List[Literal["user"]] | Omit = omit,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -691,7 +685,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -715,11 +709,8 @@ class AsyncVersionsResource(AsyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           limit: Maximum number of items to return per page.
 
@@ -835,7 +826,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         policy_set_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
@@ -860,11 +851,8 @@ class AsyncVersionsResource(AsyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           format: Narrows which Cedar representation the response includes. When omitted, both
               `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only

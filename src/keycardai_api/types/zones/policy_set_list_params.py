@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
@@ -35,12 +35,12 @@ class PolicySetListParams(TypedDict, total=False):
     Returned in `Pagination.before_cursor`. Mutually exclusive with `after`.
     """
 
-    expand: List[Literal["total_count", "user"]]
-    """**Deprecated.** Use `expand[]` instead.
+    expand: Annotated[
+        Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]], PropertyInfo(alias="expand[]")
+    ]
+    """Opt-in to additional response fields (`total_count`, `user`).
 
-    Opt-in to additional response fields. Still honored for backward compatibility;
-    supplying both `expand` and `expand[]` with disagreeing values returns
-    `400 Bad Request`.
+    Repeatable; matches the `expand[]` convention used across the Keycard API.
     """
 
     filter_active: Annotated[bool, PropertyInfo(alias="filter[active]")]
@@ -111,7 +111,7 @@ class PolicySetListParams(TypedDict, total=False):
     order: Literal["asc", "desc"]
     """Sort direction. Default is desc (newest first)."""
 
-    query: SequenceNotStr[str]
+    query: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[]")]
     """Case-insensitive substring search across all searchable fields of the resource.
 
     For policies that is `name` and `description`; for policy sets that is `name`.

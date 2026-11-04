@@ -21,6 +21,7 @@ from ...types.zones import (
     resource_list_params,
     resource_create_params,
     resource_update_params,
+    resource_retrieve_params,
 )
 from ..._base_client import make_request_options
 from ...types.zones.metadata_param import MetadataParam
@@ -143,6 +144,7 @@ class ResourcesResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        expand: Union[Literal["credential_provider"], List[Literal["credential_provider"]]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -150,8 +152,10 @@ class ResourcesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Resource:
-        """
-        Returns details of a specific Resource by ID
+        """Returns details of a specific Resource by ID.
+
+        Pass
+        `expand[]=credential_provider` to include its credential provider.
 
         Args:
           extra_headers: Send extra headers
@@ -169,7 +173,11 @@ class ResourcesResource(SyncAPIResource):
         return self._get(
             path_template("/zones/{zone_id}/resources/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"expand": expand}, resource_retrieve_params.ResourceRetrieveParams),
             ),
             cast_to=Resource,
         )
@@ -270,7 +278,10 @@ class ResourcesResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
-        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        expand: Union[
+            Literal["total_count", "credential_provider"], List[Literal["total_count", "credential_provider"]]
+        ]
+        | Omit = omit,
         filter_dependency_of_application_id_ne: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
@@ -295,11 +306,12 @@ class ResourcesResource(SyncAPIResource):
 
         Use cursor
         pagination via `after`/`before`, and `expand[]=total_count` to include the
-        matching row count. Filter by exact identifier via `filter[identifier]`. Filter
-        by trait via `filter[traits]` (repeated params are OR'd) or
-        `filter[traits][all]` (contains-all). The scalar `identifier` query parameter is
-        a backward-compatible alias for `filter[identifier]`: exact match on a single
-        value, folded into the same exact-match identifier filter.
+        matching row count. Pass `expand[]=credential_provider` to include each
+        resource's credential provider. Filter by exact identifier via
+        `filter[identifier]`. Filter by trait via `filter[traits]` (repeated params are
+        OR'd) or `filter[traits][all]` (contains-all). The scalar `identifier` query
+        parameter is a backward-compatible alias for `filter[identifier]`: exact match
+        on a single value, folded into the same exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -335,7 +347,7 @@ class ResourcesResource(SyncAPIResource):
           query_name: Search by name (substring match)
 
           sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
-              name, identifier
+              updated_at, name, identifier
 
           extra_headers: Send extra headers
 
@@ -530,6 +542,7 @@ class AsyncResourcesResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        expand: Union[Literal["credential_provider"], List[Literal["credential_provider"]]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -537,8 +550,10 @@ class AsyncResourcesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Resource:
-        """
-        Returns details of a specific Resource by ID
+        """Returns details of a specific Resource by ID.
+
+        Pass
+        `expand[]=credential_provider` to include its credential provider.
 
         Args:
           extra_headers: Send extra headers
@@ -556,7 +571,11 @@ class AsyncResourcesResource(AsyncAPIResource):
         return await self._get(
             path_template("/zones/{zone_id}/resources/{id}", zone_id=zone_id, id=id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"expand": expand}, resource_retrieve_params.ResourceRetrieveParams),
             ),
             cast_to=Resource,
         )
@@ -657,7 +676,10 @@ class AsyncResourcesResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         credential_provider_id: str | Omit = omit,
-        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        expand: Union[
+            Literal["total_count", "credential_provider"], List[Literal["total_count", "credential_provider"]]
+        ]
+        | Omit = omit,
         filter_dependency_of_application_id_ne: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
         filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
@@ -682,11 +704,12 @@ class AsyncResourcesResource(AsyncAPIResource):
 
         Use cursor
         pagination via `after`/`before`, and `expand[]=total_count` to include the
-        matching row count. Filter by exact identifier via `filter[identifier]`. Filter
-        by trait via `filter[traits]` (repeated params are OR'd) or
-        `filter[traits][all]` (contains-all). The scalar `identifier` query parameter is
-        a backward-compatible alias for `filter[identifier]`: exact match on a single
-        value, folded into the same exact-match identifier filter.
+        matching row count. Pass `expand[]=credential_provider` to include each
+        resource's credential provider. Filter by exact identifier via
+        `filter[identifier]`. Filter by trait via `filter[traits]` (repeated params are
+        OR'd) or `filter[traits][all]` (contains-all). The scalar `identifier` query
+        parameter is a backward-compatible alias for `filter[identifier]`: exact match
+        on a single value, folded into the same exact-match identifier filter.
 
         Args:
           after: Cursor for forward pagination
@@ -722,7 +745,7 @@ class AsyncResourcesResource(AsyncAPIResource):
           query_name: Search by name (substring match)
 
           sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at,
-              name, identifier
+              updated_at, name, identifier
 
           extra_headers: Send extra headers
 
