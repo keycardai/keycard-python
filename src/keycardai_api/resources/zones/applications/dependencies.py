@@ -97,7 +97,10 @@ class DependenciesResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         cursor: str | Omit = omit,
-        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        expand: Union[
+            Literal["total_count", "credential_provider"], List[Literal["total_count", "credential_provider"]]
+        ]
+        | Omit = omit,
         limit: int | Omit = omit,
         when_accessing: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -319,7 +322,10 @@ class AsyncDependenciesResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         cursor: str | Omit = omit,
-        expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        expand: Union[
+            Literal["total_count", "credential_provider"], List[Literal["total_count", "credential_provider"]]
+        ]
+        | Omit = omit,
         limit: int | Omit = omit,
         when_accessing: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
