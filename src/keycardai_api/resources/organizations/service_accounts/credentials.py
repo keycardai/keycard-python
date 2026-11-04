@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
 
-from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ...._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -116,7 +116,7 @@ class CredentialsResource(SyncAPIResource):
         *,
         organization_id: str,
         service_account_id: str,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -136,10 +136,11 @@ class CredentialsResource(SyncAPIResource):
           credential_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           extra_headers: Send extra headers
 
@@ -245,8 +246,9 @@ class CredentialsResource(SyncAPIResource):
         organization_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
+        query: SequenceNotStr[str] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -268,12 +270,17 @@ class CredentialsResource(SyncAPIResource):
           before: Cursor for backward pagination
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           limit: Maximum number of credentials to return
+
+          query: Search credentials by name, client ID, or description (case-insensitive
+              substring match). When multiple values are provided, a credential matches if it
+              matches any of them.
 
           extra_headers: Send extra headers
 
@@ -305,6 +312,7 @@ class CredentialsResource(SyncAPIResource):
                         "before": before,
                         "expand": expand,
                         "limit": limit,
+                        "query": query,
                     },
                     credential_list_params.CredentialListParams,
                 ),
@@ -451,7 +459,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         *,
         organization_id: str,
         service_account_id: str,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -471,10 +479,11 @@ class AsyncCredentialsResource(AsyncAPIResource):
           credential_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           extra_headers: Send extra headers
 
@@ -582,8 +591,9 @@ class AsyncCredentialsResource(AsyncAPIResource):
         organization_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         limit: int | Omit = omit,
+        query: SequenceNotStr[str] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -605,12 +615,17 @@ class AsyncCredentialsResource(AsyncAPIResource):
           before: Cursor for backward pagination
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           limit: Maximum number of credentials to return
+
+          query: Search credentials by name, client ID, or description (case-insensitive
+              substring match). When multiple values are provided, a credential matches if it
+              matches any of them.
 
           extra_headers: Send extra headers
 
@@ -642,6 +657,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                         "before": before,
                         "expand": expand,
                         "limit": limit,
+                        "query": query,
                     },
                     credential_list_params.CredentialListParams,
                 ),
