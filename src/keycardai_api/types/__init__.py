@@ -6,6 +6,7 @@ from .zone import Zone as Zone
 from .organization import Organization as Organization
 from .page_info_cursor import PageInfoCursor as PageInfoCursor
 from .zone_list_params import ZoneListParams as ZoneListParams
+from .organization_role import OrganizationRole as OrganizationRole
 from .zone_create_params import ZoneCreateParams as ZoneCreateParams
 from .zone_list_response import ZoneListResponse as ZoneListResponse
 from .zone_update_params import ZoneUpdateParams as ZoneUpdateParams

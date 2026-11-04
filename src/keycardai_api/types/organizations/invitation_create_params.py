@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing_extensions import Required, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
-from .organization_role import OrganizationRole
+from ..organization_role import OrganizationRole
 
 __all__ = ["InvitationCreateParams"]
 

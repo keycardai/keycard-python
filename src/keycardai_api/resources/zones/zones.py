@@ -29,7 +29,7 @@ from .secrets import (
     SecretsResourceWithStreamingResponse,
     AsyncSecretsResourceWithStreamingResponse,
 )
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from .sessions import (
     SessionsResource,
@@ -246,7 +246,6 @@ class ZonesResource(SyncAPIResource):
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
         organization_id: str | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -277,9 +276,6 @@ class ZonesResource(SyncAPIResource):
 
           protocols: Protocol configuration for zone creation
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set. Defaults to true.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -298,7 +294,6 @@ class ZonesResource(SyncAPIResource):
                     "encryption_key": encryption_key,
                     "organization_id": organization_id,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                 },
                 zone_create_params.ZoneCreateParams,
             ),
@@ -357,7 +352,6 @@ class ZonesResource(SyncAPIResource):
         external_sync_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         user_identity_provider_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -390,9 +384,6 @@ class ZonesResource(SyncAPIResource):
 
           protocols: Protocol configuration update for a zone (partial update)
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set
-
           user_identity_provider_id: Provider ID to configure for user login (set to null to unset)
 
           extra_headers: Send extra headers
@@ -416,7 +407,6 @@ class ZonesResource(SyncAPIResource):
                     "external_sync_enabled": external_sync_enabled,
                     "name": name,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                     "user_identity_provider_id": user_identity_provider_id,
                 },
                 zone_update_params.ZoneUpdateParams,
@@ -435,6 +425,7 @@ class ZonesResource(SyncAPIResource):
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
         filter_organization_id: str | Omit = omit,
+        filter_permission_in: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -448,13 +439,21 @@ class ZonesResource(SyncAPIResource):
 
         Cursor pagination
         via `after`/`before` and `limit`, plus `expand[]=total_count`, name substring
-        search, and `sort`, are honored only when the `zone-pagination` flag is enabled;
-        the default response is the unbounded legacy shape.
+        search, and `sort`, are supported on every request. `filter[permission][in]`
+        narrows the list to zones where the caller holds at least one of the given
+        permissions.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_permission_in: Only return zones where the caller is allowed ANY of these permissions
+              (`<resource_type>:<action>`, e.g. `applications:list`). Repeatable (one
+              permission per occurrence); values are unioned, max 20 (a stricter cap than the
+              authorization service's 50). The accessible zone set is resolved by the
+              authorization service and composes with cursor pagination, search, sort and
+              `expand[]=total_count`. Malformed values are a 400.
 
           limit: Maximum number of items to return
 
@@ -480,6 +479,7 @@ class ZonesResource(SyncAPIResource):
                         "cursor": cursor,
                         "expand": expand,
                         "filter_organization_id": filter_organization_id,
+                        "filter_permission_in": filter_permission_in,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -627,7 +627,6 @@ class AsyncZonesResource(AsyncAPIResource):
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
         organization_id: str | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -658,9 +657,6 @@ class AsyncZonesResource(AsyncAPIResource):
 
           protocols: Protocol configuration for zone creation
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set. Defaults to true.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -679,7 +675,6 @@ class AsyncZonesResource(AsyncAPIResource):
                     "encryption_key": encryption_key,
                     "organization_id": organization_id,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                 },
                 zone_create_params.ZoneCreateParams,
             ),
@@ -738,7 +733,6 @@ class AsyncZonesResource(AsyncAPIResource):
         external_sync_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         user_identity_provider_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -771,9 +765,6 @@ class AsyncZonesResource(AsyncAPIResource):
 
           protocols: Protocol configuration update for a zone (partial update)
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set
-
           user_identity_provider_id: Provider ID to configure for user login (set to null to unset)
 
           extra_headers: Send extra headers
@@ -797,7 +788,6 @@ class AsyncZonesResource(AsyncAPIResource):
                     "external_sync_enabled": external_sync_enabled,
                     "name": name,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                     "user_identity_provider_id": user_identity_provider_id,
                 },
                 zone_update_params.ZoneUpdateParams,
@@ -816,6 +806,7 @@ class AsyncZonesResource(AsyncAPIResource):
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
         filter_organization_id: str | Omit = omit,
+        filter_permission_in: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -829,13 +820,21 @@ class AsyncZonesResource(AsyncAPIResource):
 
         Cursor pagination
         via `after`/`before` and `limit`, plus `expand[]=total_count`, name substring
-        search, and `sort`, are honored only when the `zone-pagination` flag is enabled;
-        the default response is the unbounded legacy shape.
+        search, and `sort`, are supported on every request. `filter[permission][in]`
+        narrows the list to zones where the caller holds at least one of the given
+        permissions.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_permission_in: Only return zones where the caller is allowed ANY of these permissions
+              (`<resource_type>:<action>`, e.g. `applications:list`). Repeatable (one
+              permission per occurrence); values are unioned, max 20 (a stricter cap than the
+              authorization service's 50). The accessible zone set is resolved by the
+              authorization service and composes with cursor pagination, search, sort and
+              `expand[]=total_count`. Malformed values are a 400.
 
           limit: Maximum number of items to return
 
@@ -861,6 +860,7 @@ class AsyncZonesResource(AsyncAPIResource):
                         "cursor": cursor,
                         "expand": expand,
                         "filter_organization_id": filter_organization_id,
+                        "filter_permission_in": filter_permission_in,
                         "limit": limit,
                         "slug": slug,
                     },

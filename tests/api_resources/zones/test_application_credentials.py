@@ -521,6 +521,7 @@ class TestApplicationCredentials:
         application_credential = client.zones.application_credentials.update(
             id="id",
             zone_id="zoneId",
+            jwks_uri="https://example.com",
             type="public-key",
         )
         assert_matches_type(Credential, application_credential, path=["response"])
@@ -711,8 +712,15 @@ class TestApplicationCredentials:
             application_id="applicationId",
             before="x",
             expand="total_count",
+            filter_owner_type_ne="platform",
+            filter_traits_ne="string",
+            filter_type="token",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_provider_name="x",
             slug="slug",
+            sort="-created_at, -created_at,\r\r \t\n\r-created_at,\n\n\t-created_at,\n\r \rcreated_at,\n\t\t\n\t\ncreated_at,\n  \n\r\r -created_at, \t\n\n -created_at",
         )
         assert_matches_type(ApplicationCredentialListResponse, application_credential, path=["response"])
 
@@ -1308,6 +1316,7 @@ class TestAsyncApplicationCredentials:
         application_credential = await async_client.zones.application_credentials.update(
             id="id",
             zone_id="zoneId",
+            jwks_uri="https://example.com",
             type="public-key",
         )
         assert_matches_type(Credential, application_credential, path=["response"])
@@ -1498,8 +1507,15 @@ class TestAsyncApplicationCredentials:
             application_id="applicationId",
             before="x",
             expand="total_count",
+            filter_owner_type_ne="platform",
+            filter_traits_ne="string",
+            filter_type="token",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_provider_name="x",
             slug="slug",
+            sort="-created_at, -created_at,\r\r \t\n\r-created_at,\n\n\t-created_at,\n\r \rcreated_at,\n\t\t\n\t\ncreated_at,\n  \n\r\r -created_at, \t\n\n -created_at",
         )
         assert_matches_type(ApplicationCredentialListResponse, application_credential, path=["response"])
 
