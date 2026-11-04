@@ -269,11 +269,8 @@ class PoliciesResource(SyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_id: Filter by policy ID. Repeatable; multiple values are OR-ed (e.g.
               `?filter[id]=p1&filter[id]=p2`). Capped at 100 IDs per request — over-cap
@@ -648,11 +645,8 @@ class AsyncPoliciesResource(AsyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_id: Filter by policy ID. Repeatable; multiple values are OR-ed (e.g.
               `?filter[id]=p1&filter[id]=p2`). Capped at 100 IDs per request — over-cap
