@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Union
+from typing import List
 from typing_extensions import Literal
 
 import httpx
@@ -268,14 +268,12 @@ class PolicySetsResource(SyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
         filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -310,9 +308,6 @@ class PolicySetsResource(SyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
-
-          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
-              matches the `expand[]` convention used across the Keycard API.
 
           filter_active: Filter by active binding status. When `true`, returns only policy sets with an
               active binding. When `false`, returns only policy sets without one. Omit to
@@ -367,10 +362,6 @@ class PolicySetsResource(SyncAPIResource):
 
           order: Sort direction. Default is desc (newest first).
 
-          query: Case-insensitive substring search across all searchable fields of the resource.
-              For policies that is `name` and `description`; for policy sets that is `name`.
-              Repeatable; if multiple terms are supplied they are OR-ed.
-
           query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
               supplied they are OR-ed (any matching term returns the row).
 
@@ -410,14 +401,12 @@ class PolicySetsResource(SyncAPIResource):
                         "active": active,
                         "after": after,
                         "before": before,
-                        "expand": expand,
                         "filter_active": filter_active,
                         "filter_owner_type": filter_owner_type,
                         "filter_scope_type": filter_scope_type,
                         "filter_target_type": filter_target_type,
                         "limit": limit,
                         "order": order,
-                        "query": query,
                         "query_name": query_name,
                         "sort": sort,
                     },
@@ -709,14 +698,12 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
         filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -751,9 +738,6 @@ class AsyncPolicySetsResource(AsyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
-
-          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
-              matches the `expand[]` convention used across the Keycard API.
 
           filter_active: Filter by active binding status. When `true`, returns only policy sets with an
               active binding. When `false`, returns only policy sets without one. Omit to
@@ -808,10 +792,6 @@ class AsyncPolicySetsResource(AsyncAPIResource):
 
           order: Sort direction. Default is desc (newest first).
 
-          query: Case-insensitive substring search across all searchable fields of the resource.
-              For policies that is `name` and `description`; for policy sets that is `name`.
-              Repeatable; if multiple terms are supplied they are OR-ed.
-
           query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
               supplied they are OR-ed (any matching term returns the row).
 
@@ -851,14 +831,12 @@ class AsyncPolicySetsResource(AsyncAPIResource):
                         "active": active,
                         "after": after,
                         "before": before,
-                        "expand": expand,
                         "filter_active": filter_active,
                         "filter_owner_type": filter_owner_type,
                         "filter_scope_type": filter_scope_type,
                         "filter_target_type": filter_target_type,
                         "limit": limit,
                         "order": order,
-                        "query": query,
                         "query_name": query_name,
                         "sort": sort,
                     },

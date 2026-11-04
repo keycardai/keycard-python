@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Union
+from typing import List
 from typing_extensions import Literal
 
 import httpx
@@ -231,12 +231,10 @@ class PoliciesResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_id: SequenceNotStr[str] | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_description: SequenceNotStr[str] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -269,9 +267,6 @@ class PoliciesResource(SyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
-              matches the `expand[]` convention used across the Keycard API.
-
           filter_id: Filter by policy ID. Repeatable; multiple values are OR-ed (e.g.
               `?filter[id]=p1&filter[id]=p2`). Capped at 100 IDs per request — over-cap
               returns 400.
@@ -302,10 +297,6 @@ class PoliciesResource(SyncAPIResource):
           limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
-
-          query: Case-insensitive substring search across all searchable fields of the resource.
-              For policies that is `name` and `description`; for policy sets that is `name`.
-              Repeatable; if multiple terms are supplied they are OR-ed.
 
           query_description: Case-insensitive substring search on `description` (policies only). Repeatable;
               if multiple terms are supplied they are OR-ed.
@@ -345,12 +336,10 @@ class PoliciesResource(SyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "expand": expand,
                         "filter_id": filter_id,
                         "filter_owner_type": filter_owner_type,
                         "limit": limit,
                         "order": order,
-                        "query": query,
                         "query_description": query_description,
                         "query_name": query_name,
                         "sort": sort,
@@ -607,12 +596,10 @@ class AsyncPoliciesResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_id: SequenceNotStr[str] | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_description: SequenceNotStr[str] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -645,9 +632,6 @@ class AsyncPoliciesResource(AsyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
-              matches the `expand[]` convention used across the Keycard API.
-
           filter_id: Filter by policy ID. Repeatable; multiple values are OR-ed (e.g.
               `?filter[id]=p1&filter[id]=p2`). Capped at 100 IDs per request — over-cap
               returns 400.
@@ -678,10 +662,6 @@ class AsyncPoliciesResource(AsyncAPIResource):
           limit: Maximum number of items to return per page.
 
           order: Sort direction. Default is desc (newest first).
-
-          query: Case-insensitive substring search across all searchable fields of the resource.
-              For policies that is `name` and `description`; for policy sets that is `name`.
-              Repeatable; if multiple terms are supplied they are OR-ed.
 
           query_description: Case-insensitive substring search on `description` (policies only). Repeatable;
               if multiple terms are supplied they are OR-ed.
@@ -721,12 +701,10 @@ class AsyncPoliciesResource(AsyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "expand": expand,
                         "filter_id": filter_id,
                         "filter_owner_type": filter_owner_type,
                         "limit": limit,
                         "order": order,
-                        "query": query,
                         "query_description": query_description,
                         "query_name": query_name,
                         "sort": sort,

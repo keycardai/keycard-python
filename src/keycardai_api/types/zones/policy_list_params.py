@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from typing import List, Union
 from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
@@ -22,14 +21,6 @@ class PolicyListParams(TypedDict, total=False):
     """Cursor for backward pagination.
 
     Returned in `Pagination.before_cursor`. Mutually exclusive with `after`.
-    """
-
-    expand: Annotated[
-        Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]], PropertyInfo(alias="expand[]")
-    ]
-    """Opt-in to additional response fields (`total_count`, `user`).
-
-    Repeatable; matches the `expand[]` convention used across the Keycard API.
     """
 
     filter_id: Annotated[SequenceNotStr[str], PropertyInfo(alias="filter[id]")]
@@ -71,13 +62,6 @@ class PolicyListParams(TypedDict, total=False):
 
     order: Literal["asc", "desc"]
     """Sort direction. Default is desc (newest first)."""
-
-    query: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="query[]")]
-    """Case-insensitive substring search across all searchable fields of the resource.
-
-    For policies that is `name` and `description`; for policy sets that is `name`.
-    Repeatable; if multiple terms are supplied they are OR-ed.
-    """
 
     query_description: Annotated[SequenceNotStr[str], PropertyInfo(alias="query[description]")]
     """Case-insensitive substring search on `description` (policies only).
