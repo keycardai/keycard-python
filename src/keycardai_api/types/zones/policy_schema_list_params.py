@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import List, Union
 from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
@@ -20,6 +21,14 @@ class PolicySchemaListParams(TypedDict, total=False):
     """Cursor for backward pagination.
 
     Returned in `Pagination.before_cursor`. Mutually exclusive with `after`.
+    """
+
+    expand: Annotated[
+        Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]], PropertyInfo(alias="expand[]")
+    ]
+    """Opt-in to additional response fields (`total_count`, `user`).
+
+    Repeatable; matches the `expand[]` convention used across the Keycard API.
     """
 
     filter_default: Annotated[bool, PropertyInfo(alias="filter[default]")]

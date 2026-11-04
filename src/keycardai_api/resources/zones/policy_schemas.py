@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -123,6 +124,7 @@ class PolicySchemasResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_default: bool | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         is_default: bool | Omit = omit,
@@ -148,6 +150,9 @@ class PolicySchemasResource(SyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
+
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_default: Filter schemas by default status. When `true`, returns only the zone's default
               schema. When `false`, returns only non-default schemas. Omit to return all
@@ -201,6 +206,7 @@ class PolicySchemasResource(SyncAPIResource):
                     {
                         "after": after,
                         "before": before,
+                        "expand": expand,
                         "filter_default": filter_default,
                         "format": format,
                         "is_default": is_default,
@@ -365,6 +371,7 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_default: bool | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         is_default: bool | Omit = omit,
@@ -390,6 +397,9 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
+
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_default: Filter schemas by default status. When `true`, returns only the zone's default
               schema. When `false`, returns only non-default schemas. Omit to return all
@@ -443,6 +453,7 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
                     {
                         "after": after,
                         "before": before,
+                        "expand": expand,
                         "filter_default": filter_default,
                         "format": format,
                         "is_default": is_default,

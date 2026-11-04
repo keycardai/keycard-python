@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Union, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -117,7 +117,7 @@ class VersionsResource(SyncAPIResource):
         *,
         zone_id: str,
         policy_id: str,
-        expand: List[Literal["user"]] | Omit = omit,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -192,6 +192,7 @@ class VersionsResource(SyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
@@ -215,6 +216,9 @@ class VersionsResource(SyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
+
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           format: Narrows which Cedar representation the response includes. When omitted, both
               `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only
@@ -259,6 +263,7 @@ class VersionsResource(SyncAPIResource):
                     {
                         "after": after,
                         "before": before,
+                        "expand": expand,
                         "format": format,
                         "limit": limit,
                         "order": order,
@@ -418,7 +423,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         *,
         zone_id: str,
         policy_id: str,
-        expand: List[Literal["user"]] | Omit = omit,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
@@ -493,6 +498,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
@@ -516,6 +522,9 @@ class AsyncVersionsResource(AsyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
+
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           format: Narrows which Cedar representation the response includes. When omitted, both
               `cedar_json` and `cedar_raw` are populated. Pass `json` to receive only
@@ -560,6 +569,7 @@ class AsyncVersionsResource(AsyncAPIResource):
                     {
                         "after": after,
                         "before": before,
+                        "expand": expand,
                         "format": format,
                         "limit": limit,
                         "order": order,
