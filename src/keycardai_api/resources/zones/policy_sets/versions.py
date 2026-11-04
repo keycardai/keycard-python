@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -243,7 +243,7 @@ class VersionsResource(SyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -384,7 +384,7 @@ class VersionsResource(SyncAPIResource):
         policy_set_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
@@ -685,7 +685,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         zone_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -826,7 +826,7 @@ class AsyncVersionsResource(AsyncAPIResource):
         policy_set_id: str,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,

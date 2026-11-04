@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -124,7 +124,7 @@ class PolicySchemasResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_default: bool | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         is_default: bool | Omit = omit,
@@ -371,7 +371,7 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_default: bool | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         is_default: bool | Omit = omit,
