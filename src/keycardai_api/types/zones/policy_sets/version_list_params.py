@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from typing import List
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from ...._utils import PropertyInfo
@@ -23,14 +22,6 @@ class VersionListParams(TypedDict, total=False):
     """Cursor for backward pagination.
 
     Returned in `Pagination.before_cursor`. Mutually exclusive with `after`.
-    """
-
-    expand: List[Literal["total_count"]]
-    """**Deprecated.** Use `expand[]` instead.
-
-    Opt-in to additional response fields. Still honored for backward compatibility;
-    supplying both `expand` and `expand[]` with disagreeing values returns
-    `400 Bad Request`.
     """
 
     limit: int

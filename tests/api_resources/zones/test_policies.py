@@ -93,6 +93,7 @@ class TestPolicies:
         policy = client.zones.policies.retrieve(
             policy_id="policy_id",
             zone_id="zone_id",
+            expand=["user"],
             x_api_version="X-API-Version",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -222,12 +223,10 @@ class TestPolicies:
             zone_id="zone_id",
             after="x",
             before="x",
-            expand=["total_count"],
             filter_id=["string"],
             filter_owner_type=["string"],
             limit=1,
             order="asc",
-            query=["x"],
             query_description=["x"],
             query_name=["x"],
             sort="created_at",
@@ -412,6 +411,7 @@ class TestAsyncPolicies:
         policy = await async_client.zones.policies.retrieve(
             policy_id="policy_id",
             zone_id="zone_id",
+            expand=["user"],
             x_api_version="X-API-Version",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -541,12 +541,10 @@ class TestAsyncPolicies:
             zone_id="zone_id",
             after="x",
             before="x",
-            expand=["total_count"],
             filter_id=["string"],
             filter_owner_type=["string"],
             limit=1,
             order="asc",
-            query=["x"],
             query_description=["x"],
             query_name=["x"],
             sort="created_at",

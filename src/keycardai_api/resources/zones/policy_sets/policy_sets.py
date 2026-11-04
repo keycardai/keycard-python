@@ -25,7 +25,12 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.zones import policy_set_list_params, policy_set_create_params, policy_set_update_params
+from ....types.zones import (
+    policy_set_list_params,
+    policy_set_create_params,
+    policy_set_update_params,
+    policy_set_retrieve_params,
+)
 from ...._base_client import make_request_options
 from ....types.zones.policy_set_with_binding import PolicySetWithBinding
 from ....types.zones.policy_set_list_response import PolicySetListResponse
@@ -65,6 +70,7 @@ class PolicySetsResource(SyncAPIResource):
         zone_id: str,
         *,
         name: str,
+        manifest: policy_set_create_params.Manifest | Omit = omit,
         scope_type: Literal["zone"] | Omit = omit,
         target_type: Literal["zone", "user"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -76,12 +82,33 @@ class PolicySetsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Creates an unbound policy set.
+        """Creates a policy set.
 
-        Use updatePolicySet to bind after creating a
-        version.
+        Supply `manifest` to create its first version and any new
+        policies in the same transaction. A failure rolls back every write. Without
+        `manifest`, creates a versionless set and preserves the existing response body.
+
+        Entries use manifest apply semantics with no predecessor: bare pins use each
+        policy's latest version; supplied content reuses that version when its SHA and
+        schema match. Omitted `schema_version` uses the zone default. This operation
+        supports neither `dry_run` nor `If-Match`. Set `manifest.activate: true` to bind
+        v1 to the zone's active slot in the same transaction. Requires
+        `target_type: zone` (the default) and the `activate` permission on
+        `policy_set_bindings`, in addition to the route's `create` permission. Omitted
+        or false leaves the set unbound.
+
+        The `ETag` header is the set revision, as on `GET`. The manifest digest is
+        `policy_set_version.manifest_sha` and the `ETag` of `GET .../manifest`.
+
+        Domain error codes: `policy_set_name_conflict`, `policy_name_conflict`,
+        `policy_not_found`, `policy_archived`, `policy_version_not_found`,
+        `version_archived`, `schema_version_mismatch`, `manifest_duplicate_policy`,
+        `missing_cedar_content`, `invalid_cedar`, `schema_version_unsupported`,
+        `activate_requires_zone_target`.
 
         Args:
+          manifest: Content for the first version, created atomically with the set.
+
           scope_type: **Deprecated.** Use `target_type` instead. Only `zone` is accepted; use
               `target_type` for `user` targets.
 
@@ -115,6 +142,7 @@ class PolicySetsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "name": name,
+                    "manifest": manifest,
                     "scope_type": scope_type,
                     "target_type": target_type,
                 },
@@ -131,6 +159,7 @@ class PolicySetsResource(SyncAPIResource):
         policy_set_id: str,
         *,
         zone_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -144,6 +173,8 @@ class PolicySetsResource(SyncAPIResource):
         Returns the policy set with current binding information.
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -168,7 +199,11 @@ class PolicySetsResource(SyncAPIResource):
         return self._get(
             path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"expand": expand}, policy_set_retrieve_params.PolicySetRetrieveParams),
             ),
             cast_to=PolicySetWithBinding,
         )
@@ -189,10 +224,10 @@ class PolicySetsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Update metadata or manage binding.
+        """Update policy set metadata (name).
 
-        Set active=true to bind, active=false to
-        unbind.
+        Binding is managed by activating a policy set
+        version or via the policy-bindings API.
 
         Args:
           extra_headers: Send extra headers
@@ -233,14 +268,12 @@ class PolicySetsResource(SyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
         filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: SequenceNotStr[str] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -275,12 +308,6 @@ class PolicySetsResource(SyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
-
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
 
           filter_active: Filter by active binding status. When `true`, returns only policy sets with an
               active binding. When `false`, returns only policy sets without one. Omit to
@@ -335,10 +362,6 @@ class PolicySetsResource(SyncAPIResource):
 
           order: Sort direction. Default is desc (newest first).
 
-          query: Case-insensitive substring search across all searchable fields of the resource.
-              For policies that is `name` and `description`; for policy sets that is `name`.
-              Repeatable; if multiple terms are supplied they are OR-ed.
-
           query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
               supplied they are OR-ed (any matching term returns the row).
 
@@ -378,14 +401,12 @@ class PolicySetsResource(SyncAPIResource):
                         "active": active,
                         "after": after,
                         "before": before,
-                        "expand": expand,
                         "filter_active": filter_active,
                         "filter_owner_type": filter_owner_type,
                         "filter_scope_type": filter_scope_type,
                         "filter_target_type": filter_target_type,
                         "limit": limit,
                         "order": order,
-                        "query": query,
                         "query_name": query_name,
                         "sort": sort,
                     },
@@ -477,6 +498,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         zone_id: str,
         *,
         name: str,
+        manifest: policy_set_create_params.Manifest | Omit = omit,
         scope_type: Literal["zone"] | Omit = omit,
         target_type: Literal["zone", "user"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -488,12 +510,33 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Creates an unbound policy set.
+        """Creates a policy set.
 
-        Use updatePolicySet to bind after creating a
-        version.
+        Supply `manifest` to create its first version and any new
+        policies in the same transaction. A failure rolls back every write. Without
+        `manifest`, creates a versionless set and preserves the existing response body.
+
+        Entries use manifest apply semantics with no predecessor: bare pins use each
+        policy's latest version; supplied content reuses that version when its SHA and
+        schema match. Omitted `schema_version` uses the zone default. This operation
+        supports neither `dry_run` nor `If-Match`. Set `manifest.activate: true` to bind
+        v1 to the zone's active slot in the same transaction. Requires
+        `target_type: zone` (the default) and the `activate` permission on
+        `policy_set_bindings`, in addition to the route's `create` permission. Omitted
+        or false leaves the set unbound.
+
+        The `ETag` header is the set revision, as on `GET`. The manifest digest is
+        `policy_set_version.manifest_sha` and the `ETag` of `GET .../manifest`.
+
+        Domain error codes: `policy_set_name_conflict`, `policy_name_conflict`,
+        `policy_not_found`, `policy_archived`, `policy_version_not_found`,
+        `version_archived`, `schema_version_mismatch`, `manifest_duplicate_policy`,
+        `missing_cedar_content`, `invalid_cedar`, `schema_version_unsupported`,
+        `activate_requires_zone_target`.
 
         Args:
+          manifest: Content for the first version, created atomically with the set.
+
           scope_type: **Deprecated.** Use `target_type` instead. Only `zone` is accepted; use
               `target_type` for `user` targets.
 
@@ -527,6 +570,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "name": name,
+                    "manifest": manifest,
                     "scope_type": scope_type,
                     "target_type": target_type,
                 },
@@ -543,6 +587,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         policy_set_id: str,
         *,
         zone_id: str,
+        expand: List[Literal["user"]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -556,6 +601,8 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         Returns the policy set with current binding information.
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -580,7 +627,13 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         return await self._get(
             path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"expand": expand}, policy_set_retrieve_params.PolicySetRetrieveParams
+                ),
             ),
             cast_to=PolicySetWithBinding,
         )
@@ -601,10 +654,10 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Update metadata or manage binding.
+        """Update policy set metadata (name).
 
-        Set active=true to bind, active=false to
-        unbind.
+        Binding is managed by activating a policy set
+        version or via the policy-bindings API.
 
         Args:
           extra_headers: Send extra headers
@@ -645,14 +698,12 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
         filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: SequenceNotStr[str] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -687,12 +738,6 @@ class AsyncPolicySetsResource(AsyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
-
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
 
           filter_active: Filter by active binding status. When `true`, returns only policy sets with an
               active binding. When `false`, returns only policy sets without one. Omit to
@@ -747,10 +792,6 @@ class AsyncPolicySetsResource(AsyncAPIResource):
 
           order: Sort direction. Default is desc (newest first).
 
-          query: Case-insensitive substring search across all searchable fields of the resource.
-              For policies that is `name` and `description`; for policy sets that is `name`.
-              Repeatable; if multiple terms are supplied they are OR-ed.
-
           query_name: Case-insensitive substring search on `name`. Repeatable; if multiple terms are
               supplied they are OR-ed (any matching term returns the row).
 
@@ -790,14 +831,12 @@ class AsyncPolicySetsResource(AsyncAPIResource):
                         "active": active,
                         "after": after,
                         "before": before,
-                        "expand": expand,
                         "filter_active": filter_active,
                         "filter_owner_type": filter_owner_type,
                         "filter_scope_type": filter_scope_type,
                         "filter_target_type": filter_target_type,
                         "limit": limit,
                         "order": order,
-                        "query": query,
                         "query_name": query_name,
                         "sort": sort,
                     },

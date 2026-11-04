@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from typing import List
 from typing_extensions import Literal
 
 import httpx
@@ -124,7 +123,6 @@ class PolicySchemasResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
         filter_default: bool | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         is_default: bool | Omit = omit,
@@ -150,12 +148,6 @@ class PolicySchemasResource(SyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
-
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
 
           filter_default: Filter schemas by default status. When `true`, returns only the zone's default
               schema. When `false`, returns only non-default schemas. Omit to return all
@@ -209,7 +201,6 @@ class PolicySchemasResource(SyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "expand": expand,
                         "filter_default": filter_default,
                         "format": format,
                         "is_default": is_default,
@@ -374,7 +365,6 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
         filter_default: bool | Omit = omit,
         format: Literal["cedar", "json"] | Omit = omit,
         is_default: bool | Omit = omit,
@@ -400,12 +390,6 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
 
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
-
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
 
           filter_default: Filter schemas by default status. When `true`, returns only the zone's default
               schema. When `false`, returns only non-default schemas. Omit to return all
@@ -459,7 +443,6 @@ class AsyncPolicySchemasResource(AsyncAPIResource):
                     {
                         "after": after,
                         "before": before,
-                        "expand": expand,
                         "filter_default": filter_default,
                         "format": format,
                         "is_default": is_default,

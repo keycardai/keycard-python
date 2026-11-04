@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from typing import List
 from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
@@ -33,14 +32,6 @@ class PolicySetListParams(TypedDict, total=False):
     """Cursor for backward pagination.
 
     Returned in `Pagination.before_cursor`. Mutually exclusive with `after`.
-    """
-
-    expand: List[Literal["total_count"]]
-    """**Deprecated.** Use `expand[]` instead.
-
-    Opt-in to additional response fields. Still honored for backward compatibility;
-    supplying both `expand` and `expand[]` with disagreeing values returns
-    `400 Bad Request`.
     """
 
     filter_active: Annotated[bool, PropertyInfo(alias="filter[active]")]
@@ -110,13 +101,6 @@ class PolicySetListParams(TypedDict, total=False):
 
     order: Literal["asc", "desc"]
     """Sort direction. Default is desc (newest first)."""
-
-    query: SequenceNotStr[str]
-    """Case-insensitive substring search across all searchable fields of the resource.
-
-    For policies that is `name` and `description`; for policy sets that is `name`.
-    Repeatable; if multiple terms are supplied they are OR-ed.
-    """
 
     query_name: Annotated[SequenceNotStr[str], PropertyInfo(alias="query[name]")]
     """Case-insensitive substring search on `name`.
