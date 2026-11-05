@@ -28,7 +28,8 @@ class IamApplicationCredentialCreateToken(TypedDict, total=False):
     """Subject identifier for the token.
 
     When omitted, any token from the provider is accepted without checking
-    application-specific claims.
+    application-specific claims. A version 2 credential must set subject or
+    authentication_condition.
     """
 
 

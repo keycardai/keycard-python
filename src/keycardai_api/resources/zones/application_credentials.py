@@ -7,7 +7,7 @@ from typing_extensions import Literal, overload
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, required_args, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -75,7 +75,8 @@ class ApplicationCredentialsResource(SyncAPIResource):
           provider_id: ID of the provider issuing tokens this credential verifies
 
           subject: Subject identifier for the token. When omitted, any token from the provider is
-              accepted without checking application-specific claims.
+              accepted without checking application-specific claims. A version 2 credential
+              must set subject or authentication_condition.
 
           extra_headers: Send extra headers
 
@@ -328,8 +329,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           subject: Subject identifier for the token. Set to null to unset, which allows any token
@@ -359,8 +362,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           extra_headers: Send extra headers
@@ -379,6 +384,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        jwks_uri: str | Omit = omit,
         type: Literal["public-key"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -387,10 +393,14 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
+          jwks_uri: JWKS URI to retrieve public keys from
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -416,8 +426,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           identifier: URL of the credential (must be a valid URL)
@@ -447,8 +459,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           identifier: Identifier for public credential, also used as OAuth 2.0 client ID
@@ -476,6 +490,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
         | Literal["url"]
         | Literal["public"]
         | Omit = omit,
+        jwks_uri: str | Omit = omit,
         identifier: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -496,6 +511,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
                     {
                         "subject": subject,
                         "type": type,
+                        "jwks_uri": jwks_uri,
                         "identifier": identifier,
                     },
                     application_credential_update_params.ApplicationCredentialUpdateParams,
@@ -514,10 +530,20 @@ class ApplicationCredentialsResource(SyncAPIResource):
         after: str | Omit = omit,
         application_id: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_owner_type_ne: Literal["platform", "customer"] | Omit = omit,
+        filter_traits_ne: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_type: Union[
+            Literal["token", "password", "public-key", "url", "public"],
+            List[Literal["token", "password", "public-key", "url", "public"]],
+        ]
+        | Omit = omit,
         limit: int | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_provider_name: Union[str, SequenceNotStr[str]] | Omit = omit,
         slug: str | Omit = omit,
+        sort: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -525,15 +551,43 @@ class ApplicationCredentialsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ApplicationCredentialListResponse:
-        """
-        Returns a list of application credentials in the specified zone
+        """Returns a paginated list of application credentials in the specified zone.
+
+        Use
+        cursor pagination via `after`/`before`. Use `expand[]=total_count` to include
+        the matching row count. Search via `query[identifier]`, `query[provider_name]`,
+        or `query[]` (identifier or provider name); all are substring matches, OR'd
+        across repeated values.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
 
+          filter_owner_type_ne: Exclude credentials whose owning application has this owner type, e.g.
+              `filter[owner_type][ne]=platform` returns only credentials of org-created
+              applications.
+
+          filter_traits_ne: Exclude credentials whose owning application has this trait. A single value
+              excludes that trait; repeated params accumulate into a not-in set (max 100), so
+              a credential matches when its application's traits contain none of them. Each
+              value is a single literal trait; a comma is a literal character in the value,
+              not a delimiter.
+
+          filter_type: Filter by credential type; repeated values are OR'd, e.g.
+              `filter[type]=token&filter[type]=password`.
+
           limit: Maximum number of items to return
+
+          query: Search across credential identifier and linked provider name (substring match,
+              OR'd across repeated values)
+
+          query_identifier: Search by credential identifier (substring match, OR'd across repeated values)
+
+          query_provider_name: Search by the linked provider's name (substring match, OR'd across repeated
+              values)
+
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at
 
           extra_headers: Send extra headers
 
@@ -557,10 +611,16 @@ class ApplicationCredentialsResource(SyncAPIResource):
                         "after": after,
                         "application_id": application_id,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
+                        "filter_owner_type_ne": filter_owner_type_ne,
+                        "filter_traits_ne": filter_traits_ne,
+                        "filter_type": filter_type,
                         "limit": limit,
+                        "query": query,
+                        "query_identifier": query_identifier,
+                        "query_provider_name": query_provider_name,
                         "slug": slug,
+                        "sort": sort,
                     },
                     application_credential_list_params.ApplicationCredentialListParams,
                 ),
@@ -651,7 +711,8 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
           provider_id: ID of the provider issuing tokens this credential verifies
 
           subject: Subject identifier for the token. When omitted, any token from the provider is
-              accepted without checking application-specific claims.
+              accepted without checking application-specific claims. A version 2 credential
+              must set subject or authentication_condition.
 
           extra_headers: Send extra headers
 
@@ -904,8 +965,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           subject: Subject identifier for the token. Set to null to unset, which allows any token
@@ -935,8 +998,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           extra_headers: Send extra headers
@@ -955,6 +1020,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        jwks_uri: str | Omit = omit,
         type: Literal["public-key"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -963,10 +1029,14 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
+          jwks_uri: JWKS URI to retrieve public keys from
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -992,8 +1062,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           identifier: URL of the credential (must be a valid URL)
@@ -1023,8 +1095,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Credential:
-        """
-        Updates an application credential's configuration
+        """Updates an application credential's configuration.
+
+        A field the credential type
+        cannot change returns 400, unless it matches the stored value.
 
         Args:
           identifier: Identifier for public credential, also used as OAuth 2.0 client ID
@@ -1052,6 +1126,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         | Literal["url"]
         | Literal["public"]
         | Omit = omit,
+        jwks_uri: str | Omit = omit,
         identifier: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1072,6 +1147,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                     {
                         "subject": subject,
                         "type": type,
+                        "jwks_uri": jwks_uri,
                         "identifier": identifier,
                     },
                     application_credential_update_params.ApplicationCredentialUpdateParams,
@@ -1090,10 +1166,20 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         after: str | Omit = omit,
         application_id: str | Omit = omit,
         before: str | Omit = omit,
-        cursor: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_owner_type_ne: Literal["platform", "customer"] | Omit = omit,
+        filter_traits_ne: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_type: Union[
+            Literal["token", "password", "public-key", "url", "public"],
+            List[Literal["token", "password", "public-key", "url", "public"]],
+        ]
+        | Omit = omit,
         limit: int | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
+        query_provider_name: Union[str, SequenceNotStr[str]] | Omit = omit,
         slug: str | Omit = omit,
+        sort: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1101,15 +1187,43 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ApplicationCredentialListResponse:
-        """
-        Returns a list of application credentials in the specified zone
+        """Returns a paginated list of application credentials in the specified zone.
+
+        Use
+        cursor pagination via `after`/`before`. Use `expand[]=total_count` to include
+        the matching row count. Search via `query[identifier]`, `query[provider_name]`,
+        or `query[]` (identifier or provider name); all are substring matches, OR'd
+        across repeated values.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
 
+          filter_owner_type_ne: Exclude credentials whose owning application has this owner type, e.g.
+              `filter[owner_type][ne]=platform` returns only credentials of org-created
+              applications.
+
+          filter_traits_ne: Exclude credentials whose owning application has this trait. A single value
+              excludes that trait; repeated params accumulate into a not-in set (max 100), so
+              a credential matches when its application's traits contain none of them. Each
+              value is a single literal trait; a comma is a literal character in the value,
+              not a delimiter.
+
+          filter_type: Filter by credential type; repeated values are OR'd, e.g.
+              `filter[type]=token&filter[type]=password`.
+
           limit: Maximum number of items to return
+
+          query: Search across credential identifier and linked provider name (substring match,
+              OR'd across repeated values)
+
+          query_identifier: Search by credential identifier (substring match, OR'd across repeated values)
+
+          query_provider_name: Search by the linked provider's name (substring match, OR'd across repeated
+              values)
+
+          sort: Comma-separated sort fields. Prefix with - for descending. Allowed: created_at
 
           extra_headers: Send extra headers
 
@@ -1133,10 +1247,16 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                         "after": after,
                         "application_id": application_id,
                         "before": before,
-                        "cursor": cursor,
                         "expand": expand,
+                        "filter_owner_type_ne": filter_owner_type_ne,
+                        "filter_traits_ne": filter_traits_ne,
+                        "filter_type": filter_type,
                         "limit": limit,
+                        "query": query,
+                        "query_identifier": query_identifier,
+                        "query_provider_name": query_provider_name,
                         "slug": slug,
+                        "sort": sort,
                     },
                     application_credential_list_params.ApplicationCredentialListParams,
                 ),
