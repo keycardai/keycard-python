@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
@@ -23,12 +23,12 @@ class PolicySchemaListParams(TypedDict, total=False):
     Returned in `Pagination.before_cursor`. Mutually exclusive with `after`.
     """
 
-    expand: List[Literal["total_count", "user"]]
-    """**Deprecated.** Use `expand[]` instead.
+    expand: Annotated[
+        Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]], PropertyInfo(alias="expand[]")
+    ]
+    """Opt-in to additional response fields (`total_count`, `user`).
 
-    Opt-in to additional response fields. Still honored for backward compatibility;
-    supplying both `expand` and `expand[]` with disagreeing values returns
-    `400 Bad Request`.
+    Repeatable; matches the `expand[]` convention used across the Keycard API.
     """
 
     filter_default: Annotated[bool, PropertyInfo(alias="filter[default]")]

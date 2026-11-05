@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -159,7 +159,7 @@ class PolicySetsResource(SyncAPIResource):
         policy_set_id: str,
         *,
         zone_id: str,
-        expand: List[Literal["user"]] | Omit = omit,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -268,14 +268,14 @@ class PolicySetsResource(SyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
         filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: SequenceNotStr[str] | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -311,11 +311,8 @@ class PolicySetsResource(SyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_active: Filter by active binding status. When `true`, returns only policy sets with an
               active binding. When `false`, returns only policy sets without one. Omit to
@@ -601,7 +598,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         policy_set_id: str,
         *,
         zone_id: str,
-        expand: List[Literal["user"]] | Omit = omit,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -712,14 +709,14 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count", "user"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
         filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: SequenceNotStr[str] | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -755,11 +752,8 @@ class AsyncPolicySetsResource(AsyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_active: Filter by active binding status. When `true`, returns only policy sets with an
               active binding. When `false`, returns only policy sets without one. Omit to
