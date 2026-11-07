@@ -39,6 +39,9 @@ class IamPasswordCredentialUpdate(TypedDict, total=False):
 class IamPublicKeyCredentialUpdate(TypedDict, total=False):
     zone_id: Required[Annotated[str, PropertyInfo(alias="zoneId")]]
 
+    jwks_uri: str
+    """JWKS URI to retrieve public keys from"""
+
     type: Literal["public-key"]
 
 
