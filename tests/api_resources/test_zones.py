@@ -50,7 +50,6 @@ class TestZones:
                     "pkce_required": True,
                 }
             },
-            requires_invitation=True,
         )
         assert_matches_type(Zone, zone, path=["response"])
 
@@ -151,6 +150,7 @@ class TestZones:
                 "arn": "x",
                 "type": "aws",
             },
+            external_sync_enabled=True,
             name="x",
             protocols={
                 "oauth2": {
@@ -162,7 +162,6 @@ class TestZones:
                     "pkce_required": True,
                 }
             },
-            requires_invitation=True,
             user_identity_provider_id="user_identity_provider_id",
         )
         assert_matches_type(Zone, zone, path=["response"])
@@ -216,6 +215,7 @@ class TestZones:
             cursor="cursor",
             expand="total_count",
             filter_organization_id="filter[organization_id]",
+            filter_permission_in="string",
             limit=1,
             slug="slug",
         )
@@ -321,7 +321,6 @@ class TestAsyncZones:
                     "pkce_required": True,
                 }
             },
-            requires_invitation=True,
         )
         assert_matches_type(Zone, zone, path=["response"])
 
@@ -422,6 +421,7 @@ class TestAsyncZones:
                 "arn": "x",
                 "type": "aws",
             },
+            external_sync_enabled=True,
             name="x",
             protocols={
                 "oauth2": {
@@ -433,7 +433,6 @@ class TestAsyncZones:
                     "pkce_required": True,
                 }
             },
-            requires_invitation=True,
             user_identity_provider_id="user_identity_provider_id",
         )
         assert_matches_type(Zone, zone, path=["response"])
@@ -487,6 +486,7 @@ class TestAsyncZones:
             cursor="cursor",
             expand="total_count",
             filter_organization_id="filter[organization_id]",
+            filter_permission_in="string",
             limit=1,
             slug="slug",
         )
