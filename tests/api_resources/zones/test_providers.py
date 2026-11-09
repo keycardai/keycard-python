@@ -50,6 +50,16 @@ class TestProviders:
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "issuer": "https://example.com",
+                    "jwks": {
+                        "keys": [
+                            {
+                                "kid": "x",
+                                "kty": "kty",
+                                "alg": "alg",
+                                "use": "use",
+                            }
+                        ]
+                    },
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
                     "scope_parameter": "scope_parameter",
@@ -189,6 +199,16 @@ class TestProviders:
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "issuer": "https://example.com",
+                    "jwks": {
+                        "keys": [
+                            {
+                                "kid": "x",
+                                "kty": "kty",
+                                "alg": "alg",
+                                "use": "use",
+                            }
+                        ]
+                    },
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
                     "scope_parameter": "scope_parameter",
@@ -455,6 +475,16 @@ class TestAsyncProviders:
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "issuer": "https://example.com",
+                    "jwks": {
+                        "keys": [
+                            {
+                                "kid": "x",
+                                "kty": "kty",
+                                "alg": "alg",
+                                "use": "use",
+                            }
+                        ]
+                    },
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
                     "scope_parameter": "scope_parameter",
@@ -594,6 +624,16 @@ class TestAsyncProviders:
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "issuer": "https://example.com",
+                    "jwks": {
+                        "keys": [
+                            {
+                                "kid": "x",
+                                "kty": "kty",
+                                "alg": "alg",
+                                "use": "use",
+                            }
+                        ]
+                    },
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
                     "scope_parameter": "scope_parameter",
