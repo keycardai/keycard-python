@@ -11,6 +11,7 @@ from tests.utils import assert_matches_type
 from keycardai_api import KeycardAPI, AsyncKeycardAPI
 from keycardai_api.types.zones import (
     Provider,
+    ValidationResult,
     ProviderListResponse,
 )
 
@@ -49,6 +50,16 @@ class TestProviders:
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "issuer": "https://example.com",
+                    "jwks": {
+                        "keys": [
+                            {
+                                "kid": "x",
+                                "kty": "kty",
+                                "alg": "alg",
+                                "use": "use",
+                            }
+                        ]
+                    },
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
                     "scope_parameter": "scope_parameter",
@@ -58,7 +69,6 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
-                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -189,6 +199,16 @@ class TestProviders:
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "issuer": "https://example.com",
+                    "jwks": {
+                        "keys": [
+                            {
+                                "kid": "x",
+                                "kty": "kty",
+                                "alg": "alg",
+                                "use": "use",
+                            }
+                        ]
+                    },
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
                     "scope_parameter": "scope_parameter",
@@ -198,7 +218,6 @@ class TestProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
-                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -269,9 +288,16 @@ class TestProviders:
             cursor="cursor",
             expand="total_count",
             filter_id="string",
+            filter_identifier="string",
+            filter_slug="string",
+            filter_type="external",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
             type="external",
         )
         assert_matches_type(ProviderListResponse, provider, path=["response"])
@@ -362,6 +388,58 @@ class TestProviders:
                 zone_id="zoneId",
             )
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_validate(self, client: KeycardAPI) -> None:
+        provider = client.zones.providers.validate(
+            id="id",
+            zone_id="zoneId",
+        )
+        assert_matches_type(ValidationResult, provider, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_validate(self, client: KeycardAPI) -> None:
+        response = client.zones.providers.with_raw_response.validate(
+            id="id",
+            zone_id="zoneId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        provider = response.parse()
+        assert_matches_type(ValidationResult, provider, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_validate(self, client: KeycardAPI) -> None:
+        with client.zones.providers.with_streaming_response.validate(
+            id="id",
+            zone_id="zoneId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            provider = response.parse()
+            assert_matches_type(ValidationResult, provider, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_validate(self, client: KeycardAPI) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
+            client.zones.providers.with_raw_response.validate(
+                id="id",
+                zone_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            client.zones.providers.with_raw_response.validate(
+                id="",
+                zone_id="zoneId",
+            )
+
 
 class TestAsyncProviders:
     parametrize = pytest.mark.parametrize(
@@ -397,6 +475,16 @@ class TestAsyncProviders:
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "issuer": "https://example.com",
+                    "jwks": {
+                        "keys": [
+                            {
+                                "kid": "x",
+                                "kty": "kty",
+                                "alg": "alg",
+                                "use": "use",
+                            }
+                        ]
+                    },
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
                     "scope_parameter": "scope_parameter",
@@ -406,7 +494,6 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
-                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -537,6 +624,16 @@ class TestAsyncProviders:
                     "authorization_resource_parameter": "authorization_resource_parameter",
                     "code_challenge_methods_supported": ["string"],
                     "issuer": "https://example.com",
+                    "jwks": {
+                        "keys": [
+                            {
+                                "kid": "x",
+                                "kty": "kty",
+                                "alg": "alg",
+                                "use": "use",
+                            }
+                        ]
+                    },
                     "jwks_uri": "https://example.com",
                     "registration_endpoint": "https://example.com",
                     "scope_parameter": "scope_parameter",
@@ -546,7 +643,6 @@ class TestAsyncProviders:
                     "token_response_access_token_pointer": "token_response_access_token_pointer",
                 },
                 "openid": {
-                    "external_id_claim": "external_id_claim",
                     "scopes": ["string"],
                     "single_logout_enabled": True,
                     "user_identifier_claim": "user_identifier_claim",
@@ -617,9 +713,16 @@ class TestAsyncProviders:
             cursor="cursor",
             expand="total_count",
             filter_id="string",
+            filter_identifier="string",
+            filter_slug="string",
+            filter_type="external",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
             type="external",
         )
         assert_matches_type(ProviderListResponse, provider, path=["response"])
@@ -706,6 +809,58 @@ class TestAsyncProviders:
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             await async_client.zones.providers.with_raw_response.delete(
+                id="",
+                zone_id="zoneId",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_validate(self, async_client: AsyncKeycardAPI) -> None:
+        provider = await async_client.zones.providers.validate(
+            id="id",
+            zone_id="zoneId",
+        )
+        assert_matches_type(ValidationResult, provider, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_validate(self, async_client: AsyncKeycardAPI) -> None:
+        response = await async_client.zones.providers.with_raw_response.validate(
+            id="id",
+            zone_id="zoneId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        provider = await response.parse()
+        assert_matches_type(ValidationResult, provider, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_validate(self, async_client: AsyncKeycardAPI) -> None:
+        async with async_client.zones.providers.with_streaming_response.validate(
+            id="id",
+            zone_id="zoneId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            provider = await response.parse()
+            assert_matches_type(ValidationResult, provider, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_validate(self, async_client: AsyncKeycardAPI) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
+            await async_client.zones.providers.with_raw_response.validate(
+                id="id",
+                zone_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            await async_client.zones.providers.with_raw_response.validate(
                 id="",
                 zone_id="zoneId",
             )

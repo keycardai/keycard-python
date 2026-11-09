@@ -1,12 +1,22 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
+from typing import TYPE_CHECKING, Dict, List, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
+from pydantic import Field as FieldInfo
+
 from ..._models import BaseModel
 
-__all__ = ["Provider", "Metadata", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
+__all__ = [
+    "Provider",
+    "Metadata",
+    "Protocols",
+    "ProtocolsOauth2",
+    "ProtocolsOauth2Jwks",
+    "ProtocolsOauth2JwksKey",
+    "ProtocolsOpenid",
+]
 
 
 class Metadata(BaseModel):
@@ -14,6 +24,48 @@ class Metadata(BaseModel):
 
     icon_url: Optional[str] = None
     """Icon URL"""
+
+
+class ProtocolsOauth2JwksKey(BaseModel):
+    """A public JSON Web Key (RFC 7517).
+
+    Members beyond those listed, such as n and e, or crv, x and y, are kept as given. Private key material is rejected.
+    """
+
+    kid: str
+    """Key ID, unique within the set."""
+
+    kty: str
+    """Key type: "RSA", or "EC" on P-256, P-384 or P-521."""
+
+    alg: Optional[str] = None
+    """
+    Algorithm the key verifies: RS256 for RSA, ES256, ES384 or ES512 for EC on the
+    matching curve.
+    """
+
+    use: Optional[str] = None
+    """Public key use. Must be "sig" when set."""
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ProtocolsOauth2Jwks(BaseModel):
+    """
+    Inline JSON Web Key Set (RFC 7517) used to verify the provider's tokens instead of fetching jwks_uri or discovery, for issuers Keycard can't reach, such as a local Kubernetes cluster. Mutually exclusive with jwks_uri. Keys stay trusted until removed, so add a rotated key before the issuer signs with it.
+    """
+
+    keys: List[ProtocolsOauth2JwksKey]
 
 
 class ProtocolsOauth2(BaseModel):
@@ -41,6 +93,14 @@ class ProtocolsOauth2(BaseModel):
     """
 
     code_challenge_methods_supported: Optional[List[str]] = None
+
+    jwks: Optional[ProtocolsOauth2Jwks] = None
+    """
+    Inline JSON Web Key Set (RFC 7517) used to verify the provider's tokens instead
+    of fetching jwks_uri or discovery, for issuers Keycard can't reach, such as a
+    local Kubernetes cluster. Mutually exclusive with jwks_uri. Keys stay trusted
+    until removed, so add a rotated key before the issuer signs with it.
+    """
 
     jwks_uri: Optional[str] = None
 
@@ -71,13 +131,6 @@ class ProtocolsOauth2(BaseModel):
 
 class ProtocolsOpenid(BaseModel):
     """OpenID Connect protocol configuration"""
-
-    external_id_claim: Optional[str] = None
-    """
-    Name of the OIDC claim carrying the stable external id used to correlate logins
-    with externally provisioned (SCIM) users. Defaults to "sub". Set to "oid" for
-    Entra, whose pairwise "sub" differs from the SCIM externalId.
-    """
 
     scopes: Optional[List[str]] = None
     """Additional OIDC scopes to request from this provider during authentication (e.g.
