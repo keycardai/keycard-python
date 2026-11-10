@@ -102,6 +102,16 @@ class TestResources:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_retrieve_with_all_params(self, client: KeycardAPI) -> None:
+        resource = client.zones.resources.retrieve(
+            id="id",
+            zone_id="zoneId",
+            expand="credential_provider",
+        )
+        assert_matches_type(Resource, resource, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_raw_response_retrieve(self, client: KeycardAPI) -> None:
         response = client.zones.resources.with_raw_response.retrieve(
             id="id",
@@ -234,12 +244,19 @@ class TestResources:
             before="x",
             credential_provider_id="credentialProviderId",
             expand="total_count",
+            filter_dependency_of_application_id_ne="string",
+            filter_id="string",
             filter_identifier="string",
             filter_owner_type="platform",
+            filter_slug="string",
             filter_traits="string",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
         )
         assert_matches_type(ResourceListResponse, resource, path=["response"])
 
@@ -417,6 +434,16 @@ class TestAsyncResources:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    async def test_method_retrieve_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
+        resource = await async_client.zones.resources.retrieve(
+            id="id",
+            zone_id="zoneId",
+            expand="credential_provider",
+        )
+        assert_matches_type(Resource, resource, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncKeycardAPI) -> None:
         response = await async_client.zones.resources.with_raw_response.retrieve(
             id="id",
@@ -549,12 +576,19 @@ class TestAsyncResources:
             before="x",
             credential_provider_id="credentialProviderId",
             expand="total_count",
+            filter_dependency_of_application_id_ne="string",
+            filter_id="string",
             filter_identifier="string",
             filter_owner_type="platform",
+            filter_slug="string",
             filter_traits="string",
             identifier="identifier",
             limit=1,
+            query="x",
+            query_identifier="x",
+            query_name="x",
             slug="slug",
+            sort="-identifier,\t\r\r \tidentifier,\n\t\ncreated_at",
         )
         assert_matches_type(ResourceListResponse, resource, path=["response"])
 
