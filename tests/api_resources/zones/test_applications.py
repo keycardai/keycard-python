@@ -245,6 +245,8 @@ class TestApplications:
             expand="total_count",
             filter_id="string",
             filter_identifier="string",
+            filter_owner_type="platform",
+            filter_owner_type_ne="platform",
             filter_slug="string",
             identifier="identifier",
             limit=1,
@@ -359,7 +361,6 @@ class TestApplications:
             zone_id="zoneId",
             after="x",
             before="x",
-            cursor="cursor",
             expand="total_count",
             limit=1,
         )
@@ -703,6 +704,8 @@ class TestAsyncApplications:
             expand="total_count",
             filter_id="string",
             filter_identifier="string",
+            filter_owner_type="platform",
+            filter_owner_type_ne="platform",
             filter_slug="string",
             identifier="identifier",
             limit=1,
@@ -817,7 +820,6 @@ class TestAsyncApplications:
             zone_id="zoneId",
             after="x",
             before="x",
-            cursor="cursor",
             expand="total_count",
             limit=1,
         )
