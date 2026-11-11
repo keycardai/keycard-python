@@ -21,7 +21,10 @@ class ApplicationListResourcesParams(TypedDict, total=False):
 
     cursor: str
 
-    expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
+    expand: Annotated[
+        Union[Literal["total_count", "credential_provider"], List[Literal["total_count", "credential_provider"]]],
+        PropertyInfo(alias="expand[]"),
+    ]
 
     limit: int
     """Maximum number of items to return"""
