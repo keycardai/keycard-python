@@ -207,6 +207,7 @@ class SecretsResource(SyncAPIResource):
         zone_id: str,
         *,
         entity_id: str | Omit = omit,
+        owner_type: Literal["platform", "customer"] | Omit = omit,
         type: Literal["token", "password"] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -222,7 +223,12 @@ class SecretsResource(SyncAPIResource):
 
           entity_id: The entity to list all secrets for
 
-          type: The type of secrets to list
+          owner_type: Filter by secret ownership. Services can select either owner type; other
+              principals can select only customer-owned secrets. If omitted, services see both
+              owner types and other principals see customer-owned secrets. Requires type=token
+              or type=password when specified.
+
+          type: The type of secrets to list. Required when owner_type is specified.
 
           extra_headers: Send extra headers
 
@@ -245,6 +251,7 @@ class SecretsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "entity_id": entity_id,
+                        "owner_type": owner_type,
                         "type": type,
                     },
                     secret_list_params.SecretListParams,
@@ -475,6 +482,7 @@ class AsyncSecretsResource(AsyncAPIResource):
         zone_id: str,
         *,
         entity_id: str | Omit = omit,
+        owner_type: Literal["platform", "customer"] | Omit = omit,
         type: Literal["token", "password"] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -490,7 +498,12 @@ class AsyncSecretsResource(AsyncAPIResource):
 
           entity_id: The entity to list all secrets for
 
-          type: The type of secrets to list
+          owner_type: Filter by secret ownership. Services can select either owner type; other
+              principals can select only customer-owned secrets. If omitted, services see both
+              owner types and other principals see customer-owned secrets. Requires type=token
+              or type=password when specified.
+
+          type: The type of secrets to list. Required when owner_type is specified.
 
           extra_headers: Send extra headers
 
@@ -513,6 +526,7 @@ class AsyncSecretsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "entity_id": entity_id,
+                        "owner_type": owner_type,
                         "type": type,
                     },
                     secret_list_params.SecretListParams,
