@@ -92,7 +92,7 @@ class TestServiceAccounts:
         service_account = client.organizations.service_accounts.retrieve(
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
             organization_id="x",
-            expand=["permissions"],
+            expand="permissions",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ServiceAccount, service_account, path=["response"])
@@ -219,8 +219,9 @@ class TestServiceAccounts:
             organization_id="x",
             after="x",
             before="x",
-            expand=["permissions"],
+            expand="permissions",
             limit=1,
+            query=["x"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ServiceAccountListResponse, service_account, path=["response"])
@@ -399,7 +400,7 @@ class TestAsyncServiceAccounts:
         service_account = await async_client.organizations.service_accounts.retrieve(
             service_account_id="ab3def8hij2klm9opq5rst7uvw",
             organization_id="x",
-            expand=["permissions"],
+            expand="permissions",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ServiceAccount, service_account, path=["response"])
@@ -526,8 +527,9 @@ class TestAsyncServiceAccounts:
             organization_id="x",
             after="x",
             before="x",
-            expand=["permissions"],
+            expand="permissions",
             limit=1,
+            query=["x"],
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ServiceAccountListResponse, service_account, path=["response"])
