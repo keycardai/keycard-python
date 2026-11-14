@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from .zone import Zone as Zone
-from .role_scope import RoleScope as RoleScope
 from .organization import Organization as Organization
 from .page_info_cursor import PageInfoCursor as PageInfoCursor
 from .zone_list_params import ZoneListParams as ZoneListParams
@@ -17,14 +16,7 @@ from .invitation_accept_response import InvitationAcceptResponse as InvitationAc
 from .organization_create_params import OrganizationCreateParams as OrganizationCreateParams
 from .organization_list_response import OrganizationListResponse as OrganizationListResponse
 from .organization_update_params import OrganizationUpdateParams as OrganizationUpdateParams
-from .policy_bundle_update_params import PolicyBundleUpdateParams as PolicyBundleUpdateParams
 from .invitation_retrieve_response import InvitationRetrieveResponse as InvitationRetrieveResponse
 from .organization_retrieve_params import OrganizationRetrieveParams as OrganizationRetrieveParams
 from .encryption_key_aws_kms_config import EncryptionKeyAwsKmsConfig as EncryptionKeyAwsKmsConfig
-from .organization_list_roles_params import OrganizationListRolesParams as OrganizationListRolesParams
-from .organization_list_roles_response import OrganizationListRolesResponse as OrganizationListRolesResponse
 from .encryption_key_aws_kms_config_param import EncryptionKeyAwsKmsConfigParam as EncryptionKeyAwsKmsConfigParam
-from .organization_list_identities_params import OrganizationListIdentitiesParams as OrganizationListIdentitiesParams
-from .organization_list_identities_response import (
-    OrganizationListIdentitiesResponse as OrganizationListIdentitiesResponse,
-)

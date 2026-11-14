@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -20,6 +20,7 @@ from ..._response import (
 from ..._base_client import make_request_options
 from ...types.organizations import OrganizationRole, invitation_list_params, invitation_create_params
 from ...types.organizations.invitation import Invitation
+from ...types.organizations.invitation_status import InvitationStatus
 from ...types.organizations.organization_role import OrganizationRole
 from ...types.organizations.invitation_list_response import InvitationListResponse
 
@@ -102,7 +103,8 @@ class InvitationsResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
+        filter_status: List[InvitationStatus] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -123,10 +125,16 @@ class InvitationsResource(SyncAPIResource):
           before: Cursor for backward pagination
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
+
+          filter_status: Return only invitations with these statuses. Repeat the parameter to match any
+              of several statuses (`?filter[status]=pending&filter[status]=accepted`). Expired
+              invitations are never listed, so `expired` matches nothing. When absent, no
+              status filter is applied.
 
           limit: Maximum number of invitations to return
 
@@ -153,6 +161,7 @@ class InvitationsResource(SyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_status": filter_status,
                         "limit": limit,
                     },
                     invitation_list_params.InvitationListParams,
@@ -285,7 +294,8 @@ class AsyncInvitationsResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
+        filter_status: List[InvitationStatus] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -306,10 +316,16 @@ class AsyncInvitationsResource(AsyncAPIResource):
           before: Cursor for backward pagination
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
+
+          filter_status: Return only invitations with these statuses. Repeat the parameter to match any
+              of several statuses (`?filter[status]=pending&filter[status]=accepted`). Expired
+              invitations are never listed, so `expired` matches nothing. When absent, no
+              status filter is applied.
 
           limit: Maximum number of invitations to return
 
@@ -336,6 +352,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_status": filter_status,
                         "limit": limit,
                     },
                     invitation_list_params.InvitationListParams,
