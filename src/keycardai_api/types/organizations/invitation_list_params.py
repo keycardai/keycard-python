@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
+from .invitation_status import InvitationStatus
 
 __all__ = ["InvitationListParams"]
 
@@ -17,14 +18,26 @@ class InvitationListParams(TypedDict, total=False):
     before: str
     """Cursor for backward pagination"""
 
-    expand: List[Literal["permissions", "total_count"]]
+    expand: Annotated[
+        Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]],
+        PropertyInfo(alias="expand[]"),
+    ]
     """Fields to expand in the response.
 
     Supports "permissions" to include the permissions field with the caller's
-    permissions for the resource. For list organization identities only,
-    "total_count" populates pagination.total_count with the number of identities
-    matching the same filters as the list (excluding cursor and limit). Other
-    operations ignore expand values they do not use.
+    permissions for the resource. For the service account and service account
+    credential list operations, "total_count" populates pagination.total_count with
+    the number of items matching the same filters as the list (excluding cursor and
+    limit). Other operations ignore expand values they do not use.
+    """
+
+    filter_status: Annotated[List[InvitationStatus], PropertyInfo(alias="filter[status]")]
+    """Return only invitations with these statuses.
+
+    Repeat the parameter to match any of several statuses
+    (`?filter[status]=pending&filter[status]=accepted`). Expired invitations are
+    never listed, so `expired` matches nothing. When absent, no status filter is
+    applied.
     """
 
     limit: int
