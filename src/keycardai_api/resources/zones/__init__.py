@@ -1,5 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .roles import (
+    RolesResource,
+    AsyncRolesResource,
+    RolesResourceWithRawResponse,
+    AsyncRolesResourceWithRawResponse,
+    RolesResourceWithStreamingResponse,
+    AsyncRolesResourceWithStreamingResponse,
+)
 from .users import (
     UsersResource,
     AsyncUsersResource,
@@ -16,13 +24,13 @@ from .zones import (
     ZonesResourceWithStreamingResponse,
     AsyncZonesResourceWithStreamingResponse,
 )
-from .members import (
-    MembersResource,
-    AsyncMembersResource,
-    MembersResourceWithRawResponse,
-    AsyncMembersResourceWithRawResponse,
-    MembersResourceWithStreamingResponse,
-    AsyncMembersResourceWithStreamingResponse,
+from .groups import (
+    GroupsResource,
+    AsyncGroupsResource,
+    GroupsResourceWithRawResponse,
+    AsyncGroupsResourceWithRawResponse,
+    GroupsResourceWithStreamingResponse,
+    AsyncGroupsResourceWithStreamingResponse,
 )
 from .secrets import (
     SecretsResource,
@@ -162,12 +170,18 @@ __all__ = [
     "AsyncUsersResourceWithRawResponse",
     "UsersResourceWithStreamingResponse",
     "AsyncUsersResourceWithStreamingResponse",
-    "MembersResource",
-    "AsyncMembersResource",
-    "MembersResourceWithRawResponse",
-    "AsyncMembersResourceWithRawResponse",
-    "MembersResourceWithStreamingResponse",
-    "AsyncMembersResourceWithStreamingResponse",
+    "RolesResource",
+    "AsyncRolesResource",
+    "RolesResourceWithRawResponse",
+    "AsyncRolesResourceWithRawResponse",
+    "RolesResourceWithStreamingResponse",
+    "AsyncRolesResourceWithStreamingResponse",
+    "GroupsResource",
+    "AsyncGroupsResource",
+    "GroupsResourceWithRawResponse",
+    "AsyncGroupsResourceWithRawResponse",
+    "GroupsResourceWithStreamingResponse",
+    "AsyncGroupsResourceWithStreamingResponse",
     "SecretsResource",
     "AsyncSecretsResource",
     "SecretsResourceWithRawResponse",
