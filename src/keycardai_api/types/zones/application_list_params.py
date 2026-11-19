@@ -29,6 +29,15 @@ class ApplicationListParams(TypedDict, total=False):
     filter_identifier: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[identifier]")]
     """Filter by exact application identifier"""
 
+    filter_owner_type: Annotated[Literal["platform", "customer"], PropertyInfo(alias="filter[owner_type]")]
+    """Filter by owner type: `platform` (Keycard-managed) or `customer` (org-created)."""
+
+    filter_owner_type_ne: Annotated[Literal["platform", "customer"], PropertyInfo(alias="filter[owner_type][ne]")]
+    """Exclude applications with this owner type, e.g.
+
+    `filter[owner_type][ne]=platform` returns only org-created applications.
+    """
+
     filter_slug: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[slug]")]
     """Filter by exact application slug"""
 
