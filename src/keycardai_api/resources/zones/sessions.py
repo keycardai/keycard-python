@@ -217,7 +217,9 @@ class SessionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Permanently deletes a session, effectively logging out the user or application
+        Revokes a session and all its child sessions, including nested descendants,
+        without deleting their stored records. Revoking an already-revoked session is
+        idempotent and returns 204 No Content.
 
         Args:
           extra_headers: Send extra headers
@@ -434,7 +436,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Permanently deletes a session, effectively logging out the user or application
+        Revokes a session and all its child sessions, including nested descendants,
+        without deleting their stored records. Revoking an already-revoked session is
+        idempotent and returns 204 No Content.
 
         Args:
           extra_headers: Send extra headers
