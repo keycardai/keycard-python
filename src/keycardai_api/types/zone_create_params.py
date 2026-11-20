@@ -44,12 +44,6 @@ class ZoneCreateParams(TypedDict, total=False):
     protocols: Protocols
     """Protocol configuration for zone creation"""
 
-    requires_invitation: bool
-    """
-    Whether the zone requires an invitation for email/password registration, only
-    applies when user_identity_provider_id is not set. Defaults to true.
-    """
-
 
 class ProtocolsOauth2Cimd(TypedDict, total=False):
     """Client ID Metadata Document auto-provisioning configuration"""
