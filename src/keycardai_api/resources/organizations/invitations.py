@@ -247,6 +247,12 @@ class InvitationsResource(SyncAPIResource):
         per-recipient send cap is reached. If the email service rejects the send, the
         earlier link keeps working.
 
+        After the organization access check succeeds, the service sends
+        `X-Should-Retry: false` on 409, 429, and 5xx responses to tell SDKs to surface
+        the error without retrying. A retry can rotate the token and invalidate an email
+        link, including when the first send succeeded but the response did not reach the
+        caller.
+
         Args:
           organization_id: Organization ID or label identifier
 
@@ -497,6 +503,12 @@ class AsyncInvitationsResource(AsyncAPIResource):
         invitation limit. Returns 429 with a `Retry-After` header when that limit or the
         per-recipient send cap is reached. If the email service rejects the send, the
         earlier link keeps working.
+
+        After the organization access check succeeds, the service sends
+        `X-Should-Retry: false` on 409, 429, and 5xx responses to tell SDKs to surface
+        the error without retrying. A retry can rotate the token and invalidate an email
+        link, including when the first send succeeded but the response did not reach the
+        caller.
 
         Args:
           organization_id: Organization ID or label identifier
