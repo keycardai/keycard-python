@@ -2,13 +2,21 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Dict, Iterable, Optional
 from typing_extensions import Required, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
 
-__all__ = ["ProviderUpdateParams", "Metadata", "Protocols", "ProtocolsOauth2", "ProtocolsOpenid"]
+__all__ = [
+    "ProviderUpdateParams",
+    "Metadata",
+    "Protocols",
+    "ProtocolsOauth2",
+    "ProtocolsOauth2Jwks",
+    "ProtocolsOauth2JwksKey",
+    "ProtocolsOpenid",
+]
 
 
 class ProviderUpdateParams(TypedDict, total=False):
@@ -55,6 +63,40 @@ class Metadata(TypedDict, total=False):
     """Icon URL (set to null to unset)"""
 
 
+class ProtocolsOauth2JwksKey(  # type: ignore[call-arg]
+    TypedDict,
+    total=False,
+    extra_items=object,  # pyright: ignore[reportGeneralTypeIssues]
+):
+    """A public JSON Web Key (RFC 7517).
+
+    Members beyond those listed, such as n and e, or crv, x and y, are kept as given. Private key material is rejected.
+    """
+
+    kid: Required[str]
+    """Key ID, unique within the set."""
+
+    kty: Required[str]
+    """Key type: "RSA", or "EC" on P-256, P-384 or P-521."""
+
+    alg: str
+    """
+    Algorithm the key verifies: RS256 for RSA, ES256, ES384 or ES512 for EC on the
+    matching curve.
+    """
+
+    use: str
+    """Public key use. Must be "sig" when set."""
+
+
+class ProtocolsOauth2Jwks(TypedDict, total=False):
+    """
+    Inline JSON Web Key Set (RFC 7517) used to verify the provider's tokens instead of fetching jwks_uri or discovery, for issuers Keycard can't reach, such as a local Kubernetes cluster. Mutually exclusive with jwks_uri. Keys stay trusted until removed, so add a rotated key before the issuer signs with it.
+    """
+
+    keys: Required[Iterable[ProtocolsOauth2JwksKey]]
+
+
 class ProtocolsOauth2(TypedDict, total=False):
     """OAuth 2.0 protocol configuration. Set to null to remove all OAuth2 config."""
 
@@ -83,6 +125,14 @@ class ProtocolsOauth2(TypedDict, total=False):
 
     issuer: str
     """OIDC issuer URL for discovery and token validation. Cannot be set to null."""
+
+    jwks: Optional[ProtocolsOauth2Jwks]
+    """
+    Inline JSON Web Key Set (RFC 7517) used to verify the provider's tokens instead
+    of fetching jwks_uri or discovery, for issuers Keycard can't reach, such as a
+    local Kubernetes cluster. Mutually exclusive with jwks_uri. Keys stay trusted
+    until removed, so add a rotated key before the issuer signs with it.
+    """
 
     jwks_uri: Optional[str]
 

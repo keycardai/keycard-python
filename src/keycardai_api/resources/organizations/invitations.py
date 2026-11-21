@@ -61,8 +61,13 @@ class InvitationsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Invitation:
-        """
-        Create an invitation to join an organization
+        """Create an invitation to join an organization and queue the invitation email.
+
+        The
+        invitation is created even when the email service cannot be reached; the
+        response's `delivery_status` is `failed` then, no email was queued, and the
+        caller must resend. A 4xx from the email service, such as a recipient send cap,
+        creates no invitation.
 
         Args:
           organization_id: Organization ID or label identifier
@@ -252,8 +257,13 @@ class AsyncInvitationsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Invitation:
-        """
-        Create an invitation to join an organization
+        """Create an invitation to join an organization and queue the invitation email.
+
+        The
+        invitation is created even when the email service cannot be reached; the
+        response's `delivery_status` is `failed` then, no email was queued, and the
+        caller must resend. A 4xx from the email service, such as a recipient send cap,
+        creates no invitation.
 
         Args:
           organization_id: Organization ID or label identifier
