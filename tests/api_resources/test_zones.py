@@ -42,12 +42,14 @@ class TestZones:
             organization_id="organization_id",
             protocols={
                 "oauth2": {
+                    "background_session_max_lifetime_seconds": 3600,
                     "cimd": {
                         "allowed_client_ids": ["string"],
                         "enabled": True,
                     },
                     "dcr_enabled": True,
                     "pkce_required": True,
+                    "session_max_lifetime_seconds": 3600,
                 }
             },
         )
@@ -154,12 +156,14 @@ class TestZones:
             name="x",
             protocols={
                 "oauth2": {
+                    "background_session_max_lifetime_seconds": 3600,
                     "cimd": {
                         "allowed_client_ids": ["string"],
                         "enabled": True,
                     },
                     "dcr_enabled": True,
                     "pkce_required": True,
+                    "session_max_lifetime_seconds": 3600,
                 }
             },
             user_identity_provider_id="user_identity_provider_id",
@@ -313,12 +317,14 @@ class TestAsyncZones:
             organization_id="organization_id",
             protocols={
                 "oauth2": {
+                    "background_session_max_lifetime_seconds": 3600,
                     "cimd": {
                         "allowed_client_ids": ["string"],
                         "enabled": True,
                     },
                     "dcr_enabled": True,
                     "pkce_required": True,
+                    "session_max_lifetime_seconds": 3600,
                 }
             },
         )
@@ -425,12 +431,14 @@ class TestAsyncZones:
             name="x",
             protocols={
                 "oauth2": {
+                    "background_session_max_lifetime_seconds": 3600,
                     "cimd": {
                         "allowed_client_ids": ["string"],
                         "enabled": True,
                     },
                     "dcr_enabled": True,
                     "pkce_required": True,
+                    "session_max_lifetime_seconds": 3600,
                 }
             },
             user_identity_provider_id="user_identity_provider_id",

@@ -424,6 +424,7 @@ Methods:
 - <code title="post /organizations/{organization_id}/invitations">client.organizations.invitations.<a href="./src/keycardai_api/resources/organizations/invitations.py">create</a>(organization_id, \*\*<a href="src/keycardai_api/types/organizations/invitation_create_params.py">params</a>) -> <a href="./src/keycardai_api/types/organizations/invitation.py">Invitation</a></code>
 - <code title="get /organizations/{organization_id}/invitations">client.organizations.invitations.<a href="./src/keycardai_api/resources/organizations/invitations.py">list</a>(organization_id, \*\*<a href="src/keycardai_api/types/organizations/invitation_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/organizations/invitation_list_response.py">InvitationListResponse</a></code>
 - <code title="delete /organizations/{organization_id}/invitations/{invitation_id}">client.organizations.invitations.<a href="./src/keycardai_api/resources/organizations/invitations.py">delete</a>(invitation_id, \*, organization_id) -> None</code>
+- <code title="post /organizations/{organization_id}/invitations/{invitation_id}/resend">client.organizations.invitations.<a href="./src/keycardai_api/resources/organizations/invitations.py">resend</a>(invitation_id, \*, organization_id) -> <a href="./src/keycardai_api/types/organizations/invitation.py">Invitation</a></code>
 
 ## ServiceAccounts
 
