@@ -35,6 +35,12 @@ class ZoneUpdateParams(TypedDict, total=False):
     customer-managed key and revert to default)
     """
 
+    external_sync_enabled: bool
+    """Turns external directory sync (SCIM) on or off for this zone.
+
+    Required to create external sync tokens.
+    """
+
     name: str
     """Human-readable name.
 
@@ -43,12 +49,6 @@ class ZoneUpdateParams(TypedDict, total=False):
 
     protocols: Optional[Protocols]
     """Protocol configuration update for a zone (partial update)"""
-
-    requires_invitation: bool
-    """
-    Whether the zone requires an invitation for email/password registration, only
-    applies when user_identity_provider_id is not set
-    """
 
     user_identity_provider_id: Optional[str]
     """Provider ID to configure for user login (set to null to unset)"""
@@ -84,6 +84,9 @@ class ProtocolsOauth2Cimd(TypedDict, total=False):
 class ProtocolsOauth2(TypedDict, total=False):
     """OAuth 2.0 protocol configuration update for a zone (partial update)"""
 
+    background_session_max_lifetime_seconds: Optional[int]
+    """Maximum age of a background session. Range: 1 hour to 1 year. Default: 90 days."""
+
     cimd: ProtocolsOauth2Cimd
     """Client ID Metadata Document auto-provisioning configuration"""
 
@@ -92,6 +95,9 @@ class ProtocolsOauth2(TypedDict, total=False):
 
     pkce_required: Optional[bool]
     """Whether PKCE is required for authorization code flows"""
+
+    session_max_lifetime_seconds: Optional[int]
+    """Maximum age of a regular session. Range: 1 hour to 1 year. Default: 90 days."""
 
 
 class Protocols(TypedDict, total=False):
