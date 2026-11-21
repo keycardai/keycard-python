@@ -52,6 +52,9 @@ class IamUserSessionType(BaseModel):
     authenticated_at: Optional[datetime] = None
     """Date when the session was authenticated"""
 
+    background: Optional[bool] = None
+    """Whether the session has background access"""
+
     created_at: Optional[datetime] = None
     """Entity creation timestamp"""
 
@@ -147,6 +150,9 @@ class IamApplicationSessionType(BaseModel):
 
     authenticated_at: Optional[datetime] = None
     """Date when the session was authenticated"""
+
+    background: Optional[bool] = None
+    """Whether the session has background access"""
 
     created_at: Optional[datetime] = None
     """Entity creation timestamp"""
