@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
@@ -20,6 +20,7 @@ from ..._response import (
 from ..._base_client import make_request_options
 from ...types.organizations import OrganizationRole, invitation_list_params, invitation_create_params
 from ...types.organizations.invitation import Invitation
+from ...types.organizations.invitation_status import InvitationStatus
 from ...types.organizations.organization_role import OrganizationRole
 from ...types.organizations.invitation_list_response import InvitationListResponse
 
@@ -60,8 +61,13 @@ class InvitationsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Invitation:
-        """
-        Create an invitation to join an organization
+        """Create an invitation to join an organization and queue the invitation email.
+
+        The
+        invitation is created even when the email service cannot be reached; the
+        response's `delivery_status` is `failed` then, no email was queued, and the
+        caller must resend. A 4xx from the email service, such as a recipient send cap,
+        creates no invitation.
 
         Args:
           organization_id: Organization ID or label identifier
@@ -102,7 +108,8 @@ class InvitationsResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
+        filter_status: List[InvitationStatus] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -123,10 +130,16 @@ class InvitationsResource(SyncAPIResource):
           before: Cursor for backward pagination
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
+
+          filter_status: Return only invitations with these statuses. Repeat the parameter to match any
+              of several statuses (`?filter[status]=pending&filter[status]=accepted`). Expired
+              invitations are never listed, so `expired` matches nothing. When absent, no
+              status filter is applied.
 
           limit: Maximum number of invitations to return
 
@@ -153,6 +166,7 @@ class InvitationsResource(SyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_status": filter_status,
                         "limit": limit,
                     },
                     invitation_list_params.InvitationListParams,
@@ -208,6 +222,61 @@ class InvitationsResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def resend(
+        self,
+        invitation_id: str,
+        *,
+        organization_id: str,
+        x_client_request_id: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Invitation:
+        """Send a fresh invitation email.
+
+        The invitation token is rotated, so the link in
+        any earlier email stops working. Returns 409 while a previous email is still
+        queued or sending, or when the invitation is no longer pending. Returns 200 even
+        when the email service cannot be reached: the token has already been rotated,
+        the response's `delivery_status` is `failed`, no new email was queued, and the
+        caller must resend. Each resend counts toward the organization's daily
+        invitation limit. Returns 429 with a `Retry-After` header when that limit or the
+        per-recipient send cap is reached. If the email service rejects the send, the
+        earlier link keeps working.
+
+        Args:
+          organization_id: Organization ID or label identifier
+
+          invitation_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        if not invitation_id:
+            raise ValueError(f"Expected a non-empty value for `invitation_id` but received {invitation_id!r}")
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        return self._post(
+            path_template(
+                "/organizations/{organization_id}/invitations/{invitation_id}/resend",
+                organization_id=organization_id,
+                invitation_id=invitation_id,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Invitation,
+        )
+
 
 class AsyncInvitationsResource(AsyncAPIResource):
     @cached_property
@@ -243,8 +312,13 @@ class AsyncInvitationsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Invitation:
-        """
-        Create an invitation to join an organization
+        """Create an invitation to join an organization and queue the invitation email.
+
+        The
+        invitation is created even when the email service cannot be reached; the
+        response's `delivery_status` is `failed` then, no email was queued, and the
+        caller must resend. A 4xx from the email service, such as a recipient send cap,
+        creates no invitation.
 
         Args:
           organization_id: Organization ID or label identifier
@@ -285,7 +359,8 @@ class AsyncInvitationsResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
+        filter_status: List[InvitationStatus] | Omit = omit,
         limit: int | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -306,10 +381,16 @@ class AsyncInvitationsResource(AsyncAPIResource):
           before: Cursor for backward pagination
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
+
+          filter_status: Return only invitations with these statuses. Repeat the parameter to match any
+              of several statuses (`?filter[status]=pending&filter[status]=accepted`). Expired
+              invitations are never listed, so `expired` matches nothing. When absent, no
+              status filter is applied.
 
           limit: Maximum number of invitations to return
 
@@ -336,6 +417,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_status": filter_status,
                         "limit": limit,
                     },
                     invitation_list_params.InvitationListParams,
@@ -391,6 +473,61 @@ class AsyncInvitationsResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def resend(
+        self,
+        invitation_id: str,
+        *,
+        organization_id: str,
+        x_client_request_id: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Invitation:
+        """Send a fresh invitation email.
+
+        The invitation token is rotated, so the link in
+        any earlier email stops working. Returns 409 while a previous email is still
+        queued or sending, or when the invitation is no longer pending. Returns 200 even
+        when the email service cannot be reached: the token has already been rotated,
+        the response's `delivery_status` is `failed`, no new email was queued, and the
+        caller must resend. Each resend counts toward the organization's daily
+        invitation limit. Returns 429 with a `Retry-After` header when that limit or the
+        per-recipient send cap is reached. If the email service rejects the send, the
+        earlier link keeps working.
+
+        Args:
+          organization_id: Organization ID or label identifier
+
+          invitation_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        if not invitation_id:
+            raise ValueError(f"Expected a non-empty value for `invitation_id` but received {invitation_id!r}")
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        return await self._post(
+            path_template(
+                "/organizations/{organization_id}/invitations/{invitation_id}/resend",
+                organization_id=organization_id,
+                invitation_id=invitation_id,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Invitation,
+        )
+
 
 class InvitationsResourceWithRawResponse:
     def __init__(self, invitations: InvitationsResource) -> None:
@@ -404,6 +541,9 @@ class InvitationsResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             invitations.delete,
+        )
+        self.resend = to_raw_response_wrapper(
+            invitations.resend,
         )
 
 
@@ -420,6 +560,9 @@ class AsyncInvitationsResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             invitations.delete,
         )
+        self.resend = async_to_raw_response_wrapper(
+            invitations.resend,
+        )
 
 
 class InvitationsResourceWithStreamingResponse:
@@ -435,6 +578,9 @@ class InvitationsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             invitations.delete,
         )
+        self.resend = to_streamed_response_wrapper(
+            invitations.resend,
+        )
 
 
 class AsyncInvitationsResourceWithStreamingResponse:
@@ -449,4 +595,7 @@ class AsyncInvitationsResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             invitations.delete,
+        )
+        self.resend = async_to_streamed_response_wrapper(
+            invitations.resend,
         )
