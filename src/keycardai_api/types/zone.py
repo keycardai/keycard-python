@@ -38,6 +38,9 @@ class ProtocolsOauth2(BaseModel):
     (.well-known/oauth-authorization-server)
     """
 
+    background_session_max_lifetime_seconds: int
+    """Maximum age of a background session."""
+
     cimd: ProtocolsOauth2Cimd
     """Client ID Metadata Document auto-provisioning configuration"""
 
@@ -58,6 +61,9 @@ class ProtocolsOauth2(BaseModel):
 
     registration_endpoint: str
     """OAuth 2.0 Dynamic Client Registration endpoint"""
+
+    session_max_lifetime_seconds: int
+    """Maximum age of a regular session."""
 
     token_endpoint: str
     """OAuth 2.0 token endpoint"""
@@ -94,6 +100,12 @@ class Zone(BaseModel):
 
     created_at: datetime
     """Entity creation timestamp"""
+
+    external_sync_enabled: bool
+    """Whether external directory sync (SCIM) is enabled for this zone.
+
+    Required to create external sync tokens.
+    """
 
     name: str
     """Human-readable name"""
@@ -133,12 +145,6 @@ class Zone(BaseModel):
 
     Only populated when expand[]=permissions query parameter is provided. Keys are
     resource types, values are objects mapping action names to boolean values.
-    """
-
-    requires_invitation: Optional[bool] = None
-    """
-    Whether the zone requires an invitation for email/password registration, only
-    applies when user_identity_provider_id is not set
     """
 
     user_identity_provider_id: Optional[str] = None
