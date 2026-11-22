@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -88,6 +88,8 @@ class UserAgentsResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -96,16 +98,25 @@ class UserAgentsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserAgentListResponse:
-        """Returns a list of user agents in the specified zone.
-
-        User agents represent
-        client software (browsers, desktop apps, CLI tools) registered via OAuth 2.0
-        Dynamic Client Registration.
+        """
+        Returns the user agents in the specified zone, cursor-paginated and ordered by
+        name. User agents represent client software (browsers, desktop apps, CLI tools)
+        registered via OAuth 2.0 Dynamic Client Registration. Pass `filter[id]`
+        (repeatable, max 100) to restrict results to a known set of user agents —
+        mutually exclusive with `after`/`before` (returns 400 if combined). When
+        `filter[id]` is set, `limit` is ignored and the response contains every
+        requested user agent that exists in the zone, in a single page. IDs not in the
+        zone are silently omitted.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_id: Restrict results to user agents with this ID. Repeatable, max 100. Mutually
+              exclusive with after/before.
+
+          filter_identifier: Filter by exact identifier (OAuth client_id)
 
           limit: Maximum number of items to return
 
@@ -131,6 +142,8 @@ class UserAgentsResource(SyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_id": filter_id,
+                        "filter_identifier": filter_identifier,
                         "limit": limit,
                     },
                     user_agent_list_params.UserAgentListParams,
@@ -203,6 +216,8 @@ class AsyncUserAgentsResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_id: Union[str, SequenceNotStr[str]] | Omit = omit,
+        filter_identifier: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -211,16 +226,25 @@ class AsyncUserAgentsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserAgentListResponse:
-        """Returns a list of user agents in the specified zone.
-
-        User agents represent
-        client software (browsers, desktop apps, CLI tools) registered via OAuth 2.0
-        Dynamic Client Registration.
+        """
+        Returns the user agents in the specified zone, cursor-paginated and ordered by
+        name. User agents represent client software (browsers, desktop apps, CLI tools)
+        registered via OAuth 2.0 Dynamic Client Registration. Pass `filter[id]`
+        (repeatable, max 100) to restrict results to a known set of user agents —
+        mutually exclusive with `after`/`before` (returns 400 if combined). When
+        `filter[id]` is set, `limit` is ignored and the response contains every
+        requested user agent that exists in the zone, in a single page. IDs not in the
+        zone are silently omitted.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_id: Restrict results to user agents with this ID. Repeatable, max 100. Mutually
+              exclusive with after/before.
+
+          filter_identifier: Filter by exact identifier (OAuth client_id)
 
           limit: Maximum number of items to return
 
@@ -246,6 +270,8 @@ class AsyncUserAgentsResource(AsyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_id": filter_id,
+                        "filter_identifier": filter_identifier,
                         "limit": limit,
                     },
                     user_agent_list_params.UserAgentListParams,
