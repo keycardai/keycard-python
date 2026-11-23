@@ -21,6 +21,9 @@ class SessionListParams(TypedDict, total=False):
 
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
 
+    filter_background: Annotated[bool, PropertyInfo(alias="filter[background]")]
+    """Filter by background access. Omit to list both."""
+
     include_nested: Literal["true"]
     """Include nested sessions.
 

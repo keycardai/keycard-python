@@ -2,6 +2,7 @@
 
 from typing import Dict, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from ..._models import BaseModel
 from .invitation_status import InvitationStatus
@@ -37,6 +38,16 @@ class Invitation(BaseModel):
 
     updated_at: datetime
     """The time the entity was mostly recently updated in utc"""
+
+    delivery_status: Optional[Literal["queued", "sending", "sent", "failed", "expired"]] = None
+    """Delivery state of the most recent invitation email.
+
+    `queued` and `sending` mean the email service still holds the message. `sent`
+    means the provider accepted it. `failed` means the email service could not be
+    reached or rejected the message. `expired` means the invitation expired before
+    the message was delivered. Absent for invitations created before delivery
+    tracking existed.
+    """
 
     permissions: Optional[Dict[str, Dict[str, bool]]] = None
     """
