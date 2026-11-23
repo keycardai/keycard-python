@@ -72,6 +72,20 @@ class Group(BaseModel):
     id: str
     """Unique identifier of the group"""
 
+    external: bool
+    """Whether the group is synced from an external directory.
+
+    When true the group is directory-owned and its membership is read-only; when
+    false it is managed in Keycard.
+    """
+
+    external_issuer: Optional[str] = None
+    """Issuer of the external directory the group was synced from.
+
+    `null` for groups managed in Keycard. Read-only: set by external sync, never by
+    the caller.
+    """
+
     identifier: str
     """Zone-unique slug that policy rules match on."""
 
@@ -144,6 +158,14 @@ class User(BaseModel):
 
     email_verified: bool
     """Whether the email address has been verified"""
+
+    external: bool
+    """Whether the user is synced from an external directory over SCIM.
+
+    When true the user is directory-owned: `status` cannot be changed and the user
+    cannot be deleted through this API while the zone has `external_sync_enabled`
+    set.
+    """
 
     identifier: str
     """Zone-scoped user identifier.
