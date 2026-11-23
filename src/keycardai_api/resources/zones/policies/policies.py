@@ -7,6 +7,14 @@ from typing_extensions import Literal
 
 import httpx
 
+from .draft import (
+    DraftResource,
+    AsyncDraftResource,
+    DraftResourceWithRawResponse,
+    AsyncDraftResourceWithRawResponse,
+    DraftResourceWithStreamingResponse,
+    AsyncDraftResourceWithStreamingResponse,
+)
 from .versions import (
     VersionsResource,
     AsyncVersionsResource,
@@ -40,6 +48,11 @@ class PoliciesResource(SyncAPIResource):
     def versions(self) -> VersionsResource:
         """Immutable policy version snapshots"""
         return VersionsResource(self._client)
+
+    @cached_property
+    def draft(self) -> DraftResource:
+        """Mutable policy authoring workspace"""
+        return DraftResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> PoliciesResourceWithRawResponse:
@@ -416,6 +429,11 @@ class AsyncPoliciesResource(AsyncAPIResource):
     def versions(self) -> AsyncVersionsResource:
         """Immutable policy version snapshots"""
         return AsyncVersionsResource(self._client)
+
+    @cached_property
+    def draft(self) -> AsyncDraftResource:
+        """Mutable policy authoring workspace"""
+        return AsyncDraftResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncPoliciesResourceWithRawResponse:
@@ -810,6 +828,11 @@ class PoliciesResourceWithRawResponse:
         """Immutable policy version snapshots"""
         return VersionsResourceWithRawResponse(self._policies.versions)
 
+    @cached_property
+    def draft(self) -> DraftResourceWithRawResponse:
+        """Mutable policy authoring workspace"""
+        return DraftResourceWithRawResponse(self._policies.draft)
+
 
 class AsyncPoliciesResourceWithRawResponse:
     def __init__(self, policies: AsyncPoliciesResource) -> None:
@@ -835,6 +858,11 @@ class AsyncPoliciesResourceWithRawResponse:
     def versions(self) -> AsyncVersionsResourceWithRawResponse:
         """Immutable policy version snapshots"""
         return AsyncVersionsResourceWithRawResponse(self._policies.versions)
+
+    @cached_property
+    def draft(self) -> AsyncDraftResourceWithRawResponse:
+        """Mutable policy authoring workspace"""
+        return AsyncDraftResourceWithRawResponse(self._policies.draft)
 
 
 class PoliciesResourceWithStreamingResponse:
@@ -862,6 +890,11 @@ class PoliciesResourceWithStreamingResponse:
         """Immutable policy version snapshots"""
         return VersionsResourceWithStreamingResponse(self._policies.versions)
 
+    @cached_property
+    def draft(self) -> DraftResourceWithStreamingResponse:
+        """Mutable policy authoring workspace"""
+        return DraftResourceWithStreamingResponse(self._policies.draft)
+
 
 class AsyncPoliciesResourceWithStreamingResponse:
     def __init__(self, policies: AsyncPoliciesResource) -> None:
@@ -887,3 +920,8 @@ class AsyncPoliciesResourceWithStreamingResponse:
     def versions(self) -> AsyncVersionsResourceWithStreamingResponse:
         """Immutable policy version snapshots"""
         return AsyncVersionsResourceWithStreamingResponse(self._policies.versions)
+
+    @cached_property
+    def draft(self) -> AsyncDraftResourceWithStreamingResponse:
+        """Mutable policy authoring workspace"""
+        return AsyncDraftResourceWithStreamingResponse(self._policies.draft)
