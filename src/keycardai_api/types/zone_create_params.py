@@ -44,12 +44,6 @@ class ZoneCreateParams(TypedDict, total=False):
     protocols: Protocols
     """Protocol configuration for zone creation"""
 
-    requires_invitation: bool
-    """
-    Whether the zone requires an invitation for email/password registration, only
-    applies when user_identity_provider_id is not set. Defaults to true.
-    """
-
 
 class ProtocolsOauth2Cimd(TypedDict, total=False):
     """Client ID Metadata Document auto-provisioning configuration"""
@@ -70,6 +64,9 @@ class ProtocolsOauth2Cimd(TypedDict, total=False):
 class ProtocolsOauth2(TypedDict, total=False):
     """OAuth 2.0 protocol configuration for zone creation"""
 
+    background_session_max_lifetime_seconds: int
+    """Maximum age of a background session. Range: 1 hour to 1 year. Default: 90 days."""
+
     cimd: ProtocolsOauth2Cimd
     """Client ID Metadata Document auto-provisioning configuration"""
 
@@ -78,6 +75,9 @@ class ProtocolsOauth2(TypedDict, total=False):
 
     pkce_required: bool
     """Whether PKCE is required for authorization code flows"""
+
+    session_max_lifetime_seconds: int
+    """Maximum age of a regular session. Range: 1 hour to 1 year. Default: 90 days."""
 
 
 class Protocols(TypedDict, total=False):

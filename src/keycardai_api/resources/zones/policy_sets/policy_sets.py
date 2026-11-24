@@ -2,11 +2,27 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
 
+from .draft import (
+    DraftResource,
+    AsyncDraftResource,
+    DraftResourceWithRawResponse,
+    AsyncDraftResourceWithRawResponse,
+    DraftResourceWithStreamingResponse,
+    AsyncDraftResourceWithStreamingResponse,
+)
+from .manifest import (
+    ManifestResource,
+    AsyncManifestResource,
+    ManifestResourceWithRawResponse,
+    AsyncManifestResourceWithRawResponse,
+    ManifestResourceWithStreamingResponse,
+    AsyncManifestResourceWithStreamingResponse,
+)
 from .versions import (
     VersionsResource,
     AsyncVersionsResource,
@@ -25,10 +41,17 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.zones import policy_set_list_params, policy_set_create_params, policy_set_update_params
+from ....types.zones import (
+    policy_set_list_params,
+    policy_set_clone_params,
+    policy_set_create_params,
+    policy_set_update_params,
+    policy_set_retrieve_params,
+)
 from ...._base_client import make_request_options
 from ....types.zones.policy_set_with_binding import PolicySetWithBinding
 from ....types.zones.policy_set_list_response import PolicySetListResponse
+from ....types.zones.policy_set_clone_response import PolicySetCloneResponse
 
 __all__ = ["PolicySetsResource", "AsyncPolicySetsResource"]
 
@@ -40,6 +63,16 @@ class PolicySetsResource(SyncAPIResource):
     def versions(self) -> VersionsResource:
         """Immutable policy set manifest snapshots"""
         return VersionsResource(self._client)
+
+    @cached_property
+    def draft(self) -> DraftResource:
+        """Mutable policy set manifest workspace"""
+        return DraftResource(self._client)
+
+    @cached_property
+    def manifest(self) -> ManifestResource:
+        """Declarative read/apply of a policy set's full content"""
+        return ManifestResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> PolicySetsResourceWithRawResponse:
@@ -65,6 +98,7 @@ class PolicySetsResource(SyncAPIResource):
         zone_id: str,
         *,
         name: str,
+        manifest: policy_set_create_params.Manifest | Omit = omit,
         scope_type: Literal["zone"] | Omit = omit,
         target_type: Literal["zone", "user"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -76,12 +110,33 @@ class PolicySetsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Creates an unbound policy set.
+        """Creates a policy set.
 
-        Use updatePolicySet to bind after creating a
-        version.
+        Supply `manifest` to create its first version and any new
+        policies in the same transaction. A failure rolls back every write. Without
+        `manifest`, creates a versionless set and preserves the existing response body.
+
+        Entries use manifest apply semantics with no predecessor: bare pins use each
+        policy's latest version; supplied content reuses that version when its SHA and
+        schema match. Omitted `schema_version` uses the zone default. This operation
+        supports neither `dry_run` nor `If-Match`. Set `manifest.activate: true` to bind
+        v1 to the zone's active slot in the same transaction. Requires
+        `target_type: zone` (the default) and the `activate` permission on
+        `policy_set_bindings`, in addition to the route's `create` permission. Omitted
+        or false leaves the set unbound.
+
+        The `ETag` header is the set revision, as on `GET`. The manifest digest is
+        `policy_set_version.manifest_sha` and the `ETag` of `GET .../manifest`.
+
+        Domain error codes: `policy_set_name_conflict`, `policy_name_conflict`,
+        `policy_not_found`, `policy_archived`, `policy_version_not_found`,
+        `version_archived`, `schema_version_mismatch`, `manifest_duplicate_policy`,
+        `missing_cedar_content`, `invalid_cedar`, `schema_version_unsupported`,
+        `activate_requires_zone_target`.
 
         Args:
+          manifest: Content for the first version, created atomically with the set.
+
           scope_type: **Deprecated.** Use `target_type` instead. Only `zone` is accepted; use
               `target_type` for `user` targets.
 
@@ -115,6 +170,7 @@ class PolicySetsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "name": name,
+                    "manifest": manifest,
                     "scope_type": scope_type,
                     "target_type": target_type,
                 },
@@ -131,6 +187,7 @@ class PolicySetsResource(SyncAPIResource):
         policy_set_id: str,
         *,
         zone_id: str,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -144,6 +201,8 @@ class PolicySetsResource(SyncAPIResource):
         Returns the policy set with current binding information.
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -168,7 +227,11 @@ class PolicySetsResource(SyncAPIResource):
         return self._get(
             path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"expand": expand}, policy_set_retrieve_params.PolicySetRetrieveParams),
             ),
             cast_to=PolicySetWithBinding,
         )
@@ -189,10 +252,10 @@ class PolicySetsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Update metadata or manage binding.
+        """Update policy set metadata (name).
 
-        Set active=true to bind, active=false to
-        unbind.
+        Binding is managed by activating a policy set
+        version or via the policy-bindings API.
 
         Args:
           extra_headers: Send extra headers
@@ -233,14 +296,14 @@ class PolicySetsResource(SyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
         filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: SequenceNotStr[str] | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -276,11 +339,8 @@ class PolicySetsResource(SyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_active: Filter by active binding status. When `true`, returns only policy sets with an
               active binding. When `false`, returns only policy sets without one. Omit to
@@ -444,6 +504,122 @@ class PolicySetsResource(SyncAPIResource):
             cast_to=PolicySetWithBinding,
         )
 
+    def clone(
+        self,
+        policy_set_id: str,
+        *,
+        zone_id: str,
+        name: str,
+        copy_policies: Literal["none", "platform", "all"] | Omit = omit,
+        source_version_id: str | Omit = omit,
+        target_type: Literal["zone", "user"] | Omit = omit,
+        x_api_version: str | Omit = omit,
+        x_client_request_id: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PolicySetCloneResponse:
+        """
+        Creates a new customer-owned policy set whose first version reproduces the
+        manifest of a source version: the source's latest non-archived version by
+        default, or the one named by `source_version_id`. The set, any copied policies
+        and their versions, the first policy set version, and its attestation are
+        written in one transaction. Any failure leaves zero writes. The source is never
+        modified.
+
+        Platform-owned sets (for example the zone default `default-zone-policies`)
+        cannot be updated or versioned by customers. Clone is how a customer forks one
+        into a set they can edit with `PUT .../manifest`.
+
+        `copy_policies` decides what is shared and what is duplicated (default
+        `platform`):
+
+        - `none`: every entry pins the same policy version as the source. No new
+          policies are created.
+        - `platform`: platform-owned pins are copied into new customer-owned policies;
+          customer-owned pins are shared. The result is fully editable with minimal
+          duplication.
+        - `all`: every pin is copied.
+
+        Copied policies get `owner_type: customer`, the source policy's description, and
+        a first version whose `cedar_json`, `schema_version` and `sha` are copied
+        verbatim from the pinned source version. There is no Cedar revalidation and no
+        rewrite of the embedded static-policy keys; the evaluator namespaces them by
+        policy version ID.
+
+        A copied policy is named after its source, with the platform catalog prefix
+        `default-` stripped for platform-owned sources (`default-user-grants` becomes
+        `user-grants`). Customer-owned names are kept as-is. A derived name that
+        collides with a non-archived policy in the zone gets the first free numeric
+        suffix (`user-grants-2`, `user-grants-3`, ...). Names are resolved inside the
+        transaction; a concurrent race still surfaces as `409 policy_name_conflict`.
+
+        Manifest order is the source's, with shared and copied pins interleaved as they
+        were. `schema_version` is the source version's. `target_type` defaults to the
+        source set's and may be overridden.
+
+        The `ETag` header is the digest of the first version's manifest, so clone, then
+        conditional `PUT .../manifest`, needs no intermediate GET.
+
+        Domain error codes: `policy_set_not_found`, `policy_set_version_not_found`,
+        `policy_set_name_conflict`, `policy_name_conflict`, `set_archived`,
+        `version_archived`, `schema_version_unsupported`.
+
+        Args:
+          name: Name of the new policy set. 409 `policy_set_name_conflict` on collision.
+
+          copy_policies: Which pinned policies are duplicated as new customer-owned policies. `none`
+              shares every pin; `platform` copies platform-owned pins and shares
+              customer-owned ones; `all` copies every pin.
+
+          source_version_id: Policy set version public ID on the source set. Defaults to the source's latest
+              non-archived version.
+
+          target_type: Defaults to the source set's target type.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not policy_set_id:
+            raise ValueError(f"Expected a non-empty value for `policy_set_id` but received {policy_set_id!r}")
+        extra_headers = {
+            **strip_not_given(
+                {
+                    "X-API-Version": x_api_version,
+                    "X-Client-Request-ID": x_client_request_id,
+                }
+            ),
+            **(extra_headers or {}),
+        }
+        return self._post(
+            path_template(
+                "/zones/{zone_id}/policy-sets/{policy_set_id}/clones", zone_id=zone_id, policy_set_id=policy_set_id
+            ),
+            body=maybe_transform(
+                {
+                    "name": name,
+                    "copy_policies": copy_policies,
+                    "source_version_id": source_version_id,
+                    "target_type": target_type,
+                },
+                policy_set_clone_params.PolicySetCloneParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PolicySetCloneResponse,
+        )
+
 
 class AsyncPolicySetsResource(AsyncAPIResource):
     """Policy set CRUD and binding management"""
@@ -452,6 +628,16 @@ class AsyncPolicySetsResource(AsyncAPIResource):
     def versions(self) -> AsyncVersionsResource:
         """Immutable policy set manifest snapshots"""
         return AsyncVersionsResource(self._client)
+
+    @cached_property
+    def draft(self) -> AsyncDraftResource:
+        """Mutable policy set manifest workspace"""
+        return AsyncDraftResource(self._client)
+
+    @cached_property
+    def manifest(self) -> AsyncManifestResource:
+        """Declarative read/apply of a policy set's full content"""
+        return AsyncManifestResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncPolicySetsResourceWithRawResponse:
@@ -477,6 +663,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         zone_id: str,
         *,
         name: str,
+        manifest: policy_set_create_params.Manifest | Omit = omit,
         scope_type: Literal["zone"] | Omit = omit,
         target_type: Literal["zone", "user"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -488,12 +675,33 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Creates an unbound policy set.
+        """Creates a policy set.
 
-        Use updatePolicySet to bind after creating a
-        version.
+        Supply `manifest` to create its first version and any new
+        policies in the same transaction. A failure rolls back every write. Without
+        `manifest`, creates a versionless set and preserves the existing response body.
+
+        Entries use manifest apply semantics with no predecessor: bare pins use each
+        policy's latest version; supplied content reuses that version when its SHA and
+        schema match. Omitted `schema_version` uses the zone default. This operation
+        supports neither `dry_run` nor `If-Match`. Set `manifest.activate: true` to bind
+        v1 to the zone's active slot in the same transaction. Requires
+        `target_type: zone` (the default) and the `activate` permission on
+        `policy_set_bindings`, in addition to the route's `create` permission. Omitted
+        or false leaves the set unbound.
+
+        The `ETag` header is the set revision, as on `GET`. The manifest digest is
+        `policy_set_version.manifest_sha` and the `ETag` of `GET .../manifest`.
+
+        Domain error codes: `policy_set_name_conflict`, `policy_name_conflict`,
+        `policy_not_found`, `policy_archived`, `policy_version_not_found`,
+        `version_archived`, `schema_version_mismatch`, `manifest_duplicate_policy`,
+        `missing_cedar_content`, `invalid_cedar`, `schema_version_unsupported`,
+        `activate_requires_zone_target`.
 
         Args:
+          manifest: Content for the first version, created atomically with the set.
+
           scope_type: **Deprecated.** Use `target_type` instead. Only `zone` is accepted; use
               `target_type` for `user` targets.
 
@@ -527,6 +735,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "name": name,
+                    "manifest": manifest,
                     "scope_type": scope_type,
                     "target_type": target_type,
                 },
@@ -543,6 +752,7 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         policy_set_id: str,
         *,
         zone_id: str,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -556,6 +766,8 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         Returns the policy set with current binding information.
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -580,7 +792,13 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         return await self._get(
             path_template("/zones/{zone_id}/policy-sets/{policy_set_id}", zone_id=zone_id, policy_set_id=policy_set_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"expand": expand}, policy_set_retrieve_params.PolicySetRetrieveParams
+                ),
             ),
             cast_to=PolicySetWithBinding,
         )
@@ -601,10 +819,10 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PolicySetWithBinding:
-        """Update metadata or manage binding.
+        """Update policy set metadata (name).
 
-        Set active=true to bind, active=false to
-        unbind.
+        Binding is managed by activating a policy set
+        version or via the policy-bindings API.
 
         Args:
           extra_headers: Send extra headers
@@ -645,14 +863,14 @@ class AsyncPolicySetsResource(AsyncAPIResource):
         active: bool | Omit = omit,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_active: bool | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         filter_scope_type: SequenceNotStr[str] | Omit = omit,
         filter_target_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: SequenceNotStr[str] | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at", "status"] | Omit = omit,
         x_api_version: str | Omit = omit,
@@ -688,11 +906,8 @@ class AsyncPolicySetsResource(AsyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_active: Filter by active binding status. When `true`, returns only policy sets with an
               active binding. When `false`, returns only policy sets without one. Omit to
@@ -856,6 +1071,122 @@ class AsyncPolicySetsResource(AsyncAPIResource):
             cast_to=PolicySetWithBinding,
         )
 
+    async def clone(
+        self,
+        policy_set_id: str,
+        *,
+        zone_id: str,
+        name: str,
+        copy_policies: Literal["none", "platform", "all"] | Omit = omit,
+        source_version_id: str | Omit = omit,
+        target_type: Literal["zone", "user"] | Omit = omit,
+        x_api_version: str | Omit = omit,
+        x_client_request_id: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PolicySetCloneResponse:
+        """
+        Creates a new customer-owned policy set whose first version reproduces the
+        manifest of a source version: the source's latest non-archived version by
+        default, or the one named by `source_version_id`. The set, any copied policies
+        and their versions, the first policy set version, and its attestation are
+        written in one transaction. Any failure leaves zero writes. The source is never
+        modified.
+
+        Platform-owned sets (for example the zone default `default-zone-policies`)
+        cannot be updated or versioned by customers. Clone is how a customer forks one
+        into a set they can edit with `PUT .../manifest`.
+
+        `copy_policies` decides what is shared and what is duplicated (default
+        `platform`):
+
+        - `none`: every entry pins the same policy version as the source. No new
+          policies are created.
+        - `platform`: platform-owned pins are copied into new customer-owned policies;
+          customer-owned pins are shared. The result is fully editable with minimal
+          duplication.
+        - `all`: every pin is copied.
+
+        Copied policies get `owner_type: customer`, the source policy's description, and
+        a first version whose `cedar_json`, `schema_version` and `sha` are copied
+        verbatim from the pinned source version. There is no Cedar revalidation and no
+        rewrite of the embedded static-policy keys; the evaluator namespaces them by
+        policy version ID.
+
+        A copied policy is named after its source, with the platform catalog prefix
+        `default-` stripped for platform-owned sources (`default-user-grants` becomes
+        `user-grants`). Customer-owned names are kept as-is. A derived name that
+        collides with a non-archived policy in the zone gets the first free numeric
+        suffix (`user-grants-2`, `user-grants-3`, ...). Names are resolved inside the
+        transaction; a concurrent race still surfaces as `409 policy_name_conflict`.
+
+        Manifest order is the source's, with shared and copied pins interleaved as they
+        were. `schema_version` is the source version's. `target_type` defaults to the
+        source set's and may be overridden.
+
+        The `ETag` header is the digest of the first version's manifest, so clone, then
+        conditional `PUT .../manifest`, needs no intermediate GET.
+
+        Domain error codes: `policy_set_not_found`, `policy_set_version_not_found`,
+        `policy_set_name_conflict`, `policy_name_conflict`, `set_archived`,
+        `version_archived`, `schema_version_unsupported`.
+
+        Args:
+          name: Name of the new policy set. 409 `policy_set_name_conflict` on collision.
+
+          copy_policies: Which pinned policies are duplicated as new customer-owned policies. `none`
+              shares every pin; `platform` copies platform-owned pins and shares
+              customer-owned ones; `all` copies every pin.
+
+          source_version_id: Policy set version public ID on the source set. Defaults to the source's latest
+              non-archived version.
+
+          target_type: Defaults to the source set's target type.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not zone_id:
+            raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
+        if not policy_set_id:
+            raise ValueError(f"Expected a non-empty value for `policy_set_id` but received {policy_set_id!r}")
+        extra_headers = {
+            **strip_not_given(
+                {
+                    "X-API-Version": x_api_version,
+                    "X-Client-Request-ID": x_client_request_id,
+                }
+            ),
+            **(extra_headers or {}),
+        }
+        return await self._post(
+            path_template(
+                "/zones/{zone_id}/policy-sets/{policy_set_id}/clones", zone_id=zone_id, policy_set_id=policy_set_id
+            ),
+            body=await async_maybe_transform(
+                {
+                    "name": name,
+                    "copy_policies": copy_policies,
+                    "source_version_id": source_version_id,
+                    "target_type": target_type,
+                },
+                policy_set_clone_params.PolicySetCloneParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PolicySetCloneResponse,
+        )
+
 
 class PolicySetsResourceWithRawResponse:
     def __init__(self, policy_sets: PolicySetsResource) -> None:
@@ -876,11 +1207,24 @@ class PolicySetsResourceWithRawResponse:
         self.archive = to_raw_response_wrapper(
             policy_sets.archive,
         )
+        self.clone = to_raw_response_wrapper(
+            policy_sets.clone,
+        )
 
     @cached_property
     def versions(self) -> VersionsResourceWithRawResponse:
         """Immutable policy set manifest snapshots"""
         return VersionsResourceWithRawResponse(self._policy_sets.versions)
+
+    @cached_property
+    def draft(self) -> DraftResourceWithRawResponse:
+        """Mutable policy set manifest workspace"""
+        return DraftResourceWithRawResponse(self._policy_sets.draft)
+
+    @cached_property
+    def manifest(self) -> ManifestResourceWithRawResponse:
+        """Declarative read/apply of a policy set's full content"""
+        return ManifestResourceWithRawResponse(self._policy_sets.manifest)
 
 
 class AsyncPolicySetsResourceWithRawResponse:
@@ -902,11 +1246,24 @@ class AsyncPolicySetsResourceWithRawResponse:
         self.archive = async_to_raw_response_wrapper(
             policy_sets.archive,
         )
+        self.clone = async_to_raw_response_wrapper(
+            policy_sets.clone,
+        )
 
     @cached_property
     def versions(self) -> AsyncVersionsResourceWithRawResponse:
         """Immutable policy set manifest snapshots"""
         return AsyncVersionsResourceWithRawResponse(self._policy_sets.versions)
+
+    @cached_property
+    def draft(self) -> AsyncDraftResourceWithRawResponse:
+        """Mutable policy set manifest workspace"""
+        return AsyncDraftResourceWithRawResponse(self._policy_sets.draft)
+
+    @cached_property
+    def manifest(self) -> AsyncManifestResourceWithRawResponse:
+        """Declarative read/apply of a policy set's full content"""
+        return AsyncManifestResourceWithRawResponse(self._policy_sets.manifest)
 
 
 class PolicySetsResourceWithStreamingResponse:
@@ -928,11 +1285,24 @@ class PolicySetsResourceWithStreamingResponse:
         self.archive = to_streamed_response_wrapper(
             policy_sets.archive,
         )
+        self.clone = to_streamed_response_wrapper(
+            policy_sets.clone,
+        )
 
     @cached_property
     def versions(self) -> VersionsResourceWithStreamingResponse:
         """Immutable policy set manifest snapshots"""
         return VersionsResourceWithStreamingResponse(self._policy_sets.versions)
+
+    @cached_property
+    def draft(self) -> DraftResourceWithStreamingResponse:
+        """Mutable policy set manifest workspace"""
+        return DraftResourceWithStreamingResponse(self._policy_sets.draft)
+
+    @cached_property
+    def manifest(self) -> ManifestResourceWithStreamingResponse:
+        """Declarative read/apply of a policy set's full content"""
+        return ManifestResourceWithStreamingResponse(self._policy_sets.manifest)
 
 
 class AsyncPolicySetsResourceWithStreamingResponse:
@@ -954,8 +1324,21 @@ class AsyncPolicySetsResourceWithStreamingResponse:
         self.archive = async_to_streamed_response_wrapper(
             policy_sets.archive,
         )
+        self.clone = async_to_streamed_response_wrapper(
+            policy_sets.clone,
+        )
 
     @cached_property
     def versions(self) -> AsyncVersionsResourceWithStreamingResponse:
         """Immutable policy set manifest snapshots"""
         return AsyncVersionsResourceWithStreamingResponse(self._policy_sets.versions)
+
+    @cached_property
+    def draft(self) -> AsyncDraftResourceWithStreamingResponse:
+        """Mutable policy set manifest workspace"""
+        return AsyncDraftResourceWithStreamingResponse(self._policy_sets.draft)
+
+    @cached_property
+    def manifest(self) -> AsyncManifestResourceWithStreamingResponse:
+        """Declarative read/apply of a policy set's full content"""
+        return AsyncManifestResourceWithStreamingResponse(self._policy_sets.manifest)
