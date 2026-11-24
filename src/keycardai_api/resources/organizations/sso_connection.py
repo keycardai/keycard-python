@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Union, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -53,7 +53,7 @@ class SSOConnectionResource(SyncAPIResource):
         self,
         organization_id: str,
         *,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -69,10 +69,11 @@ class SSOConnectionResource(SyncAPIResource):
           organization_id: Organization ID or label identifier
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           extra_headers: Send extra headers
 
@@ -277,7 +278,7 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
         self,
         organization_id: str,
         *,
-        expand: List[Literal["permissions", "total_count"]] | Omit = omit,
+        expand: Union[Literal["permissions", "total_count"], List[Literal["permissions", "total_count"]]] | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -293,10 +294,11 @@ class AsyncSSOConnectionResource(AsyncAPIResource):
           organization_id: Organization ID or label identifier
 
           expand: Fields to expand in the response. Supports "permissions" to include the
-              permissions field with the caller's permissions for the resource. For list
-              organization identities only, "total_count" populates pagination.total_count
-              with the number of identities matching the same filters as the list (excluding
-              cursor and limit). Other operations ignore expand values they do not use.
+              permissions field with the caller's permissions for the resource. For the
+              service account and service account credential list operations, "total_count"
+              populates pagination.total_count with the number of items matching the same
+              filters as the list (excluding cursor and limit). Other operations ignore expand
+              values they do not use.
 
           extra_headers: Send extra headers
 
