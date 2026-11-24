@@ -40,7 +40,10 @@ class TestApplicationCredentials:
             application_id="application_id",
             provider_id="provider_id",
             type="token",
+            allowed_audience="x",
+            authentication_condition="x",
             subject="subject",
+            version=1,
         )
         assert_matches_type(ApplicationCredentialCreateResponse, application_credential, path=["response"])
 
@@ -396,8 +399,11 @@ class TestApplicationCredentials:
         application_credential = client.zones.application_credentials.update(
             id="id",
             zone_id="zoneId",
+            allowed_audience="x",
+            authentication_condition="x",
             subject="subject",
             type="token",
+            version=1,
         )
         assert_matches_type(Credential, application_credential, path=["response"])
 
@@ -835,7 +841,10 @@ class TestAsyncApplicationCredentials:
             application_id="application_id",
             provider_id="provider_id",
             type="token",
+            allowed_audience="x",
+            authentication_condition="x",
             subject="subject",
+            version=1,
         )
         assert_matches_type(ApplicationCredentialCreateResponse, application_credential, path=["response"])
 
@@ -1191,8 +1200,11 @@ class TestAsyncApplicationCredentials:
         application_credential = await async_client.zones.application_credentials.update(
             id="id",
             zone_id="zoneId",
+            allowed_audience="x",
+            authentication_condition="x",
             subject="subject",
             type="token",
+            version=1,
         )
         assert_matches_type(Credential, application_credential, path=["response"])
 

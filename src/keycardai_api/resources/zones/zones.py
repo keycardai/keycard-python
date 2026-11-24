@@ -97,6 +97,14 @@ from .policy_schemas import (
     PolicySchemasResourceWithStreamingResponse,
     AsyncPolicySchemasResourceWithStreamingResponse,
 )
+from .policy_bindings import (
+    PolicyBindingsResource,
+    AsyncPolicyBindingsResource,
+    PolicyBindingsResourceWithRawResponse,
+    AsyncPolicyBindingsResourceWithRawResponse,
+    PolicyBindingsResourceWithStreamingResponse,
+    AsyncPolicyBindingsResourceWithStreamingResponse,
+)
 from .delegated_grants import (
     DelegatedGrantsResource,
     AsyncDelegatedGrantsResource,
@@ -112,6 +120,22 @@ from .policies.policies import (
     AsyncPoliciesResourceWithRawResponse,
     PoliciesResourceWithStreamingResponse,
     AsyncPoliciesResourceWithStreamingResponse,
+)
+from .policy_evaluations import (
+    PolicyEvaluationsResource,
+    AsyncPolicyEvaluationsResource,
+    PolicyEvaluationsResourceWithRawResponse,
+    AsyncPolicyEvaluationsResourceWithRawResponse,
+    PolicyEvaluationsResourceWithStreamingResponse,
+    AsyncPolicyEvaluationsResourceWithStreamingResponse,
+)
+from .policy_validations import (
+    PolicyValidationsResource,
+    AsyncPolicyValidationsResource,
+    PolicyValidationsResourceWithRawResponse,
+    AsyncPolicyValidationsResourceWithRawResponse,
+    PolicyValidationsResourceWithStreamingResponse,
+    AsyncPolicyValidationsResourceWithStreamingResponse,
 )
 from .application_credentials import (
     ApplicationCredentialsResource,
@@ -217,6 +241,28 @@ class ZonesResource(SyncAPIResource):
     def policy_sets(self) -> PolicySetsResource:
         """Policy set CRUD and binding management"""
         return PolicySetsResource(self._client)
+
+    @cached_property
+    def policy_bindings(self) -> PolicyBindingsResource:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return PolicyBindingsResource(self._client)
+
+    @cached_property
+    def policy_validations(self) -> PolicyValidationsResource:
+        """Stateless Cedar policy validation"""
+        return PolicyValidationsResource(self._client)
+
+    @cached_property
+    def policy_evaluations(self) -> PolicyEvaluationsResource:
+        """Stateless policy evaluation testing"""
+        return PolicyEvaluationsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> ZonesResourceWithRawResponse:
@@ -598,6 +644,28 @@ class AsyncZonesResource(AsyncAPIResource):
     def policy_sets(self) -> AsyncPolicySetsResource:
         """Policy set CRUD and binding management"""
         return AsyncPolicySetsResource(self._client)
+
+    @cached_property
+    def policy_bindings(self) -> AsyncPolicyBindingsResource:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return AsyncPolicyBindingsResource(self._client)
+
+    @cached_property
+    def policy_validations(self) -> AsyncPolicyValidationsResource:
+        """Stateless Cedar policy validation"""
+        return AsyncPolicyValidationsResource(self._client)
+
+    @cached_property
+    def policy_evaluations(self) -> AsyncPolicyEvaluationsResource:
+        """Stateless policy evaluation testing"""
+        return AsyncPolicyEvaluationsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncZonesResourceWithRawResponse:
@@ -999,6 +1067,28 @@ class ZonesResourceWithRawResponse:
         """Policy set CRUD and binding management"""
         return PolicySetsResourceWithRawResponse(self._zones.policy_sets)
 
+    @cached_property
+    def policy_bindings(self) -> PolicyBindingsResourceWithRawResponse:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return PolicyBindingsResourceWithRawResponse(self._zones.policy_bindings)
+
+    @cached_property
+    def policy_validations(self) -> PolicyValidationsResourceWithRawResponse:
+        """Stateless Cedar policy validation"""
+        return PolicyValidationsResourceWithRawResponse(self._zones.policy_validations)
+
+    @cached_property
+    def policy_evaluations(self) -> PolicyEvaluationsResourceWithRawResponse:
+        """Stateless policy evaluation testing"""
+        return PolicyEvaluationsResourceWithRawResponse(self._zones.policy_evaluations)
+
 
 class AsyncZonesResourceWithRawResponse:
     def __init__(self, zones: AsyncZonesResource) -> None:
@@ -1093,6 +1183,28 @@ class AsyncZonesResourceWithRawResponse:
     def policy_sets(self) -> AsyncPolicySetsResourceWithRawResponse:
         """Policy set CRUD and binding management"""
         return AsyncPolicySetsResourceWithRawResponse(self._zones.policy_sets)
+
+    @cached_property
+    def policy_bindings(self) -> AsyncPolicyBindingsResourceWithRawResponse:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return AsyncPolicyBindingsResourceWithRawResponse(self._zones.policy_bindings)
+
+    @cached_property
+    def policy_validations(self) -> AsyncPolicyValidationsResourceWithRawResponse:
+        """Stateless Cedar policy validation"""
+        return AsyncPolicyValidationsResourceWithRawResponse(self._zones.policy_validations)
+
+    @cached_property
+    def policy_evaluations(self) -> AsyncPolicyEvaluationsResourceWithRawResponse:
+        """Stateless policy evaluation testing"""
+        return AsyncPolicyEvaluationsResourceWithRawResponse(self._zones.policy_evaluations)
 
 
 class ZonesResourceWithStreamingResponse:
@@ -1189,6 +1301,28 @@ class ZonesResourceWithStreamingResponse:
         """Policy set CRUD and binding management"""
         return PolicySetsResourceWithStreamingResponse(self._zones.policy_sets)
 
+    @cached_property
+    def policy_bindings(self) -> PolicyBindingsResourceWithStreamingResponse:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return PolicyBindingsResourceWithStreamingResponse(self._zones.policy_bindings)
+
+    @cached_property
+    def policy_validations(self) -> PolicyValidationsResourceWithStreamingResponse:
+        """Stateless Cedar policy validation"""
+        return PolicyValidationsResourceWithStreamingResponse(self._zones.policy_validations)
+
+    @cached_property
+    def policy_evaluations(self) -> PolicyEvaluationsResourceWithStreamingResponse:
+        """Stateless policy evaluation testing"""
+        return PolicyEvaluationsResourceWithStreamingResponse(self._zones.policy_evaluations)
+
 
 class AsyncZonesResourceWithStreamingResponse:
     def __init__(self, zones: AsyncZonesResource) -> None:
@@ -1283,3 +1417,25 @@ class AsyncZonesResourceWithStreamingResponse:
     def policy_sets(self) -> AsyncPolicySetsResourceWithStreamingResponse:
         """Policy set CRUD and binding management"""
         return AsyncPolicySetsResourceWithStreamingResponse(self._zones.policy_sets)
+
+    @cached_property
+    def policy_bindings(self) -> AsyncPolicyBindingsResourceWithStreamingResponse:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return AsyncPolicyBindingsResourceWithStreamingResponse(self._zones.policy_bindings)
+
+    @cached_property
+    def policy_validations(self) -> AsyncPolicyValidationsResourceWithStreamingResponse:
+        """Stateless Cedar policy validation"""
+        return AsyncPolicyValidationsResourceWithStreamingResponse(self._zones.policy_validations)
+
+    @cached_property
+    def policy_evaluations(self) -> AsyncPolicyEvaluationsResourceWithStreamingResponse:
+        """Stateless policy evaluation testing"""
+        return AsyncPolicyEvaluationsResourceWithStreamingResponse(self._zones.policy_evaluations)

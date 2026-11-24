@@ -25,6 +25,20 @@ class Token(BaseFields):
 
     type: Literal["token"]
 
+    allowed_audience: Optional[str] = None
+    """Version 2 only.
+
+    Audience the token's `aud` must contain. `null` when unset, in which case the
+    zone's issuer URL is required.
+    """
+
+    authentication_condition: Optional[str] = None
+    """Version 2 only.
+
+    CEL predicate over the token's `claims` that must evaluate to true. `null` when
+    unset.
+    """
+
     provider: Optional[Provider] = None
     """
     A Provider is a system that supplies access to Resources and allows actors
@@ -37,3 +51,6 @@ class Token(BaseFields):
     When null or omitted, any token from the provider is accepted without checking
     application-specific claims.
     """
+
+    version: Optional[Literal[1, 2]] = None
+    """Credential behavior version."""

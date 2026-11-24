@@ -199,6 +199,68 @@ class TestInvitations:
                 organization_id="x",
             )
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_resend(self, client: KeycardAPI) -> None:
+        invitation = client.organizations.invitations.resend(
+            invitation_id="ab3def8hij2klm9opq5rst7uvw",
+            organization_id="x",
+        )
+        assert_matches_type(Invitation, invitation, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_resend_with_all_params(self, client: KeycardAPI) -> None:
+        invitation = client.organizations.invitations.resend(
+            invitation_id="ab3def8hij2klm9opq5rst7uvw",
+            organization_id="x",
+            x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(Invitation, invitation, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_resend(self, client: KeycardAPI) -> None:
+        response = client.organizations.invitations.with_raw_response.resend(
+            invitation_id="ab3def8hij2klm9opq5rst7uvw",
+            organization_id="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        invitation = response.parse()
+        assert_matches_type(Invitation, invitation, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_resend(self, client: KeycardAPI) -> None:
+        with client.organizations.invitations.with_streaming_response.resend(
+            invitation_id="ab3def8hij2klm9opq5rst7uvw",
+            organization_id="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            invitation = response.parse()
+            assert_matches_type(Invitation, invitation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_resend(self, client: KeycardAPI) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
+            client.organizations.invitations.with_raw_response.resend(
+                invitation_id="ab3def8hij2klm9opq5rst7uvw",
+                organization_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `invitation_id` but received ''"):
+            client.organizations.invitations.with_raw_response.resend(
+                invitation_id="",
+                organization_id="x",
+            )
+
 
 class TestAsyncInvitations:
     parametrize = pytest.mark.parametrize(
@@ -380,6 +442,68 @@ class TestAsyncInvitations:
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `invitation_id` but received ''"):
             await async_client.organizations.invitations.with_raw_response.delete(
+                invitation_id="",
+                organization_id="x",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_resend(self, async_client: AsyncKeycardAPI) -> None:
+        invitation = await async_client.organizations.invitations.resend(
+            invitation_id="ab3def8hij2klm9opq5rst7uvw",
+            organization_id="x",
+        )
+        assert_matches_type(Invitation, invitation, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_resend_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
+        invitation = await async_client.organizations.invitations.resend(
+            invitation_id="ab3def8hij2klm9opq5rst7uvw",
+            organization_id="x",
+            x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(Invitation, invitation, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_resend(self, async_client: AsyncKeycardAPI) -> None:
+        response = await async_client.organizations.invitations.with_raw_response.resend(
+            invitation_id="ab3def8hij2klm9opq5rst7uvw",
+            organization_id="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        invitation = await response.parse()
+        assert_matches_type(Invitation, invitation, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_resend(self, async_client: AsyncKeycardAPI) -> None:
+        async with async_client.organizations.invitations.with_streaming_response.resend(
+            invitation_id="ab3def8hij2klm9opq5rst7uvw",
+            organization_id="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            invitation = await response.parse()
+            assert_matches_type(Invitation, invitation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_resend(self, async_client: AsyncKeycardAPI) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
+            await async_client.organizations.invitations.with_raw_response.resend(
+                invitation_id="ab3def8hij2klm9opq5rst7uvw",
+                organization_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `invitation_id` but received ''"):
+            await async_client.organizations.invitations.with_raw_response.resend(
                 invitation_id="",
                 organization_id="x",
             )

@@ -58,7 +58,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         application_id: str,
         provider_id: str,
         type: Literal["token"],
+        allowed_audience: str | Omit = omit,
+        authentication_condition: str | Omit = omit,
         subject: str | Omit = omit,
+        version: Literal[1, 2] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -74,9 +77,18 @@ class ApplicationCredentialsResource(SyncAPIResource):
 
           provider_id: ID of the provider issuing tokens this credential verifies
 
+          allowed_audience: Version 2 only. Audience the token's `aud` must contain. When omitted, the
+              zone's issuer URL is required.
+
+          authentication_condition: Version 2 only. CEL predicate over the token's `claims` that must evaluate to
+              true.
+
           subject: Subject identifier for the token. When omitted, any token from the provider is
               accepted without checking application-specific claims. A version 2 credential
               must set subject or authentication_condition.
+
+          version: Credential behavior version. Immutable. Defaults to 1 when omitted. A version 2
+              credential's identifier is its ID, which the workload sends as client_id.
 
           extra_headers: Send extra headers
 
@@ -239,7 +251,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
         application_id: str,
         provider_id: str | Omit = omit,
         type: Literal["token"] | Literal["password"] | Literal["public-key"] | Literal["url"] | Literal["public"],
+        allowed_audience: str | Omit = omit,
+        authentication_condition: str | Omit = omit,
         subject: str | Omit = omit,
+        version: Literal[1, 2] | Omit = omit,
         identifier: str | Omit = omit,
         jwks_uri: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -260,7 +275,10 @@ class ApplicationCredentialsResource(SyncAPIResource):
                         "application_id": application_id,
                         "provider_id": provider_id,
                         "type": type,
+                        "allowed_audience": allowed_audience,
+                        "authentication_condition": authentication_condition,
                         "subject": subject,
+                        "version": version,
                         "identifier": identifier,
                         "jwks_uri": jwks_uri,
                     },
@@ -320,8 +338,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        allowed_audience: Optional[str] | Omit = omit,
+        authentication_condition: Optional[str] | Omit = omit,
         subject: Optional[str] | Omit = omit,
         type: Literal["token"] | Omit = omit,
+        version: Literal[1, 2] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -335,8 +356,16 @@ class ApplicationCredentialsResource(SyncAPIResource):
         cannot change returns 400, unless it matches the stored value.
 
         Args:
+          allowed_audience: Version 2 only. Audience the token's `aud` must contain. Set to null to unset,
+              which requires the zone's issuer URL.
+
+          authentication_condition: Version 2 only. CEL predicate over the token's `claims` that must evaluate to
+              true. Set to null to unset.
+
           subject: Subject identifier for the token. Set to null to unset, which allows any token
               from the provider to be accepted without checking application-specific claims.
+
+          version: Immutable. When provided, must equal the credential's version.
 
           extra_headers: Send extra headers
 
@@ -483,6 +512,8 @@ class ApplicationCredentialsResource(SyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        allowed_audience: Optional[str] | Omit = omit,
+        authentication_condition: Optional[str] | Omit = omit,
         subject: Optional[str] | Omit = omit,
         type: Literal["token"]
         | Literal["password"]
@@ -490,6 +521,7 @@ class ApplicationCredentialsResource(SyncAPIResource):
         | Literal["url"]
         | Literal["public"]
         | Omit = omit,
+        version: Literal[1, 2] | Omit = omit,
         jwks_uri: str | Omit = omit,
         identifier: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -509,8 +541,11 @@ class ApplicationCredentialsResource(SyncAPIResource):
                 path_template("/zones/{zone_id}/application-credentials/{id}", zone_id=zone_id, id=id),
                 body=maybe_transform(
                     {
+                        "allowed_audience": allowed_audience,
+                        "authentication_condition": authentication_condition,
                         "subject": subject,
                         "type": type,
+                        "version": version,
                         "jwks_uri": jwks_uri,
                         "identifier": identifier,
                     },
@@ -694,7 +729,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         application_id: str,
         provider_id: str,
         type: Literal["token"],
+        allowed_audience: str | Omit = omit,
+        authentication_condition: str | Omit = omit,
         subject: str | Omit = omit,
+        version: Literal[1, 2] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -710,9 +748,18 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
 
           provider_id: ID of the provider issuing tokens this credential verifies
 
+          allowed_audience: Version 2 only. Audience the token's `aud` must contain. When omitted, the
+              zone's issuer URL is required.
+
+          authentication_condition: Version 2 only. CEL predicate over the token's `claims` that must evaluate to
+              true.
+
           subject: Subject identifier for the token. When omitted, any token from the provider is
               accepted without checking application-specific claims. A version 2 credential
               must set subject or authentication_condition.
+
+          version: Credential behavior version. Immutable. Defaults to 1 when omitted. A version 2
+              credential's identifier is its ID, which the workload sends as client_id.
 
           extra_headers: Send extra headers
 
@@ -875,7 +922,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         application_id: str,
         provider_id: str | Omit = omit,
         type: Literal["token"] | Literal["password"] | Literal["public-key"] | Literal["url"] | Literal["public"],
+        allowed_audience: str | Omit = omit,
+        authentication_condition: str | Omit = omit,
         subject: str | Omit = omit,
+        version: Literal[1, 2] | Omit = omit,
         identifier: str | Omit = omit,
         jwks_uri: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -896,7 +946,10 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                         "application_id": application_id,
                         "provider_id": provider_id,
                         "type": type,
+                        "allowed_audience": allowed_audience,
+                        "authentication_condition": authentication_condition,
                         "subject": subject,
+                        "version": version,
                         "identifier": identifier,
                         "jwks_uri": jwks_uri,
                     },
@@ -956,8 +1009,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        allowed_audience: Optional[str] | Omit = omit,
+        authentication_condition: Optional[str] | Omit = omit,
         subject: Optional[str] | Omit = omit,
         type: Literal["token"] | Omit = omit,
+        version: Literal[1, 2] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -971,8 +1027,16 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         cannot change returns 400, unless it matches the stored value.
 
         Args:
+          allowed_audience: Version 2 only. Audience the token's `aud` must contain. Set to null to unset,
+              which requires the zone's issuer URL.
+
+          authentication_condition: Version 2 only. CEL predicate over the token's `claims` that must evaluate to
+              true. Set to null to unset.
+
           subject: Subject identifier for the token. Set to null to unset, which allows any token
               from the provider to be accepted without checking application-specific claims.
+
+          version: Immutable. When provided, must equal the credential's version.
 
           extra_headers: Send extra headers
 
@@ -1119,6 +1183,8 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         id: str,
         *,
         zone_id: str,
+        allowed_audience: Optional[str] | Omit = omit,
+        authentication_condition: Optional[str] | Omit = omit,
         subject: Optional[str] | Omit = omit,
         type: Literal["token"]
         | Literal["password"]
@@ -1126,6 +1192,7 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
         | Literal["url"]
         | Literal["public"]
         | Omit = omit,
+        version: Literal[1, 2] | Omit = omit,
         jwks_uri: str | Omit = omit,
         identifier: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1145,8 +1212,11 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
                 path_template("/zones/{zone_id}/application-credentials/{id}", zone_id=zone_id, id=id),
                 body=await async_maybe_transform(
                     {
+                        "allowed_audience": allowed_audience,
+                        "authentication_condition": authentication_condition,
                         "subject": subject,
                         "type": type,
+                        "version": version,
                         "jwks_uri": jwks_uri,
                         "identifier": identifier,
                     },
