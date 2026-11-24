@@ -20,6 +20,20 @@ __all__ = [
 class IamTokenCredentialUpdate(TypedDict, total=False):
     zone_id: Required[Annotated[str, PropertyInfo(alias="zoneId")]]
 
+    allowed_audience: Optional[str]
+    """Version 2 only.
+
+    Audience the token's `aud` must contain. Set to null to unset, which requires
+    the zone's issuer URL.
+    """
+
+    authentication_condition: Optional[str]
+    """Version 2 only.
+
+    CEL predicate over the token's `claims` that must evaluate to true. Set to null
+    to unset.
+    """
+
     subject: Optional[str]
     """Subject identifier for the token.
 
@@ -28,6 +42,9 @@ class IamTokenCredentialUpdate(TypedDict, total=False):
     """
 
     type: Literal["token"]
+
+    version: Literal[1, 2]
+    """Immutable. When provided, must equal the credential's version."""
 
 
 class IamPasswordCredentialUpdate(TypedDict, total=False):
@@ -38,6 +55,9 @@ class IamPasswordCredentialUpdate(TypedDict, total=False):
 
 class IamPublicKeyCredentialUpdate(TypedDict, total=False):
     zone_id: Required[Annotated[str, PropertyInfo(alias="zoneId")]]
+
+    jwks_uri: str
+    """JWKS URI to retrieve public keys from"""
 
     type: Literal["public-key"]
 

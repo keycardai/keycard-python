@@ -24,11 +24,32 @@ class IamApplicationCredentialCreateToken(TypedDict, total=False):
 
     type: Required[Literal["token"]]
 
+    allowed_audience: str
+    """Version 2 only.
+
+    Audience the token's `aud` must contain. When omitted, the zone's issuer URL is
+    required.
+    """
+
+    authentication_condition: str
+    """Version 2 only.
+
+    CEL predicate over the token's `claims` that must evaluate to true.
+    """
+
     subject: str
     """Subject identifier for the token.
 
     When omitted, any token from the provider is accepted without checking
-    application-specific claims.
+    application-specific claims. A version 2 credential must set subject or
+    authentication_condition.
+    """
+
+    version: Literal[1, 2]
+    """Credential behavior version.
+
+    Immutable. Defaults to 1 when omitted. A version 2 credential's identifier is
+    its ID, which the workload sends as client_id.
     """
 
 
