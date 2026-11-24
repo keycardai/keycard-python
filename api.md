@@ -336,6 +336,14 @@ Methods:
 - <code title="get /zones/{zone_id}/policies/{policy_id}/versions">client.zones.policies.versions.<a href="./src/keycardai_api/resources/zones/policies/versions.py">list</a>(policy_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policies/version_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policies/version_list_response.py">VersionListResponse</a></code>
 - <code title="delete /zones/{zone_id}/policies/{policy_id}/versions/{version_id}">client.zones.policies.versions.<a href="./src/keycardai_api/resources/zones/policies/versions.py">archive</a>(version_id, \*, zone_id, policy_id) -> <a href="./src/keycardai_api/types/zones/policies/policy_version.py">PolicyVersion</a></code>
 
+### Draft
+
+Methods:
+
+- <code title="get /zones/{zone_id}/policies/{policy_id}/draft">client.zones.policies.draft.<a href="./src/keycardai_api/resources/zones/policies/draft.py">retrieve</a>(policy_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policies/draft_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_draft.py">PolicyDraft</a></code>
+- <code title="delete /zones/{zone_id}/policies/{policy_id}/draft">client.zones.policies.draft.<a href="./src/keycardai_api/resources/zones/policies/draft.py">delete</a>(policy_id, \*, zone_id) -> None</code>
+- <code title="put /zones/{zone_id}/policies/{policy_id}/draft">client.zones.policies.draft.<a href="./src/keycardai_api/resources/zones/policies/draft.py">upsert</a>(policy_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policies/draft_upsert_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_draft.py">PolicyDraft</a></code>
+
 ## PolicySets
 
 Types:
@@ -350,6 +358,7 @@ from keycardai_api.types.zones import (
     PolicySetManifestEntry,
     PolicySetWithBinding,
     PolicySetListResponse,
+    PolicySetCloneResponse,
 )
 ```
 
@@ -360,6 +369,7 @@ Methods:
 - <code title="patch /zones/{zone_id}/policy-sets/{policy_set_id}">client.zones.policy_sets.<a href="./src/keycardai_api/resources/zones/policy_sets/policy_sets.py">update</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_set_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_set_with_binding.py">PolicySetWithBinding</a></code>
 - <code title="get /zones/{zone_id}/policy-sets">client.zones.policy_sets.<a href="./src/keycardai_api/resources/zones/policy_sets/policy_sets.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_set_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_set_list_response.py">PolicySetListResponse</a></code>
 - <code title="delete /zones/{zone_id}/policy-sets/{policy_set_id}">client.zones.policy_sets.<a href="./src/keycardai_api/resources/zones/policy_sets/policy_sets.py">archive</a>(policy_set_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/policy_set_with_binding.py">PolicySetWithBinding</a></code>
+- <code title="post /zones/{zone_id}/policy-sets/{policy_set_id}/clones">client.zones.policy_sets.<a href="./src/keycardai_api/resources/zones/policy_sets/policy_sets.py">clone</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_set_clone_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_set_clone_response.py">PolicySetCloneResponse</a></code>
 
 ### Versions
 
@@ -381,6 +391,84 @@ Methods:
 - <code title="get /zones/{zone_id}/policy-sets/{policy_set_id}/versions">client.zones.policy_sets.versions.<a href="./src/keycardai_api/resources/zones/policy_sets/versions.py">list</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_sets/version_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_sets/version_list_response.py">VersionListResponse</a></code>
 - <code title="delete /zones/{zone_id}/policy-sets/{policy_set_id}/versions/{version_id}">client.zones.policy_sets.versions.<a href="./src/keycardai_api/resources/zones/policy_sets/versions.py">archive</a>(version_id, \*, zone_id, policy_set_id) -> <a href="./src/keycardai_api/types/zones/policy_sets/policy_set_version.py">PolicySetVersion</a></code>
 - <code title="get /zones/{zone_id}/policy-sets/{policy_set_id}/versions/{version_id}/policies">client.zones.policy_sets.versions.<a href="./src/keycardai_api/resources/zones/policy_sets/versions.py">list_policies</a>(version_id, \*, zone_id, policy_set_id, \*\*<a href="src/keycardai_api/types/zones/policy_sets/version_list_policies_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_sets/version_list_policies_response.py">VersionListPoliciesResponse</a></code>
+
+### Draft
+
+Types:
+
+```python
+from keycardai_api.types.zones.policy_sets import DraftListPoliciesResponse
+```
+
+Methods:
+
+- <code title="post /zones/{zone_id}/policy-sets/{policy_set_id}/draft">client.zones.policy_sets.draft.<a href="./src/keycardai_api/resources/zones/policy_sets/draft.py">create</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_sets/draft_create_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_set_draft.py">PolicySetDraft</a></code>
+- <code title="get /zones/{zone_id}/policy-sets/{policy_set_id}/draft">client.zones.policy_sets.draft.<a href="./src/keycardai_api/resources/zones/policy_sets/draft.py">retrieve</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_sets/draft_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_set_draft.py">PolicySetDraft</a></code>
+- <code title="patch /zones/{zone_id}/policy-sets/{policy_set_id}/draft">client.zones.policy_sets.draft.<a href="./src/keycardai_api/resources/zones/policy_sets/draft.py">update</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_sets/draft_update_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_set_draft.py">PolicySetDraft</a></code>
+- <code title="delete /zones/{zone_id}/policy-sets/{policy_set_id}/draft">client.zones.policy_sets.draft.<a href="./src/keycardai_api/resources/zones/policy_sets/draft.py">delete</a>(policy_set_id, \*, zone_id) -> None</code>
+- <code title="get /zones/{zone_id}/policy-sets/{policy_set_id}/draft/policies">client.zones.policy_sets.draft.<a href="./src/keycardai_api/resources/zones/policy_sets/draft.py">list_policies</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_sets/draft_list_policies_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_sets/draft_list_policies_response.py">DraftListPoliciesResponse</a></code>
+- <code title="put /zones/{zone_id}/policy-sets/{policy_set_id}/draft">client.zones.policy_sets.draft.<a href="./src/keycardai_api/resources/zones/policy_sets/draft.py">upsert</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_sets/draft_upsert_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_set_draft.py">PolicySetDraft</a></code>
+
+### Manifest
+
+Types:
+
+```python
+from keycardai_api.types.zones.policy_sets import ManifestRetrieveResponse, ManifestApplyResponse
+```
+
+Methods:
+
+- <code title="get /zones/{zone_id}/policy-sets/{policy_set_id}/manifest">client.zones.policy_sets.manifest.<a href="./src/keycardai_api/resources/zones/policy_sets/manifest.py">retrieve</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_sets/manifest_retrieve_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_sets/manifest_retrieve_response.py">ManifestRetrieveResponse</a></code>
+- <code title="put /zones/{zone_id}/policy-sets/{policy_set_id}/manifest">client.zones.policy_sets.manifest.<a href="./src/keycardai_api/resources/zones/policy_sets/manifest.py">apply</a>(policy_set_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_sets/manifest_apply_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_sets/manifest_apply_response.py">ManifestApplyResponse</a></code>
+
+## PolicyBindings
+
+Types:
+
+```python
+from keycardai_api.types.zones import (
+    PolicySetBinding,
+    PolicyBindingListResponse,
+    PolicyBindingRetrieveMetricsResponse,
+)
+```
+
+Methods:
+
+- <code title="get /zones/{zone_id}/policy-bindings/{binding_id}">client.zones.policy_bindings.<a href="./src/keycardai_api/resources/zones/policy_bindings.py">retrieve</a>(binding_id, \*, zone_id) -> <a href="./src/keycardai_api/types/zones/policy_set_binding.py">PolicySetBinding</a></code>
+- <code title="get /zones/{zone_id}/policy-bindings">client.zones.policy_bindings.<a href="./src/keycardai_api/resources/zones/policy_bindings.py">list</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_binding_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_binding_list_response.py">PolicyBindingListResponse</a></code>
+- <code title="delete /zones/{zone_id}/policy-bindings/{binding_id}">client.zones.policy_bindings.<a href="./src/keycardai_api/resources/zones/policy_bindings.py">delete</a>(binding_id, \*, zone_id) -> None</code>
+- <code title="get /zones/{zone_id}/policy-bindings/{binding_id}/metrics">client.zones.policy_bindings.<a href="./src/keycardai_api/resources/zones/policy_bindings.py">retrieve_metrics</a>(binding_id, \*, zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_binding_retrieve_metrics_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_binding_retrieve_metrics_response.py">PolicyBindingRetrieveMetricsResponse</a></code>
+- <code title="put /zones/{zone_id}/policy-bindings">client.zones.policy_bindings.<a href="./src/keycardai_api/resources/zones/policy_bindings.py">set</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_binding_set_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_set_binding.py">PolicySetBinding</a></code>
+
+## PolicyValidations
+
+Types:
+
+```python
+from keycardai_api.types.zones import PolicyValidationCreateResponse
+```
+
+Methods:
+
+- <code title="post /zones/{zone_id}/policy-validations">client.zones.policy_validations.<a href="./src/keycardai_api/resources/zones/policy_validations.py">create</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_validation_create_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_validation_create_response.py">PolicyValidationCreateResponse</a></code>
+
+## PolicyEvaluations
+
+Types:
+
+```python
+from keycardai_api.types.zones import (
+    PolicyEvaluationCreateResponse,
+    PolicyEvaluationListRequestsResponse,
+)
+```
+
+Methods:
+
+- <code title="post /zones/{zone_id}/policy-evaluations">client.zones.policy_evaluations.<a href="./src/keycardai_api/resources/zones/policy_evaluations.py">create</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_evaluation_create_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_evaluation_create_response.py">PolicyEvaluationCreateResponse</a></code>
+- <code title="get /zones/{zone_id}/policy-evaluations/requests">client.zones.policy_evaluations.<a href="./src/keycardai_api/resources/zones/policy_evaluations.py">list_requests</a>(zone_id, \*\*<a href="src/keycardai_api/types/zones/policy_evaluation_list_requests_params.py">params</a>) -> <a href="./src/keycardai_api/types/zones/policy_evaluation_list_requests_response.py">PolicyEvaluationListRequestsResponse</a></code>
 
 # Organizations
 
@@ -424,6 +512,7 @@ Methods:
 - <code title="post /organizations/{organization_id}/invitations">client.organizations.invitations.<a href="./src/keycardai_api/resources/organizations/invitations.py">create</a>(organization_id, \*\*<a href="src/keycardai_api/types/organizations/invitation_create_params.py">params</a>) -> <a href="./src/keycardai_api/types/organizations/invitation.py">Invitation</a></code>
 - <code title="get /organizations/{organization_id}/invitations">client.organizations.invitations.<a href="./src/keycardai_api/resources/organizations/invitations.py">list</a>(organization_id, \*\*<a href="src/keycardai_api/types/organizations/invitation_list_params.py">params</a>) -> <a href="./src/keycardai_api/types/organizations/invitation_list_response.py">InvitationListResponse</a></code>
 - <code title="delete /organizations/{organization_id}/invitations/{invitation_id}">client.organizations.invitations.<a href="./src/keycardai_api/resources/organizations/invitations.py">delete</a>(invitation_id, \*, organization_id) -> None</code>
+- <code title="post /organizations/{organization_id}/invitations/{invitation_id}/resend">client.organizations.invitations.<a href="./src/keycardai_api/resources/organizations/invitations.py">resend</a>(invitation_id, \*, organization_id) -> <a href="./src/keycardai_api/types/organizations/invitation.py">Invitation</a></code>
 
 ## ServiceAccounts
 

@@ -61,8 +61,13 @@ class InvitationsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Invitation:
-        """
-        Create an invitation to join an organization
+        """Create an invitation to join an organization and queue the invitation email.
+
+        The
+        invitation is created even when the email service cannot be reached; the
+        response's `delivery_status` is `failed` then, no email was queued, and the
+        caller must resend. A 4xx from the email service, such as a recipient send cap,
+        creates no invitation.
 
         Args:
           organization_id: Organization ID or label identifier
@@ -217,6 +222,67 @@ class InvitationsResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def resend(
+        self,
+        invitation_id: str,
+        *,
+        organization_id: str,
+        x_client_request_id: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Invitation:
+        """Send a fresh invitation email.
+
+        The invitation token is rotated, so the link in
+        any earlier email stops working. Returns 409 while a previous email is still
+        queued or sending, or when the invitation is no longer pending. Returns 200 even
+        when the email service cannot be reached: the token has already been rotated,
+        the response's `delivery_status` is `failed`, no new email was queued, and the
+        caller must resend. Each resend counts toward the organization's daily
+        invitation limit. Returns 429 with a `Retry-After` header when that limit or the
+        per-recipient send cap is reached. If the email service rejects the send, the
+        earlier link keeps working.
+
+        After the organization access check succeeds, the service sends
+        `X-Should-Retry: false` on 409, 429, and 5xx responses to tell SDKs to surface
+        the error without retrying. A retry can rotate the token and invalidate an email
+        link, including when the first send succeeded but the response did not reach the
+        caller.
+
+        Args:
+          organization_id: Organization ID or label identifier
+
+          invitation_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        if not invitation_id:
+            raise ValueError(f"Expected a non-empty value for `invitation_id` but received {invitation_id!r}")
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        return self._post(
+            path_template(
+                "/organizations/{organization_id}/invitations/{invitation_id}/resend",
+                organization_id=organization_id,
+                invitation_id=invitation_id,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Invitation,
+        )
+
 
 class AsyncInvitationsResource(AsyncAPIResource):
     @cached_property
@@ -252,8 +318,13 @@ class AsyncInvitationsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Invitation:
-        """
-        Create an invitation to join an organization
+        """Create an invitation to join an organization and queue the invitation email.
+
+        The
+        invitation is created even when the email service cannot be reached; the
+        response's `delivery_status` is `failed` then, no email was queued, and the
+        caller must resend. A 4xx from the email service, such as a recipient send cap,
+        creates no invitation.
 
         Args:
           organization_id: Organization ID or label identifier
@@ -408,6 +479,67 @@ class AsyncInvitationsResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def resend(
+        self,
+        invitation_id: str,
+        *,
+        organization_id: str,
+        x_client_request_id: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Invitation:
+        """Send a fresh invitation email.
+
+        The invitation token is rotated, so the link in
+        any earlier email stops working. Returns 409 while a previous email is still
+        queued or sending, or when the invitation is no longer pending. Returns 200 even
+        when the email service cannot be reached: the token has already been rotated,
+        the response's `delivery_status` is `failed`, no new email was queued, and the
+        caller must resend. Each resend counts toward the organization's daily
+        invitation limit. Returns 429 with a `Retry-After` header when that limit or the
+        per-recipient send cap is reached. If the email service rejects the send, the
+        earlier link keeps working.
+
+        After the organization access check succeeds, the service sends
+        `X-Should-Retry: false` on 409, 429, and 5xx responses to tell SDKs to surface
+        the error without retrying. A retry can rotate the token and invalidate an email
+        link, including when the first send succeeded but the response did not reach the
+        caller.
+
+        Args:
+          organization_id: Organization ID or label identifier
+
+          invitation_id: Identifier for API resources. A 26-char nanoid (URL/DNS safe).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        if not invitation_id:
+            raise ValueError(f"Expected a non-empty value for `invitation_id` but received {invitation_id!r}")
+        extra_headers = {**strip_not_given({"X-Client-Request-ID": x_client_request_id}), **(extra_headers or {})}
+        return await self._post(
+            path_template(
+                "/organizations/{organization_id}/invitations/{invitation_id}/resend",
+                organization_id=organization_id,
+                invitation_id=invitation_id,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Invitation,
+        )
+
 
 class InvitationsResourceWithRawResponse:
     def __init__(self, invitations: InvitationsResource) -> None:
@@ -421,6 +553,9 @@ class InvitationsResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             invitations.delete,
+        )
+        self.resend = to_raw_response_wrapper(
+            invitations.resend,
         )
 
 
@@ -437,6 +572,9 @@ class AsyncInvitationsResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             invitations.delete,
         )
+        self.resend = async_to_raw_response_wrapper(
+            invitations.resend,
+        )
 
 
 class InvitationsResourceWithStreamingResponse:
@@ -452,6 +590,9 @@ class InvitationsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             invitations.delete,
         )
+        self.resend = to_streamed_response_wrapper(
+            invitations.resend,
+        )
 
 
 class AsyncInvitationsResourceWithStreamingResponse:
@@ -466,4 +607,7 @@ class AsyncInvitationsResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             invitations.delete,
+        )
+        self.resend = async_to_streamed_response_wrapper(
+            invitations.resend,
         )
