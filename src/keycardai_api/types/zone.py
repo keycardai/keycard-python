@@ -38,6 +38,9 @@ class ProtocolsOauth2(BaseModel):
     (.well-known/oauth-authorization-server)
     """
 
+    background_session_max_lifetime_seconds: int
+    """Maximum age of a background session."""
+
     cimd: ProtocolsOauth2Cimd
     """Client ID Metadata Document auto-provisioning configuration"""
 
@@ -58,6 +61,9 @@ class ProtocolsOauth2(BaseModel):
 
     registration_endpoint: str
     """OAuth 2.0 Dynamic Client Registration endpoint"""
+
+    session_max_lifetime_seconds: int
+    """Maximum age of a regular session."""
 
     token_endpoint: str
     """OAuth 2.0 token endpoint"""
