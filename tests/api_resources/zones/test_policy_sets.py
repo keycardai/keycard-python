@@ -12,6 +12,7 @@ from keycardai_api import KeycardAPI, AsyncKeycardAPI
 from keycardai_api.types.zones import (
     PolicySetWithBinding,
     PolicySetListResponse,
+    PolicySetCloneResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -35,6 +36,18 @@ class TestPolicySets:
         policy_set = client.zones.policy_sets.create(
             zone_id="zone_id",
             name="name",
+            manifest={
+                "entries": [
+                    {
+                        "policy_id": "policy_id",
+                        "cedar_json": {},
+                        "cedar_raw": "cedar_raw",
+                        "policy_version_id": "policy_version_id",
+                    }
+                ],
+                "activate": True,
+                "schema_version": "schema_version",
+            },
             scope_type="zone",
             target_type="zone",
             x_api_version="X-API-Version",
@@ -94,6 +107,7 @@ class TestPolicySets:
         policy_set = client.zones.policy_sets.retrieve(
             policy_set_id="policy_set_id",
             zone_id="zone_id",
+            expand="user",
             x_api_version="X-API-Version",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -223,14 +237,14 @@ class TestPolicySets:
             active=True,
             after="x",
             before="x",
-            expand=["total_count"],
+            expand="total_count",
             filter_active=True,
             filter_owner_type=["string"],
             filter_scope_type=["string"],
             filter_target_type=["string"],
             limit=1,
             order="asc",
-            query=["x"],
+            query="string",
             query_name=["x"],
             sort="created_at",
             x_api_version="X-API-Version",
@@ -336,6 +350,78 @@ class TestPolicySets:
                 zone_id="zone_id",
             )
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_clone(self, client: KeycardAPI) -> None:
+        policy_set = client.zones.policy_sets.clone(
+            policy_set_id="policy_set_id",
+            zone_id="zone_id",
+            name="name",
+        )
+        assert_matches_type(PolicySetCloneResponse, policy_set, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_clone_with_all_params(self, client: KeycardAPI) -> None:
+        policy_set = client.zones.policy_sets.clone(
+            policy_set_id="policy_set_id",
+            zone_id="zone_id",
+            name="name",
+            copy_policies="none",
+            source_version_id="source_version_id",
+            target_type="zone",
+            x_api_version="X-API-Version",
+            x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(PolicySetCloneResponse, policy_set, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_clone(self, client: KeycardAPI) -> None:
+        response = client.zones.policy_sets.with_raw_response.clone(
+            policy_set_id="policy_set_id",
+            zone_id="zone_id",
+            name="name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        policy_set = response.parse()
+        assert_matches_type(PolicySetCloneResponse, policy_set, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_clone(self, client: KeycardAPI) -> None:
+        with client.zones.policy_sets.with_streaming_response.clone(
+            policy_set_id="policy_set_id",
+            zone_id="zone_id",
+            name="name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            policy_set = response.parse()
+            assert_matches_type(PolicySetCloneResponse, policy_set, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_clone(self, client: KeycardAPI) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
+            client.zones.policy_sets.with_raw_response.clone(
+                policy_set_id="policy_set_id",
+                zone_id="",
+                name="name",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `policy_set_id` but received ''"):
+            client.zones.policy_sets.with_raw_response.clone(
+                policy_set_id="",
+                zone_id="zone_id",
+                name="name",
+            )
+
 
 class TestAsyncPolicySets:
     parametrize = pytest.mark.parametrize(
@@ -357,6 +443,18 @@ class TestAsyncPolicySets:
         policy_set = await async_client.zones.policy_sets.create(
             zone_id="zone_id",
             name="name",
+            manifest={
+                "entries": [
+                    {
+                        "policy_id": "policy_id",
+                        "cedar_json": {},
+                        "cedar_raw": "cedar_raw",
+                        "policy_version_id": "policy_version_id",
+                    }
+                ],
+                "activate": True,
+                "schema_version": "schema_version",
+            },
             scope_type="zone",
             target_type="zone",
             x_api_version="X-API-Version",
@@ -416,6 +514,7 @@ class TestAsyncPolicySets:
         policy_set = await async_client.zones.policy_sets.retrieve(
             policy_set_id="policy_set_id",
             zone_id="zone_id",
+            expand="user",
             x_api_version="X-API-Version",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -545,14 +644,14 @@ class TestAsyncPolicySets:
             active=True,
             after="x",
             before="x",
-            expand=["total_count"],
+            expand="total_count",
             filter_active=True,
             filter_owner_type=["string"],
             filter_scope_type=["string"],
             filter_target_type=["string"],
             limit=1,
             order="asc",
-            query=["x"],
+            query="string",
             query_name=["x"],
             sort="created_at",
             x_api_version="X-API-Version",
@@ -656,4 +755,76 @@ class TestAsyncPolicySets:
             await async_client.zones.policy_sets.with_raw_response.archive(
                 policy_set_id="",
                 zone_id="zone_id",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_clone(self, async_client: AsyncKeycardAPI) -> None:
+        policy_set = await async_client.zones.policy_sets.clone(
+            policy_set_id="policy_set_id",
+            zone_id="zone_id",
+            name="name",
+        )
+        assert_matches_type(PolicySetCloneResponse, policy_set, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_clone_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
+        policy_set = await async_client.zones.policy_sets.clone(
+            policy_set_id="policy_set_id",
+            zone_id="zone_id",
+            name="name",
+            copy_policies="none",
+            source_version_id="source_version_id",
+            target_type="zone",
+            x_api_version="X-API-Version",
+            x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(PolicySetCloneResponse, policy_set, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_clone(self, async_client: AsyncKeycardAPI) -> None:
+        response = await async_client.zones.policy_sets.with_raw_response.clone(
+            policy_set_id="policy_set_id",
+            zone_id="zone_id",
+            name="name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        policy_set = await response.parse()
+        assert_matches_type(PolicySetCloneResponse, policy_set, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_clone(self, async_client: AsyncKeycardAPI) -> None:
+        async with async_client.zones.policy_sets.with_streaming_response.clone(
+            policy_set_id="policy_set_id",
+            zone_id="zone_id",
+            name="name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            policy_set = await response.parse()
+            assert_matches_type(PolicySetCloneResponse, policy_set, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_clone(self, async_client: AsyncKeycardAPI) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
+            await async_client.zones.policy_sets.with_raw_response.clone(
+                policy_set_id="policy_set_id",
+                zone_id="",
+                name="name",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `policy_set_id` but received ''"):
+            await async_client.zones.policy_sets.with_raw_response.clone(
+                policy_set_id="",
+                zone_id="zone_id",
+                name="name",
             )
