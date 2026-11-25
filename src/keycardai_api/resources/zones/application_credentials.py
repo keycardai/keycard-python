@@ -75,7 +75,8 @@ class ApplicationCredentialsResource(SyncAPIResource):
           provider_id: ID of the provider issuing tokens this credential verifies
 
           subject: Subject identifier for the token. When omitted, any token from the provider is
-              accepted without checking application-specific claims.
+              accepted without checking application-specific claims. A version 2 credential
+              must set subject or authentication_condition.
 
           extra_headers: Send extra headers
 
@@ -710,7 +711,8 @@ class AsyncApplicationCredentialsResource(AsyncAPIResource):
           provider_id: ID of the provider issuing tokens this credential verifies
 
           subject: Subject identifier for the token. When omitted, any token from the provider is
-              accepted without checking application-specific claims.
+              accepted without checking application-specific claims. A version 2 credential
+              must set subject or authentication_condition.
 
           extra_headers: Send extra headers
 
