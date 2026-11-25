@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import List, Union
 from typing_extensions import Literal, Annotated, TypedDict
 
+from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
 
 __all__ = ["UserAgentListParams"]
@@ -18,6 +19,15 @@ class UserAgentListParams(TypedDict, total=False):
     """Cursor for backward pagination"""
 
     expand: Annotated[Union[Literal["total_count"], List[Literal["total_count"]]], PropertyInfo(alias="expand[]")]
+
+    filter_id: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[id]")]
+    """Restrict results to user agents with this ID.
+
+    Repeatable, max 100. Mutually exclusive with after/before.
+    """
+
+    filter_identifier: Annotated[Union[str, SequenceNotStr[str]], PropertyInfo(alias="filter[identifier]")]
+    """Filter by exact identifier (OAuth client_id)"""
 
     limit: int
     """Maximum number of items to return"""
