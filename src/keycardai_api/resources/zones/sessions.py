@@ -133,6 +133,7 @@ class SessionsResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_background: bool | Omit = omit,
         include_nested: Literal["true"] | Omit = omit,
         limit: int | Omit = omit,
         session_type: Literal["user", "application"] | Omit = omit,
@@ -150,12 +151,14 @@ class SessionsResource(SyncAPIResource):
         By default, returns entry sessions (app
         user sessions with an initiator that are roots or direct children of a root user
         session). Use include_nested=true to include nested sessions. Can be filtered by
-        session type, status, and user.
+        session type, status, user, and background access.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_background: Filter by background access. Omit to list both.
 
           include_nested: Include nested sessions. When false (default), only returns entry sessions
               (direct children of root user sessions). When true, returns all sessions with an
@@ -188,6 +191,7 @@ class SessionsResource(SyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_background": filter_background,
                         "include_nested": include_nested,
                         "limit": limit,
                         "session_type": session_type,
@@ -213,7 +217,9 @@ class SessionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Permanently deletes a session, effectively logging out the user or application
+        Revokes a session and all its child sessions, including nested descendants,
+        without deleting their stored records. Revoking an already-revoked session is
+        idempotent and returns 204 No Content.
 
         Args:
           extra_headers: Send extra headers
@@ -346,6 +352,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         expand: Union[Literal["total_count"], List[Literal["total_count"]]] | Omit = omit,
+        filter_background: bool | Omit = omit,
         include_nested: Literal["true"] | Omit = omit,
         limit: int | Omit = omit,
         session_type: Literal["user", "application"] | Omit = omit,
@@ -363,12 +370,14 @@ class AsyncSessionsResource(AsyncAPIResource):
         By default, returns entry sessions (app
         user sessions with an initiator that are roots or direct children of a root user
         session). Use include_nested=true to include nested sessions. Can be filtered by
-        session type, status, and user.
+        session type, status, user, and background access.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_background: Filter by background access. Omit to list both.
 
           include_nested: Include nested sessions. When false (default), only returns entry sessions
               (direct children of root user sessions). When true, returns all sessions with an
@@ -401,6 +410,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                         "after": after,
                         "before": before,
                         "expand": expand,
+                        "filter_background": filter_background,
                         "include_nested": include_nested,
                         "limit": limit,
                         "session_type": session_type,
@@ -426,7 +436,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Permanently deletes a session, effectively logging out the user or application
+        Revokes a session and all its child sessions, including nested descendants,
+        without deleting their stored records. Revoking an already-revoked session is
+        idempotent and returns 204 No Content.
 
         Args:
           extra_headers: Send extra headers
