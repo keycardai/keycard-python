@@ -1,5 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .draft import (
+    DraftResource,
+    AsyncDraftResource,
+    DraftResourceWithRawResponse,
+    AsyncDraftResourceWithRawResponse,
+    DraftResourceWithStreamingResponse,
+    AsyncDraftResourceWithStreamingResponse,
+)
 from .policies import (
     PoliciesResource,
     AsyncPoliciesResource,
@@ -24,6 +32,12 @@ __all__ = [
     "AsyncVersionsResourceWithRawResponse",
     "VersionsResourceWithStreamingResponse",
     "AsyncVersionsResourceWithStreamingResponse",
+    "DraftResource",
+    "AsyncDraftResource",
+    "DraftResourceWithRawResponse",
+    "AsyncDraftResourceWithRawResponse",
+    "DraftResourceWithStreamingResponse",
+    "AsyncDraftResourceWithStreamingResponse",
     "PoliciesResource",
     "AsyncPoliciesResource",
     "PoliciesResourceWithRawResponse",
