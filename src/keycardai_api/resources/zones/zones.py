@@ -7,27 +7,19 @@ from typing_extensions import Literal
 
 import httpx
 
-from .users import (
-    UsersResource,
-    AsyncUsersResource,
-    UsersResourceWithRawResponse,
-    AsyncUsersResourceWithRawResponse,
-    UsersResourceWithStreamingResponse,
-    AsyncUsersResourceWithStreamingResponse,
+from .roles import (
+    RolesResource,
+    AsyncRolesResource,
+    RolesResourceWithRawResponse,
+    AsyncRolesResourceWithRawResponse,
+    RolesResourceWithStreamingResponse,
+    AsyncRolesResourceWithStreamingResponse,
 )
 from ...types import (
     zone_list_params,
     zone_create_params,
     zone_update_params,
     zone_retrieve_params,
-)
-from .members import (
-    MembersResource,
-    AsyncMembersResource,
-    MembersResourceWithRawResponse,
-    AsyncMembersResourceWithRawResponse,
-    MembersResourceWithStreamingResponse,
-    AsyncMembersResourceWithStreamingResponse,
 )
 from .secrets import (
     SecretsResource,
@@ -37,7 +29,7 @@ from .secrets import (
     SecretsResourceWithStreamingResponse,
     AsyncSecretsResourceWithStreamingResponse,
 )
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from .sessions import (
     SessionsResource,
@@ -79,7 +71,23 @@ from .user_agents import (
     UserAgentsResourceWithStreamingResponse,
     AsyncUserAgentsResourceWithStreamingResponse,
 )
+from .users.users import (
+    UsersResource,
+    AsyncUsersResource,
+    UsersResourceWithRawResponse,
+    AsyncUsersResourceWithRawResponse,
+    UsersResourceWithStreamingResponse,
+    AsyncUsersResourceWithStreamingResponse,
+)
 from ...types.zone import Zone
+from .groups.groups import (
+    GroupsResource,
+    AsyncGroupsResource,
+    GroupsResourceWithRawResponse,
+    AsyncGroupsResourceWithRawResponse,
+    GroupsResourceWithStreamingResponse,
+    AsyncGroupsResourceWithStreamingResponse,
+)
 from ..._base_client import make_request_options
 from .policy_schemas import (
     PolicySchemasResource,
@@ -88,6 +96,14 @@ from .policy_schemas import (
     AsyncPolicySchemasResourceWithRawResponse,
     PolicySchemasResourceWithStreamingResponse,
     AsyncPolicySchemasResourceWithStreamingResponse,
+)
+from .policy_bindings import (
+    PolicyBindingsResource,
+    AsyncPolicyBindingsResource,
+    PolicyBindingsResourceWithRawResponse,
+    AsyncPolicyBindingsResourceWithRawResponse,
+    PolicyBindingsResourceWithStreamingResponse,
+    AsyncPolicyBindingsResourceWithStreamingResponse,
 )
 from .delegated_grants import (
     DelegatedGrantsResource,
@@ -104,6 +120,22 @@ from .policies.policies import (
     AsyncPoliciesResourceWithRawResponse,
     PoliciesResourceWithStreamingResponse,
     AsyncPoliciesResourceWithStreamingResponse,
+)
+from .policy_evaluations import (
+    PolicyEvaluationsResource,
+    AsyncPolicyEvaluationsResource,
+    PolicyEvaluationsResourceWithRawResponse,
+    AsyncPolicyEvaluationsResourceWithRawResponse,
+    PolicyEvaluationsResourceWithStreamingResponse,
+    AsyncPolicyEvaluationsResourceWithStreamingResponse,
+)
+from .policy_validations import (
+    PolicyValidationsResource,
+    AsyncPolicyValidationsResource,
+    PolicyValidationsResourceWithRawResponse,
+    AsyncPolicyValidationsResourceWithRawResponse,
+    PolicyValidationsResourceWithStreamingResponse,
+    AsyncPolicyValidationsResourceWithStreamingResponse,
 )
 from .application_credentials import (
     ApplicationCredentialsResource,
@@ -169,8 +201,12 @@ class ZonesResource(SyncAPIResource):
         return UsersResource(self._client)
 
     @cached_property
-    def members(self) -> MembersResource:
-        return MembersResource(self._client)
+    def roles(self) -> RolesResource:
+        return RolesResource(self._client)
+
+    @cached_property
+    def groups(self) -> GroupsResource:
+        return GroupsResource(self._client)
 
     @cached_property
     def secrets(self) -> SecretsResource:
@@ -207,6 +243,28 @@ class ZonesResource(SyncAPIResource):
         return PolicySetsResource(self._client)
 
     @cached_property
+    def policy_bindings(self) -> PolicyBindingsResource:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return PolicyBindingsResource(self._client)
+
+    @cached_property
+    def policy_validations(self) -> PolicyValidationsResource:
+        """Stateless Cedar policy validation"""
+        return PolicyValidationsResource(self._client)
+
+    @cached_property
+    def policy_evaluations(self) -> PolicyEvaluationsResource:
+        """Stateless policy evaluation testing"""
+        return PolicyEvaluationsResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> ZonesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -234,7 +292,6 @@ class ZonesResource(SyncAPIResource):
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
         organization_id: str | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -265,9 +322,6 @@ class ZonesResource(SyncAPIResource):
 
           protocols: Protocol configuration for zone creation
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set. Defaults to true.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -286,7 +340,6 @@ class ZonesResource(SyncAPIResource):
                     "encryption_key": encryption_key,
                     "organization_id": organization_id,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                 },
                 zone_create_params.ZoneCreateParams,
             ),
@@ -342,9 +395,9 @@ class ZonesResource(SyncAPIResource):
         default_resource_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
+        external_sync_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         user_identity_provider_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -369,13 +422,13 @@ class ZonesResource(SyncAPIResource):
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
 
+          external_sync_enabled: Turns external directory sync (SCIM) on or off for this zone. Required to create
+              external sync tokens.
+
           name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
               control characters.
 
           protocols: Protocol configuration update for a zone (partial update)
-
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set
 
           user_identity_provider_id: Provider ID to configure for user login (set to null to unset)
 
@@ -397,9 +450,9 @@ class ZonesResource(SyncAPIResource):
                     "default_resource_id": default_resource_id,
                     "description": description,
                     "encryption_key": encryption_key,
+                    "external_sync_enabled": external_sync_enabled,
                     "name": name,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                     "user_identity_provider_id": user_identity_provider_id,
                 },
                 zone_update_params.ZoneUpdateParams,
@@ -418,6 +471,7 @@ class ZonesResource(SyncAPIResource):
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
         filter_organization_id: str | Omit = omit,
+        filter_permission_in: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -427,13 +481,25 @@ class ZonesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ZoneListResponse:
-        """
-        Returns a list of zones for the authenticated organization
+        """Returns a list of zones for the authenticated organization.
+
+        Cursor pagination
+        via `after`/`before` and `limit`, plus `expand[]=total_count`, name substring
+        search, and `sort`, are supported on every request. `filter[permission][in]`
+        narrows the list to zones where the caller holds at least one of the given
+        permissions.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_permission_in: Only return zones where the caller is allowed ANY of these permissions
+              (`<resource_type>:<action>`, e.g. `applications:list`). Repeatable (one
+              permission per occurrence); values are unioned, max 20 (a stricter cap than the
+              authorization service's 50). The accessible zone set is resolved by the
+              authorization service and composes with cursor pagination, search, sort and
+              `expand[]=total_count`. Malformed values are a 400.
 
           limit: Maximum number of items to return
 
@@ -459,6 +525,7 @@ class ZonesResource(SyncAPIResource):
                         "cursor": cursor,
                         "expand": expand,
                         "filter_organization_id": filter_organization_id,
+                        "filter_permission_in": filter_permission_in,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -537,8 +604,12 @@ class AsyncZonesResource(AsyncAPIResource):
         return AsyncUsersResource(self._client)
 
     @cached_property
-    def members(self) -> AsyncMembersResource:
-        return AsyncMembersResource(self._client)
+    def roles(self) -> AsyncRolesResource:
+        return AsyncRolesResource(self._client)
+
+    @cached_property
+    def groups(self) -> AsyncGroupsResource:
+        return AsyncGroupsResource(self._client)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResource:
@@ -575,6 +646,28 @@ class AsyncZonesResource(AsyncAPIResource):
         return AsyncPolicySetsResource(self._client)
 
     @cached_property
+    def policy_bindings(self) -> AsyncPolicyBindingsResource:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return AsyncPolicyBindingsResource(self._client)
+
+    @cached_property
+    def policy_validations(self) -> AsyncPolicyValidationsResource:
+        """Stateless Cedar policy validation"""
+        return AsyncPolicyValidationsResource(self._client)
+
+    @cached_property
+    def policy_evaluations(self) -> AsyncPolicyEvaluationsResource:
+        """Stateless policy evaluation testing"""
+        return AsyncPolicyEvaluationsResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> AsyncZonesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -602,7 +695,6 @@ class AsyncZonesResource(AsyncAPIResource):
         encryption_key: EncryptionKeyAwsKmsConfigParam | Omit = omit,
         organization_id: str | Omit = omit,
         protocols: zone_create_params.Protocols | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -633,9 +725,6 @@ class AsyncZonesResource(AsyncAPIResource):
 
           protocols: Protocol configuration for zone creation
 
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set. Defaults to true.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -654,7 +743,6 @@ class AsyncZonesResource(AsyncAPIResource):
                     "encryption_key": encryption_key,
                     "organization_id": organization_id,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                 },
                 zone_create_params.ZoneCreateParams,
             ),
@@ -710,9 +798,9 @@ class AsyncZonesResource(AsyncAPIResource):
         default_resource_id: Optional[str] | Omit = omit,
         description: Optional[str] | Omit = omit,
         encryption_key: Optional[zone_update_params.EncryptionKey] | Omit = omit,
+        external_sync_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         protocols: Optional[zone_update_params.Protocols] | Omit = omit,
-        requires_invitation: bool | Omit = omit,
         user_identity_provider_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -737,13 +825,13 @@ class AsyncZonesResource(AsyncAPIResource):
           encryption_key: AWS KMS configuration for zone encryption update (set to null to remove
               customer-managed key and revert to default)
 
+          external_sync_enabled: Turns external directory sync (SCIM) on or off for this zone. Required to create
+              external sync tokens.
+
           name: Human-readable name. Must not contain HTML tags (e.g. `<script>`, `<div>`) or
               control characters.
 
           protocols: Protocol configuration update for a zone (partial update)
-
-          requires_invitation: Whether the zone requires an invitation for email/password registration, only
-              applies when user_identity_provider_id is not set
 
           user_identity_provider_id: Provider ID to configure for user login (set to null to unset)
 
@@ -765,9 +853,9 @@ class AsyncZonesResource(AsyncAPIResource):
                     "default_resource_id": default_resource_id,
                     "description": description,
                     "encryption_key": encryption_key,
+                    "external_sync_enabled": external_sync_enabled,
                     "name": name,
                     "protocols": protocols,
-                    "requires_invitation": requires_invitation,
                     "user_identity_provider_id": user_identity_provider_id,
                 },
                 zone_update_params.ZoneUpdateParams,
@@ -786,6 +874,7 @@ class AsyncZonesResource(AsyncAPIResource):
         cursor: str | Omit = omit,
         expand: Union[Literal["total_count", "permissions"], List[Literal["total_count", "permissions"]]] | Omit = omit,
         filter_organization_id: str | Omit = omit,
+        filter_permission_in: Union[str, SequenceNotStr[str]] | Omit = omit,
         limit: int | Omit = omit,
         slug: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -795,13 +884,25 @@ class AsyncZonesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ZoneListResponse:
-        """
-        Returns a list of zones for the authenticated organization
+        """Returns a list of zones for the authenticated organization.
+
+        Cursor pagination
+        via `after`/`before` and `limit`, plus `expand[]=total_count`, name substring
+        search, and `sort`, are supported on every request. `filter[permission][in]`
+        narrows the list to zones where the caller holds at least one of the given
+        permissions.
 
         Args:
           after: Cursor for forward pagination
 
           before: Cursor for backward pagination
+
+          filter_permission_in: Only return zones where the caller is allowed ANY of these permissions
+              (`<resource_type>:<action>`, e.g. `applications:list`). Repeatable (one
+              permission per occurrence); values are unioned, max 20 (a stricter cap than the
+              authorization service's 50). The accessible zone set is resolved by the
+              authorization service and composes with cursor pagination, search, sort and
+              `expand[]=total_count`. Malformed values are a 400.
 
           limit: Maximum number of items to return
 
@@ -827,6 +928,7 @@ class AsyncZonesResource(AsyncAPIResource):
                         "cursor": cursor,
                         "expand": expand,
                         "filter_organization_id": filter_organization_id,
+                        "filter_permission_in": filter_permission_in,
                         "limit": limit,
                         "slug": slug,
                     },
@@ -924,8 +1026,12 @@ class ZonesResourceWithRawResponse:
         return UsersResourceWithRawResponse(self._zones.users)
 
     @cached_property
-    def members(self) -> MembersResourceWithRawResponse:
-        return MembersResourceWithRawResponse(self._zones.members)
+    def roles(self) -> RolesResourceWithRawResponse:
+        return RolesResourceWithRawResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> GroupsResourceWithRawResponse:
+        return GroupsResourceWithRawResponse(self._zones.groups)
 
     @cached_property
     def secrets(self) -> SecretsResourceWithRawResponse:
@@ -960,6 +1066,28 @@ class ZonesResourceWithRawResponse:
     def policy_sets(self) -> PolicySetsResourceWithRawResponse:
         """Policy set CRUD and binding management"""
         return PolicySetsResourceWithRawResponse(self._zones.policy_sets)
+
+    @cached_property
+    def policy_bindings(self) -> PolicyBindingsResourceWithRawResponse:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return PolicyBindingsResourceWithRawResponse(self._zones.policy_bindings)
+
+    @cached_property
+    def policy_validations(self) -> PolicyValidationsResourceWithRawResponse:
+        """Stateless Cedar policy validation"""
+        return PolicyValidationsResourceWithRawResponse(self._zones.policy_validations)
+
+    @cached_property
+    def policy_evaluations(self) -> PolicyEvaluationsResourceWithRawResponse:
+        """Stateless policy evaluation testing"""
+        return PolicyEvaluationsResourceWithRawResponse(self._zones.policy_evaluations)
 
 
 class AsyncZonesResourceWithRawResponse:
@@ -1015,8 +1143,12 @@ class AsyncZonesResourceWithRawResponse:
         return AsyncUsersResourceWithRawResponse(self._zones.users)
 
     @cached_property
-    def members(self) -> AsyncMembersResourceWithRawResponse:
-        return AsyncMembersResourceWithRawResponse(self._zones.members)
+    def roles(self) -> AsyncRolesResourceWithRawResponse:
+        return AsyncRolesResourceWithRawResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> AsyncGroupsResourceWithRawResponse:
+        return AsyncGroupsResourceWithRawResponse(self._zones.groups)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithRawResponse:
@@ -1051,6 +1183,28 @@ class AsyncZonesResourceWithRawResponse:
     def policy_sets(self) -> AsyncPolicySetsResourceWithRawResponse:
         """Policy set CRUD and binding management"""
         return AsyncPolicySetsResourceWithRawResponse(self._zones.policy_sets)
+
+    @cached_property
+    def policy_bindings(self) -> AsyncPolicyBindingsResourceWithRawResponse:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return AsyncPolicyBindingsResourceWithRawResponse(self._zones.policy_bindings)
+
+    @cached_property
+    def policy_validations(self) -> AsyncPolicyValidationsResourceWithRawResponse:
+        """Stateless Cedar policy validation"""
+        return AsyncPolicyValidationsResourceWithRawResponse(self._zones.policy_validations)
+
+    @cached_property
+    def policy_evaluations(self) -> AsyncPolicyEvaluationsResourceWithRawResponse:
+        """Stateless policy evaluation testing"""
+        return AsyncPolicyEvaluationsResourceWithRawResponse(self._zones.policy_evaluations)
 
 
 class ZonesResourceWithStreamingResponse:
@@ -1106,8 +1260,12 @@ class ZonesResourceWithStreamingResponse:
         return UsersResourceWithStreamingResponse(self._zones.users)
 
     @cached_property
-    def members(self) -> MembersResourceWithStreamingResponse:
-        return MembersResourceWithStreamingResponse(self._zones.members)
+    def roles(self) -> RolesResourceWithStreamingResponse:
+        return RolesResourceWithStreamingResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> GroupsResourceWithStreamingResponse:
+        return GroupsResourceWithStreamingResponse(self._zones.groups)
 
     @cached_property
     def secrets(self) -> SecretsResourceWithStreamingResponse:
@@ -1142,6 +1300,28 @@ class ZonesResourceWithStreamingResponse:
     def policy_sets(self) -> PolicySetsResourceWithStreamingResponse:
         """Policy set CRUD and binding management"""
         return PolicySetsResourceWithStreamingResponse(self._zones.policy_sets)
+
+    @cached_property
+    def policy_bindings(self) -> PolicyBindingsResourceWithStreamingResponse:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return PolicyBindingsResourceWithStreamingResponse(self._zones.policy_bindings)
+
+    @cached_property
+    def policy_validations(self) -> PolicyValidationsResourceWithStreamingResponse:
+        """Stateless Cedar policy validation"""
+        return PolicyValidationsResourceWithStreamingResponse(self._zones.policy_validations)
+
+    @cached_property
+    def policy_evaluations(self) -> PolicyEvaluationsResourceWithStreamingResponse:
+        """Stateless policy evaluation testing"""
+        return PolicyEvaluationsResourceWithStreamingResponse(self._zones.policy_evaluations)
 
 
 class AsyncZonesResourceWithStreamingResponse:
@@ -1197,8 +1377,12 @@ class AsyncZonesResourceWithStreamingResponse:
         return AsyncUsersResourceWithStreamingResponse(self._zones.users)
 
     @cached_property
-    def members(self) -> AsyncMembersResourceWithStreamingResponse:
-        return AsyncMembersResourceWithStreamingResponse(self._zones.members)
+    def roles(self) -> AsyncRolesResourceWithStreamingResponse:
+        return AsyncRolesResourceWithStreamingResponse(self._zones.roles)
+
+    @cached_property
+    def groups(self) -> AsyncGroupsResourceWithStreamingResponse:
+        return AsyncGroupsResourceWithStreamingResponse(self._zones.groups)
 
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithStreamingResponse:
@@ -1233,3 +1417,25 @@ class AsyncZonesResourceWithStreamingResponse:
     def policy_sets(self) -> AsyncPolicySetsResourceWithStreamingResponse:
         """Policy set CRUD and binding management"""
         return AsyncPolicySetsResourceWithStreamingResponse(self._zones.policy_sets)
+
+    @cached_property
+    def policy_bindings(self) -> AsyncPolicyBindingsResourceWithStreamingResponse:
+        """Policy set binding management.
+
+        Active slots are replace-only by design:
+        once bound (at zone bootstrap or on a principal's first policy check), an
+        active slot is never emptied — evaluation fails closed, so an empty active
+        slot would deny all access. Replace the bound version rather than removing
+        the binding. DELETE applies to shadow bindings only.
+        """
+        return AsyncPolicyBindingsResourceWithStreamingResponse(self._zones.policy_bindings)
+
+    @cached_property
+    def policy_validations(self) -> AsyncPolicyValidationsResourceWithStreamingResponse:
+        """Stateless Cedar policy validation"""
+        return AsyncPolicyValidationsResourceWithStreamingResponse(self._zones.policy_validations)
+
+    @cached_property
+    def policy_evaluations(self) -> AsyncPolicyEvaluationsResourceWithStreamingResponse:
+        """Stateless policy evaluation testing"""
+        return AsyncPolicyEvaluationsResourceWithStreamingResponse(self._zones.policy_evaluations)

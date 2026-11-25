@@ -2,11 +2,19 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Union
 from typing_extensions import Literal
 
 import httpx
 
+from .draft import (
+    DraftResource,
+    AsyncDraftResource,
+    DraftResourceWithRawResponse,
+    AsyncDraftResourceWithRawResponse,
+    DraftResourceWithStreamingResponse,
+    AsyncDraftResourceWithStreamingResponse,
+)
 from .versions import (
     VersionsResource,
     AsyncVersionsResource,
@@ -25,7 +33,7 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.zones import policy_list_params, policy_create_params, policy_update_params
+from ....types.zones import policy_list_params, policy_create_params, policy_update_params, policy_retrieve_params
 from ...._base_client import make_request_options
 from ....types.zones.policy import Policy
 from ....types.zones.policy_list_response import PolicyListResponse
@@ -40,6 +48,11 @@ class PoliciesResource(SyncAPIResource):
     def versions(self) -> VersionsResource:
         """Immutable policy version snapshots"""
         return VersionsResource(self._client)
+
+    @cached_property
+    def draft(self) -> DraftResource:
+        """Mutable policy authoring workspace"""
+        return DraftResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> PoliciesResourceWithRawResponse:
@@ -118,6 +131,7 @@ class PoliciesResource(SyncAPIResource):
         policy_id: str,
         *,
         zone_id: str,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -131,6 +145,8 @@ class PoliciesResource(SyncAPIResource):
         Get a policy by ID
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -155,7 +171,11 @@ class PoliciesResource(SyncAPIResource):
         return self._get(
             path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"expand": expand}, policy_retrieve_params.PolicyRetrieveParams),
             ),
             cast_to=Policy,
         )
@@ -224,12 +244,12 @@ class PoliciesResource(SyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_id: SequenceNotStr[str] | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: SequenceNotStr[str] | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_description: SequenceNotStr[str] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -262,11 +282,8 @@ class PoliciesResource(SyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_id: Filter by policy ID. Repeatable; multiple values are OR-ed (e.g.
               `?filter[id]=p1&filter[id]=p2`). Capped at 100 IDs per request — over-cap
@@ -414,6 +431,11 @@ class AsyncPoliciesResource(AsyncAPIResource):
         return AsyncVersionsResource(self._client)
 
     @cached_property
+    def draft(self) -> AsyncDraftResource:
+        """Mutable policy authoring workspace"""
+        return AsyncDraftResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> AsyncPoliciesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -490,6 +512,7 @@ class AsyncPoliciesResource(AsyncAPIResource):
         policy_id: str,
         *,
         zone_id: str,
+        expand: Union[Literal["user"], List[Literal["user"]]] | Omit = omit,
         x_api_version: str | Omit = omit,
         x_client_request_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -503,6 +526,8 @@ class AsyncPoliciesResource(AsyncAPIResource):
         Get a policy by ID
 
         Args:
+          expand: Opt-in to additional response fields on a single resource (`user`). Repeatable.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -527,7 +552,11 @@ class AsyncPoliciesResource(AsyncAPIResource):
         return await self._get(
             path_template("/zones/{zone_id}/policies/{policy_id}", zone_id=zone_id, policy_id=policy_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"expand": expand}, policy_retrieve_params.PolicyRetrieveParams),
             ),
             cast_to=Policy,
         )
@@ -596,12 +625,12 @@ class AsyncPoliciesResource(AsyncAPIResource):
         *,
         after: str | Omit = omit,
         before: str | Omit = omit,
-        expand: List[Literal["total_count"]] | Omit = omit,
+        expand: Union[Literal["total_count", "user"], List[Literal["total_count", "user"]]] | Omit = omit,
         filter_id: SequenceNotStr[str] | Omit = omit,
         filter_owner_type: SequenceNotStr[str] | Omit = omit,
         limit: int | Omit = omit,
         order: Literal["asc", "desc"] | Omit = omit,
-        query: SequenceNotStr[str] | Omit = omit,
+        query: Union[str, SequenceNotStr[str]] | Omit = omit,
         query_description: SequenceNotStr[str] | Omit = omit,
         query_name: SequenceNotStr[str] | Omit = omit,
         sort: Literal["created_at"] | Omit = omit,
@@ -634,11 +663,8 @@ class AsyncPoliciesResource(AsyncAPIResource):
           before: Cursor for backward pagination. Returned in `Pagination.before_cursor`. Mutually
               exclusive with `after`.
 
-          expand: **Deprecated.** Use `expand[]` instead.
-
-              Opt-in to additional response fields. Still honored for backward compatibility;
-              supplying both `expand` and `expand[]` with disagreeing values returns
-              `400 Bad Request`.
+          expand: Opt-in to additional response fields (`total_count`, `user`). Repeatable;
+              matches the `expand[]` convention used across the Keycard API.
 
           filter_id: Filter by policy ID. Repeatable; multiple values are OR-ed (e.g.
               `?filter[id]=p1&filter[id]=p2`). Capped at 100 IDs per request — over-cap
@@ -802,6 +828,11 @@ class PoliciesResourceWithRawResponse:
         """Immutable policy version snapshots"""
         return VersionsResourceWithRawResponse(self._policies.versions)
 
+    @cached_property
+    def draft(self) -> DraftResourceWithRawResponse:
+        """Mutable policy authoring workspace"""
+        return DraftResourceWithRawResponse(self._policies.draft)
+
 
 class AsyncPoliciesResourceWithRawResponse:
     def __init__(self, policies: AsyncPoliciesResource) -> None:
@@ -827,6 +858,11 @@ class AsyncPoliciesResourceWithRawResponse:
     def versions(self) -> AsyncVersionsResourceWithRawResponse:
         """Immutable policy version snapshots"""
         return AsyncVersionsResourceWithRawResponse(self._policies.versions)
+
+    @cached_property
+    def draft(self) -> AsyncDraftResourceWithRawResponse:
+        """Mutable policy authoring workspace"""
+        return AsyncDraftResourceWithRawResponse(self._policies.draft)
 
 
 class PoliciesResourceWithStreamingResponse:
@@ -854,6 +890,11 @@ class PoliciesResourceWithStreamingResponse:
         """Immutable policy version snapshots"""
         return VersionsResourceWithStreamingResponse(self._policies.versions)
 
+    @cached_property
+    def draft(self) -> DraftResourceWithStreamingResponse:
+        """Mutable policy authoring workspace"""
+        return DraftResourceWithStreamingResponse(self._policies.draft)
+
 
 class AsyncPoliciesResourceWithStreamingResponse:
     def __init__(self, policies: AsyncPoliciesResource) -> None:
@@ -879,3 +920,8 @@ class AsyncPoliciesResourceWithStreamingResponse:
     def versions(self) -> AsyncVersionsResourceWithStreamingResponse:
         """Immutable policy version snapshots"""
         return AsyncVersionsResourceWithStreamingResponse(self._policies.versions)
+
+    @cached_property
+    def draft(self) -> AsyncDraftResourceWithStreamingResponse:
+        """Mutable policy authoring workspace"""
+        return AsyncDraftResourceWithStreamingResponse(self._policies.draft)
