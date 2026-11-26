@@ -139,12 +139,12 @@ class DelegatedGrantsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DelegatedGrantListResponse:
-        """Returns a list of delegated grants in the specified zone.
+        """Returns a paginated list of delegated grants in the specified zone.
 
-        Can be filtered by
-        user, resource, or status. Use cursor pagination via `after`/`before`. Sort:
-        comma-separated field list; prefix with `-` for descending. Use
-        `expand[]=total_count` to include the matching row count.
+        Can be
+        filtered by user, resource, or status. Use cursor pagination via
+        `after`/`before`. Sort: comma-separated field list; prefix with `-` for
+        descending. Use `expand[]=total_count` to include the matching row count.
 
         Args:
           after: Cursor for forward pagination
@@ -349,12 +349,12 @@ class AsyncDelegatedGrantsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DelegatedGrantListResponse:
-        """Returns a list of delegated grants in the specified zone.
+        """Returns a paginated list of delegated grants in the specified zone.
 
-        Can be filtered by
-        user, resource, or status. Use cursor pagination via `after`/`before`. Sort:
-        comma-separated field list; prefix with `-` for descending. Use
-        `expand[]=total_count` to include the matching row count.
+        Can be
+        filtered by user, resource, or status. Use cursor pagination via
+        `after`/`before`. Sort: comma-separated field list; prefix with `-` for
+        descending. Use `expand[]=total_count` to include the matching row count.
 
         Args:
           after: Cursor for forward pagination

@@ -32,7 +32,7 @@ class TestSSOConnection:
     def test_method_retrieve_with_all_params(self, client: KeycardAPI) -> None:
         sso_connection = client.organizations.sso_connection.retrieve(
             organization_id="x",
-            expand=["permissions"],
+            expand="permissions",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
@@ -289,7 +289,7 @@ class TestAsyncSSOConnection:
     async def test_method_retrieve_with_all_params(self, async_client: AsyncKeycardAPI) -> None:
         sso_connection = await async_client.organizations.sso_connection.retrieve(
             organization_id="x",
-            expand=["permissions"],
+            expand="permissions",
             x_client_request_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(SSOConnection, sso_connection, path=["response"])
