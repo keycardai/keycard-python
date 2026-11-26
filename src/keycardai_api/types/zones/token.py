@@ -15,14 +15,29 @@ class Token(BaseFields):
     identifier: str
     """Identifier for this credential.
 
-    For token type, this equals the subject value, or '\\**' when subject is not
-    specified.
+    For version 2, this equals the credential ID and is the OAuth 2.0 client ID the
+    workload sends. For version 1, this equals the subject value, or '\\**' when
+    subject is not specified.
     """
 
     provider_id: str
     """ID of the provider issuing tokens verified by this credential"""
 
     type: Literal["token"]
+
+    allowed_audience: Optional[str] = None
+    """Version 2 only.
+
+    Audience the token's `aud` must contain. `null` when unset, in which case the
+    zone's issuer URL is required.
+    """
+
+    authentication_condition: Optional[str] = None
+    """Version 2 only.
+
+    CEL predicate over the token's `claims` that must evaluate to true. `null` when
+    unset.
+    """
 
     provider: Optional[Provider] = None
     """
@@ -36,3 +51,6 @@ class Token(BaseFields):
     When null or omitted, any token from the provider is accepted without checking
     application-specific claims.
     """
+
+    version: Optional[Literal[1, 2]] = None
+    """Credential behavior version."""
