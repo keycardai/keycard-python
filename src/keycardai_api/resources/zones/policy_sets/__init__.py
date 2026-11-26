@@ -1,5 +1,21 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .draft import (
+    DraftResource,
+    AsyncDraftResource,
+    DraftResourceWithRawResponse,
+    AsyncDraftResourceWithRawResponse,
+    DraftResourceWithStreamingResponse,
+    AsyncDraftResourceWithStreamingResponse,
+)
+from .manifest import (
+    ManifestResource,
+    AsyncManifestResource,
+    ManifestResourceWithRawResponse,
+    AsyncManifestResourceWithRawResponse,
+    ManifestResourceWithStreamingResponse,
+    AsyncManifestResourceWithStreamingResponse,
+)
 from .versions import (
     VersionsResource,
     AsyncVersionsResource,
@@ -24,6 +40,18 @@ __all__ = [
     "AsyncVersionsResourceWithRawResponse",
     "VersionsResourceWithStreamingResponse",
     "AsyncVersionsResourceWithStreamingResponse",
+    "DraftResource",
+    "AsyncDraftResource",
+    "DraftResourceWithRawResponse",
+    "AsyncDraftResourceWithRawResponse",
+    "DraftResourceWithStreamingResponse",
+    "AsyncDraftResourceWithStreamingResponse",
+    "ManifestResource",
+    "AsyncManifestResource",
+    "ManifestResourceWithRawResponse",
+    "AsyncManifestResourceWithRawResponse",
+    "ManifestResourceWithStreamingResponse",
+    "AsyncManifestResourceWithStreamingResponse",
     "PolicySetsResource",
     "AsyncPolicySetsResource",
     "PolicySetsResourceWithRawResponse",
