@@ -237,15 +237,16 @@ class InvitationsResource(SyncAPIResource):
     ) -> Invitation:
         """Send a fresh invitation email.
 
-        The invitation token is rotated, so the link in
-        any earlier email stops working. Returns 409 while a previous email is still
-        queued or sending, or when the invitation is no longer pending. Returns 200 even
-        when the email service cannot be reached: the token has already been rotated,
-        the response's `delivery_status` is `failed`, no new email was queued, and the
-        caller must resend. Each resend counts toward the organization's daily
-        invitation limit. Returns 429 with a `Retry-After` header when that limit or the
-        per-recipient send cap is reached. If the email service rejects the send, the
-        earlier link keeps working.
+        The invitation token is rotated and the
+        expiration is refreshed, so the link in any earlier email stops working. Returns
+        409 while a previous email is still queued or sending, or when the invitation is
+        no longer pending. Returns 200 even when the email service cannot be reached:
+        the token has already been rotated, the response's `delivery_status` is
+        `failed`, no new email was queued, and the caller must resend. Each resend
+        counts toward the organization's daily invitation limit. Returns 429 with a
+        `Retry-After` header when that limit or the per-recipient send cap is reached.
+        If the email service rejects the send, the earlier link and its original expiry
+        are restored.
 
         After the organization access check succeeds, the service sends
         `X-Should-Retry: false` on 409, 429, and 5xx responses to tell SDKs to surface
@@ -494,15 +495,16 @@ class AsyncInvitationsResource(AsyncAPIResource):
     ) -> Invitation:
         """Send a fresh invitation email.
 
-        The invitation token is rotated, so the link in
-        any earlier email stops working. Returns 409 while a previous email is still
-        queued or sending, or when the invitation is no longer pending. Returns 200 even
-        when the email service cannot be reached: the token has already been rotated,
-        the response's `delivery_status` is `failed`, no new email was queued, and the
-        caller must resend. Each resend counts toward the organization's daily
-        invitation limit. Returns 429 with a `Retry-After` header when that limit or the
-        per-recipient send cap is reached. If the email service rejects the send, the
-        earlier link keeps working.
+        The invitation token is rotated and the
+        expiration is refreshed, so the link in any earlier email stops working. Returns
+        409 while a previous email is still queued or sending, or when the invitation is
+        no longer pending. Returns 200 even when the email service cannot be reached:
+        the token has already been rotated, the response's `delivery_status` is
+        `failed`, no new email was queued, and the caller must resend. Each resend
+        counts toward the organization's daily invitation limit. Returns 429 with a
+        `Retry-After` header when that limit or the per-recipient send cap is reached.
+        If the email service rejects the send, the earlier link and its original expiry
+        are restored.
 
         After the organization access check succeeds, the service sends
         `X-Should-Retry: false` on 409, 429, and 5xx responses to tell SDKs to surface

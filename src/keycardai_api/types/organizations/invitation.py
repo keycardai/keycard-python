@@ -61,6 +61,12 @@ class Invitation(BaseModel):
     can later change to `complained` within the 24 hours the outcome is tracked.
     """
 
+    delivery_state_age_seconds: Optional[int] = None
+    """
+    Whole seconds in the current user-visible delivery state, calculated by the
+    server. Omitted when the state or its timestamp is unknown.
+    """
+
     delivery_status: Optional[Literal["queued", "sending", "sent", "failed", "expired"]] = None
     """Delivery state of the most recent invitation email.
 
@@ -80,4 +86,10 @@ class Invitation(BaseModel):
     populated when the 'expand[]=permissions' query parameter is provided. Keys are
     resource types (e.g., "organizations"), values are objects mapping permission
     names to boolean values indicating if the permission is granted.
+    """
+
+    resend_available: Optional[bool] = None
+    """Whether this invitation can reserve a resend at response time.
+
+    Does not account for organization policy, rate limits, or concurrent changes.
     """
