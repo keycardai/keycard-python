@@ -15,8 +15,9 @@ class Token(BaseFields):
     identifier: str
     """Identifier for this credential.
 
-    For token type, this equals the subject value, or '\\**' when subject is not
-    specified.
+    For version 2, this equals the credential ID and is the OAuth 2.0 client ID the
+    workload sends. For version 1, this equals the subject value, or '\\**' when
+    subject is not specified.
     """
 
     provider_id: str
